@@ -1,3 +1,20 @@
+# Welcome to Malcom
+
+Malcolm (https://www.imdb.com/title/tt0107290/fullcredits) is a Proof of Concept for eLife Sciences' Libero Reviewer Product.
+
+[The Product Roadmap](https://trello.com/b/NShRx4VE/libero-reviewer-product-roadmap)
+for Libero Reviewer has been revisted after the launch of libero.pub site. This roadmap
+combined with the site sets out the objectives and our commitments for the product vision.
+
+We are a part of the [Coko Community](https://coko.foundation/partners/) and
+as such committed to sharing our components with the rest of the publishing via
+this community.
+
+The aim of the PoC is to demonstrate an implementation a widely used and mature framework for
+all the heavylifting for solving the technical issues (don't reinvent the wheel).
+With the aim of sharing domain-specific components (Publishing) via PubSweet for
+the rest of the community to benefit from.
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
@@ -6,7 +23,7 @@
 [travis-url]: https://travis-ci.org/nestjs/nest
 [linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
 [linux-url]: https://travis-ci.org/nestjs/nest
-  
+
   <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
