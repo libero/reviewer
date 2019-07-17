@@ -8,7 +8,6 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
-      // Add '.ts' and '.tsx' as resolvable extensions.
       extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   module: {
@@ -22,7 +21,6 @@ module.exports = {
         ],
         exclude: /node_modules/
       },
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       {
           enforce: "pre",
           test: /\.js$/,
