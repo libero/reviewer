@@ -6,7 +6,7 @@ module.exports = {
   devServer: {
     stats: "errors-only",
     host: process.env.HOST,
-    port: process.env.PORT,
+    port: 9000,
     open: true,
     overlay: true,
     hot: true,
