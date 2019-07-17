@@ -9,16 +9,15 @@ module.exports = {
   },
   resolve: {
       // Add '.ts' and '.tsx' as resolvable extensions.
-      extensions: [".ts", ".tsx"]
+      extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   module: {
     rules: [
       {
         test: /\.ts(x?)$/,
-        exclude: /node_modules/,
         use: [
             {
-                loader: "ts-loader"
+                loader: "awesome-typescript-loader"
             }
         ],
         exclude: /node_modules/
