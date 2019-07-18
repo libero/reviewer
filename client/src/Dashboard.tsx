@@ -9,6 +9,39 @@ const submissionQuery = `{
   }
 }`;
 
+const testData = {
+  submissions: [
+    {
+      id: "1",
+      title: "testing submission 1",
+      lastStepVisited: "files",
+      updated: "2019-06-20T10:00:13.977Z"
+    },
+    {
+      id: "2",
+      title: "testing submission 2",
+      lastStepVisited: "disclosure",
+      updated: "2019-04-20T10:00:13.977Z"
+    }
+  ]
+}
+
+interface Submission {
+  title: string;
+  id: string;
+  lastStepVisited: string;
+  updated: string;
+}
+
+const SubmissionEntry = ({submission}: {submission: Submission}) => {
+  return (
+    <div>
+      <span style={{display: "block"}}>{submission.title}</span>
+      <a href={`/submission/${submission.id}/${submission.lastStepVisited}`}>{submission.lastStepVisited}</a>
+    </div>
+  )
+}
+
 const Dashboard = () => {
     const [submissions, setSubmissions] = useState([]);
     const [fetched, setFetched] = useState(false);
@@ -27,9 +60,7 @@ const Dashboard = () => {
         <div>
             Submissions <br></br>
             <ul>
-                {submissions.map(submission => (
-                    <li key={submission.id}>{submission.title}</li>
-                ))}
+              {testData.submissions.map((sub) => (<SubmissionEntry submission={sub}/>))}
             </ul>
         </div>
     );
