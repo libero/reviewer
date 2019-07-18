@@ -5,16 +5,22 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development --config webpack.development.config.js"
+    "start": "webpack-dev-server --mode development --config webpack.development.config.js",
+    "test": "jest"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.0.0",
+    "@testing-library/react": "^8.0.5",
+    "@types/jest": "^24.0.15",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.3.4",
     "awesome-typescript-loader": "^5.2.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.8.0",
     "source-map-loader": "^0.2.4",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.5.3",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.6",
