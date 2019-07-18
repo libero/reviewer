@@ -6,6 +6,7 @@ module.exports = {
   devServer: {
     stats: "errors-only",
     host: process.env.HOST,
+    historyApiFallback: true,
     port: 9000,
     open: true,
     overlay: true,
@@ -22,6 +23,7 @@ module.exports = {
       extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   output: {
+    publicPath: "/",
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
