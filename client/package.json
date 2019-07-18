@@ -8,12 +8,13 @@
     "start": "webpack-dev-server --mode development --config webpack.development.config.js"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.6",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
+    "awesome-typescript-loader": "^5.2.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.5.3",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2"

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import * as React from 'react'
 
 const App = () => {
-  const [cat, setCat] = useState('')
+  const [cat, setCat] = React.useState('')
   const fetchFromServer = () => window.fetch('http://localhost:9000/api/cats')
   .then(response => response.json())
   .then(json => setCat(json.name))
