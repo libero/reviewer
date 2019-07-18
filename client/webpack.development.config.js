@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: './index.js',
+  entry: './index.tsx',
   devServer: {
     stats: "errors-only",
     host: process.env.HOST,
@@ -18,6 +18,9 @@ module.exports = {
       }
     }
   },
+  resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.json'],
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
@@ -25,11 +28,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
+        test: /\.ts(x?)$/,
+        use: [
+            {
+                loader: "awesome-typescript-loader"
+            }
+        ],
+        exclude: /node_modules/
+      },
+      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+      {
+          enforce: "pre",
+          test: /\.js$/,
+          loader: "source-map-loader"
       },
       {
         test: /\.html$/,
