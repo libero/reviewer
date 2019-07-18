@@ -7,6 +7,7 @@
       "outDir": "./dist/",
       "sourceMap": true,
       "target": "es5",
-      //"allowSyntheticDefaultImports": true,
+      // "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true
   }
 }

@@ -21,6 +21,8 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
+    "dotenv": "^8.0.0",
+    "graphql-request": "^1.8.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1"
