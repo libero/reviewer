@@ -65,3 +65,6 @@ typings/
 
 # mac attribute file
 *.DS_Store
+
+# vs code
+.vscode

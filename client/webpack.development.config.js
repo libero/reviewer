@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
+const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+require('dotenv').config()
 
 module.exports = {
     entry: './index.tsx',
@@ -8,13 +10,13 @@ module.exports = {
         stats: 'errors-only',
         host: process.env.HOST,
         historyApiFallback: true,
-        port: 9000,
+        port: process.env.PORT,
         open: true,
         overlay: true,
         hot: true,
         proxy: {
-            '/api': {
-                target: 'http://localhost:3000',
+            [process.env.API_PROXY_ENDPOINT]: {
+                target: process.env.API_PROXY_HOST,
                 pathRewrite: { '^/api': '' },
                 changeOrigin: true,
             },
@@ -56,6 +58,9 @@ module.exports = {
         ],
     },
     plugins: [
+        new webpack.DefinePlugin({
+            API_HOST: JSON.stringify(process.env.API_HOST)
+        }),
         new HtmlWebPackPlugin({
             template: './index.html',
             filename: './index.html',
