@@ -1,9 +1,9 @@
-import * as React from 'react'
-import App from './App'
-import { render } from '@testing-library/react'
+import * as React from 'react';
+import App from './App';
+import { render, RenderResult } from '@testing-library/react';
 
-describe('App', () => {
-    it('should render correctly', () => {
-        expect(() => render(<App/>)).not.toThrow()
-    })
-})
+describe('App', (): void => {
+    it('should render correctly', (): void => {
+        expect((): RenderResult => render(<App />)).not.toThrow();
+    });
+});
