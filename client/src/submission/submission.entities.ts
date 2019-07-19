@@ -1,14 +1,6 @@
 // This should contain the types and functions to call the graphql resolvers
 import { request } from 'graphql-request';
-
-//  TYPES
-
-export interface Submission {
-    id: string;
-    title: string;
-    lastStepVisited: string;
-    updated: string;
-}
+import { Submission } from './types';
 
 // RESOLVERS
 
@@ -18,29 +10,51 @@ export interface Submission {
 declare var API_HOST: string;
 
 export async function getSubmission(id: string): Promise<Submission | null> {
-    const submissionQuery = `
+    const query = `
     query GetSubmission($id: ID!) {
       getSubmission(id: $id){
         id, title, updated
       }
     }`;
 
-    const { getSubmission } = await request(API_HOST + '/graphql', submissionQuery, { id });
+    const { getSubmission } = await request(API_HOST + '/graphql', query, { id });
     return getSubmission;
 }
 
+export async function startSubmission(): Promise<Submission | null> {
+    const mutation = `
+    mutation StartSubmission {
+      startSubmission {
+        id,
+        title,
+        updated
+      }
+    }`;
+
+    const { startSubmission } = await request(API_HOST + '/graphql', mutation);
+    return startSubmission;
+}
+
 export async function setSubmissionTitle(id: string, title: string): Promise<Submission | null> {
-    const submissionQuery = `
-    query SetSubmissionTitle($id: ID!, $title: String!) {
+    const mutation = `
+    mutation SetSubmissionTitle($id: ID!, $title: String!) {
       changeSubmissionTitle (id: $id, title: $title){
         id, title, updated
       }
     }`;
 
-    const { changeSubmissionTitle } = await request(API_HOST + '/graphql', submissionQuery, { id, title });
+    const { changeSubmissionTitle } = await request(API_HOST + '/graphql', mutation, { id, title });
     return changeSubmissionTitle;
 }
 
 export async function getSubmissions(): Promise<Submission[]> {
-    return [];
+    const query = `
+    query GetSubmissions {
+      getSubmissions {
+        id, title, updated
+      }
+    }`;
+
+    const { getSubmissions } = await request(API_HOST + '/graphql', query);
+    return getSubmissions;
 }
