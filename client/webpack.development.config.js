@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
-const webpack = require('webpack')
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-require('dotenv').config()
+require('dotenv').config();
 
 module.exports = {
     entry: './index.tsx',
@@ -59,7 +59,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            API_HOST: JSON.stringify(process.env.API_HOST)
+            API_HOST: JSON.stringify(process.env.API_HOST),
         }),
         new HtmlWebPackPlugin({
             template: './index.html',
