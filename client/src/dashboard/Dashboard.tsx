@@ -1,31 +1,15 @@
 import React, { useState, Fragment, CSSProperties } from 'react';
 import { request } from 'graphql-request';
 import { Link } from 'react-router-dom';
+import Button from "../components-core/Button";
 
 declare var API_HOST: string;
 
 const submissionQuery = `{
   getSubmissions {
-    id, title
+    id, title, updated
   }
 }`;
-
-const testData = {
-    submissions: [
-        {
-            id: '1',
-            title: 'testing submission 1',
-            lastStepVisited: 'files',
-            updated: '2019-06-20T10:00:13.977Z',
-        },
-        {
-            id: '2',
-            title: 'testing submission 2',
-            lastStepVisited: 'disclosure',
-            updated: '2019-04-20T10:00:13.977Z',
-        },
-    ],
-};
 
 interface Submission {
     title: string;
@@ -56,10 +40,12 @@ const SubmissionEntry = ({ submission }: { submission: Submission }) => {
                     padding: '24px 0 24px 0',
                 }}
             >
-                {submission.title}
+                {submission.title.length !== 0 ? submission.title : "(no title)"}
             </span>
             <div style={{ width: '15%' }}>
-                <span style={{ color: 'rgb(2, 136, 209)', cursor: 'pointer' }}>Continue Submission</span>
+                <Link to={`/submission/${submission.id}/${submission.lastStepVisited || "title"}`} style={{ textDecoration: "none"}}>
+                  <span style={{ color: 'rgb(2, 136, 209)', cursor: 'pointer' }}>Continue Submission</span>
+                </Link>
             </div>
             <div style={{ width: '15%' }}>
                 <span style={{ color: 'rgb(136, 136, 136)', display: 'block' }}>3 Weeks Ago</span>
@@ -82,7 +68,7 @@ const Dashboard = () => {
                     setSubmissions(getSubmissions);
                 },
             )
-            .catch((): void => setFetched(true));
+            .catch((): void => setFetched(false));
     }
 
     return (
@@ -93,35 +79,13 @@ const Dashboard = () => {
                 fontFamily: '"Noto Sans", Arial, Helvetica, sans-serif, sans-serif',
             }}
         >
-            <button
-                style={{
-                    // this should be moved into its own variable somewhere
-                    float: 'right',
-                    color: 'rgb(255, 255, 255)',
-                    fontSize: '14px',
-                    lineHeight: '18px',
-                    textTransform: 'uppercase',
-                    fontFamily: '"Noto Sans", Arial, Helvetica, sans- serif',
-                    fontWeight: 700,
-                    minWidth: '120px',
-                    height: '48px',
-                    borderWidth: '1px',
-                    borderStyle: 'solid',
-                    borderImage: 'initial',
-                    borderRadius: '3px',
-                    background: 'rgb(2, 136, 209)',
-                    padding: '12px 18px 9px',
-                    borderColor: 'rgb(2, 136, 209)',
-                }}
-            >
-                New Submission
-            </button>
+        <Button float="right" text={"New Submission"}/>
             <h2 style={{ paddingTop: '16px', paddingBottom: '32px' }}>Submissions</h2>
             <ul style={{ paddingLeft: 0 }}>
-                {testData.submissions.length === 0 ? (
-                    <div>You ain{"'"}t got no submissions</div>
+                {submissions.length === 0 ? (
+                    <div>You don{"'"}t have any submissions. Maybe you should make one?</div>
                 ) : (
-                    testData.submissions.map((sub, index): unknown => <SubmissionEntry key={index} submission={sub} />)
+                    submissions.map((sub, index): unknown => <SubmissionEntry key={index} submission={sub} />)
                 )}
             </ul>
             <div style={{ textAlign: 'center', color: 'rgb(136, 136, 136)' }}>
