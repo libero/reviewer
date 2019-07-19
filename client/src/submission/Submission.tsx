@@ -1,7 +1,23 @@
 import React, { useState } from 'react';
 import Button from '../components-core/Button';
+import { request } from 'graphql-request';
+import { Submission, getSubmission } from './submission.entities';
+
+declare var API_HOST: string;
 
 const Submission = ({ match }: { match: any }) => {
+    const [submission, updateSubmission] = useState<Submission>(undefined);
+    const [submissionFetched, setSubmissionFetched] = useState<boolean>(false);
+
+    if (!submissionFetched) {
+        getSubmission(match.params.id)
+            .then((fetchedSubmission: Submission) => {
+                updateSubmission(fetchedSubmission);
+                setSubmissionFetched(true);
+            })
+            .catch((): void => setSubmissionFetched(true));
+    }
+
     return (
         <div
             style={{
@@ -13,14 +29,14 @@ const Submission = ({ match }: { match: any }) => {
         >
             <h1> Submission</h1>
             {JSON.stringify(match.params)}
-            <TitleEntry defaultValue={match.params.id} />
+            <TitleEntry placeholder="enter yo title here" initialValue={submission && submission.title} />
             <Button text="Submit" />
         </div>
     );
 };
 
-const TitleEntry = ({ defaultValue }: { defaultValue: string }) => {
-    const [submission, updateSubmission] = useState({});
+const TitleEntry = ({ initialValue, placeholder }: { placeholder: string; initialValue?: string }) => {
+    const [touched, setTouched] = useState<boolean>(false);
     return (
         <div
             style={{
@@ -33,7 +49,7 @@ const TitleEntry = ({ defaultValue }: { defaultValue: string }) => {
                     fontSize: '14px',
                 }}
             >
-                Manuscript Title
+                Manuscript Title {touched ? '*' : ''}
             </span>
             <input
                 style={{
@@ -48,7 +64,12 @@ const TitleEntry = ({ defaultValue }: { defaultValue: string }) => {
                 }}
                 name="title"
                 type="Text"
-                placeholder="Enter title here"
+                placeholder={placeholder}
+                onChange={(): void => {
+                    setTouched(true);
+                }}
+                // Use the updated value, otherwise set to the existing initial value
+                value={touched ? undefined : initialValue}
             />
         </div>
     );
