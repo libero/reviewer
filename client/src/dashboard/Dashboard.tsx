@@ -1,24 +1,14 @@
 import React, { useState, Fragment, CSSProperties } from 'react';
 import { request } from 'graphql-request';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Button from '../components-core/Button';
-
-declare var API_HOST: string;
-
-const submissionQuery = `{
-  getSubmissions {
-    id, title, updated
-  }
-}`;
-
-interface Submission {
-    title: string;
-    id: string;
-    lastStepVisited: string;
-    updated: string;
-}
+import { getSubmissions, startSubmission } from '../submission/submission.entities';
+import { Submission } from '../submission/types';
+import moment from 'moment';
 
 const SubmissionEntry = ({ submission }: { submission: Submission }) => {
+    const submissionTimeStamp = new Date();
+    submissionTimeStamp.setTime(Number.parseInt(submission.updated));
     return (
         // made the anchor tag into a span temporarily for styling.
         <div
@@ -51,27 +41,35 @@ const SubmissionEntry = ({ submission }: { submission: Submission }) => {
                 </Link>
             </div>
             <div style={{ width: '15%' }}>
-                <span style={{ color: 'rgb(136, 136, 136)', display: 'block' }}>3 Weeks Ago</span>
-                <span style={{ color: 'rgb(136, 136, 136)', fontSize: '12px' }}>{submission.updated}</span>
+                <span style={{ color: 'rgb(136, 136, 136)', display: 'block' }}>
+                    {moment(submissionTimeStamp.toISOString()).fromNow()}
+                </span>
+                <span style={{ color: 'rgb(136, 136, 136)', fontSize: '12px' }}>
+                    {moment(submissionTimeStamp.toISOString()).calendar()}
+                </span>
             </div>
         </div>
     );
 };
 
-const Dashboard = () => {
+const Dashboard = withRouter(({ history }) => {
     const [submissions, setSubmissions] = useState([]);
     const [fetched, setFetched] = useState(false);
 
     // only fetch once to prevent render loop
     if (!fetched) {
-        request(API_HOST + '/graphql', submissionQuery)
+        getSubmissions()
             .then(
-                ({ getSubmissions }): void => {
+                (fetchedSubmissions: Submission[]): void => {
+                    setSubmissions(fetchedSubmissions);
                     setFetched(true);
-                    setSubmissions(getSubmissions);
                 },
             )
-            .catch((): void => setFetched(false));
+            .catch(
+                (): void => {
+                    setFetched(true);
+                },
+            );
     }
 
     return (
@@ -82,13 +80,23 @@ const Dashboard = () => {
                 fontFamily: '"Noto Sans", Arial, Helvetica, sans-serif, sans-serif',
             }}
         >
-            <Button float="right" text={'New Submission'} />
+            <Button
+                float="right"
+                text={'New Submission'}
+                onClick={(): void => {
+                    startSubmission().then(
+                        (submission): void => {
+                            history.push(`/submission/${submission.id}/title`);
+                        },
+                    );
+                }}
+            />
             <h2 style={{ paddingTop: '16px', paddingBottom: '32px' }}>Submissions</h2>
             <ul style={{ paddingLeft: 0 }}>
                 {submissions.length === 0 ? (
                     <div>You don{"'"}t have any submissions. Maybe you should make one?</div>
                 ) : (
-                    submissions.map((sub, index): unknown => <SubmissionEntry key={index} submission={sub} />)
+                    submissions.reverse().map((sub, index): unknown => <SubmissionEntry key={index} submission={sub} />)
                 )}
             </ul>
             <div style={{ textAlign: 'center', color: 'rgb(136, 136, 136)' }}>
@@ -100,6 +108,6 @@ const Dashboard = () => {
             </div>
         </div>
     );
-};
+});
 
 export default Dashboard;

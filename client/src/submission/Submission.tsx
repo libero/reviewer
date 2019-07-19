@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import Button from '../components-core/Button';
+import TextField from '../components-core/TextField';
 import { request } from 'graphql-request';
-import { Submission, getSubmission } from './submission.entities';
+import { setSubmissionTitle, getSubmission } from './submission.entities';
+import { Submission } from './types';
 
 declare var API_HOST: string;
 
 const Submission = ({ match }: { match: any }) => {
     const [submission, updateSubmission] = useState<Submission>(undefined);
     const [submissionFetched, setSubmissionFetched] = useState<boolean>(false);
+    const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
 
     if (!submissionFetched) {
         getSubmission(match.params.id)
@@ -15,6 +18,7 @@ const Submission = ({ match }: { match: any }) => {
                 updateSubmission(fetchedSubmission);
                 setSubmissionFetched(true);
             })
+            // TODO: Better handle error states
             .catch((): void => setSubmissionFetched(true));
     }
 
@@ -28,51 +32,45 @@ const Submission = ({ match }: { match: any }) => {
             }}
         >
             <h1> Submission</h1>
-            {JSON.stringify(match.params)}
-            <TitleEntry placeholder="enter yo title here" initialValue={submission && submission.title} />
-            <Button text="Submit" />
-        </div>
-    );
-};
-
-const TitleEntry = ({ initialValue, placeholder }: { placeholder: string; initialValue?: string }) => {
-    const [touched, setTouched] = useState<boolean>(false);
-    return (
-        <div
-            style={{
-                padding: '24px 0px 24px 0px',
-            }}
-        >
-            <span
-                style={{
-                    display: 'block',
-                    fontSize: '14px',
+            <TextField
+                label="Manuscript Title"
+                placeholder="enter yo title here"
+                initialValue={submission && submission.title}
+                touchedNote={!hasSubmitted ? 'unsaved' : undefined}
+                onChange={(ev): void => {
+                    updateSubmission({
+                        ...submission,
+                        title: ev.target.value,
+                    });
+                    setHasSubmitted(false);
                 }}
-            >
-                Manuscript Title {touched ? '*' : ''}
-            </span>
-            <input
-                style={{
-                    width: '100%',
-                    borderRadius: '3px',
-                    border: '1px solid rgb(224, 224, 224)',
-                    fontFamily: '"Noto Sans", Arial, Helvetica, sans-serif',
-                    fontSize: '16px',
-                    lineHeight: '24px',
-                    padding: '12px',
-                    height: '48px',
-                }}
-                name="title"
-                type="Text"
-                placeholder={placeholder}
-                onChange={(): void => {
-                    setTouched(true);
-                }}
-                // Use the updated value, otherwise set to the existing initial value
-                value={touched ? undefined : initialValue}
             />
+            <div>
+                <Button
+                    text="Submit"
+                    onClick={(): void => {
+                        setSubmissionTitle(submission.id, submission.title);
+                        setHasSubmitted(true);
+                    }}
+                />
+                {hasSubmitted ? (
+                    <span
+                        style={{
+                            height: 48,
+                            padding: '12px 18px 9px',
+                            fontSize: '14px',
+                            lineHeight: '18px',
+                            display: 'inline-block',
+                        }}
+                    >
+                        {' '}
+                        💾 Saved!{' '}
+                    </span>
+                ) : (
+                    ''
+                )}
+            </div>
         </div>
     );
 };
-
 export default Submission;
