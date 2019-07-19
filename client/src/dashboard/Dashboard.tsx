@@ -1,7 +1,7 @@
 import React, { useState, Fragment, CSSProperties } from 'react';
 import { request } from 'graphql-request';
 import { Link } from 'react-router-dom';
-import Button from "../components-core/Button";
+import Button from '../components-core/Button';
 
 declare var API_HOST: string;
 
@@ -40,11 +40,14 @@ const SubmissionEntry = ({ submission }: { submission: Submission }) => {
                     padding: '24px 0 24px 0',
                 }}
             >
-                {submission.title.length !== 0 ? submission.title : "(no title)"}
+                {submission.title.length !== 0 ? submission.title : '(no title)'}
             </span>
             <div style={{ width: '15%' }}>
-                <Link to={`/submission/${submission.id}/${submission.lastStepVisited || "title"}`} style={{ textDecoration: "none"}}>
-                  <span style={{ color: 'rgb(2, 136, 209)', cursor: 'pointer' }}>Continue Submission</span>
+                <Link
+                    to={`/submission/${submission.id}/${submission.lastStepVisited || 'title'}`}
+                    style={{ textDecoration: 'none' }}
+                >
+                    <span style={{ color: 'rgb(2, 136, 209)', cursor: 'pointer' }}>Continue Submission</span>
                 </Link>
             </div>
             <div style={{ width: '15%' }}>
@@ -79,7 +82,7 @@ const Dashboard = () => {
                 fontFamily: '"Noto Sans", Arial, Helvetica, sans-serif, sans-serif',
             }}
         >
-        <Button float="right" text={"New Submission"}/>
+            <Button float="right" text={'New Submission'} />
             <h2 style={{ paddingTop: '16px', paddingBottom: '32px' }}>Submissions</h2>
             <ul style={{ paddingLeft: 0 }}>
                 {submissions.length === 0 ? (

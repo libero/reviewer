@@ -7,7 +7,7 @@ const App: React.StatelessComponent = (): JSX.Element => (
     <Router>
         <Route exact path="/" component={(): JSX.Element => <div>home route</div>} />
         <Route exact path="/dashboard" component={Dashboard} />
-        <Route path="/submission/:id/:stage" component={Submission}/>
+        <Route path="/submission/:id/:stage" component={Submission} />
     </Router>
 );
 
