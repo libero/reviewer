@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development --config webpack.development.config.js",
+    "start": "webpack-dev-server --mode development --config webpack.development.config.js --host=0.0.0.0",
     "test": "jest",
     "lint": "eslint --fix --ext .js,.ts,.tsx ."
   },

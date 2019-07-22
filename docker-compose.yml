@@ -2,5 +2,47 @@ version: '3'
 services:
   postgres:
     image: postgres:11
+    networks:
+      - infra_postgres
+    volumes:
+      - pg-data:/data/postgres
+
+  backend:
+    image: node:10
     ports:
-      - 5432:5432
+      - "3000:3000"
+    working_dir: "/server"
+    command: ["bash", "-c", "npm i && npm run start:dev"]
+    volumes:
+      - ./server/:/server/:z
+    environment:
+      PGHOST: postgres
+    networks:
+      - infra_postgres
+      - infra_api
+    depends_on: ["postgres"]
+
+  frontend:
+    image: node:10
+    ports:
+      - "9000:9000"
+      - "8081:8081"
+    working_dir: "/client"
+    command: ["bash", "-c", "npm i && npm run start"]
+    volumes:
+      - ./client/:/client/:z
+    environment:
+      API_PROXY_HOST: http://backend:3000
+    networks:
+      - infra_api
+
+networks:
+  infra_postgres:
+    external:
+      name: infra_postgres
+  infra_api:
+    external:
+      name: infra_api
+
+volumes:
+  pg-data:
