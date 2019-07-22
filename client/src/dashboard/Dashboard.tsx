@@ -11,40 +11,20 @@ const SubmissionEntry = ({ submission }: { submission: Submission }) => {
     submissionTimeStamp.setTime(Number.parseInt(submission.updated));
     return (
         // made the anchor tag into a span temporarily for styling.
-        <div
-            style={{
-                width: '100%',
-                display: 'flex',
-                flex: '1 0 auto',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                borderBottom: '1px solid rgb(224, 224, 224)',
-            }}
-        >
-            <span
-                style={{
-                    width: '60%',
-                    fontFamily: '"Noto Sans", Arial, Helvetica, sans-serif',
-                    fontSize: '16px',
-                    fontWeight: 700,
-                    padding: '24px 0 24px 0',
-                }}
-            >
+        <div className='dashboard-entry'>
+            <span className='dashboard-entry-title'>
                 {submission.title.length !== 0 ? submission.title : '(no title)'}
             </span>
-            <div style={{ width: '15%' }}>
-                <Link
-                    to={`/submission/${submission.id}/${submission.lastStepVisited || 'title'}`}
-                    style={{ textDecoration: 'none' }}
-                >
-                    <span style={{ color: 'rgb(2, 136, 209)', cursor: 'pointer' }}>Continue Submission</span>
+            <div>
+                <Link className='dashboard-entry-link' to={`/submission/${submission.id}/${submission.lastStepVisited || 'title'}`}>
+                    <span>Continue Submission</span>
                 </Link>
             </div>
-            <div style={{ width: '15%' }}>
-                <span style={{ color: 'rgb(136, 136, 136)', display: 'block' }}>
+            <div>
+                <span className='dashboard-entry-date-since'>
                     {moment(submissionTimeStamp.toISOString()).fromNow()}
                 </span>
-                <span style={{ color: 'rgb(136, 136, 136)', fontSize: '12px' }}>
+                <span className='dashboard-entry-date'>
                     {moment(submissionTimeStamp.toISOString()).calendar()}
                 </span>
             </div>
@@ -73,13 +53,7 @@ const Dashboard = withRouter(({ history }) => {
     }
 
     return (
-        <div
-            style={{
-                marginLeft: '16%',
-                marginRight: '16%',
-                fontFamily: '"Noto Sans", Arial, Helvetica, sans-serif, sans-serif',
-            }}
-        >
+        <div className='dashboard'>
             <Button
                 float="right"
                 text={'New Submission'}
