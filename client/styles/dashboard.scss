@@ -1,0 +1,46 @@
+.dashboard {
+    margin-left: 16%;
+    margin-right: 16%;
+    font-family: Noto Sans, Arial, Helvetica, sans-serif, sans-serif;
+}
+
+
+.dashboard-entry {
+    width: 100%;
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgb(224, 224, 224);
+
+    span.dashboard-entry-title {
+        width: 60%;
+        font-family: Noto Sans, Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 24px 0 24px 0;
+    }
+
+    div {
+        width: 15%;
+        a.dashboard-entry-link {
+            text-decoration: none;
+            span {
+                color: rgb(2, 136, 209);
+                cursor: pointer;
+            }
+        }
+
+        span {
+            color: rgb(136, 136, 136);
+            
+            & .dashboard-entry-date-since {
+                display: block
+            }
+            
+            & .dashboard-entry-date {
+                font-size: 12px
+            }
+        }
+    }
+}
