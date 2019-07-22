@@ -32,12 +32,39 @@ The command should open a new tab in your browser with the client app url.
 
 ## Server Side
 
-[TODO] update when we add config for server side.
-
 
 ```
 cd server/
 yarn install
+cp .env.example .env
+```
+
+Open the `.env` file, it should look like this:
+
+```
+DB_TYPE=postgres
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_DATABASE=postgres
+SERVER_PORT=3000
+```
+
+* The `DB_TYPE` is the type of database used.
+* The `DB_HOST` and `DB_PORT` specify the url and port where the database can be accessed.
+* The `DB_USERNAME`, `DB_PASSWORD` and `DB_DATABASE` define connection details.
+* The `SERVER_PORT` specifies which port to bind for the server.
+
+Next, bring up the docker services
+```
+docker-compose up -d
+```
+
+The settings from the `.env` file will be used to set up the services (e.g. database settings).
+
+To start the server, run:
+```
 yarn run start:dev
 ```
 
