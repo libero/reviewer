@@ -1,12 +1,14 @@
+@import '../variables.scss';
+
 .appbar {
   display: flex;
   align-items: center;
   // TODO: variables! maybe ems?
-  height: 72px;
-  border-bottom: 1px solid #E0E0E0;
+  height: 4.5rem;
+  border-bottom: 0.063rem solid $borderColour;
   margin-bottom: 0;
   justify-content: space-between;
-  margin-bottom: 72px;
-  padding-left: 24px;
-  padding-right:24px;
+  margin-bottom: 4.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
