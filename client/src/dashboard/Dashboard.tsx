@@ -5,6 +5,7 @@ import Button from '../components-core/Button';
 import { getSubmissions, startSubmission } from '../submission/submission.entities';
 import { Submission } from '../submission/types';
 import moment from 'moment';
+import '../../styles/dashboard.scss'
 
 const SubmissionEntry = ({ submission }: { submission: Submission }) => {
     const submissionTimeStamp = new Date();
