@@ -1,0 +1,12 @@
+// Colours
+// TODO: colours should define a pallet ie: blue, grey, darkGrey these should then be used by element styles ie: textColour footerTextColour 
+$textColourMuted: rgb(136, 136, 136) !default;
+$textColourLink: rgb(2, 136, 209) !default;
+$borderColour: rgb(224, 224, 224) !default; 
+
+// breakpoints
+$phone: 599px;
+$tablePortraite: 600px;
+$tabletLandscape: 900px;
+$desktop: 1200px;
+$largeDesktop: 1600px;
