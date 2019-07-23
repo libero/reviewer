@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, AppBarIcon} from '../ui/atoms'
+import { AppBar, AppBarIcon} from '../../ui/atoms'
 
 const NavBar: React.FC = (): JSX.Element => (
   <AppBar>

@@ -1,8 +1,8 @@
 import React, { useState, Fragment, CSSProperties } from 'react';
 import { request } from 'graphql-request';
 import { Link, withRouter } from 'react-router-dom';
-import { getSubmissions, startSubmission } from '../submission/submission.entities';
-import { Submission } from '../submission/types';
+import { getSubmissions, startSubmission } from '../../submission/submission.entities';
+import { Submission } from '../../submission/types';
 import moment from 'moment';
 
 const SubmissionEntry = ({ submission }: { submission: Submission }) => {
