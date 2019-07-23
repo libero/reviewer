@@ -50,14 +50,11 @@ services:
       SERVER_PORT: ${SERVER_PORT}
     networks:
       - infra_api
+    depends_on: ["backend"]
 
 networks:
   infra_postgres:
-    external:
-      name: infra_postgres
   infra_api:
-    external:
-      name: infra_api
 
 volumes:
   pg-data:
