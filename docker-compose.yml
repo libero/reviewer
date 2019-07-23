@@ -39,7 +39,7 @@ services:
     ports:
       - "9000:${CLIENT_PORT}"
     working_dir: "/client"
-    command: ["bash", "-c", "yarn && yarn run start"]
+    command: ["bash", "-c", "yarn && yarn run start --host 0.0.0.0"]
     volumes:
       - ./client/:/client/:z
     environment:
