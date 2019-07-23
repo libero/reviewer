@@ -11,7 +11,7 @@ services:
     networks:
       - infra_postgres
     volumes:
-      - pg-data:/data/postgres
+      - pg-data:/var/lib/postgresql/data
 
   backend:
     image: node:10
