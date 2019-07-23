@@ -2,7 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 module.exports = {
     entry: './index.tsx',
@@ -10,14 +10,13 @@ module.exports = {
         stats: 'errors-only',
         host: process.env.HOST,
         historyApiFallback: true,
-        port: process.env.PORT,
+        port: process.env.CLIENT_PORT,
         open: true,
         overlay: true,
         hot: true,
         proxy: {
-            [process.env.API_PROXY_ENDPOINT]: {
-                target: process.env.API_PROXY_HOST,
-                pathRewrite: { '^/api': '' },
+            [process.env.CLIENT_API_PROXY_ENDPOINT]: {
+                target: `${process.env.CLIENT_API_PROXY_URL}:${process.env.SERVER_PORT}`,
                 changeOrigin: true,
             },
         },
@@ -67,7 +66,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            API_HOST: JSON.stringify(process.env.API_HOST),
+            API_HOST: JSON.stringify(`${process.env.CLIENT_API_URL}:${process.env.CLIENT_PORT}`),
         }),
         new HtmlWebPackPlugin({
             template: './index.html',
