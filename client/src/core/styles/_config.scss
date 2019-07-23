@@ -4,6 +4,10 @@ $textColourMuted: rgb(136, 136, 136) !default;
 $textColourLink: rgb(2, 136, 209) !default;
 $borderColour: rgb(224, 224, 224) !default; 
 
+//fonts
+$defaultFontFamily: "Noto Sans", Arial, Helvetica, sans-serif, sans-serif;
+$altFontFamily: "Noto Serif", serif;
+
 // breakpoints
 $phone: 599px;
 $tablePortraite: 600px;
