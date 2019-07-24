@@ -44,6 +44,24 @@ exports.loaders = () => ({
                 loader: 'source-map-loader',
             },
             {
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    { loader: 'file-loader' },
+                ],
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                {
+                    loader: 'url-loader',
+                    options: {
+                    limit: 10000,
+                    mimetype: 'image/svg+xml'
+                    }
+                }
+                ]
+            },
+            {
                 test: /\.html$/,
                 use: [
                     {
