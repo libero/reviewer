@@ -1,10 +1,13 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-type NavMenuProps = {
-  items?: { url: string, display: string, external?: boolean }[]
+export type NavMenuItemType = { url: string, display: string, external?: boolean };
+
+export interface Props {
+  items?: NavMenuItemType[]
 }
-const NavMenu: React.FC<NavMenuProps> = ({ items = [] }): JSX.Element => (
+
+const NavMenu: React.FC<Props> = ({ items = [] }): JSX.Element => (
   <ul className='nav-menu'>
     {
       items.map(item => (

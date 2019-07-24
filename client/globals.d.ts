@@ -20,5 +20,6 @@ declare namespace jest {
     toBeInTheDocument(): CustomMatcherResult;
     toHaveAttribute(path: String, value: String): CustomMatcherResult;
     toHaveTextContent(content: String): CustomMatcherResult;
+    toHaveClass(...classNames: string[]): CustomMatcherResult;
   }
 }
