@@ -1,4 +1,7 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const cssnano = require('cssnano');
 
 exports.devServer = () => ({
     devServer: {
@@ -58,3 +61,25 @@ exports.loaders = () => ({
 exports.clean = () => ({
     plugins: [new CleanWebpackPlugin()],
 });
+
+
+exports.minifyCSS = () => ({
+    plugins: [
+        new OptimizeCssAssetsPlugin({
+            cssProcessor: cssnano,
+            cssProcessorOptions: {
+                discardComments: {
+                    removeAll: true,
+                },
+                safe: true,
+            },
+            canPrint: false,
+        }),
+    ],
+})
+
+exports.minifyJS = () => ({
+    optimization: {
+        minimizer: [new TerserPlugin({ sourceMap: true })],
+    }
+})
