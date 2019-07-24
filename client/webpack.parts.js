@@ -1,11 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-module.exports = {
-    entry: './index.tsx',
+exports.devServer = () => ({
     devServer: {
         stats: 'errors-only',
         host: process.env.HOST,
@@ -21,14 +16,9 @@ module.exports = {
             },
         },
     },
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.json'],
-    },
-    output: {
-        publicPath: '/',
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
-    },
+});
+
+exports.loaders = () => ({
     module: {
         rules: [
             {
@@ -48,7 +38,6 @@ module.exports = {
                 ],
                 exclude: /node_modules/,
             },
-            // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             {
                 enforce: 'pre',
                 test: /\.js$/,
@@ -62,33 +51,10 @@ module.exports = {
                     },
                 ],
             },
-            {
-                test: /\.(png|jpg|gif)$/,
-                use: [
-                    { loader: 'file-loader' },
-                ],
-            },
-            {
-                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                use: [
-                {
-                    loader: 'url-loader',
-                    options: {
-                    limit: 10000,
-                    mimetype: 'image/svg+xml'
-                    }
-                }
-                ]
-            },
         ],
     },
-    plugins: [
-        new webpack.DefinePlugin({
-            API_HOST: JSON.stringify(`${process.env.CLIENT_API_URL}:${process.env.CLIENT_PORT}`),
-        }),
-        new HtmlWebPackPlugin({
-            template: './index.html',
-            filename: './index.html',
-        }),
-    ],
-};
+});
+
+exports.clean = () => ({
+    plugins: [new CleanWebpackPlugin()],
+});
