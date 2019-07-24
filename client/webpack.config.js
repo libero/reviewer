@@ -36,8 +36,10 @@ const developmentConfig = merge([
 ]);
 
 const productionConfig = merge([
-    parts.loaders(),
     parts.clean(),
+    parts.loaders(),
+    parts.minifyCSS(),
+    parts.minifyJS(),
 ]);
 
 module.exports = mode => {
