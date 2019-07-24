@@ -18,5 +18,7 @@ declare module '@testing-library/jest-dom';
 declare namespace jest {
   interface Matchers<R> {
     toBeInTheDocument(): CustomMatcherResult;
+    toHaveAttribute(path: String, value: String): CustomMatcherResult;
+    toHaveTextContent(content: String): CustomMatcherResult;
   }
 }
