@@ -1,10 +1,6 @@
 import * as React from 'react';
-import '@testing-library/jest-dom/extend-expect'
-import { toBeInTheDocument } from '@testing-library/jest-dom';
 import AppBar from './AppBar';
 import { cleanup, render, RenderResult } from '@testing-library/react';
-
-expect.extend({toBeInTheDocument})
 
 describe('AppBar', (): void => {
     afterEach(cleanup)
