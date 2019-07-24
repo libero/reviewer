@@ -1,0 +1,27 @@
+.nav-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 auto;
+  height: 4.5rem;
+  padding: 0;
+
+  .nav-menu__item {
+    margin: 1.5rem 0;
+    height: 1.5rem;
+
+    &:first-child {
+      padding-left: 0.75rem;
+      border-left: 1px solid $borderColour;
+    }
+  }
+  .nav-menu__link {
+    padding: 0 0.75rem;
+    color: $textColourMuted;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .nav-menu__link--active {
+    color: $bodyText;
+  }
+}

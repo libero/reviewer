@@ -5,14 +5,14 @@ type NavMenuProps = {
   items?: { url: string, display: string, external?: boolean }[]
 }
 const NavMenu: React.FC<NavMenuProps> = ({ items = [] }): JSX.Element => (
-  <ul>
+  <ul className='nav-menu'>
     {
       items.map(item => (
-        <li key={`${item.url}-${item.display}`}>
+        <li className='nav-menu__item' key={`${item.url}-${item.display}`}>
           {
             item.external ? 
-            <a href={item.url}>{item.display}</a> :
-            <NavLink to={item.url}>{item.display}</NavLink>
+            <a className='nav-menu__link' href={item.url}>{item.display}</a> :
+            <NavLink className='nav-menu__link' activeClassName='nav-menu__link--active' exact to={item.url}>{item.display}</NavLink>
           }
         </li>
       ))

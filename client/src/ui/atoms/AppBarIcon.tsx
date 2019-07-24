@@ -7,8 +7,8 @@ type AppBarIconProps = {
 }
 
 const AppBarIcon: React.FC<AppBarIconProps> = ({link = '', imgSrc = '', altText = ''}): JSX.Element => (
-  <a href={link} className="appbar--icon">
-    <img className="appbar--img" src={imgSrc} alt={altText} />
+  <a href={link} className="app-bar__icon">
+    <img className="app-bar__img" src={imgSrc} alt={altText} />
   </a>
 )
 
