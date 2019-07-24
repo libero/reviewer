@@ -8,5 +8,6 @@ script:
   - yarn
   - npm run lint
   - npm run build
-  - npm run jest:cov
+  - npm run test:cov
+  - npm run test:e2e
 
