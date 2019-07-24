@@ -12,3 +12,11 @@ declare module "*.svg" {
   const content: any;
   export default content;
 }
+
+declare module '@testing-library/jest-dom';
+
+declare namespace jest {
+  interface Matchers<R> {
+    toBeInTheDocument(): CustomMatcherResult;
+  }
+}
