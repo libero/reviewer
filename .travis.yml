@@ -2,6 +2,11 @@ language: node_js
 node_js:
   - 8
   - 10
+
+matrix:
+  allowed_failures:
+    - node_js: 8
+
 cache: npm
 script:
   - cd server
@@ -9,5 +14,4 @@ script:
   - npm run lint
   - npm run build
   - npm run test:cov
-  - npm run test:e2e
 
