@@ -5,8 +5,8 @@ import { ConfigService } from './packages/config/config.service';
  * This is duplicated from the ConfigModule code as there's no straightforward way
  * to get it from main nest application object here
  */
-const envFilename = '../.env' + (process.env.NODE_ENV ? '.' + process.env.NODE_ENV : '')
-const configService = new ConfigService(envFilename)
+const envFilename = '../.env' + (process.env.NODE_ENV ? '.' + process.env.NODE_ENV : '');
+const configService = new ConfigService(envFilename);
 
 const config = {
   type: configService.get('DB_TYPE'),
@@ -20,4 +20,4 @@ const config = {
   migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
 } as TypeOrmModuleOptions;
 
-export = config
+export = config;

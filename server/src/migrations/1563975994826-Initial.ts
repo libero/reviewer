@@ -16,16 +16,15 @@ export class Initial1563975994826 implements MigrationInterface {
           },
           {
             name: 'created_date',
-            type: 'date'
-          }
-        ]
-      }))
+            type: 'date',
+          },
+        ],
+      }) );
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
       const table = await queryRunner.getTable('submission');
 
-      await queryRunner.dropTable('submission')
+      await queryRunner.dropTable('submission');
     }
-
 }
