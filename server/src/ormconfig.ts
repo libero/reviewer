@@ -1,6 +1,10 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from './packages/config/config.service';
 
+/**
+ * This is duplicated from the ConfigModule code as there's no straightforward way
+ * to get it from main nest application object here
+ */
 const envFilename = '../.env' + (process.env.NODE_ENV ? '.' + process.env.NODE_ENV : '')
 const configService = new ConfigService(envFilename)
 

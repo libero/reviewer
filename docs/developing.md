@@ -83,3 +83,33 @@ To shutdown, run
 ```
 docker-compose down
 ```
+
+## Run migrations
+
+The typeorm cli is available by running
+```
+yarn run typeorm
+```
+
+See the [typeorm cli documentation](https://typeorm.io/#/using-cli) for more migration information.
+
+### Examples:
+
+When running the server locally,
+```
+# apply migrations
+yarn run typeorm migration:run
+
+# revert
+yarn run typeorm migration:revert
+```
+
+When running in container
+```
+# apply migrations
+docker-compose exec backend yarn run typeorm migration:run
+
+# revert
+docker-compose exec backend yarn run typeorm migration:revert
+```
+
