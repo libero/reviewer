@@ -1,0 +1,11 @@
+.app-bar {
+  display: flex;
+  align-items: center;
+  height: 4.5rem;
+  border-bottom: 0.063rem solid $borderColour;
+  margin-bottom: 0;
+  justify-content: space-between;
+  margin-bottom: 4.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}

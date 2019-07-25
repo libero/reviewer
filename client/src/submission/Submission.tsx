@@ -1,6 +1,4 @@
 import React, { useState, FormEvent } from 'react';
-import Button from '../components-core/Button';
-import TextField from '../components-core/TextField';
 import { request } from 'graphql-request';
 import { setSubmissionTitle, getSubmission } from './submission.entities';
 import { Submission } from './types';
@@ -32,7 +30,7 @@ const Submission = ({ match }: { match: any }) => {
             }}
         >
             <h1> Submission</h1>
-            <TextField
+            {/* <input
                 label="Manuscript Title"
                 placeholder="enter yo title here"
                 initialValue={submission && submission.title}
@@ -44,15 +42,15 @@ const Submission = ({ match }: { match: any }) => {
                     });
                     setHasSubmitted(false);
                 }}
-            />
+            /> */}
             <div>
-                <Button
+                {/* <Button
                     text="Submit"
                     onClick={(): void => {
                         setSubmissionTitle(submission.id, submission.title);
                         setHasSubmitted(true);
                     }}
-                />
+                /> */}
                 {hasSubmitted ? (
                     <span
                         style={{
