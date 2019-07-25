@@ -1,4 +1,7 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const cssnano = require('cssnano');
 
 exports.devServer = () => ({
     devServer: {
@@ -44,6 +47,24 @@ exports.loaders = () => ({
                 loader: 'source-map-loader',
             },
             {
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    { loader: 'file-loader' },
+                ],
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                {
+                    loader: 'url-loader',
+                    options: {
+                    limit: 10000,
+                    mimetype: 'image/svg+xml'
+                    }
+                }
+                ]
+            },
+            {
                 test: /\.html$/,
                 use: [
                     {
@@ -58,3 +79,25 @@ exports.loaders = () => ({
 exports.clean = () => ({
     plugins: [new CleanWebpackPlugin()],
 });
+
+
+exports.minifyCSS = () => ({
+    plugins: [
+        new OptimizeCssAssetsPlugin({
+            cssProcessor: cssnano,
+            cssProcessorOptions: {
+                discardComments: {
+                    removeAll: true,
+                },
+                safe: true,
+            },
+            canPrint: false,
+        }),
+    ],
+})
+
+exports.minifyJS = () => ({
+    optimization: {
+        minimizer: [new TerserPlugin({ sourceMap: true })],
+    }
+})

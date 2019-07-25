@@ -1,4 +1,4 @@
-# Welcome to Malcom
+# Welcome to Malcolm
 
 Malcolm (https://www.imdb.com/title/tt0107290/fullcredits) is a Proof of Concept for eLife Sciences' Libero Reviewer Product.
 

@@ -1,11 +1,9 @@
 import React, { useState, Fragment, CSSProperties } from 'react';
 import { request } from 'graphql-request';
 import { Link, withRouter } from 'react-router-dom';
-import Button from '../components-core/Button';
-import { getSubmissions, startSubmission } from '../submission/submission.entities';
-import { Submission } from '../submission/types';
+import { getSubmissions, startSubmission } from '../../submission/submission.entities';
+import { Submission } from '../../submission/types';
 import moment from 'moment';
-import '../../styles/dashboard.scss'
 
 const SubmissionEntry = ({ submission }: { submission: Submission }) => {
     const submissionTimeStamp = new Date();
@@ -55,9 +53,7 @@ const Dashboard = withRouter(({ history }) => {
 
     return (
         <div className='dashboard'>
-            <Button
-                float="right"
-                text={'New Submission'}
+            <button
                 onClick={(): void => {
                     startSubmission().then(
                         (submission): void => {
@@ -65,7 +61,7 @@ const Dashboard = withRouter(({ history }) => {
                         },
                     );
                 }}
-            />
+            >New Submission</button>
             <h2 style={{ paddingTop: '16px', paddingBottom: '32px' }}>Submissions</h2>
             <ul style={{ paddingLeft: 0 }}>
                 {submissions.length === 0 ? (
