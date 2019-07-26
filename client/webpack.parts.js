@@ -108,16 +108,25 @@ exports.minifyCSS = () => ({
 exports.minifyJS = () => ({
     optimization: {
         minimizer: [new TerserPlugin({ sourceMap: true })],
-        moduleIds: 'hashed',
+    }
+})
+
+exports.splitBundles = () => ({
+    optimization: {
         runtimeChunk: 'single',
         splitChunks: {
-            cacheGroups: {
-              vendor: {
-                test: /[\\/]node_modules[\\/]/,
-                name: 'vendors',
-                chunks: 'all'
-              }
-            }
-        },
-    }
+         chunks: 'all',
+         maxInitialRequests: Infinity,
+         minSize: 0,
+         cacheGroups: {
+           vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module) {
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            return `npm.${packageName.replace('@', '')}`;
+           },
+         },
+       },
+      },
+     }
 })

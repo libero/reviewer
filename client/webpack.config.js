@@ -40,6 +40,7 @@ const productionConfig = merge([
     parts.loaders(),
     parts.minifyCSS(),
     parts.minifyJS(),
+    parts.splitBundles()
 ]);
 
 module.exports = mode => {
