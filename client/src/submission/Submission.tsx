@@ -1,24 +1,22 @@
-import React, { useState, FormEvent } from 'react';
-import { request } from 'graphql-request';
-import { setSubmissionTitle, getSubmission } from './submission.entities';
+import React, { useState } from 'react';
 import { Submission } from './types';
 
 declare var API_HOST: string;
 
-const Submission = ({ match }: { match: any }) => {
-    const [submission, updateSubmission] = useState<Submission>(undefined);
-    const [submissionFetched, setSubmissionFetched] = useState<boolean>(false);
-    const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
+const Submission = (/*{ match }: RouteComponentProps*/): JSX.Element => {
+    //const [submission, updateSubmission] = useState<Submission>(undefined);
+    //const [submissionFetched, setSubmissionFetched] = useState<boolean>(false);
+    const [hasSubmitted /* setHasSubmitted */] = useState<boolean>(false);
 
-    if (!submissionFetched) {
-        getSubmission(match.params.id)
-            .then((fetchedSubmission: Submission) => {
-                updateSubmission(fetchedSubmission);
-                setSubmissionFetched(true);
-            })
-            // TODO: Better handle error states
-            .catch((): void => setSubmissionFetched(true));
-    }
+    // if (!submissionFetched) {
+    //     getSubmission(match.params.id)
+    //         .then((fetchedSubmission: Submission) => {
+    //             updateSubmission(fetchedSubmission);
+    //             setSubmissionFetched(true);
+    //         })
+    //         // TODO: Better handle error states
+    //         .catch((): void => setSubmissionFetched(true));
+    // }
 
     return (
         <div
