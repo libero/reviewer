@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -109,4 +110,28 @@ exports.minifyJS = () => ({
     optimization: {
         minimizer: [new TerserPlugin({ sourceMap: true })],
     }
+})
+
+exports.splitBundles = () => ({
+    plugins: [
+        // Ignore all locale files of moment.js
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      ],
+    optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+         chunks: 'all',
+         maxInitialRequests: Infinity,
+         minSize: 0,
+         cacheGroups: {
+           vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module) {
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            return `npm.${packageName.replace('@', '')}`;
+           },
+         },
+       },
+      },
+     }
 })

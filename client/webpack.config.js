@@ -13,7 +13,7 @@ const commonConfig = merge([
         output: {
             publicPath: '/',
             path: path.resolve(__dirname, 'dist'),
-            filename: 'bundle.js',
+            filename: '[name].[contenthash].js',
         },
         plugins: [
             new HtmlWebPackPlugin({
@@ -40,6 +40,7 @@ const productionConfig = merge([
     parts.loaders(),
     parts.minifyCSS(),
     parts.minifyJS(),
+    parts.splitBundles()
 ]);
 
 module.exports = mode => {
