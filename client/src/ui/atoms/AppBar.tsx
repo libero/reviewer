@@ -1,9 +1,7 @@
-import React, { ReactNode } from 'react'
-type AppBarProps = {
-  children?: ReactNode
+import React, { ReactNode } from 'react';
+interface Props {
+    children?: ReactNode;
 }
-const AppBar: React.FC<AppBarProps> = ({ children }): JSX.Element => (
-  <div className="app-bar" >{ children }</div>
-)
+const AppBar: React.FC<Props> = ({ children }: Props): JSX.Element => <div className="app-bar">{children}</div>;
 
-export default AppBar
+export default AppBar;

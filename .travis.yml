@@ -6,12 +6,18 @@ node_js:
 matrix:
   allowed_failures:
     - node_js: 8
-
-cache: npm
-script:
+install:
   - cd server
   - yarn
-  - npm run lint
-  - npm run build
-  - npm run test:cov
+  - yarn build
+  - cd ../client
+  - yarn
+  - cd ../
 
+cache: yarn
+
+script:
+  - cd server
+  - yarn lint && yarn test:cov
+  - cd ../client
+  - yarn lint && yarn test
