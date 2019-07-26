@@ -27,10 +27,10 @@ exports.loaders = () => ({
             {
                 test: /\.scss$/,
                 use: [
-                    {loader: 'style-loader', options: {sourceMap: true}},
-                    {loader: 'css-loader', options: {sourceMap: true}},
-                    {loader: 'sass-loader', options: {sourceMap: true}},
-                ]
+                    { loader: 'style-loader', options: { sourceMap: true } },
+                    { loader: 'css-loader', options: { sourceMap: true } },
+                    { loader: 'sass-loader', options: { sourceMap: true } },
+                ],
             },
             {
                 test: /\.ts(x?)$/,
@@ -48,28 +48,26 @@ exports.loaders = () => ({
             },
             {
                 test: /\.(png|jpg|gif)$/,
-                use: [
-                    { loader: 'file-loader' },
-                ],
+                use: [{ loader: 'file-loader' }],
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
                 use: [
-                {
-                    loader: 'url-loader',
-                    options: {
-                    limit: 10000,
-                    mimetype: 'image/svg+xml'
-                    }
-                }
-                ]
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            mimetype: 'image/svg+xml',
+                        },
+                    },
+                ],
             },
             {
                 test: /\.(ttf|eot|woff|woff2)$/,
                 use: {
-                    loader: "file-loader",
+                    loader: 'file-loader',
                     options: {
-                        name: "assets/fonts/[name].[ext]",
+                        name: 'assets/fonts/[name].[ext]',
                     },
                 },
             },
@@ -89,7 +87,6 @@ exports.clean = () => ({
     plugins: [new CleanWebpackPlugin()],
 });
 
-
 exports.minifyCSS = () => ({
     plugins: [
         new OptimizeCssAssetsPlugin({
@@ -103,10 +100,10 @@ exports.minifyCSS = () => ({
             canPrint: false,
         }),
     ],
-})
+});
 
 exports.minifyJS = () => ({
     optimization: {
         minimizer: [new TerserPlugin({ sourceMap: true })],
-    }
-})
+    },
+});

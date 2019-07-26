@@ -22,7 +22,7 @@ const commonConfig = merge([
             }),
             new webpack.DefinePlugin({
                 API_HOST: JSON.stringify(`${process.env.CLIENT_API_URL}:${process.env.CLIENT_PORT}`),
-            })
+            }),
         ],
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.json'],
@@ -30,24 +30,14 @@ const commonConfig = merge([
     },
 ]);
 
-const developmentConfig = merge([
-    parts.devServer(),
-    parts.loaders(),
-]);
+const developmentConfig = merge([parts.devServer(), parts.loaders()]);
 
-const productionConfig = merge([
-    parts.clean(),
-    parts.loaders(),
-    parts.minifyCSS(),
-    parts.minifyJS(),
-]);
+const productionConfig = merge([parts.clean(), parts.loaders(), parts.minifyCSS(), parts.minifyJS()]);
 
 module.exports = mode => {
     if (mode === 'production') {
-        return merge(commonConfig, productionConfig, { mode })
+        return merge(commonConfig, productionConfig, { mode });
     } else {
-        return merge(commonConfig, developmentConfig, { mode })
+        return merge(commonConfig, developmentConfig, { mode });
     }
-}
-
-
+};

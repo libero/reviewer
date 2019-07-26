@@ -10,22 +10,23 @@ const SubmissionEntry = ({ submission }: { submission: Submission }) => {
     submissionTimeStamp.setTime(Number.parseInt(submission.updated));
     return (
         // made the anchor tag into a span temporarily for styling.
-        <div className='dashboard-entry'>
-            <span className='dashboard-entry-title'>
+        <div className="dashboard-entry">
+            <span className="dashboard-entry-title">
                 {submission.title.length !== 0 ? submission.title : '(no title)'}
             </span>
             <div>
-                <Link className='dashboard-entry-link' to={`/submission/${submission.id}/${submission.lastStepVisited || 'title'}`}>
+                <Link
+                    className="dashboard-entry-link"
+                    to={`/submission/${submission.id}/${submission.lastStepVisited || 'title'}`}
+                >
                     <span>Continue Submission</span>
                 </Link>
             </div>
             <div>
-                <span className='dashboard-entry-date-since'>
+                <span className="dashboard-entry-date-since">
                     {moment(submissionTimeStamp.toISOString()).fromNow()}
                 </span>
-                <span className='dashboard-entry-date'>
-                    {moment(submissionTimeStamp.toISOString()).calendar()}
-                </span>
+                <span className="dashboard-entry-date">{moment(submissionTimeStamp.toISOString()).calendar()}</span>
             </div>
         </div>
     );
@@ -38,30 +39,26 @@ const Dashboard = withRouter(({ history }) => {
     // only fetch once to prevent render loop
     if (!fetched) {
         getSubmissions()
-            .then(
-                (fetchedSubmissions: Submission[]): void => {
-                    setSubmissions(fetchedSubmissions);
-                    setFetched(true);
-                },
-            )
-            .catch(
-                (): void => {
-                    setFetched(true);
-                },
-            );
+            .then((fetchedSubmissions: Submission[]): void => {
+                setSubmissions(fetchedSubmissions);
+                setFetched(true);
+            })
+            .catch((): void => {
+                setFetched(true);
+            });
     }
 
     return (
-        <div className='dashboard'>
+        <div className="dashboard">
             <button
                 onClick={(): void => {
-                    startSubmission().then(
-                        (submission): void => {
-                            history.push(`/submission/${submission.id}/title`);
-                        },
-                    );
+                    startSubmission().then((submission): void => {
+                        history.push(`/submission/${submission.id}/title`);
+                    });
                 }}
-            >New Submission</button>
+            >
+                New Submission
+            </button>
             <h2 style={{ paddingTop: '16px', paddingBottom: '32px' }}>Submissions</h2>
             <ul style={{ paddingLeft: 0 }}>
                 {submissions.length === 0 ? (

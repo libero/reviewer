@@ -4,7 +4,7 @@ import Dashboard from '../../dashboard/components/Dashboard';
 import Submission from '../../submission/Submission';
 import NavBar from './NavBar';
 
-import '../styles/index.scss'
+import '../styles/index.scss';
 
 const App: React.StatelessComponent = (): JSX.Element => (
     <div>
