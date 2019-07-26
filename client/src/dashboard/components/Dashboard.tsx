@@ -1,12 +1,11 @@
-import React, { useState, Fragment, CSSProperties } from 'react';
-import { request } from 'graphql-request';
+import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { getSubmissions, startSubmission } from '../../submission/submission.entities';
 import { Submission } from '../../submission/types';
 import moment from 'moment';
 
 const SubmissionEntry = ({ submission }: { submission: Submission }) => {
-    const submissionTimeStamp = new Date();
+    const submissionTimeStamp: Date = new Date();
     submissionTimeStamp.setTime(Number.parseInt(submission.updated));
     return (
         // made the anchor tag into a span temporarily for styling.
