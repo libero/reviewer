@@ -12,6 +12,7 @@ install:
   - yarn build
   - cd ../client
   - yarn
+  - cd ../
 
 cache: yarn
 jobs:
