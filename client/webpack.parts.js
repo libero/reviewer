@@ -108,5 +108,16 @@ exports.minifyCSS = () => ({
 exports.minifyJS = () => ({
     optimization: {
         minimizer: [new TerserPlugin({ sourceMap: true })],
+        moduleIds: 'hashed',
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+              vendor: {
+                test: /[\\/]node_modules[\\/]/,
+                name: 'vendors',
+                chunks: 'all'
+              }
+            }
+        },
     }
 })
