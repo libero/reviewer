@@ -2,22 +2,20 @@ language: node_js
 node_js:
   - 8
   - 10
+env:
+  - TEST_SUITE=client
+  - TEST_SUITE=server
 
 matrix:
   allowed_failures:
     - node_js: 8
 install:
-  - cd server
+  # This sets the context for the whole thing
+  - cd $TEST_SUITE
   - yarn
-  - yarn build
-  - cd ../client
-  - yarn
-  - cd ../
 
 cache: yarn
 
 script:
-  - cd server
-  - yarn lint && yarn test:cov
-  - cd ../client
+  - yarn build
   - yarn lint && yarn test
