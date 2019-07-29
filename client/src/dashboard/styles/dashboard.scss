@@ -4,43 +4,79 @@
     font-family: Noto Sans, Arial, Helvetica, sans-serif, sans-serif;
 }
 
-
 .dashboard-entry {
-    width: 100%;
-    display: flex;
-    flex: 1 0 auto;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgb(224, 224, 224);
+    border-bottom: 0.063rem solid $borderColour;
 
-    span.dashboard-entry-title {
-        width: 60%;
-        font-family: Noto Sans, Arial, Helvetica, sans-serif;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 24px 0 24px 0;
+    @include forSize('tabletPortraitUp') {
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 1.875rem 0;
+    }
+}
+
+.dashboard-entry__link {
+    color: $bodyText;
+    text-decoration: none;
+    width: 95%;
+    :hover {
+        color: $textColourLink;
     }
 
-    div {
-        width: 15%;
-        a.dashboard-entry-link {
-            text-decoration: none;
-            span {
-                color: rgb(2, 136, 209);
-                cursor: pointer;
-            }
-        }
+    @include forSize('tabletPortraitUp') {
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 1.875rem 0;
+    }
 
-        span {
-            color: rgb(136, 136, 136);
-            
-            & .dashboard-entry-date-since {
-                display: block
-            }
-            
-            & .dashboard-entry-date {
-                font-size: 12px
+    .dashboard-entry__content {
+        @include forSize('tabletPortraitUp') {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    .dashboard-entry__title {
+        box-sizing: border-box;
+        margin-bottom: 1.5rem;
+        color: rgb(33, 33, 33);
+        font-family: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        text-align: left;
+
+        @include forSize('tabletPortraitUp') {
+            flex-grow: 1;
+            margin-bottom: 0;
+            margin-right: 1.5rem;
+        }
+    }
+    
+    .dashboard-entry__link-text {
+        color: $textColourLink;
+
+        @include forSize('tabletPortraitUp') {
+            flex: 0 0 120px;
+            margin-bottom: 0;
+        }
+    }
+
+    .dashboard-entry__dates {
+        color: $textColourMuted;
+        justify-content: space-between;
+        display: flex;
+        
+        @include forSize('tabletPortraitUp') {   
+            flex-direction: column;
+            text-align: right;
+            flex: 0 0 7.5rem;
+            justify-content: flex-start;
+        }
+        
+        .dashboard-entry__date {
+            @include forSize('tabletPortraitUp') {
+                font-size: 0.75rem;
             }
         }
     }
+    
 }

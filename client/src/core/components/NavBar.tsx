@@ -8,7 +8,7 @@ const NavBar: React.FC = (): JSX.Element => (
     <NavMenu items={[
       {
         display: 'Dashboard',
-        url: '/'
+        url: '/dashboard'
       },
       {
         display: 'Author guide',
