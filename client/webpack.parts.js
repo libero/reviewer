@@ -1,4 +1,5 @@
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -134,4 +135,12 @@ exports.splitBundles = () => ({
        },
       },
      }
+})
+
+exports.output = ({ filename }) => ({
+    output: {
+        publicPath: '/',
+        path: path.resolve(__dirname, 'dist'),
+        filename,
+    }
 })

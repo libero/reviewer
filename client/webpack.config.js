@@ -10,11 +10,6 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const commonConfig = merge([
     {
         entry: './index.tsx',
-        output: {
-            publicPath: '/',
-            path: path.resolve(__dirname, 'dist'),
-            filename: '[name].[contenthash].js',
-        },
         plugins: [
             new HtmlWebPackPlugin({
                 template: './index.html',
@@ -31,11 +26,13 @@ const commonConfig = merge([
 ]);
 
 const developmentConfig = merge([
+    parts.output({ filename: 'bundle.js' }),
     parts.devServer(),
     parts.loaders(),
 ]);
 
 const productionConfig = merge([
+    parts.output({ filename: '[name].[contenthash].js' }),
     parts.clean(),
     parts.loaders(),
     parts.minifyCSS(),
