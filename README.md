@@ -19,6 +19,16 @@ the rest of the community to benefit from.
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Quick Start
+The develpoment environment uses `docker-compose` to bootstrap it's services and infrastructure. To get started from fresh, do the following:
+
+```bash
+cp .env.example .env
+docker-compose up
+```
+
+
+
 ## Installation
 
 ```bash
