@@ -3,14 +3,18 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from './packages/config/config.module';
-import { ConfigService } from './packages/config/config.service';
-import { SubmissionModule } from './packages/submission/submission.module';
+import { ConfigModule } from './modules/config/config.module';
+import { ConfigService } from './modules/config/config.service';
+import { AuthModule } from './modules/auth/auth.module';
+import { SubmissionModule } from './modules/submission-adaptor/submission.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   controllers: [AppController],
   imports: [
+    PassportModule.register({defaultStrategy: 'jwt'}),
     GraphQLModule.forRoot({
+      context: ({ req }) => ({ req }),
       typePaths: ['./**/*.graphql'],
     }),
     TypeOrmModule.forRootAsync({
@@ -28,6 +32,7 @@ import { SubmissionModule } from './packages/submission/submission.module';
       } as TypeOrmModuleOptions),
     }),
     ConfigModule,
+    AuthModule,
     SubmissionModule,
   ],
   providers: [AppService],

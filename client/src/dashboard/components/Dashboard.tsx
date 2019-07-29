@@ -35,8 +35,12 @@ const dashboardDateText = (date: Date): string => {
     return `${diffYears} ${diffYears === 1 ? 'year' : 'years'} ago`;
 };
 
-const SubmissionEntry = ({ submission }: { submission: Submission }): JSX.Element => {
-    const submissionTimeStamp = new Date();
+interface Props {
+    submission: Submission;
+}
+
+const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element => {
+    const submissionTimeStamp: Date = new Date();
     submissionTimeStamp.setTime(Number.parseInt(submission.updated));
     return (
         // made the anchor tag into a span temporarily for styling.
