@@ -10,12 +10,12 @@ matrix:
   allowed_failures:
     - node_js: 8
 install:
+  # This sets the context for the whole thing
   - cd $TEST_SUITE
   - yarn
 
 cache: yarn
 
 script:
-  - cd $TEST_SUITE
   - yarn build
   - yarn lint && yarn test
