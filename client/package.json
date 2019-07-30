@@ -49,6 +49,7 @@
   "dependencies": {
     "@material-ui/core": "^4.3.0",
     "@material-ui/icons": "^4.2.1",
+    "cheerio": "^1.0.0-rc.3",
     "@khanacademy/tota11y": "^0.2.0",
     "dotenv": "^8.0.0",
     "graphql-request": "^1.8.2",

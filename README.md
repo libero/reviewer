@@ -27,8 +27,6 @@ cp .env.example .env
 docker-compose up
 ```
 
-
-
 ## Installation
 
 ```bash
