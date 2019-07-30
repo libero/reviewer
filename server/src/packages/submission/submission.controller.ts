@@ -1,34 +1,48 @@
 import { v4 as uuid } from 'uuid';
 import { Submission } from './submission.entity';
-// Needed for next stage
-// import { SubmissionRepository} from './submission.repository';
+import { ISubmission, SubmissionRepository } from './submission.repository';
+import { Option, None, Some } from 'funfix';
 
 export class SubmissionController {
-  repository = null;
+  repository: Option<SubmissionRepository> = None;
 
-  constructor(repo: any) {
-    this.repository = repo;
+  constructor(repo: SubmissionRepository) {
+    this.repository = Some(repo);
   }
 
   async findAll(): Promise<Submission[]> {
-    return await this.repository.findAll();
+    return await this.repository
+      .map(async repo =>
+        (await repo.findAll()).map((isub: ISubmission) => new Submission(isub)),
+      )
+      .get();
   }
 
   async start(): Promise<Submission> {
     const submission: Submission = Submission.make(uuid());
 
-    return this.repository.save(submission);
+    return await this.repository
+      .map(async repo => new Submission(await repo.save(submission)))
+      .get();
   }
 
   async findOne(id: string): Promise<Submission> {
-    return await this.repository.findById(id);
+    return await this.repository
+      .map(async repo => new Submission((await repo.findById(id)).get()))
+      .get();
   }
 
   async changeTitle(id: string, title: string): Promise<Submission> {
-    const submission: Submission = await this.repository.findOne(id);
+    return await this.repository
+      .map(async repo => {
+        const submission: Submission = new Submission(
+          (await repo.findById(id)).get(), // XXX: Will error if submission can't be found
+        );
 
-    submission.changeTitle(title);
+        submission.changeTitle(title);
 
-    return this.repository.save(submission);
+        return new Submission(await repo.save(submission));
+      })
+      .get();
   }
 }
