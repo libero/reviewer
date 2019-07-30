@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
+const HtmlInjectNewRelicPlugin = require('./webpack/html-inject-newrelic');
 
 exports.devServer = () => ({
     devServer: {
@@ -91,7 +92,6 @@ exports.clean = () => ({
     plugins: [new CleanWebpackPlugin()],
 });
 
-
 exports.minifyCSS = () => ({
     plugins: [
         new OptimizeCssAssetsPlugin({
@@ -117,24 +117,24 @@ exports.splitBundles = () => ({
     plugins: [
         // Ignore all locale files of moment.js
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-      ],
+    ],
     optimization: {
         runtimeChunk: 'single',
         splitChunks: {
-         chunks: 'all',
-         maxInitialRequests: Infinity,
-         minSize: 0,
-         cacheGroups: {
-           vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name(module) {
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-            return `npm.${packageName.replace('@', '')}`;
-           },
-         },
-       },
-      },
-     }
+            chunks: 'all',
+            maxInitialRequests: Infinity,
+            minSize: 0,
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name(module) {
+                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+                        return `npm.${packageName.replace('@', '')}`;
+                    },
+                },
+            },
+        },
+    }
 })
 
 exports.output = ({ filename }) => ({
@@ -143,4 +143,17 @@ exports.output = ({ filename }) => ({
         path: path.resolve(__dirname, 'dist'),
         filename,
     }
+})
+
+exports.generateSourceMaps = ({ type }) => ({
+    devtool: type
+})
+
+exports.newRelic = () => ({
+    plugins: [
+        new HtmlInjectNewRelicPlugin({
+            license: process.env.NEW_RELIC_CLIENT_LICENSE_KEY,
+            applicationID: process.env.NEW_RELIC_CLIENT_APP_ID,
+        }),
+    ],
 })
