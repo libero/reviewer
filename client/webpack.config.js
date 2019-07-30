@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const parts = require('./webpack.parts');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const HtmlInjectNewRelicPlugin = require('./webpack/html-inject-newrelic');
 
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
@@ -15,10 +14,6 @@ const commonConfig = merge([
             new HtmlWebPackPlugin({
                 template: 'index.html',
                 filename: 'index.html',
-            }),
-            new HtmlInjectNewRelicPlugin({
-                license: process.env.NEW_RELIC_CLIENT_LICENSE_KEY,
-                applicationID: process.env.NEW_RELIC_CLIENT_APP_ID,
             }),
             new webpack.DefinePlugin({
                 API_HOST: JSON.stringify(`${process.env.CLIENT_API_URL}:${process.env.CLIENT_PORT}`),
@@ -44,7 +39,8 @@ const productionConfig = merge([
     parts.minifyCSS(),
     parts.minifyJS(),
     parts.splitBundles(),
-    parts.generateSourceMaps({ type: 'source-map' })
+    parts.generateSourceMaps({ type: 'source-map' }),
+    parts.newRelic(),
 ]);
 
 module.exports = mode => {

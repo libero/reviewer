@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
+const HtmlInjectNewRelicPlugin = require('./webpack/html-inject-newrelic');
 
 exports.devServer = () => ({
     devServer: {
@@ -146,4 +147,13 @@ exports.output = ({ filename }) => ({
 
 exports.generateSourceMaps = ({ type }) => ({
     devtool: type
+})
+
+exports.newRelic = () => ({
+    plugins: [
+        new HtmlInjectNewRelicPlugin({
+            license: process.env.NEW_RELIC_CLIENT_LICENSE_KEY,
+            applicationID: process.env.NEW_RELIC_CLIENT_APP_ID,
+        }),
+    ],
 })
