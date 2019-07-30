@@ -91,7 +91,6 @@ exports.clean = () => ({
     plugins: [new CleanWebpackPlugin()],
 });
 
-
 exports.minifyCSS = () => ({
     plugins: [
         new OptimizeCssAssetsPlugin({
@@ -117,24 +116,24 @@ exports.splitBundles = () => ({
     plugins: [
         // Ignore all locale files of moment.js
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-      ],
+    ],
     optimization: {
         runtimeChunk: 'single',
         splitChunks: {
-         chunks: 'all',
-         maxInitialRequests: Infinity,
-         minSize: 0,
-         cacheGroups: {
-           vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name(module) {
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-            return `npm.${packageName.replace('@', '')}`;
-           },
-         },
-       },
-      },
-     }
+            chunks: 'all',
+            maxInitialRequests: Infinity,
+            minSize: 0,
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name(module) {
+                        const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+                        return `npm.${packageName.replace('@', '')}`;
+                    },
+                },
+            },
+        },
+    }
 })
 
 exports.output = ({ filename }) => ({
@@ -143,4 +142,8 @@ exports.output = ({ filename }) => ({
         path: path.resolve(__dirname, 'dist'),
         filename,
     }
+})
+
+exports.generateSourceMaps = ({ type }) => ({
+    devtool: type
 })

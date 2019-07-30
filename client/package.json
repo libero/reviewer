@@ -46,6 +46,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.0.0",
     "graphql-request": "^1.8.2",
     "moment": "^2.24.0",
