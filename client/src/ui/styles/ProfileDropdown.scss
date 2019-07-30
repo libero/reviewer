@@ -52,8 +52,8 @@
     text-decoration: none;
     color: $bodyText;
     &:hover {
-      color: $white;
-      background-color: $textColourLink;
+      color: $colourTextReverse;
+      background-color: $colourPrimary;
     }
   }
 }

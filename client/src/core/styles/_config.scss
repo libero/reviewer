@@ -4,12 +4,8 @@ $textColourMuted: rgb(136, 136, 136) !default;
 $colourPrimary: rgb(2, 136, 209) !default;
 $borderColour: rgb(224, 224, 224) !default; 
 $bodyText: rgb(33, 33, 33) !default;
-<<<<<<< HEAD
-$white: rgb(255, 255, 255) !default;
-=======
 $colourSecondary: #f7f7f7 !default;
-$colourTextReverse: #fff;
->>>>>>> master
+$colourTextReverse: #fff !default;
 
 //fonts
 $defaultFontFamily: "Noto Sans", Arial, Helvetica, sans-serif, sans-serif;
