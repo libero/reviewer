@@ -13,7 +13,7 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data
 
-  backend:
+  server:
     image: node:10
     ports:
       - "3000:${SERVER_PORT}"
@@ -34,7 +34,7 @@ services:
       - infra_api
     depends_on: ["postgres"]
 
-  frontend:
+  client:
     image: node:10
     ports:
       - "9000:${CLIENT_PORT}"
@@ -45,12 +45,12 @@ services:
     environment:
       CLIENT_PORT: ${CLIENT_PORT}
       CLIENT_API_URL: ${CLIENT_API_URL}
-      CLIENT_API_PROXY_URL: "http://backend"
+      CLIENT_API_PROXY_URL: "http://server"
       CLIENT_API_PROXY_ENDPOINT: ${CLIENT_API_PROXY_ENDPOINT}
       SERVER_PORT: ${SERVER_PORT}
     networks:
       - infra_api
-    depends_on: ["backend"]
+    depends_on: ["server"]
 
 networks:
   infra_postgres:
