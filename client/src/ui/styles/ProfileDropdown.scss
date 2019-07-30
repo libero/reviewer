@@ -12,34 +12,34 @@
     }
   }
   .profile-dropdown__arrow {
-    margin-bottom: -4px;
-    margin-left: 4px;
-    border-width: 4px;
+    margin-bottom: -0.25rem;
+    margin-left: 0.25rem;
+    border-width: 0.25rem;
     border-style: solid;
     border-color: rgb(33, 33, 33) transparent transparent;
     border-image: initial;
   }
   .profile-dropdown__panel {
     position: absolute;
-    top: 36px;
+    top: 2.25rem;
     right: 0px;
     max-width: 200px;
     z-index: 1400;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px;
     background-color: rgb(255, 255, 255);
     border-radius: 3px;
-    padding: 12px 0px;
+    padding: 0.75rem 0;
   }
   .profile-dropdown__item {
     white-space: nowrap;
-    padding:12px;
+    padding: 0.75rem;
   }
   .profile-dropdown__panel-heading {
     font-family: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
     font-weight: 400;
     text-overflow: ellipsis;
-    border-bottom: 1px solid rgb(224, 224, 224);
-    padding: 12px 24px 12px 12px;
+    border-bottom: 1px solid $borderColour;
+    padding: 0.75rem;
     overflow: hidden;
   }
   .profile-dropdown__list {
