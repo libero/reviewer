@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppBar, AppBarIcon, NavMenu } from '../../ui/atoms';
+import { ProfileDropdown } from '../../ui/molecules';
 import Logo from '../assets/elife-logo.png';
 
 const NavBar: React.FC = (): JSX.Element => (
@@ -25,7 +26,7 @@ const NavBar: React.FC = (): JSX.Element => (
                 },
             ]}
         />
-        App Bar
+        <ProfileDropdown name="Name" />
     </AppBar>
 );
 

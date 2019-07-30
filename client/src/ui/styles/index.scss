@@ -1,4 +1,7 @@
-/* All atom ui components should live here*/
+/* All atom ui components should live here */
 @import './AppBar';
 @import './AppBarIcon';
 @import './NavMenu';
+
+/* All molecule ui components should live here */
+@import './ProfileDropdown.scss'
