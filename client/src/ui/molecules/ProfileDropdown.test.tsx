@@ -25,13 +25,23 @@ describe('ProfileDropDown', (): void => {
   })
   it('should mark aria-expanded to false when profile menu not shown', (): void => {
     const { container } = renderDropDown();
-    expect(container.querySelector('.profile-dropdown__panel')).not.toBeInTheDocument()
+    expect(container.querySelector('.profile-dropdown__panel')).not.toBeInTheDocument();
     expect(container.querySelector('.profile-dropdown__button')).toHaveAttribute('aria-expanded', 'false');
   })
   it('shows profile menu on click of button', (): void => {
     const { container } = renderDropDown();
-    expect(container.querySelector('.profile-dropdown__panel')).not.toBeInTheDocument()
+    expect(container.querySelector('.profile-dropdown__panel')).not.toBeInTheDocument();
     fireEvent.click(container.querySelector('.profile-dropdown__button')); 
-    expect(container.querySelector('.profile-dropdown__panel')).toBeInTheDocument()
+    expect(container.querySelector('.profile-dropdown__panel')).toBeInTheDocument();
   })
+  it('closes profile menu on second click of button', (): void => {
+    const { container } = renderDropDown();
+    expect(container.querySelector('.profile-dropdown__panel')).not.toBeInTheDocument();
+    fireEvent.click(container.querySelector('.profile-dropdown__button')); 
+    expect(container.querySelector('.profile-dropdown__panel')).toBeInTheDocument();
+    fireEvent.click(container.querySelector('.profile-dropdown__button')); 
+    expect(container.querySelector('.profile-dropdown__panel')).not.toBeInTheDocument()
+  })
+
+  //TODO: How do we test the document event listeners for closing when clicking outside of component area?
 });
