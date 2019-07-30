@@ -1,18 +1,19 @@
 // Colours
 // TODO: colours should define a pallet ie: blue, grey, darkGrey these should then be used by element styles ie: textColour footerTextColour 
 $textColourMuted: rgb(136, 136, 136) !default;
-$textColourLink: rgb(2, 136, 209) !default;
+$colourPrimary: rgb(2, 136, 209) !default;
 $borderColour: rgb(224, 224, 224) !default; 
 $bodyText: rgb(33, 33, 33) !default;
-
+$colourSecondary: #f7f7f7 !default;
+$colourTextReverse: #fff;
 
 //fonts
 $defaultFontFamily: "Noto Sans", Arial, Helvetica, sans-serif, sans-serif;
+$fontHeading: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
 $altFontFamily: "Noto Serif", serif;
 
 // breakpoints
-$phone: 599px;
-$tablePortraite: 600px;
-$tabletLandscape: 900px;
-$desktop: 1200px;
-$largeDesktop: 1600px;
+$phone: 480px;
+$tabletPortrait: 768px;
+$tabletLandscape: 1000px;
+$desktop: 1272px;

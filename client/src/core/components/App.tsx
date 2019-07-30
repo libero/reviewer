@@ -4,15 +4,18 @@ import Dashboard from '../../dashboard/components/Dashboard';
 import Submission from '../../submission/Submission';
 import NavBar from './NavBar';
 
+import '@khanacademy/tota11y';
 import '../styles/index.scss';
 
 const App: React.StatelessComponent = (): JSX.Element => (
     <div>
         <Router>
             <NavBar />
-            <Route exact path="/" component={(): JSX.Element => <div>home route</div>} />
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route path="/submission/:id/:stage" component={Submission} />
+            <div className="site-content">
+                <Route exact path="/" component={(): JSX.Element => <div>home route</div>} />
+                <Route exact path="/dashboard" component={Dashboard} />
+                <Route path="/submission/:id/:stage" component={Submission} />
+            </div>
         </Router>
     </div>
 );
