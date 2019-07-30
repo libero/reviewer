@@ -3,6 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { getSubmissions, startSubmission } from '../../submission/submission.entities';
 import { Submission } from '../../submission/types';
 import moment from 'moment';
+import { Button } from '../../ui/atoms';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 const dashboardDateText = (date: Date): string => {
     const diffDays = moment(new Date()).diff(date, 'days');
@@ -53,7 +55,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element =>
                     <span className="dashboard-entry__title">
                         {submission.title.length !== 0 ? submission.title : '(no title)'}
                     </span>
-                    <div className="dashboard-entry__link-text">
+                    <div className="dashboard-entry__link_text">
                         <span>Continue Submission</span>
                     </div>
                     <div className="dashboard-entry__dates">
@@ -65,6 +67,27 @@ const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element =>
                 </div>
             </Link>
         </div>
+    );
+};
+
+const SubmissionList: React.FC<Submission[]> = (submissions: Submission[]): JSX.Element => {
+    return (
+        <Tabs className="dashboard__tabs">
+            <TabList className="dashboard__tabs_list">
+                <TabPanel className="dashboard__tab_panel">
+                    <ul>
+                        {submissions.length === 0 ? (
+                            <div>You don{"'"}t have any submissions. Maybe you should make one?</div>
+                        ) : (
+                            submissions
+                                .reverse()
+                                .map((sub, index): unknown => <SubmissionEntry key={index} submission={sub} />)
+                        )}
+                    </ul>
+                </TabPanel>
+                <TabPanel className="dashboard__tab_panel"></TabPanel>
+            </TabList>
+        </Tabs>
     );
 };
 
@@ -87,25 +110,19 @@ const Dashboard = withRouter(
 
         return (
             <div className="dashboard">
-                <button
-                    onClick={(): void => {
-                        startSubmission().then((submission): void => {
-                            history.push(`/submission/${submission.id}/title`);
-                        });
-                    }}
-                >
-                    New Submission
-                </button>
-                <h2 style={{ paddingTop: '16px', paddingBottom: '32px' }}>Submissions</h2>
-                <ul style={{ paddingLeft: 0 }}>
-                    {submissions.length === 0 ? (
-                        <div>You don{"'"}t have any submissions. Maybe you should make one?</div>
-                    ) : (
-                        submissions
-                            .reverse()
-                            .map((sub, index): unknown => <SubmissionEntry key={index} submission={sub} />)
-                    )}
-                </ul>
+                <div className="dashboard__button_container">
+                    <Button
+                        primary
+                        onClick={(): void => {
+                            startSubmission().then((submission): void => {
+                                history.push(`/submission/${submission.id}/title`);
+                            });
+                        }}
+                    >
+                        New Submission
+                    </Button>
+                </div>
+                <SubmissionList submissions={submissions}></SubmissionList>
                 <div style={{ textAlign: 'center', color: 'rgb(136, 136, 136)' }}>
                     <p>
                         To find existing submissions or to submit a{' '}

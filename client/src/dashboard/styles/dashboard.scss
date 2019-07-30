@@ -1,82 +1,136 @@
+@import "../../core/styles/_config";
+@import "../../core/styles/_mixins";
+
 .dashboard {
-    margin-left: 16%;
-    margin-right: 16%;
-    font-family: Noto Sans, Arial, Helvetica, sans-serif, sans-serif;
+  font-family: Noto Sans, Arial, Helvetica, sans-serif, sans-serif;
+  padding-bottom: 7.5em;
+
+  @include forSize('tabletLandscapeUp') {
+    padding-bottom: 0;
+  }
+
+  @include forSize('desktopUp') {
+    margin-left: 16.666%;
+    margin-right: 16.666%;
+  }
+}
+
+.dashboard__new_submission {
+  margin-bottom: 6px;
+  margin-top: 24px;
 }
 
 .dashboard-entry {
-    border-bottom: 0.063rem solid $borderColour;
+  border-bottom: 0.063rem solid $borderColour;
 
-    @include forSize('tabletPortraitUp') {
-      flex-direction: row;
-      align-items: flex-start;
-      padding: 1.875rem 0;
-    }
+  @include forSize('tabletPortraitUp') {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 1.875rem 0;
+  }
 }
 
 .dashboard-entry__link {
-    color: $bodyText;
-    text-decoration: none;
-    width: 95%;
-    :hover {
-        color: $textColourLink;
-    }
+  color: $bodyText;
+  text-decoration: none;
+  width: 95%;
 
+  :hover {
+    color: $colourPrimary;
+  }
+
+  @include forSize('tabletPortraitUp') {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 1.875rem 0;
+  }
+}
+
+.dashboard-entry__content {
+  @include forSize('tabletPortraitUp') {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.dashboard-entry__title {
+  box-sizing: border-box;
+  margin-bottom: 1.5rem;
+  color: rgb(33, 33, 33);
+  font-family: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  text-align: left;
+
+  @include forSize('tabletPortraitUp') {
+    flex-grow: 1;
+    margin-bottom: 0;
+    margin-right: 1.5rem;
+  }
+}
+
+.dashboard-entry__link_text {
+  color: $colourPrimary;
+
+  @include forSize('tabletPortraitUp') {
+    flex: 0 0 120px; //TODO REM
+    margin-bottom: 0;
+  }
+}
+
+.dashboard-entry__dates {
+  color: $textColourMuted;
+  justify-content: space-between;
+  display: flex;
+
+  @include forSize('tabletPortraitUp') {
+    flex-direction: column;
+    text-align: right;
+    flex: 0 0 7.5rem;
+    justify-content: flex-start;
+  }
+
+  .dashboard-entry__date {
     @include forSize('tabletPortraitUp') {
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 1.875rem 0;
+      font-size: 0.75rem;
     }
+  }
+}
 
-    .dashboard-entry__content {
-        @include forSize('tabletPortraitUp') {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-        }
+.dashboard__button_container {
+  text-align: right;
+  display: none;
+  margin-bottom: 6px;
+  margin-top: 24px;
+
+  @include forSize('tabletPortraitUp') {
+    display: block;
+  }
+}
+
+.dashboard__tabs {
+  min-height: 29.688rem;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard__tabs_list {
+  display: none;
+  @include forSize('phoneOnly') {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.dashboard__tab_panel {
+  display: none;
+
+  &.selected {
+      display: block;
+      @include forSize('phoneOnly') {
+        border-top: 1px solid $borderColour;
     }
-
-    .dashboard-entry__title {
-        box-sizing: border-box;
-        margin-bottom: 1.5rem;
-        color: rgb(33, 33, 33);
-        font-family: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
-        font-weight: 400;
-        text-align: left;
-
-        @include forSize('tabletPortraitUp') {
-            flex-grow: 1;
-            margin-bottom: 0;
-            margin-right: 1.5rem;
-        }
-    }
-    
-    .dashboard-entry__link-text {
-        color: $textColourLink;
-
-        @include forSize('tabletPortraitUp') {
-            flex: 0 0 120px;
-            margin-bottom: 0;
-        }
-    }
-
-    .dashboard-entry__dates {
-        color: $textColourMuted;
-        justify-content: space-between;
-        display: flex;
-        
-        @include forSize('tabletPortraitUp') {   
-            flex-direction: column;
-            text-align: right;
-            flex: 0 0 7.5rem;
-            justify-content: flex-start;
-        }
-        
-        .dashboard-entry__date {
-            @include forSize('tabletPortraitUp') {
-                font-size: 0.75rem;
-            }
-        }
-    }
-    
+  }
 }

@@ -7,4 +7,16 @@
 @import '../../ui/styles/index';
 
 //dashboard
-@import '../../dashboard/styles/dashboard'
+@import '../../dashboard/styles/dashboard';
+
+.site-content {
+    width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include forSize('desktopUp') {
+        width: 1272px;
+    }
+}
