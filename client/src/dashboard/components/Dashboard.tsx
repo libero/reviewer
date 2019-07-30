@@ -4,7 +4,7 @@ import { getSubmissions, startSubmission } from '../../submission/submission.ent
 import { Submission } from '../../submission/types';
 import moment from 'moment';
 import { Button } from '../../ui/atoms';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Tabs, TabList, TabPanel } from 'react-tabs';
 
 const dashboardDateText = (date: Date): string => {
     const diffDays = moment(new Date()).diff(date, 'days');
@@ -69,8 +69,10 @@ const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element =>
         </div>
     );
 };
-
-const SubmissionList: React.FC<Submission[]> = (submissions: Submission[]): JSX.Element => {
+interface SubmissionListProps {
+    submissions: Submission[];
+}
+const SubmissionList: React.FC<SubmissionListProps> = ({ submissions }: SubmissionListProps): JSX.Element => {
     return (
         <Tabs className="dashboard__tabs">
             <TabList className="dashboard__tabs_list">
@@ -93,7 +95,7 @@ const SubmissionList: React.FC<Submission[]> = (submissions: Submission[]): JSX.
 
 const Dashboard = withRouter(
     ({ history }): JSX.Element => {
-        const [submissions, setSubmissions] = useState([]);
+        const [submissions, setSubmissions]:[Submission[], Function] = useState([]);
         const [fetched, setFetched] = useState(false);
 
         // only fetch once to prevent render loop
