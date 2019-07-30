@@ -17,10 +17,6 @@ all the heavylifting for solving the technical issues (don't reinvent the wheel)
 With the aim of sharing domain-specific components (Publishing) via PubSweet for
 the rest of the community to benefit from.
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
 ## Quick Start
 
 The develpoment environment uses `docker-compose` to bootstrap it's services and infrastructure. To get started from fresh, do the following:
