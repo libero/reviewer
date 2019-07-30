@@ -42,6 +42,16 @@ describe('ProfileDropDown', (): void => {
     fireEvent.click(container.querySelector('.profile-dropdown__button')); 
     expect(container.querySelector('.profile-dropdown__panel')).not.toBeInTheDocument()
   })
-
   //TODO: How do we test the document event listeners for closing when clicking outside of component area?
+  it('displays name in the profile menu', (): void => {
+    const { getByText, container } = renderDropDown();
+    fireEvent.click(container.querySelector('.profile-dropdown__button'));
+    expect(getByText('Name')).toBeInTheDocument();
+  })
+  it('displays the ORCID and logout links in profile menu', () => {
+    const { getByText, container } = renderDropDown();
+    fireEvent.click(container.querySelector('.profile-dropdown__button'));
+    expect(getByText('Manage ORCID')).toHaveAttribute('href', 'https://orcid.org/my-orcid');
+    expect(getByText('Logout')).toHaveAttribute('href', '/logout');
+  })
 });
