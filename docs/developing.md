@@ -8,34 +8,8 @@ Copy the example .env file
 cp .env.example .env
 ```
 
-Open the `.env` file, it should look like this (some configuration omitted)
-
-```
-# Server
-
-## Listening port
-SERVER_PORT=3000
-
-## Database
-DB_TYPE=postgres
-DB_HOST=localhost
-DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
-DB_DATABASE=postgres
-
-...
-
-# Client
-
-## Listening port
-CLIENT_PORT=9000
-
-## Api proxy settings
-CLIENT_API_URL=http://localhost
-CLIENT_API_PROXY_URL=http://localhost
-CLIENT_API_PROXY_ENDPOINT=/graphql
-```
+This should get you started with a [default configuration](../.env.example) that works out of the box. Refer to the
+[Configuration documentation](./configuration.md) for a more detailed description.
 
 ## Running locally
 
