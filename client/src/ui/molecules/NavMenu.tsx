@@ -9,10 +9,11 @@ export interface NavMenuItemType {
 
 export interface Props {
     items?: NavMenuItemType[];
+    vertical?: boolean;
 }
 
-const NavMenu: React.FC<Props> = ({ items = [] }: Props): JSX.Element => (
-    <ul className="nav-menu">
+const NavMenu: React.FC<Props> = ({ items = [], vertical }: Props): JSX.Element => (
+    <ul className={`nav-menu nav-menu--${vertical ? 'vertical' : 'inline'}`}>
         {items.map(
             (item): JSX.Element => (
                 <li className="nav-menu__item" key={`${item.url}-${item.display}`}>

@@ -1,0 +1,12 @@
+.burger-menu {
+  display: flex;
+  @include forSize('tabletPortraitUp') {
+    display: none;
+  }
+  .burger-menu__toggle-button {
+    background-color: transparent;
+    border: none;
+    line-height: 0;
+    padding: 0;
+  }
+}
