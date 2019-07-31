@@ -4,7 +4,8 @@ import { getSubmissions, startSubmission } from '../../submission/submission.ent
 import { Submission } from '../../submission/types';
 import moment from 'moment';
 import { Button } from '../../ui/atoms';
-import { Tabs, TabList, TabPanel } from 'react-tabs';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Delete } from '@material-ui/icons';
 
 const dashboardDateText = (date: Date): string => {
     const diffDays = moment(new Date()).diff(date, 'days');
@@ -66,36 +67,56 @@ const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element =>
                     </div>
                 </div>
             </Link>
+            <div className="dashboard-entry__icon_container">
+                <Delete className="dashboard-entry__icon" height="24" width="24" viewBox="3 3 18 18" />
+            </div>
         </div>
     );
 };
+
 interface SubmissionListProps {
     submissions: Submission[];
 }
+
 const SubmissionList: React.FC<SubmissionListProps> = ({ submissions }: SubmissionListProps): JSX.Element => {
     return (
         <Tabs className="dashboard__tabs">
             <TabList className="dashboard__tabs_list">
-                <TabPanel className="dashboard__tab_panel">
-                    <ul>
-                        {submissions.length === 0 ? (
-                            <div>You don{"'"}t have any submissions. Maybe you should make one?</div>
-                        ) : (
-                            submissions
-                                .reverse()
-                                .map((sub, index): unknown => <SubmissionEntry key={index} submission={sub} />)
-                        )}
-                    </ul>
-                </TabPanel>
-                <TabPanel className="dashboard__tab_panel"></TabPanel>
+                <Tab className="dashboard__tab" key="active">
+                    Submissions
+                </Tab>
+                <Tab className="dashboard__tab" key="archived">
+                    Archive
+                </Tab>
             </TabList>
+            <TabPanel className="dashboard__tab_panel" key="active">
+                {submissions.length === 0 ? (
+                    <div>You don{"'"}t have any submissions. Maybe you should make one?</div>
+                ) : (
+                    submissions
+                        .reverse()
+                        .map(
+                            (sub: Submission, index: number): JSX.Element => (
+                                <SubmissionEntry key={index} submission={sub} />
+                            ),
+                        )
+                )}
+            </TabPanel>
+            <TabPanel className="dashboard__tab_panel" key="archived" />
         </Tabs>
     );
 };
 
 const Dashboard = withRouter(
     ({ history }): JSX.Element => {
-        const [submissions, setSubmissions]:[Submission[], Function] = useState([]);
+        const [submissions, setSubmissions]: [Submission[], Function] = useState([
+            {
+                id: '1',
+                lastStepVisited: 'step',
+                title: 'bob',
+                updated: new Date().toISOString(),
+            },
+        ]);
         const [fetched, setFetched] = useState(false);
 
         // only fetch once to prevent render loop
@@ -124,7 +145,7 @@ const Dashboard = withRouter(
                         New Submission
                     </Button>
                 </div>
-                <SubmissionList submissions={submissions}></SubmissionList>
+                <SubmissionList submissions={submissions} />
                 <div style={{ textAlign: 'center', color: 'rgb(136, 136, 136)' }}>
                     <p>
                         To find existing submissions or to submit a{' '}
