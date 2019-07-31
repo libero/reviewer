@@ -109,14 +109,7 @@ const SubmissionList: React.FC<SubmissionListProps> = ({ submissions }: Submissi
 
 const Dashboard = withRouter(
     ({ history }): JSX.Element => {
-        const [submissions, setSubmissions]: [Submission[], Function] = useState([
-            {
-                id: '1',
-                lastStepVisited: 'step',
-                title: 'bob',
-                updated: new Date().toISOString(),
-            },
-        ]);
+        const [submissions, setSubmissions]: [Submission[], Function] = useState([]);
         const [fetched, setFetched] = useState(false);
 
         // only fetch once to prevent render loop
