@@ -1,22 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import AccountBox from '@material-ui/icons/AccountBox';
 
+import useOnClickOutside from '../hooks/useOnClickOutside';
+
 interface Props {
   name: string
-}
-
-function useOnClickOutside(ref: React.MutableRefObject<HTMLElement>, callback: Function) {
-  const clickHandler = (event: Event): void => {
-    if (ref.current && !ref.current.contains(event.target as Element)) {
-      callback()
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('mousedown', clickHandler);
-    return () => document.removeEventListener('mousedown', clickHandler);
-  },[])
 }
 
 const ProfileDropdown: React.FC<Props> = ({ name }: Props): JSX.Element => {
