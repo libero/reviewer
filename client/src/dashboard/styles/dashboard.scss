@@ -7,9 +7,6 @@
 
   @include forSize('tabletLandscapeUp') {
     padding-bottom: 0;
-  }
-
-  @include forSize('desktopUp') {
     margin-left: 16.666%;
     margin-right: 16.666%;
   }
@@ -22,6 +19,7 @@
 
 .dashboard-entry {
   border-bottom: 0.063rem solid $borderColour;
+  display: flex;
 
   @include forSize('tabletPortraitUp') {
     flex-direction: row;
@@ -37,12 +35,6 @@
 
   :hover {
     color: $colourPrimary;
-  }
-
-  @include forSize('tabletPortraitUp') {
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 1.875rem 0;
   }
 }
 
@@ -97,6 +89,20 @@
   }
 }
 
+.dashboard-entry__icon_container {
+  width: 5%;
+}
+
+.dashboard-entry__icon.MuiSvgIcon-root {
+  margin-left: 24px;
+  display: none;
+  fill: $textColourMuted;
+
+  @include forSize('tabletPortraitUp') {
+    display:inline-block;
+  }
+}
+
 .dashboard__button_container {
   text-align: right;
   display: none;
@@ -115,7 +121,7 @@
 
 .dashboard__tabs_list {
   display: none;
-  @include forSize('phoneOnly') {
+  @include forSize('tabletPortraitUp') {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -124,12 +130,32 @@
   }
 }
 
+.dashboard__tab {
+  padding: 24px;
+  list-style: none;
+  cursor: pointer;
+  border-bottom: 4px solid transparent;
+  margin-bottom: -1px;
+  color: $textColourMuted;
+  &:hover {
+    color: $colourPrimary;
+  }
+
+  &.react-tabs__tab--selected {
+    border-bottom-color: $colourPrimary;
+    color: $bodyText
+  }
+
+  &.react-tabs__tab--disabled {
+    cursor: default;
+  }
+}
+
 .dashboard__tab_panel {
   display: none;
-
-  &.selected {
+  &.react-tabs__tab-panel--selected {
       display: block;
-      @include forSize('phoneOnly') {
+      @include forSize('tabletPortraitUp') {
         border-top: 1px solid $borderColour;
     }
   }

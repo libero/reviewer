@@ -7,13 +7,12 @@ import NavBar from './NavBar';
 import '@khanacademy/tota11y';
 import '../styles/index.scss';
 
-const App: React.StatelessComponent = (): JSX.Element => (
+const App: React.FC = (): JSX.Element => (
     <div>
         <Router>
             <NavBar />
             <div className="site-content">
-                <Route exact path="/" component={(): JSX.Element => <div>home route</div>} />
-                <Route exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/" component={Dashboard} />
                 <Route path="/submission/:id/:stage" component={Submission} />
             </div>
         </Router>
