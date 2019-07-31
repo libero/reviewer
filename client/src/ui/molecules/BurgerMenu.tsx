@@ -17,7 +17,7 @@ const BurgerMenu: React.FC<Props> = ({ items }: Props): JSX.Element => {
       <button 
         aria-haspopup="true"
         onClick={(): void => setExpanded(!expanded)}
-        className="burger_menu__toggle_button">
+        className="burger_menu__icon_button burger_menu__icon_button--expand">
         <MenuIcon />
       </button>
       {
@@ -25,7 +25,7 @@ const BurgerMenu: React.FC<Props> = ({ items }: Props): JSX.Element => {
         <div aria-expanded="true"  className="burger_menu__overlay">
           <div ref={panelRef} className="burger_menu__panel">
             <button 
-              className="burger_menu__toggle_button burger_menu__toggle_button--close" 
+              className="burger_menu__icon_button burger_menu__icon_button--collapse" 
               onClick={(): void => setExpanded(!expanded)}>
               <Close />
             </button>

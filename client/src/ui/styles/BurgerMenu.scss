@@ -3,7 +3,7 @@
   @include forSize('tabletPortraitUp') {
     display: none;
   }
-  .burger_menu__toggle_button {
+  .burger_menu__icon_button {
     background-color: transparent;
     border: none;
     line-height: 0;
@@ -18,7 +18,7 @@
     }
   }
 
-  .burger_menu__toggle_button--close {
+  .burger_menu__icon_button--collapse {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
