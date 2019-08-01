@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
-import Dashboard from '../../dashboard/components/Dashboard';
-import Submission from '../../submission/Submission';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { default as DashboardRoutes } from '../../dashboard/components/Routes';
+import { default as InitialSubmissionRoutes } from '../../initial-submission/components/Routes';
 import NavBar from './NavBar';
 
 import '@khanacademy/tota11y';
@@ -12,8 +12,8 @@ const App: React.FC = (): JSX.Element => (
         <Router>
             <NavBar />
             <div className="site-content">
-                <Route exact path="/" component={Dashboard} />
-                <Route path="/submission/:id/:stage" component={Submission} />
+                <InitialSubmissionRoutes />
+                <DashboardRoutes />
             </div>
         </Router>
     </div>
