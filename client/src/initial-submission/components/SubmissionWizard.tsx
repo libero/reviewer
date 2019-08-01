@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Submission } from './types';
+import { Submission } from '../types';
 
 declare var API_HOST: string;
 
-const Submission = (/*{ match }: RouteComponentProps*/): JSX.Element => {
+const SubmissionWizard = (/*{ match }: RouteComponentProps*/): JSX.Element => {
     //const [submission, updateSubmission] = useState<Submission>(undefined);
     //const [submissionFetched, setSubmissionFetched] = useState<boolean>(false);
     const [hasSubmitted /* setHasSubmitted */] = useState<boolean>(false);
@@ -69,4 +69,4 @@ const Submission = (/*{ match }: RouteComponentProps*/): JSX.Element => {
         </div>
     );
 };
-export default Submission;
+export default SubmissionWizard;

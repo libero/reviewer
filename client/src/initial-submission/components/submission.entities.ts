@@ -1,6 +1,6 @@
 // This should contain the types and functions to call the graphql resolvers
 import { request } from 'graphql-request';
-import { Submission } from './types';
+import { Submission } from '../types';
 
 // RESOLVERS
 

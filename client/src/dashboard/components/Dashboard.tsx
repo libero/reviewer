@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { getSubmissions, startSubmission } from '../../submission/submission.entities';
-import { Submission } from '../../submission/types';
+import { getSubmissions, startSubmission } from '../../initial-submission/components/submission.entities';
+import { Submission } from '../../initial-submission/types';
 import moment from 'moment';
 import { Button } from '../../ui/atoms';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
