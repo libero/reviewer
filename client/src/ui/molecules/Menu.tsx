@@ -13,13 +13,15 @@ export interface Props {
     onLinkClick?: () => void;
 }
 
-const Menu: React.FC<Props> = ({ items = [], rootClassName = 'menu', onLinkClick = () => {} }: Props): JSX.Element => (
+const Menu: React.FC<Props> = ({
+    items = [],
+    rootClassName = 'menu',
+    onLinkClick = (): void => {},
+}: Props): JSX.Element => (
     <ul className={`${rootClassName}__list`}>
         {items.map(
             (item): JSX.Element => (
-                <li 
-                    className={`${rootClassName}__item`} 
-                    key={`${item.url}-${item.display}`}>
+                <li className={`${rootClassName}__item`} key={`${item.url}-${item.display}`}>
                     {item.external ? (
                         <a className={`${rootClassName}__link`} href={item.url}>
                             {item.display}

@@ -33,10 +33,10 @@ describe('NavMenu', (): void => {
         expect(container.querySelector('.menu__list')).toBeInTheDocument();
         expect(container.querySelector('.menu__item')).toBeInTheDocument();
         expect(container.querySelector('.menu__link')).toBeInTheDocument();
-    })
+    });
 
     it('uses rootClassName passed as className prefix', (): void => {
-        const { container } = render(<Menu items={items} rootClassName="foo"/>, {
+        const { container } = render(<Menu items={items} rootClassName="foo" />, {
             wrapper: routerWrapper(['/link-1']),
         });
         expect(container.querySelector('.menu__list')).not.toBeInTheDocument();
@@ -45,16 +45,13 @@ describe('NavMenu', (): void => {
         expect(container.querySelector('.foo__list')).toBeInTheDocument();
         expect(container.querySelector('.foo__item')).toBeInTheDocument();
         expect(container.querySelector('.foo__link')).toBeInTheDocument();
-    })
+    });
 
     it('should render correct items', (): void => {
         const { container } = render(<Menu items={items} />, {
             wrapper: routerWrapper(['/']),
         });
-        expect(container.querySelector('.menu__item:first-child .menu__link')).toHaveAttribute(
-            'href',
-            '/link-1',
-        );
+        expect(container.querySelector('.menu__item:first-child .menu__link')).toHaveAttribute('href', '/link-1');
         expect(container.querySelector('.menu__item:nth-child(3) .menu__link')).toHaveAttribute(
             'href',
             'www.google.com',
@@ -83,18 +80,22 @@ describe('NavMenu', (): void => {
 
     it('calls onLinkClick callback when non-external links are clicked', (): void => {
         const mockCallback = jest.fn();
-        const { getByText } = render(<Menu 
-            onLinkClick={mockCallback}
-            items={[
+        const { getByText } = render(
+            <Menu
+                onLinkClick={mockCallback}
+                items={[
+                    {
+                        display: 'Link 1',
+                        url: '/link-1',
+                    },
+                ]}
+            />,
             {
-                display: 'Link 1',
-                url: '/link-1',
-            }
-        ]} />, {
-            wrapper: routerWrapper(['/']),
-        });
-        expect(mockCallback).toBeCalledTimes(0)
+                wrapper: routerWrapper(['/']),
+            },
+        );
+        expect(mockCallback).toBeCalledTimes(0);
         fireEvent.click(getByText('Link 1'));
-        expect(mockCallback).toBeCalledTimes(1)
-    })
+        expect(mockCallback).toBeCalledTimes(1);
+    });
 });

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Submission } from '../types';
+//import { Submission } from '../types';
 
 declare var API_HOST: string;
 
