@@ -86,24 +86,48 @@ export class KnexUserRepository implements UserRepository {
         this.IDENTITY_TABLE,
         `${this.USER_TABLE}.id`,
         `${this.IDENTITY_TABLE}.user_id`,
+      ).select(
+        'users.id as user_id',
+        'users.created as user_created',
+        'users.updated as user_updated',
+        'users.defaultIdentity as user_defaultIdentity',
+
+        'identity.id as identity_id',
+        'identity.created as identity_created',
+        'identity.updated as identity_updated',
+        'identity.display_name as identity_display_name',
+        'identity.email as identity_email',
+        'identity.meta as identity_meta',
       );
 
+    console.log({result});
+
     const userInfo = Option.of(result[0]).map(
-      (user): JustUser => {
+      (row): JustUser => {
         return {
-          id: user.user_id,
-          created: user.created,
-          updated: Option.of(user.updated),
-          defaultIdentity: Option.of(user.defaultIdentity),
+          id: row.user_id,
+          created: row.user_created,
+          updated: Option.of(row.user_updated),
+          defaultIdentity: Option.of(row.user_defaultIdentity),
         };
       },
     );
+
+    const identities = Option.of(result.map((row): Identity => ({
+      id: row.identity_id,
+      created: row.identity_created,
+      updated: row.identity_updated,
+      user_id: row.user_id,
+      display_name: row.identity_display_name,
+      email: row.identity_email,
+      meta: row.identity_meta,
+    })));
 
     return userInfo.map(
       (user: JustUser): IUser => {
         return {
           ...user,
-          identities: None,
+          identities,
         };
       },
     );
