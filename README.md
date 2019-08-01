@@ -1,5 +1,7 @@
 ![eLife logo](https://raw.githubusercontent.com/elifesciences/pattern-library/develop/assets/img/patterns/organisms/elife-logo-symbol-2x.png)
 
+[![Build Status](https://travis-ci.com/libero/reviewer.svg?branch=master)](https://travis-ci.com/libero/reviewer)
+
 # Welcome to Libero Reviewer
 
 Malcolm (https://www.imdb.com/title/tt0107290/fullcredits) is a Proof of Concept for eLife Sciences' Libero Reviewer Product.
