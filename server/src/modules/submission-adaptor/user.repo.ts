@@ -100,8 +100,6 @@ export class KnexUserRepository implements UserRepository {
         'identity.meta as identity_meta',
       );
 
-    console.log({result});
-
     const userInfo = Option.of(result[0]).map(
       (row): JustUser => {
         return {
