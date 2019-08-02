@@ -78,7 +78,15 @@ export class KnexUserRepository implements UserRepository {
     // delet this
   }
 
+  private async genericQuery<T>(whereClause: T): Promise<Option<IUser[]>> {
+
+    return None;
+  }
+
   public async selectById(userId: string): Promise<Option<IUser>> {
+    // TODO: the following query code will be used  quite  a bit - you should
+    // probably split it out into a function
+    //
     const result = await this.knex(this.USER_TABLE)
       .where({ [`${this.USER_TABLE}.id`]: userId })
       // TODO: Reassign the ambiguous field names in the join so it doesn't get muddled up
@@ -100,6 +108,33 @@ export class KnexUserRepository implements UserRepository {
         'identity.meta as identity_meta',
       );
 
+    interface DatabaseOutput {
+      user_id: string;
+      user_created: Date;
+      user_updated?: Date;
+      user_defaultIdentity: string;
+
+      identity_id: string;
+      identity_created: Date;
+      identity_updated?: Date;
+      identity_display_name: string;
+      identity_email: string;
+      identity_meta: string;
+    }
+
+    const getUserInfo = (rows: DatabaseOutput[]): Option<JustUser> => Option.of(rows.filter((row) => row.user_id === userId)[0]).map(
+
+      (row): JustUser => {
+        return {
+          id: row.user_id,
+          created: row.user_created,
+          updated: Option.of(row.user_updated),
+          defaultIdentity: Option.of(row.user_defaultIdentity),
+        };
+      },
+    );
+
+    // Split this into function
     const userInfo = Option.of(result[0]).map(
       (row): JustUser => {
         return {
@@ -111,6 +146,7 @@ export class KnexUserRepository implements UserRepository {
       },
     );
 
+    // Split this into function
     const identities = Option.of(result.map((row): Identity => ({
       id: row.identity_id,
       created: row.identity_created,
