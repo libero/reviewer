@@ -38,12 +38,12 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ match, history }: Rou
                     if(getCurrentStepPathIndex() > 0) {
                         history.push(`/submit/${match.params.id}${stepRoutes[getCurrentStepPathIndex() - 1].path}`);
                     } 
-                }}>Prev</Button>
+                }}>back</Button>
                 <Button onClick={() =>{
                     if( getCurrentStepPathIndex() < stepRoutes.length - 1) {
                         history.push(`/submit/${match.params.id}${stepRoutes[getCurrentStepPathIndex() + 1].path}`);
                     } 
-                }} primary>Next</Button>
+                }} primary>next</Button>
             </React.Fragment>
         </Formik>
     );
