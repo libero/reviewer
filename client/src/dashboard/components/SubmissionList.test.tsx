@@ -22,4 +22,11 @@ describe('SubmissionList', (): void => {
                 }),
         ).not.toThrow();
     });
+
+    it('should render empty list message correctly', (): void => {
+        const { getByText } = render(<SubmissionList submissions={[]} />, {
+            wrapper: routerWrapper(['/link-1']),
+        });
+        expect(getByText("You don't have any submissions. Maybe you should make one?")).toBeInTheDocument();
+    });
 });
