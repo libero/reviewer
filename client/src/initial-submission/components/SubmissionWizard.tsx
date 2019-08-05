@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Switch, Route, Redirect, RouteComponentProps, RouteProps } from 'react-router-dom';
+import { Switch, Route, Redirect, RouteComponentProps, RouteProps } from 'react-router-dom';
 import { Formik } from 'formik';
 import { Button } from '../../ui/atoms';
 
@@ -16,10 +16,10 @@ const stepRoutes: RouteProps[] = [
 ];
 
 const SubmissionWizard: React.FC<RouteComponentProps> = ({ match, history }: RouteComponentProps<Props>): JSX.Element => {
-    const getCurrentStepPath = (): string => history.location.pathname.split('/')[3].toLowerCase();
+    const getCurrentStepPath = (): string => history.location.pathname.split('/')[3] && history.location.pathname.split('/')[3].toLowerCase();
     const getCurrentStepPathIndex = (): number => stepRoutes.findIndex(config => config.path === '/' + getCurrentStepPath());
     return (
-        <Formik initialValues={{}} onSubmit={(): void => {}}>
+        <Formik initialValues={{}} onSubmit={(): void => { }}>
             <React.Fragment>
                 <Switch>
                     {stepRoutes.map((route) => (
@@ -34,16 +34,16 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({ match, history }: Rou
                         to={`/submit/${match.params.id}/author`}
                     />
                 </Switch>
-                <Button onClick={() =>{
-                    if(getCurrentStepPathIndex() > 0) {
+                {
+                    getCurrentStepPathIndex() > 0 && <Button onClick={() => {
                         history.push(`/submit/${match.params.id}${stepRoutes[getCurrentStepPathIndex() - 1].path}`);
-                    } 
-                }}>back</Button>
-                <Button onClick={() =>{
-                    if( getCurrentStepPathIndex() < stepRoutes.length - 1) {
-                        history.push(`/submit/${match.params.id}${stepRoutes[getCurrentStepPathIndex() + 1].path}`);
-                    } 
-                }} primary>next</Button>
+                    }}>back</Button>
+                }
+                {
+                    getCurrentStepPathIndex() < stepRoutes.length - 1 && <Button onClick={() => {
+                            history.push(`/submit/${match.params.id}${stepRoutes[getCurrentStepPathIndex() + 1].path}`);
+                    }} primary>next</Button>
+                }
             </React.Fragment>
         </Formik>
     );
