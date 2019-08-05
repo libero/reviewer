@@ -1,7 +1,7 @@
 import React from 'react';
 import Routes from './Routes';
 import routerWrapper from '../../../test-utils/routerWrapper';
-import { render, RenderResult } from '@testing-library/react';
+import { cleanup, render, RenderResult } from '@testing-library/react';
 
 const renderRoutesWithPath = (route: string = ''): RenderResult =>
     render(<Routes />, {
@@ -9,6 +9,7 @@ const renderRoutesWithPath = (route: string = ''): RenderResult =>
     });
 
 describe('InitialSubmissionRoutes', (): void => {
+    afterEach(cleanup);
     it('should render correctly', (): void => {
         expect(renderRoutesWithPath).not.toThrow();
     });
