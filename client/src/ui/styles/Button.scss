@@ -6,12 +6,12 @@
 
   &:focus,
   &:hover {
-    background-color: darken($colourSecondary, 0.3);
+    background-color: darken($colourSecondary, 10%);
     transition: 0.2s ease;
   }
 
   &:active {
-    background-color: darken($colourSecondary, 0.5);
+    background-color: darken($colourSecondary, 20%);
   }
 
   &[disabled] {
@@ -38,40 +38,25 @@
 .button--primary {
   background: $colourPrimary;
   color: $colourTextReverse;
-
   &:focus,
   &:hover {
-    background-color: darken($colourPrimary, 0.3);
+    background-color: darken($colourPrimary, 10%);
   }
 
   &:active {
-    background-color: darken($colourPrimary, 0.5);
+    background-color: darken($colourPrimary, 20%);
   }
+}
 
-  &[disabled] {
-    &:focus,
-    &:hover,
-    &:active {
-      background: $colourPrimary;
-    }
-  }
-
-  border-color: $colourPrimary;
-
+.button--danger {
+  background: $colourDanger;
+  color: $colourTextReverse;
   &:focus,
   &:hover {
-    border-color: darken($colourPrimary, 0.3);
+    background-color: darken($colourDanger, 10%);
   }
 
   &:active {
-    border-color: darken($colourPrimary, 0.5);
-  }
-
-  &[disabled] {
-    &:focus,
-    &:hover,
-    &:active {
-      border-color: $colourPrimary;
-    }
+    background-color: darken($colourDanger, 20%);
   }
 }

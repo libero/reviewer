@@ -1,0 +1,33 @@
+.modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1500;
+  background: rgba(0, 0, 0, 0.8);
+  transition: opacity 0.2s ease;
+  overflow-y: auto;
+}
+
+.modal__wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  width: 408px;
+  background-color: $white;
+  text-align: center;
+  padding: 24px;
+}
+
+.modal__buttons {
+  bottom: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-around;
+}
