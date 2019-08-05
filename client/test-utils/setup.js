@@ -2,7 +2,7 @@
 require('@testing-library/jest-dom/extend-expect');
 const jestDom = require('@testing-library/jest-dom');
 
-expect.extend({...jestDom})
+expect.extend({...jestDom});
 
  //Temp suppression of act wrapper error to be fixed in react-dom 16.9
 jest.spyOn(console, 'error').mockImplementation((...args) => {

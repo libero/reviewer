@@ -35,6 +35,19 @@ export async function startSubmission(): Promise<Submission | null> {
     return startSubmission;
 }
 
+export async function deleteSubmission(id: string): Promise<boolean> {
+    const mutation = `
+        mutation DeleteSubmission($id: ID!) {
+            removeSubmission(id: $id) {
+                id
+            }
+        }    
+    `;
+
+    const { removeSubmission } = await request(API_HOST + '/graphql', mutation, { id });
+    return removeSubmission;
+}
+
 export async function setSubmissionTitle(id: string, title: string): Promise<Submission | null> {
     const mutation = `
     mutation SetSubmissionTitle($id: ID!, $title: String!) {
