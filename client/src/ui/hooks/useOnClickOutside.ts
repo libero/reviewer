@@ -8,8 +8,8 @@ function useOnClickOutside(ref: React.MutableRefObject<HTMLElement>, callback: F
     };
 
     useEffect((): (() => void) => {
-        document.addEventListener('mousedown', clickHandler);
-        return (): void => document.removeEventListener('mousedown', clickHandler);
+        document.addEventListener('click', clickHandler);
+        return (): void => document.removeEventListener('click', clickHandler);
     }, []);
 }
 
