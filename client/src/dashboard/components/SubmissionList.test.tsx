@@ -11,6 +11,7 @@ describe('SubmissionList', (): void => {
         id: 'someId',
         title: 'testSubmission',
         lastStepVisited: 'someStep',
+        status: 'CONTINUE_SUBMISSION',
         updated: new Date().getTime(),
     };
 

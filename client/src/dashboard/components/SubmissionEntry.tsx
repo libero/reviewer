@@ -44,28 +44,29 @@ interface Props {
 
 const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
+    const status = submission.status.toLowerCase();
     return (
-        <div className="dashboard-entry">
+        <div className="submission-entry">
             <Link
-                className="dashboard-entry__link"
+                className={`submission-entry__link submission-entry__link--${status}`}
                 to={`/submission/${submission.id}/${submission.lastStepVisited || 'title'}`}
             >
-                <div className="dashboard-entry__content">
-                    <span className="dashboard-entry__title">
+                <div className="submission-entry__content">
+                    <span className={`submission-entry__title submission-entry__title--${status}`}>
                         {submission.title.length !== 0 ? submission.title : '(no title)'}
                     </span>
-                    <div className="dashboard-entry__link_text">
+                    <div className={`submission-entry__link_text submission-entry__link_text--${status}`}>
                         <span>Continue Submission</span>
                     </div>
-                    <div className="dashboard-entry__dates">
+                    <div className="submission-entry__dates">
                         <time>{dashboardDateText(submission.updated)}</time>
-                        <time className="dashboard-entry__date">
+                        <time className="submission-entry__date">
                             {moment(submission.updated).format('ddd D MMM YYYY')}
                         </time>
                     </div>
                 </div>
             </Link>
-            <div className="dashboard-entry__icon_container">
+            <div className="submission-entry__icon_container">
                 <Modal
                     hide={toggle}
                     isShowing={isShowing}
@@ -80,7 +81,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element =>
                 </Modal>
                 <Delete
                     onClick={(): void => toggle()}
-                    className="dashboard-entry__icon"
+                    className="submission-entry__icon"
                     height="24"
                     width="24"
                     viewBox="3 3 18 18"

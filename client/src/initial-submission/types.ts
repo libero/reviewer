@@ -3,4 +3,5 @@ export interface Submission {
     title: string;
     lastStepVisited: string;
     updated: number;
+    status: string;
 }
