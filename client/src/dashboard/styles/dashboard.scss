@@ -13,11 +13,11 @@
 }
 
 .dashboard__new_submission {
-  margin-bottom: 6px;
-  margin-top: 24px;
+  margin-bottom: 0.375rem;
+  margin-top: 1.5rem;
 }
 
-.dashboard-entry {
+.submission-entry {
   border-bottom: 0.063rem solid $borderColour;
   display: flex;
 
@@ -28,7 +28,7 @@
   }
 }
 
-.dashboard-entry__link {
+.submission-entry__link {
   color: $bodyText;
   text-decoration: none;
   width: 95%;
@@ -38,7 +38,11 @@
   }
 }
 
-.dashboard-entry__content {
+.submission-entry__link--submitted, .submission-entry__link--rejected {
+  pointer-events: none;
+}
+
+.submission-entry__content {
   @include forSize('tabletPortraitUp') {
     display: flex;
     flex-direction: row;
@@ -46,10 +50,9 @@
   }
 }
 
-.dashboard-entry__title {
+.submission-entry__title {
   box-sizing: border-box;
   margin-bottom: 1.5rem;
-  color: rgb(33, 33, 33);
   font-family: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
   font-weight: 400;
   text-align: left;
@@ -61,16 +64,38 @@
   }
 }
 
-.dashboard-entry__link_text {
-  color: $colourPrimary;
+.submission-entry__title--continue_submission {
+  color: $bodyText;
+}
 
+.submission-entry__title--rejected {
+  color: $colourDanger;
+}
+
+.submission-entry__title--submitted {
+  color: $textColourMuted;
+}
+
+.submission-entry__link_text {
   @include forSize('tabletPortraitUp') {
-    flex: 0 0 120px; //TODO REM
+    flex: 0 0 7.5rem;
     margin-bottom: 0;
   }
 }
 
-.dashboard-entry__dates {
+.submission-entry-entry__link_text--continue_submission {
+  color: $colourPrimary;
+}
+
+.submission-entry__link_text--rejected {
+  color: $colourDanger;
+}
+
+.submission-entry__link_text--submitted {
+  color: $textColourMuted;
+}
+
+.submission-entry__dates {
   color: $textColourMuted;
   justify-content: space-between;
   display: flex;
@@ -82,19 +107,19 @@
     justify-content: flex-start;
   }
 
-  .dashboard-entry__date {
+  .submission-entry__date {
     @include forSize('tabletPortraitUp') {
       font-size: 0.75rem;
     }
   }
 }
 
-.dashboard-entry__icon_container {
+.submission-entry__icon_container {
   width: 5%;
 }
 
-.dashboard-entry__icon.MuiSvgIcon-root {
-  margin-left: 24px;
+.submission-entry__icon.MuiSvgIcon-root {
+  margin-left: 1.5rem;
   display: none;
   fill: $textColourMuted;
 
@@ -106,8 +131,8 @@
 .dashboard__button_container {
   text-align: right;
   display: none;
-  margin-bottom: 6px;
-  margin-top: 24px;
+  margin-bottom: 0.375rem;
+  margin-top: 1.5rem;
 
   @include forSize('tabletPortraitUp') {
     display: block;
@@ -131,11 +156,11 @@
 }
 
 .dashboard__tab {
-  padding: 24px;
+  padding: 1.5rem;
   list-style: none;
   cursor: pointer;
-  border-bottom: 4px solid transparent;
-  margin-bottom: -1px;
+  border-bottom: 0.25rem solid transparent;
+  margin-bottom: -0.063rem;
   color: $textColourMuted;
   &:hover {
     color: $colourPrimary;
@@ -156,7 +181,7 @@
   &.react-tabs__tab-panel--selected {
       display: block;
       @include forSize('tabletPortraitUp') {
-        border-top: 1px solid $borderColour;
+        border-top: 0.063rem solid $borderColour;
     }
   }
 }
