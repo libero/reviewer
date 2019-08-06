@@ -4,9 +4,9 @@ import SubmissionWizard from './SubmissionWizard';
 
 const Routes: React.FC = (): JSX.Element => (
     <Switch>
-        <Route component={(): JSX.Element => <div>Survey Page</div>} path="/survey/:id" />
-        <Route component={(): JSX.Element => <div>Thankyou page</div>} path="/thankyou/:id" />
-        <Route component={SubmissionWizard} path="/submit/:id" />
+        <Route path="/survey/:id" component={(): JSX.Element => <div>Survey Page</div>} />
+        <Route path="/thankyou/:id" component={(): JSX.Element => <div>Thankyou page</div>} />
+        <Route path="/submit/:id" component={SubmissionWizard} />
     </Switch>
 );
 

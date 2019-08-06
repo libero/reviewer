@@ -1,72 +1,64 @@
-import React, { useState } from 'react';
-//import { Submission } from '../types';
+import React from 'react';
+import { Switch, Route, Redirect, RouteComponentProps, RouteProps } from 'react-router-dom';
+import { Formik } from 'formik';
+import { Button } from '../../ui/atoms';
 
-declare var API_HOST: string;
+interface Props {
+    id: string;
+}
+/*eslint-disable react/display-name*/
+const stepRoutes: RouteProps[] = [
+    { path: '/author', component: (): JSX.Element => <div>Author Step</div> },
+    { path: '/files', component: (): JSX.Element => <div>File Step</div> },
+    { path: '/details', component: (): JSX.Element => <div>Detail Step</div> },
+    { path: '/editors', component: (): JSX.Element => <div>Editors Step</div> },
+    { path: '/disclosure', component: (): JSX.Element => <div>Disclosure Step</div> },
+];
 
-const SubmissionWizard = (/*{ match }: RouteComponentProps*/): JSX.Element => {
-    //const [submission, updateSubmission] = useState<Submission>(undefined);
-    //const [submissionFetched, setSubmissionFetched] = useState<boolean>(false);
-    const [hasSubmitted /* setHasSubmitted */] = useState<boolean>(false);
-
-    // if (!submissionFetched) {
-    //     getSubmission(match.params.id)
-    //         .then((fetchedSubmission: Submission) => {
-    //             updateSubmission(fetchedSubmission);
-    //             setSubmissionFetched(true);
-    //         })
-    //         // TODO: Better handle error states
-    //         .catch((): void => setSubmissionFetched(true));
-    // }
-
+const SubmissionWizard: React.FC<RouteComponentProps> = ({
+    match,
+    history,
+}: RouteComponentProps<Props>): JSX.Element => {
+    const getCurrentStepPath = (): string =>
+        history.location.pathname.split('/')[3] && history.location.pathname.split('/')[3].toLowerCase();
+    const getCurrentStepPathIndex = (): number =>
+        stepRoutes.findIndex((config): boolean => config.path === '/' + getCurrentStepPath());
     return (
-        <div
-            style={{
-                marginRight: '33%',
-                marginLeft: '33%',
-                marginTop: '150px',
-                fontFamily: '"Noto Sans", Arial, Helvetica, sans-serif, sans-serif',
-            }}
-        >
-            <h1> Submission</h1>
-            {/* <input
-                label="Manuscript Title"
-                placeholder="enter yo title here"
-                initialValue={submission && submission.title}
-                touchedNote={!hasSubmitted ? 'unsaved' : undefined}
-                onChange={(ev): void => {
-                    updateSubmission({
-                        ...submission,
-                        title: ev.target.value,
-                    });
-                    setHasSubmitted(false);
-                }}
-            /> */}
-            <div>
-                {/* <Button
-                    text="Submit"
-                    onClick={(): void => {
-                        setSubmissionTitle(submission.id, submission.title);
-                        setHasSubmitted(true);
-                    }}
-                /> */}
-                {hasSubmitted ? (
-                    <span
-                        style={{
-                            height: 48,
-                            padding: '12px 18px 9px',
-                            fontSize: '14px',
-                            lineHeight: '18px',
-                            display: 'inline-block',
+        <Formik initialValues={{}} onSubmit={(): void => {}}>
+            <React.Fragment>
+                <Switch>
+                    {stepRoutes.map(
+                        (route): JSX.Element => (
+                            <Route
+                                key={route.path as string}
+                                path={match.url + route.path}
+                                component={route.component}
+                            />
+                        ),
+                    )}
+                    <Redirect from="/submit/:id" to={`/submit/${match.params.id}/author`} />
+                </Switch>
+                {getCurrentStepPathIndex() > 0 && (
+                    <Button
+                        onClick={(): void => {
+                            history.push(`/submit/${match.params.id}${stepRoutes[getCurrentStepPathIndex() - 1].path}`);
                         }}
                     >
-                        {' '}
-                        💾 Saved!{' '}
-                    </span>
-                ) : (
-                    ''
+                        back
+                    </Button>
                 )}
-            </div>
-        </div>
+                {getCurrentStepPathIndex() < stepRoutes.length - 1 && (
+                    <Button
+                        onClick={(): void => {
+                            history.push(`/submit/${match.params.id}${stepRoutes[getCurrentStepPathIndex() + 1].path}`);
+                        }}
+                        type="primary"
+                    >
+                        next
+                    </Button>
+                )}
+            </React.Fragment>
+        </Formik>
     );
 };
 export default SubmissionWizard;
