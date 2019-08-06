@@ -52,7 +52,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
                         onClick={(): void => {
                             history.push(`/submit/${match.params.id}${stepRoutes[getCurrentStepPathIndex() + 1].path}`);
                         }}
-                        primary
+                        type="primary"
                     >
                         next
                     </Button>
