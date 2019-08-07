@@ -1,10 +1,12 @@
 /* All atom ui components should live here */
 @import './AppBar';
 @import './AppBarIcon';
+@import './Button';
+@import './Paragraph';
+@import './Footer'; // this needs to be declared after Paragraph for precedence
 
 /* All molecule ui components should live here */
 @import './BurgerMenu';
-@import './Button';
 @import './Modal';
 @import './Menu';
 @import './ProfileDropdown';

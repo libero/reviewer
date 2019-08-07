@@ -13,6 +13,13 @@ $colourDanger: rgb(207, 12, 78);
 $defaultFontFamily: "Noto Sans", Arial, Helvetica, sans-serif, sans-serif;
 $fontHeading: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
 $altFontFamily: "Noto Serif", serif;
+$fontReading: "Noto Serif", serif;
+$fontWriting: "Noto Sans", Arial, Helvetica, sans-serif;
+$fontSizeSmall: 14px;
+
+//sizing
+$lineHeightBase: 1.5rem;
+$lineHeightBaseSmall: 1.125rem;
 
 // breakpoints
 $phone: 480px;

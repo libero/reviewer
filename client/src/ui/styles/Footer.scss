@@ -1,0 +1,10 @@
+.footer {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+  text-align: center;
+  .footer__link {
+    color: $colourPrimary;
+    text-decoration: none;
+  }
+}
