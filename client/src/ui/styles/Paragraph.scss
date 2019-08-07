@@ -1,0 +1,24 @@
+.paragraph {
+  font-family: $fontWriting;
+  line-height: $lineHeightBase;
+
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.paragraph--secondary {
+  color: $textColourMuted;
+}
+
+.paragraph--small {
+  font-size: $fontSizeSmall;
+  line-height: $lineHeightBaseSmall;
+}
+
+.paragraph--reading {
+  font-family: $fontReading;
+}
