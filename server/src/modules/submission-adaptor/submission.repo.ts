@@ -1,7 +1,6 @@
 // This should probably be called something else
-import { SubmissionRepository, ISubmission } from '../../packages/submission/submission.repository';
+import { SubmissionRepository, ISubmission, SubmissionId } from '../../packages/submission/submission.repository';
 import { Option, None } from 'funfix';
-import { Uuid } from '../../core';
 import * as Knex from 'knex';
 
 export class KnexSubmissionRepository implements SubmissionRepository {
@@ -31,7 +30,7 @@ export class KnexSubmissionRepository implements SubmissionRepository {
     return dated;
   }
 
-  public async findById(id: string): Promise<Option<ISubmission>> {
+  public async findById(id: SubmissionId): Promise<Option<ISubmission>> {
     const rows = await this.knex(this.TABLE_NAME).where({id}).select<ISubmission[]>('id', 'title', 'updated');
 
     return Option.of(rows[0]);
@@ -45,7 +44,7 @@ export class KnexSubmissionRepository implements SubmissionRepository {
     return toInsert;
   }
 
-  public async delete(id: Uuid): Promise<boolean> {
+  public async delete(id: SubmissionId): Promise<boolean> {
 
     const res = await this.knex(this.TABLE_NAME).where({id}).delete();
 

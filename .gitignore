@@ -72,3 +72,6 @@ typings/
 
 # vs code
 .vscode
+
+# generated code
+*.tmp.ts
