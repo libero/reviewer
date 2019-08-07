@@ -1,6 +1,6 @@
 // This should contain the types and functions to call the graphql resolvers
 import { request } from 'graphql-request';
-import { Submission } from './types';
+import { Submission } from '../types';
 
 // RESOLVERS
 
@@ -33,6 +33,19 @@ export async function startSubmission(): Promise<Submission | null> {
 
     const { startSubmission } = await request(API_HOST + '/graphql', mutation);
     return startSubmission;
+}
+
+export async function deleteSubmission(id: string): Promise<boolean> {
+    const mutation = `
+        mutation DeleteSubmission($id: ID!) {
+            removeSubmission(id: $id) {
+                id
+            }
+        }    
+    `;
+
+    const { removeSubmission } = await request(API_HOST + '/graphql', mutation, { id });
+    return removeSubmission;
 }
 
 export async function setSubmissionTitle(id: string, title: string): Promise<Submission | null> {

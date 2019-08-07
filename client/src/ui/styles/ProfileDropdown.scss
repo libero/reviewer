@@ -1,6 +1,6 @@
-.profile-dropdown {
+.profile_dropdown {
   position: relative;
-  .profile-dropdown__button {
+  .profile_dropdown__button {
     background: none;
     border: none;
     padding: 0;
@@ -11,7 +11,7 @@
       outline:none
     }
   }
-  .profile-dropdown__arrow {
+  .profile_dropdown__arrow {
     margin-bottom: -0.25rem;
     margin-left: 0.25rem;
     border-width: 0.25rem;
@@ -19,7 +19,7 @@
     border-color: rgb(33, 33, 33) transparent transparent;
     border-image: initial;
   }
-  .profile-dropdown__panel {
+  .profile_dropdown__panel {
     position: absolute;
     top: 2.25rem;
     right: 0px;
@@ -30,11 +30,11 @@
     border-radius: 3px;
     padding: 0.75rem 0;
   }
-  .profile-dropdown__item {
+  .profile_dropdown__item {
     white-space: nowrap;
     padding: 0.75rem;
   }
-  .profile-dropdown__panel-heading {
+  .profile_dropdown__panel-heading {
     font-family: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
     font-weight: 400;
     text-overflow: ellipsis;
@@ -42,12 +42,12 @@
     padding: 0.75rem;
     overflow: hidden;
   }
-  .profile-dropdown__list {
+  .profile_dropdown__list {
     list-style: none;
     margin: 0;
     padding-left: 0;
   }
-  .profile-dropdown__link {
+  .profile_dropdown__link {
     display: block;
     text-decoration: none;
     color: $bodyText;

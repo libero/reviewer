@@ -1,11 +1,13 @@
 // Colours
 // TODO: colours should define a pallet ie: blue, grey, darkGrey these should then be used by element styles ie: textColour footerTextColour 
-$textColourMuted: rgb(136, 136, 136) !default;
+$white: #fff;
+$textColourMuted: rgb(136, 136, 136) !default; //colourTextSecondary
 $colourPrimary: rgb(2, 136, 209) !default;
 $borderColour: rgb(224, 224, 224) !default; 
-$bodyText: rgb(33, 33, 33) !default;
-$colourSecondary: #f7f7f7 !default;
-$colourTextReverse: #fff !default;
+$bodyText: rgb(33, 33, 33) !default; //colourText
+$colourSecondary: rgb(247, 247, 247) !default;
+$colourTextReverse: $white !default;
+$colourDanger: rgb(207, 12, 78);
 
 //fonts
 $defaultFontFamily: "Noto Sans", Arial, Helvetica, sans-serif, sans-serif;

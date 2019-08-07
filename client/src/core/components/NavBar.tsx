@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar, AppBarIcon } from '../../ui/atoms';
-import { ProfileDropdown, NavMenu, BurgerMenu } from '../../ui/molecules';
+import { ProfileDropdown, Menu, BurgerMenu } from '../../ui/molecules';
 import Logo from '../assets/elife-logo.png';
 const menuItems = [
     {
@@ -23,11 +23,9 @@ const menuItems = [
 
 const NavBar: React.FC = (): JSX.Element => (
     <AppBar>
-        <BurgerMenu>
-            <NavMenu items={menuItems} vertical />
-        </BurgerMenu>
+        <BurgerMenu items={menuItems} />
         <AppBarIcon imgSrc={Logo} link="/" altText="eLife logo" />
-        <NavMenu items={menuItems} />
+        <Menu items={menuItems} />
         <ProfileDropdown name="Name" />
     </AppBar>
 );
