@@ -8,7 +8,7 @@ help:
 	@echo "To run the CI script locally, use `make all`, which will
 	@echo "start building all components in parallel"
 
-build-server:
+build-and-test-server:
 	@echo "Build and test"
 	cd server/ && yarn
 	cd server/ && yarn lint
@@ -16,7 +16,7 @@ build-server:
 	cd server/ && yarn test
 	@echo "Build docker containers"
 
-build-client:
+build-and-test-client:
 	@echo "Build and test"
 	cd client/ && yarn
 	cd client/ && yarn lint
