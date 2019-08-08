@@ -39,10 +39,10 @@ client_ci:
 install_client_packages:
 	cd client/ && yarn
 
-lint_client: install_server_packages
+lint_client: install_client_packages
 	cd client/ && yarn lint
 
-build_client: install_server_packages
+build_client: install_client_packages
 	cd client/ && yarn build
 
 test_client: build_client
