@@ -9,7 +9,7 @@ help:
 	@echo "start building all components in parallel"
 
 server_ci:
-	make -j 4 test_server lint_server
+	make -j 4 lint_server build_server_container
 
 install_server_packages:
 	cd server/ && yarn
