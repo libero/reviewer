@@ -53,7 +53,7 @@ lint_client: install_client_packages
 build_client: install_client_packages
 	cd client/ && yarn build
 
-test_client: install_server_packages
+test_client: install_client_packages
 	cd client/ && yarn test
 
 build_client_container: build_client test_client
