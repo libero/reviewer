@@ -2,8 +2,8 @@ language: node_js
 node_js:
   - 10
 env:
-  - TEST_SUITE=build-and-test-server
-  - TEST_SUITE=build-and-test-client
+  - TEST_SUITE=server_ci
+  - TEST_SUITE=client_ci
 
 cache: yarn
 
