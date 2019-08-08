@@ -15,6 +15,12 @@ help:
 
 TRAVIS_BUILD_NUMBER ?= local
 
+###########################
+#
+# CI Build and Test
+#
+###########################
+
 server_ci:
 	make -j 4 lint_server build_server_container
 
@@ -61,3 +67,19 @@ build_client_container: build_client test_client
 
 local_ci:
 	make -j 4 server_ci client_ci
+
+###########################
+#
+# Integration Tests
+#
+###########################
+
+start_containers:
+	# Has a soft dependency on build_server_container and build_client_containe
+	@echo "Starts running the newly built & pushed containers in testing mode"
+
+run_browser_tests: start_containers
+	@echo "Run the browser tests"
+
+run_api_tests: start_containers
+	@echo "Run the api tests"
