@@ -8,6 +8,8 @@ help:
 	@echo "To run the CI script locally, use `make all`, which will"
 	@echo "start building all components in parallel"
 
+TRAVIS_COMMIT ?= local
+
 server_ci:
 	make -j 4 lint_server build_server_container
 
@@ -28,7 +30,7 @@ build_server_container: build_server test_server
 	# The docker container needs the graphql schemas found in src but not dist
 	cd server/ && mkdir -p gql
 	cd server/ && bash -c 'find src | grep graphql | xargs -I {}  cp {} gql/'
-	cd server/ && docker build -t libero_reviewer_server:latest .
+	cd server/ && docker build -t libero_reviewer_server:$(TRAVIS_COMMIT) .
 
 push_server_container: build_server_container
 	@echo "Push the container to a docker registry"
