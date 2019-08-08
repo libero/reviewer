@@ -13,7 +13,7 @@ help:
 	@echo "- each command runs in it's own shell, hence all the 'cd's"
 	@echo "- the build targets are in the format <name>:[<dependencies>]"
 
-TRAVIS_COMMIT ?= local
+TRAVIS_BUILD_NUMBER ?= local
 
 server_ci:
 	make -j 4 lint_server build_server_container
@@ -36,7 +36,7 @@ build_server_container: build_server test_server
 	# The docker container needs the graphql schemas found in src but not dist
 	cd server/ && mkdir -p gql
 	cd server/ && bash -c 'find src | grep graphql | xargs -I {}  cp {} gql/'
-	cd server/ && docker build -t libero/reviewer_server:$(TRAVIS_COMMIT) .
+	cd server/ && docker build -t libero/reviewer_server:$(TRAVIS_BUILD_NUMBER) .
 
 push_server_container: build_server_container
 	@echo "Push the container to a docker registry"
@@ -57,7 +57,7 @@ test_client: install_client_packages
 	cd client/ && yarn test
 
 build_client_container: build_client test_client
-	cd client/ && docker build -t libero/reviewer_client:$(TRAVIS_COMMIT) .
+	cd client/ && docker build -t libero/reviewer_client:$(TRAVIS_BUILD_NUMBER) .
 
 local_ci:
 	make -j 4 server_ci client_ci
