@@ -25,4 +25,4 @@ build-and-test-client:
 	@echo "Build docker containers"
 
 all:
-	make -j4 build-server build-client
+	make -j4 build-and-test-server build-and-test-client
