@@ -20,12 +20,10 @@ storiesOf('ui | molecules/Menu', module)
                 {
                     display: 'Here',
                     url: '/?path=/story/ui-molecules-menu--menu',
-                    external: true,
                 },
                 {
                     display: 'Author guide',
                     url: '/author-guide',
-                    external: true,
                 },
                 {
                     display: 'Reviewer guide',
