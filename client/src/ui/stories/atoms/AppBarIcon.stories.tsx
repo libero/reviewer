@@ -10,7 +10,7 @@ storiesOf('ui | atoms/AppBarIcon', module)
     .addDecorator(withKnobs)
     .addDecorator(centered)
     .add(
-        'primary',
+        'AppBarIcon',
         (): JSX.Element => {
             const altText = text('Alt Text', 'eLife Logo');
             return <AppBarIcon imgSrc={Logo} link="#" altText={altText} />;

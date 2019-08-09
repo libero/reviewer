@@ -38,16 +38,14 @@ const Dashboard = withRouter(
                 </div>
                 <SubmissionList submissions={submissions} />
                 <Footer>
-                    <p>
-                        To find existing submissions or to submit a{' '}
-                        <Link className="footer__link" to="/author-guide/types">
-                            Research Advance
-                        </Link>{' '}
-                        please visit our{' '}
-                        <a className="footer__link" href="https://submit.elifesciences.org">
-                            full peer review and submissions system
-                        </a>{' '}
-                    </p>
+                    To find existing submissions or to submit a{' '}
+                    <Link className="footer__link" to="/author-guide/types">
+                        Research Advance
+                    </Link>{' '}
+                    please visit our{' '}
+                    <a className="footer__link" href="https://submit.elifesciences.org">
+                        full peer review and submissions system
+                    </a>
                 </Footer>
             </div>
         );

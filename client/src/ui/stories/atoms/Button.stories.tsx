@@ -10,7 +10,7 @@ storiesOf('ui | atoms/Button', module)
     .addDecorator(withKnobs)
     .addDecorator(centered)
     .add(
-        'primary',
+        'Button',
         (): JSX.Element => {
             const type = select('Type', ['primary', 'danger'], 'primary');
             const buttonText = text('Text', 'Button');

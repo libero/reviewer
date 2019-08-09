@@ -13,7 +13,7 @@ const historyLocation: LocationDescriptor[] = ['/'];
 storiesOf('ui | atoms/AppBar', module)
     .addDecorator(withKnobs)
     .add(
-        'primary',
+        'AppBar',
         (): JSX.Element => {
             return <AppBar />;
         },
