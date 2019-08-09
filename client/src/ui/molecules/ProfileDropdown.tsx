@@ -12,7 +12,6 @@ const ProfileDropdown: React.FC<Props> = ({ name }: Props): JSX.Element => {
     const [expanded, setExpanded]: [boolean, Function] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>();
     useOnClickOutside(dropdownRef, (): void => setExpanded(false));
-
     return (
         <div ref={dropdownRef} className="profile_dropdown">
             <button
