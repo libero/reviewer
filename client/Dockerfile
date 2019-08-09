@@ -1,8 +1,11 @@
-from nginx
+FROM nginx:1.16
 
-maintainer eLife Reviwer Product Team <reviewer-product@elifesciences.org>
+MAINTAINER eLife Reviwer Product Team <reviewer-product@elifesciences.org>
 
-copy deployment/nginx.conf /etc/nginx/nginx.conf
-copy dist/ /usr/share/nginx/html
+COPY deployment/nginx.conf /etc/nginx/nginx.conf
+COPY dist/ /usr/share/nginx/html
 
-expose 80
+HEALTHCHECK --interval=1m --timeout=1s \
+	CMD curl -f http://localhost/index.html || exit 1
+
+EXPOSE 80

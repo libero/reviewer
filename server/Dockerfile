@@ -1,19 +1,21 @@
-from node:10-alpine
+FROM node:10-alpine
 
-maintainer eLife Reviwer Product Team <reviewer-product@elifesciences.org>
+MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 
-workdir /opt
+WORKDIR /opt
 
-copy package.json .
-copy yarn.lock .
+COPY package.json .
+COPY yarn.lock .
 
-copy dist/ dist/
+COPY dist/ dist/
 
-copy gql/ dist/modules/
+COPY gql/ dist/modules/
 
-copy node_modules/ ./node_modules/
+COPY node_modules/ ./node_modules/
 
-expose 3000
+EXPOSE 3000
+HEALTHCHECK --interval=1m --timeout=1s \
+	CMD curl -f http://localhost:3000/health || exit 1
 
-cmd ["node", "dist/main.js"]
+CMD ["node", "dist/main.js"]
 
