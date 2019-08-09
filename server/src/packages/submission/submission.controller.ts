@@ -1,8 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { Submission } from './submission.entity';
-import { ISubmission, SubmissionRepository } from './submission.repository';
+import { ISubmission, SubmissionRepository, SubmissionId } from './submission.repository';
 import { Option, None } from 'funfix';
-import { Uuid } from '../../core';
 
 export class SubmissionController {
   repository: Option<SubmissionRepository> = None;
@@ -20,7 +19,8 @@ export class SubmissionController {
   }
 
   async start(): Promise<Submission> {
-    const submission: Submission = await Submission.make(uuid());
+    const id = SubmissionId.fromUuid(uuid());
+    const submission: Submission = await Submission.make(id);
 
     await this.repository
       .map(async repo => await repo.save(submission.toDTO()))
@@ -29,13 +29,13 @@ export class SubmissionController {
     return submission;
   }
 
-  async findOne(id: Uuid): Promise<Submission> {
+  async findOne(id: SubmissionId): Promise<Submission> {
     return await this.repository
       .map(async repo => new Submission((await repo.findById(id)).get()))
       .get();
   }
 
-  async changeTitle(id: Uuid, title: string): Promise<Submission> {
+  async changeTitle(id: SubmissionId, title: string): Promise<Submission> {
     return await this.repository
       .map(async repo => {
         const submission: Submission = new Submission(
@@ -44,12 +44,12 @@ export class SubmissionController {
 
         submission.changeTitle(title);
 
-        return new Submission(await repo.save(submission));
+        return new Submission(await repo.save(submission.toDTO()));
       })
       .get();
   }
 
-  async deleteSubmission(id: Uuid): Promise<boolean> {
+  async deleteSubmission(id: SubmissionId): Promise<boolean> {
     return await this.repository.map(async repo => {
       return await repo.delete(id);
     }).get();

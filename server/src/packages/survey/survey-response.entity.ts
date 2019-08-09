@@ -1,17 +1,19 @@
 import {
   ISurveyResponse,
   SurveyResponseDTO,
+  SurveyId,
+  SurveyResponseId,
 } from './survey-response.repository';
 import { Question } from './question';
 import { Answer } from './answer';
-import { Uuid } from '../../core';
+import { SubmissionId } from '../submission/submission.repository';
 
 export class SurveyResponse implements ISurveyResponse {
-  id: Uuid;
+  id: SurveyResponseId;
 
-  surveyId: Uuid;
+  surveyId: SurveyId;
 
-  submissionId: Uuid;
+  submissionId: SubmissionId;
 
   questions: Question[];
 
@@ -24,9 +26,9 @@ export class SurveyResponse implements ISurveyResponse {
     questions = [],
     answers = [] ,
   }: {
-    id: Uuid;
-    surveyId: Uuid;
-    submissionId: Uuid;
+    id: SurveyResponseId;
+    surveyId: SurveyId;
+    submissionId: SubmissionId;
     questions?: Question[];
     answers?: Answer[];
   }) {

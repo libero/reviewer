@@ -1,17 +1,19 @@
 import { Option } from 'funfix';
-import { Uuid } from '../../core';
+import { uuidType } from '../core';
+
+export class SubmissionId extends uuidType<'SubmissionId'>() {}
 
 export interface SubmissionRepository {
   findAll(): Promise<ISubmission[]>;
-  findById(id: Uuid): Promise<Option<ISubmission>>;
+  findById(id: SubmissionId): Promise<Option<ISubmission>>;
   save(subm: ISubmission): Promise<ISubmission>;
-  delete(id: Uuid): Promise<boolean>;
+  delete(id: SubmissionId): Promise<boolean>;
 }
 
 // I'm treating ISubmission as a DTO for submission
 
 export interface ISubmission {
-  id: Uuid;
+  id: SubmissionId;
   title: string;
   updated: Date;
 }
