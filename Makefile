@@ -8,7 +8,7 @@ help:
 	@echo "To run the CI script locally, use `make all`, which will"
 	@echo "start building all components in parallel"
 	@echo ""
-	@echo "If you aren't familliar with Makefile, there are a cople of"
+	@echo "If you aren't familliar with Makefile, there are a couple of"
 	@echo "things you should know:"
 	@echo "- each command runs in it's own shell, hence all the 'cd's"
 	@echo "- the build targets are in the format <name>:[<dependencies>]"
