@@ -1,6 +1,6 @@
 from node:10-alpine
 
-maintainer eLife Reviwer Product Team <reviwer-product@elifesciences.org>
+maintainer eLife Reviwer Product Team <reviewer-product@elifesciences.org>
 
 workdir /opt
 
