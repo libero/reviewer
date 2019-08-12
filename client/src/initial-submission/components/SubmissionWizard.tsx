@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect, RouteComponentProps, RouteProps } from 'react-router-dom';
 import { Formik } from 'formik';
 import { Button } from '../../ui/atoms';
+import { ProgressBar } from '../../ui/molecules';
 
 interface Props {
     id: string;
@@ -26,6 +27,10 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
     return (
         <Formik initialValues={{}} onSubmit={(): void => {}}>
             <React.Fragment>
+                <ProgressBar 
+                    steps={[{ id: 'author', text: 'Author'}, { id: 'files', text: 'Files'}, { id: 'details', text: 'Details'}]}
+                    currentStep={getCurrentStepPath()}
+                />
                 <Switch>
                     {stepRoutes.map(
                         (route): JSX.Element => (
