@@ -1,11 +1,11 @@
 import React from 'react';
-interface Props {
-    onClick?: Function;
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
     type?: string;
     children?: string;
 }
-const Button: React.FC<Props> = ({ onClick, type, children }: Props): JSX.Element => (
-    <button className={`button ${type ? 'button--' + type : ''}`} onClick={(): void => onClick()}>
+
+const Button: React.FC<Props> = ({ type, children, className, ...rest }: Props): JSX.Element => (
+    <button className={`button ${type ? 'button--' + type : ''} ${className}`} {...rest}>
         {children}
     </button>
 );
