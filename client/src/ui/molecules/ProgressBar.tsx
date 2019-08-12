@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import Check from '@material-ui/icons/Check';
 
+type StepState = 'activated' | 'current' | null;
+
 type Step = {
   id: string;
   text?: string;
@@ -13,13 +15,22 @@ interface Props {
 
 const ProgressBar: React.FC<Props> = ({ steps = [], currentStep }: Props): JSX.Element => {
   const currentStepIndex = currentStep ? steps.findIndex(step => step.id === currentStep) : 0;
+  const getStepState = (step: Step, index: number): StepState => {
+    if (index === currentStepIndex) {
+      return 'current';
+    }
+    if (step.active || index <= currentStepIndex) {
+      return 'activated';
+    }
+
+    return null;
+  }
   return (
     <div className="progress_bar">
       {
         steps.map((step, index) => <ProgressStep 
           key={step.id} {...step}
-          current={index === currentStepIndex}
-          activated={step.active || index <= currentStepIndex}
+          state={getStepState(step, index)}
           firstItem={index === 0}
         />)
       }
@@ -28,21 +39,20 @@ const ProgressBar: React.FC<Props> = ({ steps = [], currentStep }: Props): JSX.E
 };
 
 type ProgressStepProps = Step & {
-  current?: boolean;
-  activated?: boolean;
+  state?: StepState;
   firstItem?: boolean;
 }
 
-const ProgressStep: React.FC<ProgressStepProps> = ({ text, firstItem, activated, current }: ProgressStepProps): JSX.Element => (
+const ProgressStep: React.FC<ProgressStepProps> = ({ text, firstItem, state }: ProgressStepProps): JSX.Element => (
   <Fragment>
-    { 
-      !firstItem && <div className={`progress_bar__divider ${ activated ? 'progress_bar__divider--activated' : ''}`}/>
+    {
+      !firstItem && <div className={`progress_bar__divider ${ state ? 'progress_bar__divider--' + state : ''}`}/>
     }
-    <div className={`progress_bar__step ${ current ? 'progress_bar__step--current' : ''} ${ activated ? 'progress_bar__step--activated' : ''}`}>
-      <span className={`progress_bar__bullet ${current ? 'progress_bar__bullet--current' : ''} ${activated && !current ? 'progress_bar__bullet--activated' : ''}`}>
-        { activated && !current && <Check className="progress_bar__icon"/> }
+    <div className={`progress_bar__step ${ state ? 'progress_bar__step--' + state : ''}`}>
+      <span className={`progress_bar__bullet ${state ? 'progress_bar__bullet--' + state : ''}`}>
+        { state === 'activated' && <Check className="progress_bar__icon"/> }
       </span>
-      <span className={`progress_bar__text ${activated ? 'progress_bar__text--activated' : ''}`}>{ text }</span>
+      <span className={`progress_bar__text ${state ? 'progress_bar__text--' + state : ''}`}>{ text }</span>
     </div>
   </Fragment>
 )
