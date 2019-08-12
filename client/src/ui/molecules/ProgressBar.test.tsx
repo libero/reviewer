@@ -2,6 +2,7 @@ import React from 'react';
 import { cleanup, render, RenderResult } from '@testing-library/react';
 import ProgressBar from './ProgressBar';
 
+// TODO: Write full test suite for Progress bar.
 describe('Button', (): void => {
     afterEach(cleanup);
 
