@@ -22,3 +22,13 @@
 .paragraph--reading {
   font-family: $fontReading;
 }
+
+.paragraph--footer {
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+  .footer__link {
+    color: $colourPrimary;
+    text-decoration: none;
+  }
+}
