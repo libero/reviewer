@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { getSubmissions, startSubmission } from '../../initial-submission/components/submission.entities';
 import { Submission } from '../../initial-submission/types';
-import { Button, Footer } from '../../ui/atoms';
+import { Button, Paragraph } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
 
 const Dashboard = withRouter(
@@ -37,7 +37,7 @@ const Dashboard = withRouter(
                     </Button>
                 </div>
                 <SubmissionList submissions={submissions} />
-                <Footer>
+                <Paragraph type="footer">
                     To find existing submissions or to submit a{' '}
                     <Link className="footer__link" to="/author-guide/types">
                         Research Advance
@@ -45,8 +45,8 @@ const Dashboard = withRouter(
                     please visit our{' '}
                     <a className="footer__link" href="https://submit.elifesciences.org">
                         full peer review and submissions system
-                    </a>
-                </Footer>
+                    </a>{' '}
+                </Paragraph>
             </div>
         );
     },

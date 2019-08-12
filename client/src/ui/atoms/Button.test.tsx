@@ -9,7 +9,7 @@ describe('Button', (): void => {
         expect((): RenderResult => render(<Button />)).not.toThrow();
     });
 
-    it('should render the correct colour buttons', (): void => {
+    it('should append the type string passed to a button-- class', (): void => {
         const { getByText } = render(<Button type="primary">test</Button>);
         expect(getByText('test')).toHaveClass('button--primary');
     });
@@ -19,5 +19,11 @@ describe('Button', (): void => {
         const { container } = render(<Button onClick={mockFn} />);
         fireEvent.click(container.querySelector('button'));
         expect(mockFn).toHaveBeenCalledTimes(1);
+    });
+
+    it('should append passed className to button styling classes', (): void => {
+        const { getByText } = render(<Button className="some-class">test</Button>);
+        expect(getByText('test')).toHaveClass('some-class');
+        expect(getByText('test')).toHaveClass('button');
     });
 });
