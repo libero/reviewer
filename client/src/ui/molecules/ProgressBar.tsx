@@ -11,9 +11,10 @@ interface Step {
 interface Props {
     steps?: Step[];
     currentStep?: string;
+    fixedWidthCentered?: boolean 
 }
 
-const ProgressBar: React.FC<Props> = ({ steps = [], currentStep }: Props): JSX.Element => {
+const ProgressBar: React.FC<Props> = ({ steps = [], currentStep, fixedWidthCentered }: Props): JSX.Element => {
     const currentStepIndex: number = currentStep
         ? steps.findIndex((step: Step): boolean => step.id === currentStep)
         : 0;
@@ -28,7 +29,7 @@ const ProgressBar: React.FC<Props> = ({ steps = [], currentStep }: Props): JSX.E
         return null;
     };
     return (
-        <div className="progress_bar">
+        <div className={`progress_bar ${fixedWidthCentered ? 'progress_bar--fixed_width_centered' : ''}`}>
             {steps.map(
                 (step: Step, index: number): JSX.Element => (
                     <ProgressStep key={step.id} {...step} state={getStepState(step, index)} firstItem={index === 0} />

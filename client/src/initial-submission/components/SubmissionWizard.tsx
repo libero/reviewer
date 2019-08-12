@@ -34,6 +34,7 @@ const SubmissionWizard: React.FC<RouteComponentProps> = ({
         <Formik initialValues={{}} onSubmit={(): void => {}}>
             <React.Fragment>
                 <ProgressBar
+                    fixedWidthCentered
                     steps={stepConfig.map((step: StepConfig): { id: string; label: string } => ({
                         id: step.id,
                         label: step.label,

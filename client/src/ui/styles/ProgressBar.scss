@@ -6,6 +6,12 @@
   margin: 1.25rem 1.25rem 4.5rem
 }
 
+.progress_bar--fixed_width_centered {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .progress_bar__step {
   align-items: center;
   display: flex;
