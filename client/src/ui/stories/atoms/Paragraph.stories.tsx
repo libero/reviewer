@@ -20,4 +20,25 @@ storiesOf('ui | atoms/Paragraph', module)
                 </Paragraph>
             );
         },
+    )
+    .add(
+        'Footer With Links',
+        (): JSX.Element => {
+            const footerText = text('Text', 'Some text for a footer');
+            const footerText2 = text('Text2', 'Some more text for a footer');
+            return (
+                <Paragraph type="footer">
+                    <a className="footer__link" href="#">
+                        {' '}
+                        some link{' '}
+                    </a>
+                    {footerText}
+                    <a className="footer__link" href="#">
+                        {' '}
+                        some link{' '}
+                    </a>
+                    {footerText2}
+                </Paragraph>
+            );
+        },
     );

@@ -11,7 +11,7 @@ const ModalWithButton = (): JSX.Element => {
     const modalMessage = text('Modal Message', 'This is a modal');
     return (
         <Fragment>
-            <Button onClick={toggle}>Show Modal</Button>
+            <Button onClick={(): void => toggle()}>Show Modal</Button>
             <Modal hide={toggle} isShowing={isShowing} onAccept={action('accept')}>
                 <p>{modalMessage}</p>
             </Modal>
