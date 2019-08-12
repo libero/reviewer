@@ -25,5 +25,5 @@ describe('Button', (): void => {
         const { getByText } = render(<Button className="some-class">test</Button>);
         expect(getByText('test')).toHaveClass('some-class');
         expect(getByText('test')).toHaveClass('button');
-    })
+    });
 });
