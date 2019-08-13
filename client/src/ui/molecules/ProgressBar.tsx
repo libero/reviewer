@@ -10,7 +10,7 @@ interface Step {
 interface Props {
     steps?: Step[];
     currentStep?: string;
-    fixedWidthCentered?: boolean 
+    fixedWidthCentered?: boolean;
 }
 
 const ProgressBar: React.FC<Props> = ({ steps = [], currentStep, fixedWidthCentered }: Props): JSX.Element => {
