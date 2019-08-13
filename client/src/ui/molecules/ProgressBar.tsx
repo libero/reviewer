@@ -6,7 +6,6 @@ type StepState = 'activated' | 'current' | null;
 interface Step {
     id: string;
     label?: string;
-    active?: boolean;
 }
 interface Props {
     steps?: Step[];
@@ -22,7 +21,7 @@ const ProgressBar: React.FC<Props> = ({ steps = [], currentStep, fixedWidthCente
         if (index === currentStepIndex) {
             return 'current';
         }
-        if (step.active || index <= currentStepIndex) {
+        if (index <= currentStepIndex) {
             return 'activated';
         }
 
