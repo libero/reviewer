@@ -5,7 +5,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: React.FC<Props> = ({ type, children, className, ...rest }: Props): JSX.Element => (
-    <button className={`button ${type ? 'button--' + type : ''} ${className}`} {...rest}>
+    <button className={`button${type ? ' button--' + type : ''}${className ? ' ' + className : ''}`} {...rest}>
         {children}
     </button>
 );
