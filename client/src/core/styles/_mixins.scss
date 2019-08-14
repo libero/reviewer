@@ -1,6 +1,6 @@
 @mixin forSize($size) {
   @if $size == phoneOnly {
-    @media (max-width: $phone) { @content; }
+    @media (max-width: $tabletPortrait) { @content; }
   } @else if $size == tabletPortraitUp {
     @media (min-width: $tabletPortrait) { @content; }
   } @else if $size == tabletLandscapeUp {
