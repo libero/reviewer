@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router';
 import { LocationDescriptor } from 'history';
 import { object, withKnobs } from '@storybook/addon-knobs';
 import { Submission } from '../../initial-submission/types';
+import getMockSubmissionForDaysAgo from './storyUtils';
 
 const historyLocation: LocationDescriptor[] = ['/'];
 
@@ -19,12 +20,6 @@ const notes = `
    | .dashboard__tab | Styling for the tab itself |
    | .dashboard__tab_panel | Styling for the tab panel container |
 `;
-
-const getMockSubmissionForDaysAgo = (daysAgo: number): number => {
-    const date = new Date();
-    date.setDate(new Date().getDate() - daysAgo);
-    return date.getTime();
-};
 
 storiesOf('Dashboard | Components/SubmissionList', module)
     .addDecorator(withKnobs)
