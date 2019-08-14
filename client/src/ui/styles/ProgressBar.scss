@@ -1,0 +1,96 @@
+$progressBarSpacing: 1.25rem 1.25rem 4.5rem;
+$progressBarFixedMaxWidth: 31.25rem;
+$progressBarStepHeight: 1.25rem;
+$progressBarStepWidth: 1.25rem;
+$progressBarLineWidth: 0.25rem;
+$progressBarBulletInnerWidth: 0.625rem;
+$progressBarBulletInnerHeight: 0.625rem;
+$progressBarIconSize: 1rem;
+$progressBarTextTopSpacing: 1.5rem;
+$progressBarTextWidth: 7.5rem;
+
+.progress_bar {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: $progressBarSpacing;
+}
+
+.progress_bar--fixed_width_centered {
+  max-width: $progressBarFixedMaxWidth;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.progress_bar__step {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: $progressBarStepHeight;
+  width: $progressBarStepWidth;
+  background-color: $borderColour;
+  border-style: solid;
+  border-image: initial;
+  border-radius: $borderRadiusRounded;
+  border-color: $borderColour;
+  border-width: $progressBarLineWidth;
+}
+
+.progress_bar__step--activated {
+  background-color: $white;
+  border-color: $colourPrimary;
+}
+.progress_bar__step--current {
+  background-color: $white;
+  border-color: $colourPrimary;
+}
+.progress_bar__bullet {
+  background-color: inherit;
+  align-items: center;
+  color: $white;
+  display: flex;
+  justify-content: center;
+  border-radius: $borderRadiusRounded;
+}
+
+.progress_bar__bullet--current {
+  background-color: $white;
+  height: $progressBarBulletInnerHeight;
+  width: $progressBarBulletInnerWidth;
+}
+
+.progress_bar__bullet--activated {
+  background-color: $colourPrimary;
+  .progress_bar__icon {
+    font-size: $progressBarIconSize;
+  }
+}
+
+.progress_bar__divider {
+  background-color: $borderColour;
+  height: $progressBarLineWidth;
+  flex: 1 1 0%;
+}
+.progress_bar__divider--activated {
+  background-color: $colourPrimary;
+}
+.progress_bar__divider--current {
+  background-color: $colourPrimary;
+}
+
+.progress_bar__text {
+  position: absolute;
+  text-align: center;
+  top: $progressBarTextTopSpacing;
+  white-space: normal;
+  width: $progressBarTextWidth;
+  line-height: $lineHeightBaseSmall;
+  font-size: $fontSizeSmall;
+  color: $borderColour;
+}
+
+.progress_bar__text--current {
+  color: $bodyText;
+}
