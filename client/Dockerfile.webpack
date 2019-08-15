@@ -1,15 +1,21 @@
-ARG image_tag=latest
+ARG IMAGE_TAG=latest
 
-FROM liberoadmin/reviewer_client_packages:${image_tag}
+FROM liberoadmin/reviewer_client_packages:$IMAGE_TAG
 
 WORKDIR /opt
 
-COPY tsconfig.build.json .
+COPY globals.d.ts .
+COPY index.html .
+COPY index.tsx .
+
+COPY test-utils/ test-utils/
+COPY jest.config.js
 COPY tsconfig.json .
-COPY tslint.json .
+
+COPY webpack/ webpack.
 COPY webpack.config.js
 COPY webpack.parts.js
-COPY globals.d.ts .
+
 COPY src/ ./src/
 
 RUN yarn build
