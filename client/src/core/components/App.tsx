@@ -10,7 +10,7 @@ import '../styles/index.scss';
 
 declare var API_HOST: string;
 
-const authToken = localStorage.getItem('token')
+const authToken = localStorage.getItem('token');
 
 const App: React.FC = (): JSX.Element => (
     <div>

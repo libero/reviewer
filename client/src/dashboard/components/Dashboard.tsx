@@ -1,16 +1,18 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 import { Button, Paragraph } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
 
 const Dashboard = withRouter(
-    ({ history }): JSX.Element => {
-        const { loading, error, data } = useQuery(gql`
+    (): JSX.Element => {
+        const { loading, data } = useQuery(gql`
             query GetSubmissions {
                 getSubmissions {
-                id, title, updated
+                    id
+                    title
+                    updated
                 }
             }
         `);
@@ -22,9 +24,7 @@ const Dashboard = withRouter(
                         New Submission
                     </Button>
                 </div>
-                {
-                    loading ? 'loading' : <SubmissionList submissions={data.getSubmissions} />
-                }
+                {loading ? 'loading' : <SubmissionList submissions={data.getSubmissions} />}
                 <Paragraph type="footer">
                     To find existing submissions or to submit a{' '}
                     <Link className="footer__link" to="/author-guide/types">
