@@ -7,6 +7,9 @@ WORKDIR /opt
 COPY globals.d.ts .
 COPY index.html .
 COPY index.tsx .
+COPY .babelrc .
+COPY .eslintrc.js .
+COPY .eslintignore .
 
 COPY test-utils/ test-utils/
 COPY jest.config.js .
