@@ -13,7 +13,7 @@ help:
 	@echo "- each command runs in it's own shell, hence all the 'cd's"
 	@echo "- the build targets are in the format <name>:[<dependencies>]"
 
-TRAVIS_COMMIT ?= latest 
+TRAVIS_COMMIT ?= local
 
 DC_BUILD = IMAGE_TAG=${TRAVIS_COMMIT} docker-compose -f docker-compose.build.yml
 
@@ -28,7 +28,6 @@ server_ci:
 
 install_server_packages:
 	${DC_BUILD} build server_npm
-	# cd server/ && yarn
 
 build_server_source: install_server_packages
 	${DC_BUILD} build server_typescript
@@ -49,19 +48,19 @@ client_ci:
 	make lint_client build_client_container
 
 install_client_packages:
-	cd client/ && yarn
+	${DC_BUILD} build client_npm
 
-lint_client: install_client_packages
-	cd client/ && yarn lint
+build_client_source: install_client_packages
+	${DC_BUILD} build client_webpack
 
-build_client: install_client_packages
-	cd client/ && yarn build
+lint_client: build_client_source
+	${DC_BUILD} run yarn lint
 
-test_client: install_client_packages
-	cd client/ && yarn test
+test_client: build_client_container
+	${DC_BUILD} run yarn test 
 
-build_client_container: build_client test_client
-	cd client/ && docker build -t libero/reviewer_client:$(TRAVIS_BUILD_NUMBER) .
+build_client_container: test_client build_client_source
+	${DC_BUILD} build reviewer_client
 
 local_ci:
 	make -j 4 server_ci client_ci

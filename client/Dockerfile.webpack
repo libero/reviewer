@@ -1,0 +1,17 @@
+FROM scratch
+
+ARG image_tag=latest
+
+FROM liberoadmin/reviewer_client_packages:${image_tag}
+
+WORKDIR /opt
+
+COPY tsconfig.build.json .
+COPY tsconfig.json .
+COPY tslint.json .
+COPY webpack.config.js
+COPY webpack.parts.js
+COPY globals.d.ts .
+COPY src/ ./src/
+
+RUN yarn build
