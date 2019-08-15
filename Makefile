@@ -5,7 +5,7 @@ help:
 	@echo "The purpose of this file is to help clean up the ci-config"
 	@echo "and to make it easier to switch CI providers if necessary"
 	@echo ""
-	@echo "To run the CI script locally, use `make all`, which will"
+	@echo "To run the CI script locally, use 'make local_ci', which will"
 	@echo "start building all components in parallel"
 	@echo ""
 	@echo "If you aren't familliar with Makefile, there are a couple of"
@@ -13,7 +13,9 @@ help:
 	@echo "- each command runs in it's own shell, hence all the 'cd's"
 	@echo "- the build targets are in the format <name>:[<dependencies>]"
 
-TRAVIS_BUILD_NUMBER ?= local
+TRAVIS_COMMIT ?= local
+
+DC_BUILD = IMAGE_TAG=${TRAVIS_COMMIT} docker-compose -f docker-compose.build.yml
 
 ###########################
 #
@@ -22,33 +24,29 @@ TRAVIS_BUILD_NUMBER ?= local
 ###########################
 
 server_ci:
-	make -j 4 lint_server build_server_container
+	make lint_server test_server push_server_container
 
 install_server_packages:
-	cd server/ && yarn
+	${DC_BUILD} build server_npm
+	# cd server/ && yarn
 
-lint_server: install_server_packages
-	cd server/ && yarn lint
+build_server_source: install_server_packages
+	${DC_BUILD} build server_typescript
 
-build_server: install_server_packages
-	cd server/ && yarn build
+lint_server: build_server_source
+	${DC_BUILD} run server_typescript yarn lint
 
-test_server: install_server_packages 
-	# This does not require the code to be compiled beforehand
-	cd server/ && yarn test
+test_server: build_server_source
+	${DC_BUILD} run server_typescript yarn test
 
-build_server_container: build_server test_server
-	@echo "Move graphql schema into the dist directory"
-	# The docker container needs the graphql schemas found in src but not dist
-	cd server/ && mkdir -p gql
-	cd server/ && bash -c 'find src | grep graphql | xargs -I {}  cp {} gql/'
-	cd server/ && docker build -t libero/reviewer_server:$(TRAVIS_BUILD_NUMBER) .
+build_application_server_container: test_server lint_server
+	${DC_BUILD} build reviewer_server
 
-push_server_container: build_server_container
+push_server_container: build_application_server_container
 	@echo "Push the container to a docker registry"
 
 client_ci:
-	make -j 4 lint_client build_client_container
+	make lint_client build_client_container
 
 install_client_packages:
 	cd client/ && yarn

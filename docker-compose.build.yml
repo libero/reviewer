@@ -1,0 +1,22 @@
+version: '3'
+services:
+  server_npm:
+    build:
+      context: 'server/'
+      dockerfile: 'Dockerfile.packages'
+    image: liberoadmin/reviewer_server_packages:${IMAGE_TAG}
+  server_typescript:
+    build:
+      context: 'server/'
+      dockerfile: "Dockerfile.typescript"
+    image: liberoadmin/reviewer_server_typescript:${IMAGE_TAG}
+    depends_on:
+      - server_npm
+  reviewer_server:
+    build:
+      context: 'server/'
+      dockerfile: "Dockerfile.application"
+    image: liberoadmin/reviewer_server:${IMAGE_TAG}
+    depends_on:
+      - server_npm
+      - server_typescript

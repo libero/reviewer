@@ -5,10 +5,13 @@ env:
   - TEST_SUITE=server_ci
   - TEST_SUITE=client_ci
 
+services:
+  - docker
+
 cache: yarn
 
 script:
-  - make $TEST_SUITE
+  - make -j 4 $TEST_SUITE
 
 stages:
   - name: Test
