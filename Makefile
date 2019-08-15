@@ -46,7 +46,7 @@ push_server_container: build_application_server_container
 	@echo "Push the container to a docker registry"
 
 client_ci:
-	make lint_client build_client_container
+	make build_client_container
 
 install_client_packages:
 	${DC_BUILD} build client_npm
