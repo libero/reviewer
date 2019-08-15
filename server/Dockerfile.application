@@ -1,4 +1,4 @@
-ARG image_tag = latest
+ARG image_tag=latest
 
 FROM liberoadmin/reviewer_server_typescript:${image_tag}
 
@@ -12,4 +12,3 @@ HEALTHCHECK --interval=1m --timeout=1s \
 	CMD curl -f http://localhost:3000/health || exit 1
 
 CMD ["node", "dist/main.js"]
-
