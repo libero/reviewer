@@ -43,7 +43,7 @@ interface Props {
 
 const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
-    const status = submission.status.toLowerCase();
+    const status = submission.status ? submission.status.toLowerCase() : '';
     return (
         <div className="submission-entry">
             <Link

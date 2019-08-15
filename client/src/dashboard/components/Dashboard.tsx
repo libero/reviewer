@@ -14,7 +14,7 @@ const Dashboard = withRouter(
                 }
             }
         `);
-        
+
         return (
             <div className="dashboard">
                 <div className="dashboard__button_container">
@@ -22,7 +22,9 @@ const Dashboard = withRouter(
                         New Submission
                     </Button>
                 </div>
-                <SubmissionList submissions={data.getSubmission} />
+                {
+                    loading ? 'loading' : <SubmissionList submissions={data.getSubmissions} />
+                }
                 <Paragraph type="footer">
                     To find existing submissions or to submit a{' '}
                     <Link className="footer__link" to="/author-guide/types">
