@@ -13,7 +13,8 @@ help:
 	@echo "- each command runs in it's own shell, hence all the 'cd's"
 	@echo "- the build targets are in the format <name>:[<dependencies>]"
 
-TRAVIS_COMMIT ?= local
+COMMIT_SLUG = `git log HEAD^..HEAD --pretty=oneline --abbrev-commit | head -c 7`
+TRAVIS_COMMIT ?= "local"
 
 DC_BUILD = IMAGE_TAG=${TRAVIS_COMMIT} docker-compose -f docker-compose.build.yml
 
@@ -54,10 +55,10 @@ build_client_source: install_client_packages
 	${DC_BUILD} build client_webpack
 
 lint_client: build_client_source
-	${DC_BUILD} run yarn lint
+	${DC_BUILD} run client_webpack yarn lint
 
-test_client: build_client_container
-	${DC_BUILD} run yarn test 
+test_client: build_client_source 
+	${DC_BUILD} run client_webpack yarn test 
 
 build_client_container: test_client build_client_source
 	${DC_BUILD} build reviewer_client

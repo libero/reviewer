@@ -1,6 +1,6 @@
-ARG IMAGE_TAG=latest
+ARG image_tag=latest
 
-FROM liberoadmin/reviewer_client_packages:$IMAGE_TAG
+FROM liberoadmin/reviewer_client_packages:${image_tag}
 
 WORKDIR /opt
 
@@ -9,12 +9,12 @@ COPY index.html .
 COPY index.tsx .
 
 COPY test-utils/ test-utils/
-COPY jest.config.js
+COPY jest.config.js .
 COPY tsconfig.json .
 
-COPY webpack/ webpack.
-COPY webpack.config.js
-COPY webpack.parts.js
+COPY webpack/ webpack/
+COPY webpack.config.js .
+COPY webpack.parts.js .
 
 COPY src/ ./src/
 
