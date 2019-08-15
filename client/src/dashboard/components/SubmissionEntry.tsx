@@ -4,7 +4,6 @@ import moment from 'moment';
 import useModal from '../../ui/hooks/useModal';
 import { Modal } from '../../ui/atoms';
 import { Submission } from '../../initial-submission/types';
-import { deleteSubmission } from '../../initial-submission/components/submission.entities';
 import { Link } from 'react-router-dom';
 
 const dashboardDateText = (date: number): string => {
@@ -70,7 +69,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element =>
                 <Modal
                     hide={toggle}
                     isShowing={isShowing}
-                    onAccept={(): Promise<boolean> => deleteSubmission(submission.id)}
+                    onAccept={(): void => {}}
                 >
                     <h2>Confirm delete submission?</h2>
                     <p>

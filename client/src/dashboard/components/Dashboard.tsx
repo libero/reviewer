@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { getSubmissions, startSubmission } from '../../initial-submission/components/submission.entities';
 import { Submission } from '../../initial-submission/types';
 import { Button, Paragraph } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
@@ -10,27 +9,12 @@ const Dashboard = withRouter(
         const [submissions, setSubmissions]: [Submission[], Function] = useState([]);
         const [fetched, setFetched] = useState(false);
 
-        // only fetch once to prevent render loop
-        if (!fetched) {
-            getSubmissions()
-                .then((fetchedSubmissions: Submission[]): void => {
-                    setSubmissions(fetchedSubmissions);
-                    setFetched(true);
-                })
-                .catch((): void => {
-                    setFetched(true);
-                });
-        }
-
         return (
             <div className="dashboard">
                 <div className="dashboard__button_container">
                     <Button
                         type="primary"
                         onClick={(): void => {
-                            startSubmission().then((submission): void => {
-                                history.push(`/submission/${submission.id}/title`);
-                            });
                         }}
                     >
                         New Submission
