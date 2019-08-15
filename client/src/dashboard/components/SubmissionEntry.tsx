@@ -66,11 +66,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element =>
                 </div>
             </Link>
             <div className="submission-entry__icon_container">
-                <Modal
-                    hide={toggle}
-                    isShowing={isShowing}
-                    onAccept={(): void => {}}
-                >
+                <Modal hide={toggle} isShowing={isShowing} onAccept={(): void => {}}>
                     <h2>Confirm delete submission?</h2>
                     <p>
                         Your submission &quot;

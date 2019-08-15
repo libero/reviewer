@@ -12,11 +12,7 @@ const Dashboard = withRouter(
         return (
             <div className="dashboard">
                 <div className="dashboard__button_container">
-                    <Button
-                        type="primary"
-                        onClick={(): void => {
-                        }}
-                    >
+                    <Button type="primary" onClick={(): void => {}}>
                         New Submission
                     </Button>
                 </div>

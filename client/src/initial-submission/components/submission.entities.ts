@@ -41,7 +41,7 @@
 //             removeSubmission(id: $id) {
 //                 id
 //             }
-//         }    
+//         }
 //     `;
 
 //     const { removeSubmission } = await request(API_HOST + '/graphql', mutation, { id });
