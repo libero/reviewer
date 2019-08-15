@@ -13,7 +13,7 @@ help:
 	@echo "- each command runs in it's own shell, hence all the 'cd's"
 	@echo "- the build targets are in the format <name>:[<dependencies>]"
 
-TRAVIS_COMMIT ?= local
+TRAVIS_COMMIT ?= latest 
 
 DC_BUILD = IMAGE_TAG=${TRAVIS_COMMIT} docker-compose -f docker-compose.build.yml
 

@@ -1,4 +1,6 @@
-FROM liberoadmin/reviewer_server_packages:latest
+ARG image_tag=latest
+
+FROM liberoadmin/reviewer_server_packages:${image_tag}
 
 WORKDIR /opt
 

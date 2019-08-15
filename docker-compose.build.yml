@@ -9,6 +9,8 @@ services:
     build:
       context: 'server/'
       dockerfile: "Dockerfile.typescript"
+      args:
+        image_tag: ${IMAGE_TAG}
     image: liberoadmin/reviewer_server_typescript:${IMAGE_TAG}
     depends_on:
       - server_npm
@@ -16,6 +18,8 @@ services:
     build:
       context: 'server/'
       dockerfile: "Dockerfile.application"
+      args:
+        image_tag: ${IMAGE_TAG}
     image: liberoadmin/reviewer_server:${IMAGE_TAG}
     depends_on:
       - server_npm

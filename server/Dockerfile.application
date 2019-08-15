@@ -1,4 +1,6 @@
-FROM liberoadmin/reviewer_server_typescript:latest
+ARG image_tag = latest
+
+FROM liberoadmin/reviewer_server_typescript:${image_tag}
 
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 
