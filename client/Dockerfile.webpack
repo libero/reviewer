@@ -1,5 +1,3 @@
-FROM scratch
-
 ARG image_tag=latest
 
 FROM liberoadmin/reviewer_client_packages:${image_tag}

@@ -1,8 +1,6 @@
-FROM scratch
+ARG image_tag=latest
 
-ARG IMAGE_TAG=latest
-
-FROM liberoadmin/reviewer_client_webpack:$IMAGE_TAG
+FROM liberoadmin/reviewer_client_webpack:${image_tag}
 
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 WORKDIR /opt
