@@ -6,6 +6,8 @@ services:
       context: 'server/'
       dockerfile: 'Dockerfile.packages'
     image: liberoadmin/reviewer_server_packages:${IMAGE_TAG}
+    networks: 
+        - 'reviewer_build'
   server_typescript:
     build:
       context: 'server/'
@@ -15,6 +17,8 @@ services:
     image: liberoadmin/reviewer_server_typescript:${IMAGE_TAG}
     depends_on:
       - server_npm
+    networks: 
+        - 'reviewer_build'
   reviewer_server:
     build:
       context: 'server/'
@@ -25,6 +29,8 @@ services:
     depends_on:
       - server_npm
       - server_typescript
+    networks: 
+        - 'reviewer_build'
 
   # Client
   client_npm:
@@ -32,6 +38,8 @@ services:
       context: 'client/'
       dockerfile: 'Dockerfile.packages'
     image: liberoadmin/reviewer_client_packages:${IMAGE_TAG}
+    networks: 
+        - 'reviewer_build'
 
   client_webpack:
     build:
@@ -42,6 +50,8 @@ services:
     image: liberoadmin/reviewer_client_webpack:${IMAGE_TAG}
     depends_on:
       - client_npm
+    networks: 
+        - 'reviewer_build'
 
   reviewer_client:
     build:
@@ -53,3 +63,9 @@ services:
     depends_on:
       - client_npm
       - client_webpack
+    networks: 
+        - 'reviewer_build'
+networks:
+  reviewer_build:
+    external:
+      name: reviewer_build
