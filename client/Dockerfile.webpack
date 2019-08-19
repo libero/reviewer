@@ -4,21 +4,10 @@ FROM liberoadmin/reviewer_client_packages:${image_tag}
 
 WORKDIR /opt
 
-COPY globals.d.ts .
-COPY index.html .
-COPY index.tsx .
-COPY .babelrc .
-COPY .eslintrc.js .
-COPY .eslintignore .
+COPY globals.d.ts index.html index.tsx .babelrc .eslintrc.js .eslintignore webpack.parts.js jest.config.js tsconfig.json webpack.config.js .
 
 COPY test-utils/ test-utils/
-COPY jest.config.js .
-COPY tsconfig.json .
-
 COPY webpack/ webpack/
-COPY webpack.config.js .
-COPY webpack.parts.js .
-
 COPY src/ ./src/
 
 RUN yarn build
