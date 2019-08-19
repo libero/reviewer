@@ -5,7 +5,7 @@ type Props = {
     children: ReactElement
 }
 
-export default ( mocks: MockedResponse[], addTypename: boolean = false ) => {
+export default ( mocks?: MockedResponse[], addTypename: boolean = false ) => {
     const render: React.FC<Props> = ({ children }: Props): JSX.Element => (
         <MockedProvider mocks={mocks} addTypename={addTypename}>
             {children}

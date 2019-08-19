@@ -12,7 +12,7 @@
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
-    "@apollo/react-testing": "^3.0.1",
+    "@apollo/react-testing": "3.0.0",
     "@babel/core": "^7.5.5",
     "@storybook/addon-a11y": "^5.1.10",
     "@storybook/addon-actions": "^5.1.10",
