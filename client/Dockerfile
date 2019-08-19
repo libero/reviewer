@@ -1,6 +1,6 @@
 FROM nginx:1.16
 
-MAINTAINER eLife Reviwer Product Team <reviewer-product@elifesciences.org>
+MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 
 COPY deployment/nginx.conf /etc/nginx/nginx.conf
 COPY dist/ /usr/share/nginx/html
