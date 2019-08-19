@@ -1,21 +1,13 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import { Button, Paragraph } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
+import { getSubmissionsQuery } from '../graphql';
 
 const Dashboard = withRouter(
     (): JSX.Element => {
-        const { loading, data } = useQuery(gql`
-            query GetSubmissions {
-                getSubmissions {
-                    id
-                    title
-                    updated
-                }
-            }
-        `);
+        const { loading, data } = useQuery(getSubmissionsQuery);
 
         return (
             <div className="dashboard">

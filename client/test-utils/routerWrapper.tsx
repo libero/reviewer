@@ -1,13 +1,9 @@
-import React, { ReactNode } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { MemoryRouter } from 'react-router';
 import { LocationDescriptor } from 'history'
 
-type memoryRouterProps = {
-    children: ReactNode
-}
-
 export default (historyLocation: LocationDescriptor[] = ['/']) => {
-    const render: React.FC<memoryRouterProps> = ({ children }): JSX.Element => (
+    const render: React.FC<{}> = ({ children }: PropsWithChildren<{}>): JSX.Element => (
         <MemoryRouter initialEntries={historyLocation}>
             {children}
         </MemoryRouter>

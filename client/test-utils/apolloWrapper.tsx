@@ -1,14 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 import { MockedProvider, MockedResponse } from '@apollo/react-testing';
 
-type Props = {
-    children: ReactElement
-}
-
 export default ( mocks?: MockedResponse[], addTypename: boolean = false ) => {
-    const render: React.FC<Props> = ({ children }: Props): JSX.Element => (
+    const render: React.FC<{}> = ({ children }: PropsWithChildren<{}>): JSX.Element => (
         <MockedProvider mocks={mocks} addTypename={addTypename}>
-            {children}
+            {children as ReactElement}
         </MockedProvider>
     );
     return render;
