@@ -13,10 +13,23 @@ help:
 	@echo "- each command runs in it's own shell, hence all the 'cd's"
 	@echo "- the build targets are in the format <name>:[<dependencies>]"
 
-COMMIT_SLUG = `git log HEAD^..HEAD --pretty=oneline --abbrev-commit | head -c 7`
+# COMMIT_SLUG = `git log HEAD^..HEAD --pretty=oneline --abbrev-commit | head -c 7`
+
+DOCKER_NETWORK_NAME=reviewer_build
+
 TRAVIS_COMMIT ?= "local"
 
 DC_BUILD = IMAGE_TAG=${TRAVIS_COMMIT} docker-compose -f docker-compose.build.yml
+
+###########################
+#
+# Docker Setup
+#
+###########################
+
+start_network:
+	docker network prune
+	docker network create ${DOCKER_NETWORK_NAME}
 
 ###########################
 #
@@ -24,7 +37,7 @@ DC_BUILD = IMAGE_TAG=${TRAVIS_COMMIT} docker-compose -f docker-compose.build.yml
 #
 ###########################
 
-server_ci:
+server_ci: start_network
 	make lint_server test_server push_server_container
 
 install_server_packages:
@@ -45,7 +58,7 @@ build_application_server_container: test_server lint_server
 push_server_container: build_application_server_container
 	@echo "Push the container to a docker registry"
 
-client_ci:
+client_ci: start_network
 	make build_client_container
 
 install_client_packages:
