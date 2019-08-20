@@ -6,23 +6,6 @@ import apolloWrapper from '../../../test-utils/apolloWrapper';
 import App from './App';
 import { getSubmissionsQuery } from '../../dashboard/graphql';
 
-//need to declare the global vars, would be good to have this in setup script but that means making it a ts not js file.
-/* eslint-disable @typescript-eslint/no-namespace */
-declare global {
-    namespace NodeJS {
-        interface Global {
-            API_HOST: string;
-            fetch: Function;
-        }
-    }
-}
-/* eslint-enable @typescript-eslint/no-namespace */
-
-//mock fetch used by Apollo
-global.fetch = jest.fn();
-// mock webpack injected global
-global.API_HOST = '';
-
 describe('App', (): void => {
     it('should render correctly', (): void => {
         // Mock out instance of ApolloProvider so we can use a mocked provider instead
