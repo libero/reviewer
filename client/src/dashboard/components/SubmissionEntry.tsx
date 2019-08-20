@@ -4,7 +4,6 @@ import moment from 'moment';
 import useModal from '../../ui/hooks/useModal';
 import { Modal } from '../../ui/atoms';
 import { Submission } from '../../initial-submission/types';
-import { deleteSubmission } from '../../initial-submission/components/submission.entities';
 import { Link } from 'react-router-dom';
 
 const dashboardDateText = (date: number): string => {
@@ -44,7 +43,7 @@ interface Props {
 
 const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
-    const status = submission.status.toLowerCase();
+    const status = submission.status ? submission.status.toLowerCase() : '';
     return (
         <div className="submission-entry">
             <Link
@@ -67,11 +66,7 @@ const SubmissionEntry: React.FC<Props> = ({ submission }: Props): JSX.Element =>
                 </div>
             </Link>
             <div className="submission-entry__icon_container">
-                <Modal
-                    hide={toggle}
-                    isShowing={isShowing}
-                    onAccept={(): Promise<boolean> => deleteSubmission(submission.id)}
-                >
+                <Modal hide={toggle} isShowing={isShowing} onAccept={(): void => {}}>
                     <h2>Confirm delete submission?</h2>
                     <p>
                         Your submission &quot;

@@ -7,7 +7,7 @@ interface SubmissionListProps {
     submissions: Submission[];
 }
 
-const SubmissionList: React.FC<SubmissionListProps> = ({ submissions }: SubmissionListProps): JSX.Element => {
+const SubmissionList: React.FC<SubmissionListProps> = ({ submissions = [] }: SubmissionListProps): JSX.Element => {
     return (
         <Tabs className="dashboard__tabs">
             <TabList className="dashboard__tabs_list">

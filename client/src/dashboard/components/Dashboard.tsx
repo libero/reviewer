@@ -1,42 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { getSubmissions, startSubmission } from '../../initial-submission/components/submission.entities';
-import { Submission } from '../../initial-submission/types';
+import { useQuery } from '@apollo/react-hooks';
 import { Button, Paragraph } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
+import { getSubmissionsQuery } from '../graphql';
 
 const Dashboard = withRouter(
-    ({ history }): JSX.Element => {
-        const [submissions, setSubmissions]: [Submission[], Function] = useState([]);
-        const [fetched, setFetched] = useState(false);
-
-        // only fetch once to prevent render loop
-        if (!fetched) {
-            getSubmissions()
-                .then((fetchedSubmissions: Submission[]): void => {
-                    setSubmissions(fetchedSubmissions);
-                    setFetched(true);
-                })
-                .catch((): void => {
-                    setFetched(true);
-                });
-        }
+    (): JSX.Element => {
+        const { loading, data } = useQuery(getSubmissionsQuery);
 
         return (
             <div className="dashboard">
                 <div className="dashboard__button_container">
-                    <Button
-                        type="primary"
-                        onClick={(): void => {
-                            startSubmission().then((submission): void => {
-                                history.push(`/submission/${submission.id}/title`);
-                            });
-                        }}
-                    >
+                    <Button type="primary" onClick={(): void => {}}>
                         New Submission
                     </Button>
                 </div>
-                <SubmissionList submissions={submissions} />
+                {loading ? 'loading' : <SubmissionList submissions={data.getSubmissions} />}
                 <Paragraph type="footer">
                     To find existing submissions or to submit a{' '}
                     <Link className="footer__link" to="/author-guide/types">
