@@ -28,7 +28,6 @@ DC_BUILD = IMAGE_TAG=${TRAVIS_COMMIT} docker-compose -f docker-compose.build.yml
 ###########################
 
 start_network:
-	docker network prune
 	docker network create ${DOCKER_NETWORK_NAME}
 
 ###########################
