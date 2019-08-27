@@ -1,4 +1,3 @@
-
 help:
 	@echo "Libero reviewer CI Makefile"
 	@echo "---"
@@ -14,6 +13,7 @@ help:
 	@echo "- the build targets are in the format <name>:[<dependencies>]"
 
 # COMMIT_SLUG = `git log HEAD^..HEAD --pretty=oneline --abbrev-commit | head -c 7`
+.DEFAULT_GOAL=help
 
 DOCKER_NETWORK_NAME=reviewer_build
 
