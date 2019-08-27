@@ -4,10 +4,10 @@ FROM liberoadmin/reviewer_client_webpack:${image_tag} AS built
 FROM nginx:1-alpine
 
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
-WORKDIR /opt
+WORKDIR /app
 
 COPY deployment/nginx.conf /etc/nginx/nginx.conf
-COPY --from=built /opt/dist/ /usr/share/nginx/html
+COPY --from=built /app/dist/ /usr/share/nginx/html
 
 EXPOSE 80
 

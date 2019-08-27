@@ -4,7 +4,7 @@ FROM liberoadmin/reviewer_server_typescript:${image_tag}
 
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 
-WORKDIR /opt
+WORKDIR /app
 
 EXPOSE 3000
 

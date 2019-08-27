@@ -2,13 +2,11 @@ ARG image_tag=latest
 
 FROM liberoadmin/reviewer_server_packages:${image_tag}
 
-WORKDIR /opt
+WORKDIR /app
 
 COPY tsconfig.build.json . 
 COPY tsconfig.json .
 COPY tslint.json .
 COPY src/ ./src/
-
-RUN ls
 
 RUN yarn build

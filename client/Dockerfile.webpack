@@ -2,7 +2,7 @@ ARG image_tag=latest
 
 FROM liberoadmin/reviewer_client_packages:${image_tag}
 
-WORKDIR /opt
+WORKDIR /app
 
 COPY globals.d.ts index.html index.tsx .babelrc .eslintrc.js .eslintignore webpack.parts.js jest.config.js tsconfig.json webpack.config.js ./
 
