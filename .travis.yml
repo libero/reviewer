@@ -1,11 +1,25 @@
-language: node_js
-node_js:
-  - 10
+language: minimal
 env:
-  - TEST_SUITE=build-and-test-server
-  - TEST_SUITE=build-and-test-client
+  - TEST_SUITE=server_ci
+  - TEST_SUITE=client_ci
+
+services:
+  - docker
 
 cache: yarn
 
 script:
-  - make $TEST_SUITE
+  - make -j 4 $TEST_SUITE
+
+stages:
+  - name: Test
+  - name: Integration Tests
+
+jobs:
+  include:
+    - stage: Integration Tests
+      name: "API Tests"
+      script: make run_api_tests
+    - stage: Integration Tests
+      name: "Browser Tests"
+      script: make run_browser_tests
