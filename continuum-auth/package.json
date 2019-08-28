@@ -11,5 +11,8 @@
     "url": "https://github.com/libero/reviewer"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^3.5.3"
+  }
 }
