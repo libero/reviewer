@@ -76,3 +76,4 @@ typings/
 # generated code
 *.tmp.ts
 data/
+dist/
