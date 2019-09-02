@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "yarn test",
-    "compile": "tsc --build tsconfig.json"
+    "compile": "tsc --build tsconfig.json",
+    "start:dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts"
   },
   "repository": {
     "type": "git",
@@ -15,8 +16,12 @@
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.17.1",
+    "@types/jsonwebtoken": "^8.3.3",
     "@types/pino": "^5.8.10",
     "express": "^4.17.1",
+    "funfix": "^7.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^1.19.1",
     "pino": "^5.13.2",
     "typescript": "^3.5.3"
   }
