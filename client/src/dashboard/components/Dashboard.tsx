@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
+import { useTranslation } from "react-i18next";
 import { Button, Paragraph } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
 import { getSubmissionsQuery } from '../graphql';
@@ -8,12 +9,13 @@ import { getSubmissionsQuery } from '../graphql';
 const Dashboard = withRouter(
     (): JSX.Element => {
         const { loading, data } = useQuery(getSubmissionsQuery);
+        const { t, i18n } = useTranslation();
 
         return (
             <div className="dashboard">
                 <div className="dashboard__button_container">
                     <Button type="primary" onClick={(): void => {}}>
-                        New Submission
+                        {t('dashboard:new-submission')}
                     </Button>
                 </div>
                 {loading ? 'loading' : <SubmissionList submissions={data.getSubmissions} />}

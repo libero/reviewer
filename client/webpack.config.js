@@ -29,6 +29,7 @@ const developmentConfig = merge([
     parts.output({ filename: 'bundle.js' }),
     parts.devServer(),
     parts.loaders(),
+    parts.copyFiles(),
     parts.generateSourceMaps({ type: 'eval' })
 ]);
 
@@ -39,6 +40,7 @@ const productionConfig = merge([
     parts.minifyCSS(),
     parts.minifyJS(),
     parts.splitBundles(),
+    parts.copyFiles(),
     parts.generateSourceMaps({ type: 'source-map' }),
     parts.newRelic(),
 ]);

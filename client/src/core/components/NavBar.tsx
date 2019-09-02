@@ -2,21 +2,22 @@ import React from 'react';
 import { AppBar, AppBarIcon } from '../../ui/atoms';
 import { ProfileDropdown, Menu, BurgerMenu } from '../../ui/molecules';
 import Logo from '../assets/elife-logo.png';
+
 const menuItems = [
     {
-        display: 'Dashboard',
+        display: 'common:navbar.dashboard',
         url: '/',
     },
     {
-        display: 'Author guide',
+        display: 'common:navbar.author-guide',
         url: '/author-guide',
     },
     {
-        display: 'Reviewer guide',
+        display: 'common:navbar.reviewer-guide',
         url: '/reviewer-guide',
     },
     {
-        display: 'Contact us',
+        display: 'common:navbar.contact-us',
         url: '/contact-us',
     },
 ];
