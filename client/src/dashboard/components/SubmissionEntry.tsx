@@ -1,5 +1,5 @@
 import React from 'react';
-import { Delete } from '@material-ui/icons';
+import Delete from '@material-ui/icons/Delete';
 import moment from 'moment';
 import useModal from '../../ui/hooks/useModal';
 import { Modal } from '../../ui/atoms';
