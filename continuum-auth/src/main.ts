@@ -2,9 +2,10 @@ import * as express from 'express';
 import {Express, Request, Response} from 'express';
 import { InfraLogger as logger } from './logger';
 
-import { HealthCheck, Login } from './use-cases';
+import { HealthCheck, Login, Authenticate } from './use-cases';
 
 function init() {
+  logger.info("Starting service");
   // Start the application
   const app: Express = express();
 
@@ -20,6 +21,10 @@ function init() {
 
   app.post("/login", Login);
   app.get("/login", Login);
+
+  app.get("/authenticate/:token", Authenticate);
+  
+  return app;
 }
 
-init();
+init().listen(3001, () => logger.info("Service listening on port 3001"));
