@@ -21,10 +21,10 @@
 
 .menu__link {
   padding: 0 0.75rem;
-  color: $textColourMuted;
+  color: $colourTextLarge;
   display: inline-block;
   text-decoration: none;
 }
 .menu__link--active {
-  color: $bodyText;
+  color: $colourText;
 }
