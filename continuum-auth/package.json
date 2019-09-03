@@ -4,8 +4,9 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "yarn test",
+    "test": "echo not configured yet",
     "build": "tsc --build tsconfig.json",
+    "lint": "echo not configured yet",
     "start:dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts"
   },
   "repository": {
