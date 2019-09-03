@@ -94,6 +94,9 @@ test_continuum-auth: build_continuum-auth_source
 build_application_continuum-auth_container: test_continuum-auth lint_continuum-auth
 	${DC_BUILD} build reviewer_continuum-auth
 
+push_continuum-auth_container: build_application_continuum-auth_container
+	@echo "Push the container to a docker registry"
+
 local_ci:
 	make -j 4 server_ci continuum-auth_ci client_ci
 
