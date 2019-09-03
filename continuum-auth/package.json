@@ -19,13 +19,15 @@
     "@types/jsonwebtoken": "^8.3.3",
     "@types/node-fetch": "^2.5.0",
     "@types/pino": "^5.8.10",
+    "@types/uuid": "^3.4.5",
     "express": "^4.17.1",
     "funfix": "^7.0.1",
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.1",
     "pino": "^5.13.2",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "pino-pretty": "^3.2.1",
