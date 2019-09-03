@@ -36,11 +36,10 @@ export const Authenticate = (profilesService: ProfilesRepo) => (
             logger.info("getProfile", profile);
             // TODO: Calculate user-role
 
-            const payload = { token_id: v4(), profile, user_roles: ['author']};
+            const payload = { token_id: v4(), profile, user_roles: ["author"] };
             const output_token = encode(payload);
-            
-            res.redirect(output_token);
 
+            res.redirect(output_token);
           })
           .getOrElseL(() => {
             logger.warn("unauthorized");
