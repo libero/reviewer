@@ -4,11 +4,11 @@ import { DomainLogger as logger } from '../logger';
 
 import config from '../config';
 
-const { auth: { redirect_url } } = config;
+const { auth: { login_redirect_url } } = config;
 
 export const Login = (req: Request, res: Response) => {
 
-  logger.info("Redirecting request", {redirect_url});
+  logger.info("Redirecting request", { login_redirect_url });
 
-  res.redirect("http://www.google.com");
+  res.redirect(login_redirect_url);
 };
