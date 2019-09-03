@@ -65,6 +65,38 @@ services:
       - client_webpack
     networks: 
         - 'reviewer_build'
+
+  # continuum-auth
+  continuum-auth_npm:
+    build:
+      context: 'continuum-auth/'
+      dockerfile: 'Dockerfile.packages'
+    image: liberoadmin/reviewer_continuum-auth_packages:${IMAGE_TAG}
+    networks: 
+        - 'reviewer_build'
+  continuum-auth_typescript:
+    build:
+      context: 'continuum-auth/'
+      dockerfile: "Dockerfile.typescript"
+      args:
+        image_tag: ${IMAGE_TAG}
+    image: liberoadmin/reviewer_continuum-auth_typescript:${IMAGE_TAG}
+    depends_on:
+      - continuum-auth_npm
+    networks: 
+        - 'reviewer_build'
+  reviewer_continuum-auth:
+    build:
+      context: 'continuum-auth/'
+      dockerfile: "Dockerfile.application"
+      args:
+        image_tag: ${IMAGE_TAG}
+    image: liberoadmin/reviewer_continuum-auth:${IMAGE_TAG}
+    depends_on:
+      - continuum-auth_npm
+      - continuum-auth_typescript
+    networks: 
+        - 'reviewer_build'
 networks:
   reviewer_build:
     external:

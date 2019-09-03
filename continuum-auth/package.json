@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "yarn test",
-    "compile": "tsc --build tsconfig.json",
+    "build": "tsc --build tsconfig.json",
     "start:dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts"
   },
   "repository": {
