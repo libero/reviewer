@@ -1,7 +1,10 @@
-import {addDecorator, addParameters, configure} from '@storybook/react';
+import { addDecorator, addParameters, configure } from '@storybook/react';
 import { withA11y } from '@storybook/addon-a11y';
+import '../src/core/utils/i18n';
 import theme from './theme';
+import { SuspenseDecorator } from './decorators'
 
+addDecorator(SuspenseDecorator);
 addDecorator(withA11y);
 
 addParameters({

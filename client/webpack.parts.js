@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
@@ -143,6 +144,14 @@ exports.output = ({ filename }) => ({
         path: path.resolve(__dirname, 'dist'),
         filename,
     }
+})
+
+exports.copyFiles = () => ({
+    plugins: [
+        new CopyPlugin([
+            { from: './src/core/locales', to: path.resolve(__dirname, 'dist', 'locales') }
+        ])
+    ]
 })
 
 exports.generateSourceMaps = ({ type }) => ({

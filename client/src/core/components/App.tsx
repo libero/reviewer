@@ -12,15 +12,21 @@ declare var API_HOST: string;
 
 const authToken = localStorage.getItem('token');
 
+const Loader = () => (
+    <div>Loading...</div>
+)
+
 const App: React.FC = (): JSX.Element => (
     <div>
         <ApolloProvider client={createApolloClient(API_HOST, authToken)}>
             <Router>
-                <NavBar />
-                <div className="site-content">
-                    <InitialSubmissionRoutes />
-                    <DashboardRoutes />
-                </div>
+                <React.Suspense fallback={<Loader />}>
+                    <NavBar />
+                    <div className="site-content">
+                        <InitialSubmissionRoutes />
+                        <DashboardRoutes />
+                    </div>
+                </React.Suspense>
             </Router>
         </ApolloProvider>
     </div>

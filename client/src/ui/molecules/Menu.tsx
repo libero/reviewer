@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from "react-i18next";
 import { NavLink } from 'react-router-dom';
 
 export interface MenuItemType {
@@ -17,14 +18,16 @@ const Menu: React.FC<Props> = ({
     items = [],
     rootClassName = 'menu',
     onLinkClick = (): void => {},
-}: Props): JSX.Element => (
-    <ul className={`${rootClassName}__list`}>
+}: Props): JSX.Element => {
+    const { t, i18n } = useTranslation();
+
+    return (<ul className={`${rootClassName}__list`}>
         {items.map(
             (item): JSX.Element => (
                 <li className={`${rootClassName}__item`} key={`${item.url}-${item.display}`}>
                     {item.external ? (
                         <a className={`${rootClassName}__link`} href={item.url}>
-                            {item.display}
+                            {item.display} {t(item.display)}
                         </a>
                     ) : (
                         <NavLink
@@ -34,13 +37,13 @@ const Menu: React.FC<Props> = ({
                             onClick={onLinkClick}
                             to={item.url}
                         >
-                            {item.display}
+                            {t(item.display)}
                         </NavLink>
                     )}
                 </li>
             ),
         )}
     </ul>
-);
+)};
 
 export default Menu;
