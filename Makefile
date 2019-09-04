@@ -84,6 +84,16 @@ local_ci:
 #
 ###########################
 
+config_service_init: start_containers
+	docker-compose exec etcd1 etcdctl put /Libero/version SSE
+	docker-compose exec etcd1 etcdctl put /Org_A/Journal_A/Type S3
+	docker-compose exec etcd1 etcdctl put /Org_A/Journal_A/Bucket Bucket_A
+	docker-compose exec etcd1 etcdctl put /Org_A/Journal_A/ACL private
+	docker-compose exec etcd1 etcdctl get --prefix /
+
+start_config_service:
+	docker-compose up etcd1
+
 start_containers:
 	# Has a soft dependency on build_server_container and build_client_containe
 	@echo "Starts running the newly built & pushed containers in testing mode"
