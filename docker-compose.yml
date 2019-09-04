@@ -58,6 +58,7 @@ services:
       - ./message-bus-tester/:/message-bus-tester/:z
     networks:
       - infra_api
+      - infra_rabbit
 
   continuum-auth:
     image: node:10

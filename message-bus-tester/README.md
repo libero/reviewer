@@ -30,6 +30,7 @@ This project is also going to define how the message bus is structured, at the m
 Things to notice about this diagram:
 - Each kind of service has one queue. This follows the 'worker' pattern where when each instance of a service picks an event from the queue that event is consumed and the other instances of that service no longer have access to it. This requires the services to be completely stateless otherwise there will be some serious inconsistencies.
 - This architecture is not intended to provide "request-response" functionality across services. That's bad, it introduces coupling between services. If you expect a message queue to do that, you're probably doing something wrong.
+- **Each type of service has it's own queue for each type of event**
 
 This will be abstracted to the following interface:
 
