@@ -1,5 +1,6 @@
 version: '3'
 services:
+  # Underlying services 
   postgres:
     image: postgres:11
     ports:
@@ -13,6 +14,32 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data
 
+  etcd1:
+    image: gcr.io/etcd-development/etcd:v3.3
+    restart: unless-stopped
+    healthcheck:
+      test: "etcdctl endpoint health"
+      interval: 1m
+      timeout: 10s
+      retries: 3
+    command: /usr/local/bin/etcd --data-dir=/etcd-data
+    environment:
+      ETCDCTL_API: 3
+      ETCD_DEBUG: 1
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://127.0.0.1:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_ADVERTISE_CLIENT_URLS: http://127.0.0.1:2379
+      ETCD_INITIAL_CLUSTER: default=http://127.0.0.1:2380
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    volumes:
+      - ./data:/etcd-data
+  
+  # Support Services
+
+  # Domain Services
   server:
     image: node:10
     ports:
@@ -33,6 +60,17 @@ services:
       - infra_postgres
       - infra_api
     depends_on: ["postgres"]
+
+  continuum-auth:
+    image: node:10
+    ports:
+      - "3001:3001"
+    working_dir: "/continuum-auth"
+    command: ["bash", "-c", "yarn && yarn start:dev"]
+    volumes:
+      - ./continuum-auth/:/continuum-auth/:z
+    networks:
+      - infra_api
 
   client:
     image: node:10

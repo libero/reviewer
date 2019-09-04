@@ -75,14 +75,46 @@ test_client: build_client_source
 build_client_container: test_client build_client_source
 	${DC_BUILD} build reviewer_client
 
+# continuum-auth
+continuum-auth_ci: start_network
+	make lint_continuum-auth test_continuum-auth push_continuum-auth_container
+
+install_continuum-auth_packages:
+	${DC_BUILD} build continuum-auth_npm
+
+build_continuum-auth_source: install_continuum-auth_packages
+	${DC_BUILD} build continuum-auth_typescript
+
+lint_continuum-auth: build_continuum-auth_source
+	${DC_BUILD} run continuum-auth_typescript yarn lint
+
+test_continuum-auth: build_continuum-auth_source
+	${DC_BUILD} run continuum-auth_typescript yarn test
+
+build_application_continuum-auth_container: test_continuum-auth lint_continuum-auth
+	${DC_BUILD} build reviewer_continuum-auth
+
+push_continuum-auth_container: build_application_continuum-auth_container
+	@echo "Push the container to a docker registry"
+
 local_ci:
-	make -j 4 server_ci client_ci
+	make -j 4 server_ci continuum-auth_ci client_ci
 
 ###########################
 #
 # Integration Tests
 #
 ###########################
+
+config_service_init: start_containers
+	docker-compose exec etcd1 etcdctl put /Libero/version SSE
+	docker-compose exec etcd1 etcdctl put /Org_A/Journal_A/Type S3
+	docker-compose exec etcd1 etcdctl put /Org_A/Journal_A/Bucket Bucket_A
+	docker-compose exec etcd1 etcdctl put /Org_A/Journal_A/ACL private
+	docker-compose exec etcd1 etcdctl get --prefix /
+
+start_config_service:
+	docker-compose up etcd1
 
 start_containers:
 	# Has a soft dependency on build_server_container and build_client_containe

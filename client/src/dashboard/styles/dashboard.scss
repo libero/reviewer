@@ -29,7 +29,7 @@
 }
 
 .submission-entry__link {
-  color: $bodyText;
+  color: $colourText;
   text-decoration: none;
   width: 95%;
 
@@ -65,15 +65,15 @@
 }
 
 .submission-entry__title--continue_submission {
-  color: $bodyText;
+  color: $colourText;
 }
 
 .submission-entry__title--rejected {
-  color: $colourDanger;
+  color: $colourError;
 }
 
 .submission-entry__title--submitted {
-  color: $textColourMuted;
+  color: $colourTextLarge;
 }
 
 .submission-entry__link_text {
@@ -88,15 +88,15 @@
 }
 
 .submission-entry__link_text--rejected {
-  color: $colourDanger;
+  color: $colourError;
 }
 
 .submission-entry__link_text--submitted {
-  color: $textColourMuted;
+  color: $colourTextLarge;
 }
 
 .submission-entry__dates {
-  color: $textColourMuted;
+  color: $colourTextLarge;
   justify-content: space-between;
   display: flex;
 
@@ -121,7 +121,7 @@
 .submission-entry__icon.MuiSvgIcon-root {
   margin-left: 1.5rem;
   display: none;
-  fill: $textColourMuted;
+  fill: $colourTextLarge;
 
   @include forSize('tabletPortraitUp') {
     display:inline-block;
@@ -171,14 +171,14 @@
   cursor: pointer;
   border-bottom: 0.25rem solid transparent;
   margin-bottom: -0.063rem;
-  color: $textColourMuted;
+  color: $colourTextLarge;
   &:hover {
     color: $colourPrimary;
   }
 
   &.react-tabs__tab--selected {
     border-bottom-color: $colourPrimary;
-    color: $bodyText
+    color: $colourText
   }
 
   &.react-tabs__tab--disabled {

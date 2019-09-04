@@ -2,6 +2,7 @@ language: minimal
 env:
   - TEST_SUITE=server_ci
   - TEST_SUITE=client_ci
+  - TEST_SUITE=continuum-auth_ci
 
 services:
   - docker

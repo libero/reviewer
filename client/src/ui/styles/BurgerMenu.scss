@@ -49,10 +49,10 @@
     padding: 1.5rem;
   }
   .burger_menu__link {
-    color: $textColourMuted;
+    color: $colourTextLarge;
     text-decoration: none;
   }
   .burger_menu__link--active {
-    color: $bodyText;
+    color: $colourText;
   }
 }

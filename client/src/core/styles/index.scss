@@ -2,6 +2,7 @@
 @import './_fonts.scss';
 @import './_mixins.scss';
 @import './_global.scss';
+@import './_typography.scss';
 
 //ui
 @import '../../ui/styles/index';
@@ -10,11 +11,17 @@
 @import '../../dashboard/styles/dashboard';
 
 .site-content {
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.site-content__centered {
     width: 100%;
     padding-left: 24px;
     padding-right: 24px;
     margin-left: auto;
     margin-right: auto;
+    min-width: 0;
 
     @include forSize('desktopUp') {
         width: 1272px;

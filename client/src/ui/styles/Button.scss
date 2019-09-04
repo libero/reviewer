@@ -2,7 +2,7 @@
   background: $colourSecondary;
   border: 1px solid $borderColour;
   border-radius: 3px;
-  color: $bodyText;
+  color: $colourText;
 
   &:focus,
   &:hover {
@@ -29,7 +29,7 @@
   line-height: 18px;
   padding: 12px 18px 9px 18px;
   text-transform: uppercase;
-  font-family: $fontHeading;
+  font-family: $fontStrong;
   font-weight: 400;
   min-width: 120px;
   height: 48px;
@@ -49,14 +49,41 @@
 }
 
 .button--danger {
-  background: $colourDanger;
+  background: $colourError;
   color: $colourTextReverse;
   &:focus,
   &:hover {
-    background-color: darken($colourDanger, 10%);
+    background-color: darken($colourError, 10%);
   }
 
   &:active {
-    background-color: darken($colourDanger, 20%);
+    background-color: darken($colourError, 20%);
+  }
+}
+
+.button--orcid {
+  border-color: $colourORCID;
+  background-color: $colourORCID;
+  color: $colourText;
+  width: 11.125rem;
+
+  &:focus,
+  &:hover {
+    border-color: darken($colourORCID, 30%);
+    background-color: darken($colourORCID, 30%);
+  }
+
+  &:active {
+    border-color: darken($colourORCID, 50%);
+    background-color: darken($colourORCID, 50%);
+  }
+
+  &[disabled] {
+    &:focus,
+    &:hover,
+    &:active {
+      border-color: $colourORCID;
+      background-color: $colourORCID;
+    }
   }
 }

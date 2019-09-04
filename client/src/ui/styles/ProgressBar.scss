@@ -71,7 +71,7 @@ $progressBarTextWidth: 7.5rem;
 .progress_bar__divider {
   background-color: $borderColour;
   height: $progressBarLineWidth;
-  flex: 1 1 0%;
+  flex: 1 1 0;
 }
 .progress_bar__divider--activated {
   background-color: $colourPrimary;
@@ -92,5 +92,5 @@ $progressBarTextWidth: 7.5rem;
 }
 
 .progress_bar__text--current {
-  color: $bodyText;
+  color: $colourText;
 }
