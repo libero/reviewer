@@ -14,6 +14,23 @@ export class RabbitMessageQueue implements MessageQueue {
     return `consumer-${def.kind}-${def.namespace}-service_name`;
   }
 
+  private eventToMessage<T extends object>(event: Event<T>): any {
+    // Wrap the event in some internal transport layer format, in effect transforming the
+    // event into a message
+    return {
+      event,
+      meta: {
+        attempts: 0, // increments each process
+        retries: 10, // total retries
+        failures: 0 // increments each failure
+      }
+    };
+  }
+
+  private messageToEvent<T extends object>(message: {event: Event<T>, meta: any}): Option<Event<T>> {
+    return Option.of(message.event);
+  }
+
   public async init(event_defs: EventIdentifier[]): Promise<this> {
     // First things first
     this.connection = Option.of(
@@ -35,7 +52,19 @@ export class RabbitMessageQueue implements MessageQueue {
   public async publish<T extends object>(event: Event<T>): Promise<boolean> {
     // Publishes an event to it's queue
     const where_to = this.defToExchange(event);
-    return false;
+    return this.connection
+      .map(async connection => {
+        const channel = await connection.createChannel();
+
+        await channel.publish(
+          where_to,
+          "",
+          new Buffer(JSON.stringify(this.eventToMessage(event)))
+        );
+
+        return true;
+      })
+      .getOrElse(false);
   }
 
   public async subscribe<P extends object>(
@@ -59,9 +88,11 @@ export class RabbitMessageQueue implements MessageQueue {
               ""
             );
 
-            await channel.assertQueue(this.defToQueue(event_identifier)+'_bonus')
+            await channel.assertQueue(
+              this.defToQueue(event_identifier) + "__bonus"
+            );
             await channel.bindQueue(
-              this.defToQueue(event_identifier)+"_bonus",
+              this.defToQueue(event_identifier) + "__bonus",
               this.defToExchange(event_identifier),
               ""
             );
@@ -70,10 +101,10 @@ export class RabbitMessageQueue implements MessageQueue {
               this.defToQueue(event_identifier),
               async (msg: Message) => {
                 try {
-                  const event: Event<P> = JSON.parse(msg.content.toString());
-                  logger.info("eventRecv", { event });
+                  const message: {event: Event<P>, meta: any} = JSON.parse(msg.content.toString());
+                  logger.info("eventRecv", { message });
 
-                  handler(event).then(isOk => {
+                  handler(this.messageToEvent(message).get()).then(isOk => {
                     if (isOk) {
                       // Ack
                       channel.ack(msg);

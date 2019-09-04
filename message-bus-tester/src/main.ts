@@ -10,18 +10,32 @@ type TestEventPayload = {
 };
 
 const init_mq = async () => {
-  const events: EventIdentifier = {
+  const test_event_def: EventIdentifier = {
     kind: "something_else",
     namespace: "service_01",
   };
 
-  const mq = await (new RabbitMessageQueue()).init([events, events]);
+  const mq = await (new RabbitMessageQueue()).init([test_event_def, test_event_def]);
   logger.info("messageQueueStarted");
 
-  mq.subscribe<TestEventPayload>(events, async (event) => {
+  mq.subscribe<TestEventPayload>(test_event_def, async (event) => {
     logger.info(event);
     return true;
   });
+
+  setTimeout(() => {
+    const event: Event<TestEventPayload> = {
+      id: 'some-wevent-id',
+      created: new Date(),
+      payload: {
+        x: 10,
+        y: 20,
+      },
+      ...test_event_def
+    }
+
+    mq.publish(event);
+  }, 5000)
 
 };
 

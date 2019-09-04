@@ -13,25 +13,7 @@ export interface Event<T extends object> extends EventIdentifier{
   created: Date;
 
   payload: T; // The actual data
-}
-
-class ServiceStartedEvent implements Event<{}> {
-  id: string;
-  created: Date;
-  payload: {};
-  kind: string; 
-  namespace: string;
-
-  constructor(kind: EventType, namespace: string) {
-    this.id = "some-event-id";
-    this.created = new Date();
-    this.kind = kind;
-    this.namespace= namespace
-  }
-
-  public static fromIdentifier(id: EventIdentifier) {
-    return new this(id.kind, id.namespace);
-  }
+  context?: unknown; // context about 
 }
 
 type EventPayload = {
@@ -46,21 +28,6 @@ const thing: Event<EventPayload>= {
   kind: "something",
   namespace: "something_else"
 }
-
-
-// const service_started_event_def: EventIdentifier = { kind: "ServiceStarted", namespace: "infra" };
-// 
-// const ev = ServiceStartedEvent.fromIdentifier(service_started_event_def);
-// 
-// const mq = {} as any;
-// 
-// mq.publish(ev);
-// 
-// // mq.subcribe<{}>(service_started_event_def, (_) => /{
-// console.log("got a thing");
-// });
-
-
 
 export interface MessageQueue {
   init(event_definitions: EventIdentifier[]): Promise<this>;
