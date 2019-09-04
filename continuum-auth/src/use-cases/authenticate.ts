@@ -4,6 +4,7 @@ import { Option } from "funfix";
 import { encode } from "../jwt";
 import { ProfilesRepo } from "../repo/profiles";
 import { v4 } from "uuid";
+import config from '../config';
 
 // This is the endpoint that does the actual token exchange/user lookup and signing the output token
 // And yeah, I know the controller/usecase code shouldn't be mixed but idec, we can refactor it at some point
@@ -29,6 +30,8 @@ export const Authenticate = (profilesService: ProfilesRepo) => (
         // Send that back to the client
 
         // Controller: perform the requests to the various services and fetch the user data
+
+        const  { auth: { authorised_redirect_url } } = config;
         const maybeProfile = await profilesService.getProfileById(token);
 
         maybeProfile
@@ -39,7 +42,7 @@ export const Authenticate = (profilesService: ProfilesRepo) => (
             const payload = { token_id: v4(), profile, user_roles: ["author"] };
             const output_token = encode(payload);
 
-            res.redirect(output_token);
+            res.redirect(`${authorised_redirect_url}#${output_token}`);
           })
           .getOrElseL(() => {
             logger.warn("unauthorized");
