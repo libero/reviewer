@@ -1,17 +1,23 @@
 // Colours
-// TODO: colours should define a pallet ie: blue, grey, darkGrey these should then be used by element styles ie: textColour footerTextColour 
-$white: #fff;
-$textColourMuted: rgb(136, 136, 136) !default; //colourTextSecondary
-$colourPrimary: rgb(2, 136, 209) !default;
-$borderColour: rgb(224, 224, 224) !default; 
-$bodyText: rgb(33, 33, 33) !default; //colourText
-$colourSecondary: rgb(247, 247, 247) !default;
+$white: rgb(255,255,255);
+
+//text
+$colourText: rgb(33, 33, 33) !default; //colourText
+$colourTextSecondary: rgb(136, 136, 136) !default; //colourTextSecondary
+$colourTextLarge: rgb(149,149,149) !default; //colourTextSecondary
 $colourTextReverse: $white !default;
-$colourDanger: rgb(207, 12, 78);
+
+//main
+$colourPrimary: rgb(8, 122, 204) !default;
+$colourSecondary: rgb(247, 247, 247) !default;
+$borderColour: rgb(224, 224, 224) !default;
+$colourError: rgb(207, 12, 78);
+$colourORCID: rgb(166, 206, 57);
+$colourSuccess: rgb(51,136,8);
 
 //fonts
 $defaultFontFamily: "Noto Sans", Arial, Helvetica, sans-serif, sans-serif;
-$fontHeading: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
+$fontStrong: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
 $altFontFamily: "Noto Serif", serif;
 $fontReading: "Noto Serif", serif;
 $fontWriting: "Noto Sans", Arial, Helvetica, sans-serif;
