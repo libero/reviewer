@@ -11,9 +11,6 @@
   "author": "Libero Team",
   "license": "ISC",
   "dependencies": {
-    "@types/amqplib": "^0.5.13",
-    "@types/express": "^4.17.1",
-    "@types/pino": "^5.8.10",
     "amqplib": "^0.5.5",
     "express": "^4.17.1",
     "funfix": "^7.0.1",
@@ -21,6 +18,9 @@
     "typescript": "^3.6.2"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.5.13",
+    "@types/express": "^4.17.1",
+    "@types/pino": "^5.8.10",
     "nodemon": "^1.19.2",
     "ts-node": "^8.3.0"
   }
