@@ -59,7 +59,7 @@ export class RabbitMessageQueue implements MessageQueue {
         await channel.publish(
           where_to,
           "",
-          new Buffer(JSON.stringify(this.eventToMessage(event)))
+          Buffer.from(JSON.stringify(this.eventToMessage(event)))
         );
 
         return true;
