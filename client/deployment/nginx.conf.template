@@ -4,11 +4,11 @@ events {
 
 http {
   server {
-    listen 9000;
+    listen ${CLIENT_PORT};
 
     location /graphql {
       # This **needs** to use an environment variable for prod
-      proxy_pass http://server:3000;
+      proxy_pass ${CLIENT_API_PROXY_URL}:${SERVER_PORT};
     }
 
     location / {
