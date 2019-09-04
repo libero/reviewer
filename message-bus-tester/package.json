@@ -4,7 +4,9 @@
   "description": "Eventually this is going to turn into our message bus library, which will eventually implement the pubsweet message bus interface.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jeset"
+    "test": "jeset",
+    "compile": "tsc",
+    "start:dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts"
   },
   "author": "Libero Team",
   "license": "ISC",
@@ -13,5 +15,9 @@
     "express": "^4.17.1",
     "funfix": "^7.0.1",
     "typescript": "^3.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2",
+    "ts-node": "^8.3.0"
   }
 }
