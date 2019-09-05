@@ -88,15 +88,6 @@ export class RabbitMessageQueue implements MessageQueue {
               ""
             );
 
-            await channel.assertQueue(
-              this.defToQueue(event_identifier) + "__bonus"
-            );
-            await channel.bindQueue(
-              this.defToQueue(event_identifier) + "__bonus",
-              this.defToExchange(event_identifier),
-              ""
-            );
-
             await channel.consume(
               this.defToQueue(event_identifier),
               async (msg: Message) => {
