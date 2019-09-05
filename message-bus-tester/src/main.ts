@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { InfraLogger as logger } from './logger';
 import { Event, EventIdentifier } from './message-queue';
 import { RabbitMessageQueue } from './rabbit-message-queue';
+import { MockMessageQueue } from './mock-message-queue';
 
 type TestEventPayload = {
   x: number;
@@ -15,11 +16,12 @@ const init_mq = async () => {
     namespace: "service_01",
   };
 
-  const mq = await (new RabbitMessageQueue()).init([test_event_def, test_event_def]);
+  // Mock bus
+  const mock_mq = await (new MockMessageQueue()).init([test_event_def, test_event_def]);
   logger.info("messageQueueStarted");
 
-  mq.subscribe<TestEventPayload>(test_event_def, async (event) => {
-    logger.info(event);
+  mock_mq.subscribe<TestEventPayload>(test_event_def, async (event) => {
+    logger.info('mockEventRecieved', event);
     return true;
   });
 
@@ -34,7 +36,30 @@ const init_mq = async () => {
       ...test_event_def
     }
 
-    mq.publish(event);
+    mock_mq.publish(event);
+  }, 10000)
+
+  // Rabbit bus
+  const rabbitmq_mq = await (new RabbitMessageQueue()).init([test_event_def, test_event_def]);
+  logger.info("messageQueueStarted");
+
+  rabbitmq_mq.subscribe<TestEventPayload>(test_event_def, async (event) => {
+    logger.info('rabbitEventRecieved', event);
+    return true;
+  });
+
+  setTimeout(() => {
+    const event: Event<TestEventPayload> = {
+      id: 'some-wevent-id',
+      created: new Date(),
+      payload: {
+        x: 10,
+        y: 20,
+      },
+      ...test_event_def
+    }
+
+    rabbitmq_mq.publish(event);
   }, 5000)
 
 };
