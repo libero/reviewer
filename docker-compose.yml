@@ -14,6 +14,14 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - infra_rabbit
+
   etcd1:
     image: gcr.io/etcd-development/etcd:v3.3
     restart: unless-stopped
@@ -39,6 +47,30 @@ services:
   
   # Support Services
 
+  # NOTE: This will eventually be removed when other services start using the message bus
+  message-bus-tester:
+    image: node:10
+    ports:
+      - "3002:3002"
+    working_dir: "/message-bus-tester"
+    command: ["bash", "-c", "yarn && yarn start:dev"]
+    volumes:
+      - ./message-bus-tester/:/message-bus-tester/:z
+    networks:
+      - infra_api
+      - infra_rabbit
+
+  continuum-auth:
+    image: node:10
+    ports:
+      - "3001:3001"
+    working_dir: "/continuum-auth"
+    command: ["bash", "-c", "yarn && yarn start:dev"]
+    volumes:
+      - ./continuum-auth/:/continuum-auth/:z
+    networks:
+      - infra_api
+
   # Domain Services
   server:
     image: node:10
@@ -61,17 +93,6 @@ services:
       - infra_api
     depends_on: ["postgres"]
 
-  continuum-auth:
-    image: node:10
-    ports:
-      - "3001:3001"
-    working_dir: "/continuum-auth"
-    command: ["bash", "-c", "yarn && yarn start:dev"]
-    volumes:
-      - ./continuum-auth/:/continuum-auth/:z
-    networks:
-      - infra_api
-
   client:
     image: node:10
     ports:
@@ -93,6 +114,7 @@ services:
 networks:
   infra_postgres:
   infra_api:
+  infra_rabbit:
 
 volumes:
   pg-data:
