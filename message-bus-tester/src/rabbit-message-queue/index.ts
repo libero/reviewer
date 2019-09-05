@@ -1,10 +1,10 @@
-import { EventIdentifier, MessageQueue, Event } from "../message-queue";
+import { EventIdentifier, EventSubscriber, EventPublisher, Event } from "../message-queue";
 import * as amqplib from "amqplib";
 import { Connection, Message } from "amqplib";
 import { Option, Some } from "funfix";
 import { InfraLogger as logger } from "../logger";
 
-export class RabbitMessageQueue implements MessageQueue {
+export class RabbitMessageQueue implements EventSubscriber, EventPublisher {
   connection: Option<Connection>;
   private defToExchange(def: EventIdentifier) {
     return `event-${def.kind}-${def.namespace}--ex`;

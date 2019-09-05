@@ -29,10 +29,16 @@ const thing: Event<EventPayload>= {
   namespace: "something_else"
 }
 
-export interface MessageQueue {
+export interface EventPublisher {
   init(event_definitions: EventIdentifier[]): Promise<this>;
 
   publish<T extends object>(event: Event<T>): Promise<boolean>;
+}
+
+export interface EventSubscriber {
+  init(event_definitions: EventIdentifier[]): Promise<this>;
+
   subscribe<P extends object>(event_definition: EventIdentifier, handler: (ev: Event<P>)=>Promise<boolean>): void;
   // handler: returns weather or not we should ack the message
 }
+
