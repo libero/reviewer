@@ -1,30 +1,27 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { TwoColumnLayout, Paragraph, Button } from '../../ui/atoms';
 import Image from '../../core/assets/welcome.jpg';
 
 const Login = (): JSX.Element => {
+    const { t } = useTranslation();
+
     return (
-        <div className="login-page">
+        <div className="login-page site-content__centered">
             <TwoColumnLayout>
                 <div>
-                    <h1 className="typography__heading typography__heading--h1">Welcome!</h1>
+                    <h1 className="typography__heading typography__heading--h1">{t('login:welcome')}</h1>
 
                     <div className="login-page__text">
+                        <Paragraph type="writing">{t('login:mission-1')}</Paragraph>
+                        <Paragraph type="writing">{t('login:mission-2')}</Paragraph>
                         <Paragraph type="writing">
-                            The leading scientists behind eLife are committed to rapid, fair, and constructive review of
-                            academic research.
-                        </Paragraph>
-                        <Paragraph type="writing">
-                            We welcome submissions of the highest scientific standards and importance in all areas of
-                            importance in all areas of the life and biomedical sciences.
-                        </Paragraph>
-                        <Paragraph type="writing">
-                            You can read more in our{' '}
+                            {t('login:author-guide-message')}
                             <a
                                 className="typography typography__body--link"
                                 href="https://reviewer.elifesciences.org/author-guide"
                             >
-                                author guide
+                                {t('login:author-guide-link')}
                             </a>
                             .
                         </Paragraph>
@@ -32,42 +29,43 @@ const Login = (): JSX.Element => {
 
                     <div className="login-page__buttons">
                         <a className="login-page__buttons--orcid" href={'/'}>
-                            <Button type="orcid">Login with ORCID</Button>
+                            <Button type="orcid">{t('login:login-orcid')}</Button>
                         </a>
                         <Paragraph type="writing">
-                            No ORCID?{' '}
+                            {t('login:sign-up-message-1')}
                             <a className="typography typography__body--link" href="https://orcid.org/register">
-                                Sign up
-                            </a>{' '}
-                            now.
+                                {t('login:sign-up-link')}
+                            </a>
+                            {t('login:sign-up-message-2')}
                         </Paragraph>
                     </div>
                 </div>
                 <div className="login-page__image">
                     <img className="login-page__image--image" alt="Login Page Art" src={Image} />
                     <p className="login-page__image--credit">
-                        Illustration by <a href="http://www.davidebonazzi.com/">Davide Bonazzi</a>
+                        {t('login:image-attribution')}
+                        <a href="http://www.davidebonazzi.com/">{t('login:image-artist')}</a>
                     </p>
                 </div>
             </TwoColumnLayout>
             <Paragraph type="footer">
-                Read our{' '}
+                {t('login:footer-text-1')}
                 <a
                     className="typography typography__body--link"
                     href="https://elifesciences.org/terms"
                     rel="noopener noreferrer"
                     target="_blank"
                 >
-                    Terms and conditions
-                </a>{' '}
-                and{' '}
+                    {t('login:footer-link-1')}
+                </a>
+                {t('login:footer-text-2')}
                 <a
                     className="typography typography__body--link"
                     href="https://elifesciences.org/privacy"
                     rel="noopener noreferrer"
                     target="_blank"
                 >
-                    Privacy policy
+                    {t('login:footer-link-2')}
                 </a>
                 .
             </Paragraph>
