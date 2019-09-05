@@ -13,20 +13,7 @@ export interface Event<T extends object> extends EventIdentifier{
   created: Date;
 
   payload: T; // The actual data
-  context?: unknown; // context about 
-}
-
-type EventPayload = {
-  x: number;
-  y: number;
-}
-
-const thing: Event<EventPayload>= {
-  id: "",
-  created: new Date(),
-  payload: {x: 10, y: 10},
-  kind: "something",
-  namespace: "something_else"
+  context?: unknown; // context about the event itself, including the actor that triggered the transmission of the event;
 }
 
 export interface EventPublisher {
