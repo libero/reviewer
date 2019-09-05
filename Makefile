@@ -69,8 +69,8 @@ build_client_source: install_client_packages
 lint_client: build_client_source
 	${DC_BUILD} run client_webpack yarn lint
 
-test_client: build_client_source 
-	${DC_BUILD} run client_webpack yarn test 
+test_client: build_client_source
+	${DC_BUILD} run client_webpack yarn test
 
 build_client_container: test_client build_client_source
 	${DC_BUILD} build reviewer_client
