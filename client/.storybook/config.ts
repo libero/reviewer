@@ -1,6 +1,6 @@
 import { addDecorator, addParameters, configure } from '@storybook/react';
 import { withA11y } from '@storybook/addon-a11y';
-import '../src/core/utils/i18n';
+import I18n from '../src/core/utils/i18n';
 import theme from './theme';
 import { SuspenseDecorator } from './decorators'
 
@@ -12,6 +12,14 @@ addParameters({
     theme: theme
   }
 });
+
+I18n({
+    debug: false,
+    fallbackLng: false,
+    react: {
+        useSuspense: false
+    }
+})
 
 // automatically import all files ending in *.stories.js
 const req = require.context('../src', true, /\.stories\.tsx$/);
