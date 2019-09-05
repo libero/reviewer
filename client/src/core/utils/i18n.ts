@@ -1,19 +1,17 @@
-import i18n from "i18next";
+import i18n, { InitOptions } from "i18next";
+import { merge } from "lodash";
 import { initReactI18next } from "react-i18next";
 import Backend from 'i18next-xhr-backend';
 
-i18n
-    .use(Backend)
-    .use(initReactI18next)
-    .init({
-        lng: "en",
+export default function (options = {}) {
+    let i18nOptions: InitOptions = {
+        lng: 'en',
         load: "currentOnly",
         keySeparator: '.',
         ns: ['common', 'dashboard'],
         fallbackLng: 'en',
         debug: process.env.NODE_ENV !== "production",
         react: {
-            useSuspense:false,
             wait: true,
         },
         interpolation: {
@@ -22,6 +20,12 @@ i18n
         backend: {
             loadPath: "/locales/{{lng}}/{{ns}}.json"
         }
-    });
+    }
 
-export default i18n;
+    merge(i18nOptions, options)
+
+    i18n
+        .use(Backend)
+        .use(initReactI18next)
+        .init(i18nOptions);
+}
