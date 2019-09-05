@@ -1,8 +1,8 @@
-import { MessageQueue, EventIdentifier, Event } from "../message-queue";
+import { EventPublisher, EventSubscriber, EventIdentifier, Event } from "../message-queue";
 import { InfraLogger as logger } from "../logger";
 import { Option, None, Some } from "funfix";
 
-export class MockMessageQueue implements MessageQueue {
+export class MockMessageQueue implements EventPublisher, EventSubscriber{
   private queues: Option<Map<string, (ev: Event<any>) => Promise<boolean>>> = None;
 
   constructor() {
