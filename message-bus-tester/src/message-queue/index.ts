@@ -17,13 +17,13 @@ export interface Event<T extends object> extends EventIdentifier{
 }
 
 export interface EventPublisher {
-  init(event_definitions: EventIdentifier[]): Promise<this>;
+  init(event_definitions: EventIdentifier[], service_name: string): Promise<this>;
 
   publish<T extends object>(event: Event<T>): Promise<boolean>;
 }
 
 export interface EventSubscriber {
-  init(event_definitions: EventIdentifier[]): Promise<this>;
+  init(event_definitions: EventIdentifier[], service_name: string): Promise<this>;
 
   subscribe<P extends object>(event_definition: EventIdentifier, handler: (ev: Event<P>)=>Promise<boolean>): void;
   // handler: returns weather or not we should ack the message

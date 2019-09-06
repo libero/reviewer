@@ -17,7 +17,7 @@ describe("mock message queue", () => {
       const handler_mock = jest.fn(async () => true);
 
       // Mock bus
-      const mock_mq = await (new MockMessageQueue()).init([test_event_def, test_event_def]);
+      const mock_mq = await (new MockMessageQueue()).init([test_event_def, test_event_def], "message-bus-test");
 
       mock_mq.subscribe<TestEventPayload>(test_event_def, handler_mock);
 

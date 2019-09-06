@@ -17,7 +17,7 @@ const init_mq = async () => {
   };
 
   // Mock bus
-  const mock_mq = await (new MockMessageQueue()).init([test_event_def, test_event_def]);
+  const mock_mq = await (new MockMessageQueue()).init([test_event_def, test_event_def], "message-bus-test");
   logger.info("messageQueueStarted");
 
   mock_mq.subscribe<TestEventPayload>(test_event_def, async (event) => {
@@ -40,7 +40,7 @@ const init_mq = async () => {
   }, 10000)
 
   // Rabbit bus
-  const rabbitmq_mq = await (new RabbitMessageQueue()).init([test_event_def, test_event_def]);
+  const rabbitmq_mq = await (new RabbitMessageQueue()).init([test_event_def, test_event_def], "message-bus-test");
   logger.info("messageQueueStarted");
 
   rabbitmq_mq.subscribe<TestEventPayload>(test_event_def, async (event) => {

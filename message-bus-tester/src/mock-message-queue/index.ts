@@ -9,7 +9,7 @@ export class MockMessageQueue implements EventPublisher, EventSubscriber{
     this.queues = Some(new Map());
   }
 
-  public async init(defs: EventIdentifier[]): Promise<this> {
+  public async init(defs: EventIdentifier[], _service_name: string): Promise<this> {
     // Create queues in the map
     return this;
   }
