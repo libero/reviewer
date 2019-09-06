@@ -9,7 +9,7 @@ const {
 } = config;
 
 export const Login = (req: Request, res: Response) => {
-  logger.info("Redirecting request", { login_redirect_url });
+  logger.info("loginRedirect", { login_redirect_url });
 
   res.redirect(login_redirect_url);
 };

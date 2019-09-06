@@ -26,7 +26,7 @@ export const decodeJournalToken = (token: string): Option<JournalAuthToken> => {
   const {
     journal_jwt: { secret }
   } = config;
-  // This needs to know about the journal secret in order to verify it. The two systems should use different tokens
+  // This needs to know about the journal secret in order to verify it. The two systems should use different tokens & secrets
 
   try {
     return Option.of(verify(token, secret) as JournalAuthToken);
