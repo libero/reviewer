@@ -6,12 +6,14 @@ import { InfraLogger as logger } from "../logger";
 
 export class RabbitMessageQueue implements EventSubscriber, EventPublisher {
   connection: Option<Connection>;
+  service_name: string = "unknown_service";
+
   private defToExchange(def: EventIdentifier) {
-    return `event-${def.kind}-${def.namespace}--ex`;
+    return `event__${def.kind}-${def.namespace}`;
   }
 
   private defToQueue(def: EventIdentifier) {
-    return `consumer-${def.kind}-${def.namespace}-service_name`;
+    return `consumer-${def.kind}-${def.namespace}__${this.service_name}`;
   }
 
   private eventToMessage<T extends object>(event: Event<T>): any {
@@ -31,7 +33,8 @@ export class RabbitMessageQueue implements EventSubscriber, EventPublisher {
     return Option.of(message.event);
   }
 
-  public async init(event_defs: EventIdentifier[]): Promise<this> {
+  public async init(event_defs: EventIdentifier[], service_name: string): Promise<this> {
+    this.service_name = service_name;
     // First things first
     this.connection = Option.of(
       // TODO: put this in configuration
