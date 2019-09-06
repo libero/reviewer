@@ -13,10 +13,11 @@ export interface UserIdentity { // don't forget this is merged with the rest of 
   token_id: string; // Generated, unique per token
   token_version: '0.1-alpha'; // Generated, hardcoded
   identity: { // Unique per user, lookup from profiles, people, user management services
-    orcid: string;
-    libero_id?: string;
-    profiles_id?: string;
-    people_id?: string;
+    user_id: string;
+    external: Array<{
+      id: string;
+      domain: string; // e.g. "elife-profiles", "elife-people", "orcid"
+    }>;
   };
 
   // Generic user roles, basically to know which
@@ -67,8 +68,17 @@ export const Authenticate = (profilesService: ProfilesRepo) => (
               token_id: v4(),
               token_version: "0.1-alpha",
               identity: {
-                orcid: profile.orcid,
-                profiles_id: profile.id,
+                id: v4(), // Warning: this needs to be a useful value at some point
+                external: [
+                  {
+                    id: profile.id,
+                    domain: "elife-profiles"
+                  },
+                  {
+                    id: profile.orcid,
+                    domain: "orcid",
+                  }
+                ]
               },
               roles: [{journal: "elife", kind: "author"}],
               meta: null,

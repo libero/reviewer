@@ -10,10 +10,11 @@ export interface UserIdentity { // don't forget this is merged with the rest of 
   token_id: string; // Generated, unique per token
   token_version: '0.1-alpha'; // Generated, hardcoded
   identity: { // Unique per user, lookup from profiles, people, user management services
-    orcid: string;
-    libero_id?: string;
-    profiles_id?: string;
-    people_id?: string;
+    user_id: string;
+    external: Array<{
+      id: string;
+      domain: string; // e.g. "elife-profiles", "elife-people", "orcid"
+    }>;
   };
 
   // Generic user roles, basically to know which
