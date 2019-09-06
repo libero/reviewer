@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { TwoColumnLayout, Paragraph, Button } from '../../ui/atoms';
+import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../ui/atoms';
 import Image from '../../core/assets/welcome.jpg';
 
 const Login = (): JSX.Element => {
@@ -40,13 +40,11 @@ const Login = (): JSX.Element => {
                         </Paragraph>
                     </div>
                 </div>
-                <div className="login-page__image">
-                    <img className="login-page__image--image" alt="Login Page Art" src={Image} />
-                    <p className="login-page__image--credit">
-                        {t('login:image-attribution')}
-                        <a href="http://www.davidebonazzi.com/">{t('login:image-artist')}</a>
-                    </p>
-                </div>
+                <ImageWithAttribution
+                    image={Image}
+                    artistKey="login:image-artist"
+                    artistUrl="http://www.davidebonazzi.com/"
+                />
             </TwoColumnLayout>
             <Paragraph type="footer">
                 {t('login:footer-text-1')}

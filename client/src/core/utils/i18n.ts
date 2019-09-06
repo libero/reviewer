@@ -8,7 +8,7 @@ export default function(options = {}): void {
         lng: 'en',
         load: 'currentOnly',
         keySeparator: '.',
-        ns: ['common', 'dashboard', 'login'],
+        ns: ['common', 'dashboard', 'login', 'ui'],
         fallbackLng: 'en',
         debug: process.env.NODE_ENV !== 'production',
         react: {

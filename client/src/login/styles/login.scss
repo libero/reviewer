@@ -31,30 +31,3 @@
 .login-page__buttons--orcid {
   margin-right: 1.5rem;
 }
-
-.login-page__image {
-  width: 75%;
-  height: 100%;
-  display: none;
-  margin-left: auto;
-  @include forSize('tabletPortraitUp') {
-    display: block;
-  }
-}
-
-.login-page__image--image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.login-page__image--credit {
-  color: $colourTextLarge;
-  font-size: 12px;
-  text-align: right;
-
-  a {
-    color: inherit;
-    text-decoration: underline;
-  }
-}
-
