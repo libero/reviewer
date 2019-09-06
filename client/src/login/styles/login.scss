@@ -1,0 +1,33 @@
+.login-page {
+  justify-content: center;
+  width: 100%;
+  max-width: 27rem;
+  min-width: 0;
+  margin-top: 1.5rem;
+  @include forSize('phoneOnly') {
+    margin-top: 4.5rem;
+  }
+  @include forSize('tabletPortraitUp') {
+    margin-top: 0;
+    max-width: 28.375rem;
+  }
+  @include forSize('tabletLandscapeUp') {
+    max-width: 49.125rem;
+  }
+  @include forSize('desktopUp') {
+    max-width: 52.5rem;
+  }
+}
+
+.login-page__text {
+  margin-bottom: 3rem;
+}
+
+.login-page__buttons {
+  display: flex;
+  align-items: center;
+}
+
+.login-page__buttons--orcid {
+  margin-right: 1.5rem;
+}
