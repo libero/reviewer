@@ -42,7 +42,7 @@ const Login = (): JSX.Element => {
                 </div>
                 <ImageWithAttribution
                     image={Image}
-                    artistKey="login:image-artist"
+                    artistName={t('login:image-artist')}
                     artistUrl="http://www.davidebonazzi.com/"
                 />
             </TwoColumnLayout>

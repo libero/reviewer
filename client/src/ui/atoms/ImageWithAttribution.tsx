@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 
 interface Props {
     image: string;
-    artistKey: string;
+    artistName: string;
     artistUrl: string;
 }
 
-const ImageWithAttribution = ({ image, artistKey, artistUrl }: Props): JSX.Element => {
+const ImageWithAttribution = ({ image, artistName, artistUrl }: Props): JSX.Element => {
     const { t } = useTranslation();
 
     return (
@@ -15,7 +15,7 @@ const ImageWithAttribution = ({ image, artistKey, artistUrl }: Props): JSX.Eleme
             <img className="image-attributed__image--image" alt="Login Page Art" src={image} />
             <p className="image-attributed__image--credit">
                 {t('ui:image-attribution')}
-                <a href={artistUrl}>{t(artistKey)}</a>
+                <a href={artistUrl}>{artistName}</a>
             </p>
         </div>
     );

@@ -10,6 +10,12 @@ storiesOf('ui | atoms/ImageWithAttribution', module)
     .add(
         'Button',
         (): JSX.Element => {
-            return <ImageWithAttribution image={Image} artistKey="some-key" artistUrl="http://www.google.com" />;
+            return (
+                <ImageWithAttribution
+                    image={Image}
+                    artistName="Bob Ross"
+                    artistUrl="http://www.happylittletrees.elifesciences.org"
+                />
+            );
         },
     );

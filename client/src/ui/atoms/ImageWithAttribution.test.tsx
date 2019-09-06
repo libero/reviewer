@@ -7,12 +7,12 @@ describe('Button', (): void => {
 
     it('should render correctly', (): void => {
         expect(
-            (): RenderResult => render(<ImageWithAttribution image={''} artistKey={''} artistUrl={''} />),
+            (): RenderResult => render(<ImageWithAttribution image={''} artistName={''} artistUrl={''} />),
         ).not.toThrow();
     });
 
     it('should append the type string passed to a button-- class', (): void => {
-        const { getByText } = render(<ImageWithAttribution image={''} artistKey={''} artistUrl={''} />);
+        const { getByText } = render(<ImageWithAttribution image={''} artistName={''} artistUrl={''} />);
         expect(getByText('image-attribution')).toBeInTheDocument();
     });
 });
