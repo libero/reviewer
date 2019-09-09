@@ -54,17 +54,29 @@ services:
       - "3002:3002"
     working_dir: "/message-bus-tester"
     command: ["bash", "-c", "yarn && yarn start:dev"]
+    healthcheck:
+      test: "curl localhost:3002/health"
+      interval: 1m
+      timeout: 10s
+      retries: 3
     volumes:
       - ./message-bus-tester/:/message-bus-tester/:z
     networks:
       - infra_api
       - infra_rabbit
+    depends_on:
+      - rabbitmq
 
   continuum-auth:
     image: node:10
     ports:
       - "3001:3001"
     working_dir: "/continuum-auth"
+    healthcheck:
+      test: "curl localhost:3001/health"
+      interval: 1m
+      timeout: 10s
+      retries: 3
     command: ["bash", "-c", "yarn && yarn start:dev"]
     volumes:
       - ./continuum-auth/:/continuum-auth/:z
@@ -85,6 +97,11 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
     working_dir: "/server"
+    healthcheck:
+      test: "curl localhost:3000/health"
+      interval: 1m
+      timeout: 10s
+      retries: 3
     command: ["bash", "-c", "yarn && yarn run start:dev"]
     volumes:
       - ./server/:/server/:z
