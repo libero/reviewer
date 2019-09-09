@@ -36,10 +36,10 @@ module.exports = {
             "supporting_files": {
               "id": "supportingFiles",
               "options": {
-                // What should be configurable here? fileSize? 
+                // What should be configurable here? fileSize?
               }
             }
-            //What should be configurable here? fileSize? 
+            //What should be configurable here? fileSize?
           }
         }
       ]
@@ -173,7 +173,35 @@ module.exports = {
       ]
     },
     {
-        "name_key": "wizard:details_step--label",
-    }
+      "name_key": 'wizard:details_step--label',
+      "components": [
+          {
+              "id": 'senior_editors',
+              "type": 'PEOPLE_PICKER',
+              "options": {
+                  "key_prefix": 'senior_editors',
+                  "roles": ['senior-editor', 'leadership'],
+                  "exclude": true,
+              },
+          },
+          {
+              "id": 'reviewers',
+              "type": 'PEOPLE_PICKER',
+              "options": {
+                  "key_prefix": 'reviewing_editor',
+                  "roles": ["reviewing-editor"],
+                  "exclude": true,
+              },
+          },
+          {
+              "id": "sugested_reviewers",
+              "type": "TEXT_FIELD",
+              "options": {
+                  "label_key": "wizzard:sugested-reviewer",
+                  //not sure how we want to do the dual inputs
+              }
+          }
+      ],
+    },
   ]
 }
