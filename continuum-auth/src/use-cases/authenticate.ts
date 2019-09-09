@@ -68,7 +68,7 @@ export const Authenticate = (profilesService: ProfilesRepo) => (
               token_id: v4(),
               token_version: "0.1-alpha",
               identity: {
-                id: v4(), // Warning: this needs to be a useful value at some point
+                user_id: v4(), // TODO: this needs to be a useful value at some point
                 external: [
                   {
                     id: profile.id,
