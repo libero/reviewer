@@ -3,9 +3,9 @@
 const config = {
   auth: {
     // Where the /login route sends you - a.k.a the identity server
-    login_redirect_url: "https://elifesciences.org/submit",
+    login_redirect_url: "http://localhost:3003/submit",
     // App entry point i.e. the resource server that needs authentication
-    authorised_redirect_url: "http://localhost:3001/login"
+    authorised_redirect_url: "http://localhost:9000/login"
   },
   internal_jwt: {
     // This token is global to libero services
