@@ -20,6 +20,7 @@ module.exports = {
       "components": [
         {
           "id": "coverLetter",
+          "label_key": "wizard:files_step--cover-letter-label",
           "type": "RICH_TEXT_EDITOR",
           "options": {
             "validation": true,
@@ -48,6 +49,7 @@ module.exports = {
       "components": [
         {
           "id": "title",
+          "label_key": "wizard:details_step--title-label",
           "type": "EXPANDING_INPUT",
           "options": {
             "validation": {
@@ -57,6 +59,7 @@ module.exports = {
         },
         {
           "id": "articleType",
+          "label_key": "wizard:details_step--article-type-label",
           "type": "SELECT_INPUT",
           "options": {
             // defaults
@@ -76,6 +79,7 @@ module.exports = {
         },
         {
           "id": "subjectAreas",
+          "label_key": "wizard:details_step--subject-area-label",
           "type": "SELECT_INPUT",
           "options": {
             "searchable": true,
@@ -104,8 +108,72 @@ module.exports = {
               // How are we doing this?
             }
           }
+        },
+        {
+          "id": "previouslyDiscussed",
+          "type": "TOGGLE",
+          "label_key": "wizard:details_step--previously-discussed-label",
+          "components": [
+            {
+              "id": "details",
+              "label_key": "wizard:details_step--previously-discussed-details-label",
+              "type": "MULTILINE_INPUT",
+              "options": {
+                "validation": {
+                  // How are we doing this?
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "previouslySubmitted",
+          "type": "TOGGLE",
+          "label_key": "wizard:details_step--previously-submitted-label",
+          "components": [
+            {
+              "id": "details",
+              "label_key": "wizard:details_step--previously-submitted-details-label",
+              "type": "MULTILINE_INPUT",
+              "options": {
+                "validation": {
+                  // How are we doing this?
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "cosubmissions",
+          "type": "TOGGLE",
+          "label_key": "wizard:details_step--cosubmissions-label",
+          "components": [
+            {
+              "id": "first",
+              "label_key": "wizard:details_step--first-cosubmissions-label",
+              "type": "TEXT_INPUT",
+              "options": {
+                "validation": {
+                  // How are we doing this?
+                }
+              }
+            },
+            {
+              "id": "second",
+              "label_key": "wizard:details_step--second-cosubmissions-label",
+              "type": "TEXT_INPUT",
+              "options": {
+                "validation": {
+                  // How are we doing this?
+                }
+              }
+            }
+          ]
         }
       ]
+    },
+    {
+        "name_key": "wizard:details_step--label",
     }
   ]
 }
