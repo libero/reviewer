@@ -173,33 +173,117 @@ module.exports = {
       ]
     },
     {
-      "name_key": 'wizard:details_step--label',
+      "name_key": 'wizard:editors_step--label',
       "components": [
           {
               "id": 'senior_editors',
               "type": 'PEOPLE_PICKER',
               "options": {
                   "key_prefix": 'senior_editors',
-                  "roles": ['senior-editor', 'leadership'],
-                  "exclude": true,
+                  "roles": ['senior-editor', 'leadership']
               },
           },
           {
-              "id": 'reviewers',
+            "id": "excluded_editors",
+            "type": "TOGGLE_EXCLUDED",
+            "name_key": "wizard:editors_step--excluded-editors-label",
+            "toggle_text": "senior editor",
+            "components": [
+              {
+                "id": "selected",
+                "type": 'PEOPLE_PICKER',
+                "options": {
+                    "key_prefix": 'excluded_editors',
+                    "roles": ['senior-editor', 'leadership'],
+                    "excluded": "senior_editors"
+                },
+              },
+              {
+                "id": "reason",
+                "label_key": "wizard:editors_step--excluded-editors-reason-label",
+                "type": "MULTILINE_INPUT",
+                "options": {
+                  "validation": {
+                    // How are we doing this?
+                  }
+                }
+              }
+            ]
+          },
+          {
+              "id": 'reviewing_editor',
               "type": 'PEOPLE_PICKER',
               "options": {
                   "key_prefix": 'reviewing_editor',
-                  "roles": ["reviewing-editor"],
-                  "exclude": true,
+                  "roles": ["reviewing-editor"]
               },
           },
           {
-              "id": "sugested_reviewers",
-              "type": "TEXT_FIELD",
-              "options": {
-                  "label_key": "wizzard:sugested-reviewer",
-                  //not sure how we want to do the dual inputs
+            "id": "excluded_reviewing_editor",
+            "type": "TOGGLE_EXCLUDED",
+            "name_key": "wizard:editors_step--excluded-reviewing-editor-label",
+            "toggle_text": "reviewing editor",
+            "components": [
+              {
+                "id": "selected",
+                "type": 'PEOPLE_PICKER',
+                "options": {
+                    "key_prefix": 'excluded_reviewing_editor',
+                    "roles": ['reviewing-editor'],
+                    "excluded": "reviewing_editor"
+                },
+              },
+              {
+                "id": "reason",
+                "label_key": "wizard:editors_step--excluded-reviewing-editor-reason-label",
+                "type": "MULTILINE_INPUT",
+                "options": {
+                  "validation": {
+                    // How are we doing this?
+                  }
+                }
               }
+            ]
+          },
+          {
+              "id": "sugested_reviewers",
+              "label_key": "wizard:editors_step--suggested-reviewers-label",
+              "type": "EXPANDING_NAME_EMAIL",
+              "options": {
+                  "name_label_key": "wizard:editors_step--suggested-reviewers-name-label",
+                  "email_label_key": "wizard:editors_step--suggested-reviewers-name-label",
+                  "validation": true,
+                  "max_rows": 6
+              }
+          },
+          {
+            "id": "excluded_reviewers",
+            "type": "TOGGLE_EXCLUDED",
+            "name_key": "wizard:editors_step--excluded-reviewers-label",
+            "toggle_text": "reviewer",
+            "components": [
+              {
+                "id": "reviewers",
+                "label_key": "wizard:editors_step--excluded-reviewers-label",
+                "type": "EXPANDING_NAME_EMAIL",
+                "options": {
+                    "name_label_key": "wizard:editors_step--excluded-reviewers-name-label",
+                    "email_label_key": "wizard:editors_step--excluded-reviewers-name-label",
+                    "validation": true,
+                    "max_rows": 2
+                }
+              },
+              {
+                "id": "reason",
+                "label_key": "wizard:editors_step--excluded-reviewers-reason-label",
+                "type": "MULTILINE_INPUT",
+                "options": {
+                  "validation": {
+                    // How are we doing this?
+                  }
+                }
+              }
+            ]
           }
       ],
     },
