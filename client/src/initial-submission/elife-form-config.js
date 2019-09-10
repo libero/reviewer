@@ -2,7 +2,7 @@ module.exports = {
     steps: [
         {
             // step name will be stored in translation file, key is customizable here
-            name_key: 'wizard:author_step--label',
+            nameKey: 'wizard:author_step--label',
             path: 'author',
             components: [
                 {
@@ -17,17 +17,17 @@ module.exports = {
             ],
         },
         {
-            name_key: 'wizard:files_step--label',
+            nameKey: 'wizard:files_step--label',
             path: 'files',
             components: [
                 {
                     id: 'coverLetter',
-                    label_key: 'wizard:files_step--cover-letter-label',
+                    labelKey: 'wizard:files_step--cover-letter-label',
                     type: 'RICH_TEXT_EDITOR',
                     options: {
                         validation: true,
                         // If present, gives the block of customizable text before the input block. This should be stored in a translation file.
-                        description_key: 'coverletter_description',
+                        descriptionKey: 'coverletter_description',
                     },
                 },
                 {
@@ -35,7 +35,7 @@ module.exports = {
                     type: 'MANUSCRIPT_UPLOAD',
                     options: {
                         validation: true,
-                        supporting_files: {
+                        supportingFiles: {
                             id: 'supportingFiles',
                             options: {
                                 // What should be configurable here? fileSize?
@@ -47,12 +47,12 @@ module.exports = {
             ],
         },
         {
-            name_key: 'wizard:details_step--label',
+            nameKey: 'wizard:details_step--label',
             path: 'details',
             components: [
                 {
                     id: 'title',
-                    label_key: 'wizard:details_step--title-label',
+                    labelKey: 'wizard:details_step--title-label',
                     type: 'EXPANDING_INPUT',
                     options: {
                         validation: {
@@ -62,21 +62,21 @@ module.exports = {
                 },
                 {
                     id: 'articleType',
-                    label_key: 'wizard:details_step--article-type-label',
+                    labelKey: 'wizard:details_step--article-type-label',
                     type: 'SELECT_INPUT',
                     options: {
                         // defaults
                         //"searchable": false,
                         //"multiple": false,
                         values: [
-                            { label_key: 'wizard:article_type--research-article', value: 'research_article' },
-                            { label_key: 'wizard:article_type--short-report', value: 'short_report' },
-                            { label_key: 'wizard:article_type--tools-resources', value: 'tools_resources' },
+                            { labelKey: 'wizard:article_type--research-article', value: 'research_article' },
+                            { labelKey: 'wizard:article_type--short-report', value: 'short_report' },
+                            { labelKey: 'wizard:article_type--tools-resources', value: 'tools_resources' },
                             {
-                                label_key: 'wizard:article_type--scientific-correspondence',
+                                labelKey: 'wizard:article_type--scientific-correspondence',
                                 value: 'scientific_correspondence',
                             },
-                            { label_key: 'wizard:article_type--feature-article', value: 'feature_article' },
+                            { labelKey: 'wizard:article_type--feature-article', value: 'feature_article' },
                         ],
                         validation: {
                             // How are we doing this?
@@ -85,79 +85,79 @@ module.exports = {
                 },
                 {
                     id: 'subjectAreas',
-                    label_key: 'wizard:details_step--subject-area-label',
+                    labelKey: 'wizard:details_step--subject-area-label',
                     type: 'SELECT_INPUT',
                     options: {
                         searchable: true,
                         multiple: true,
                         values: [
                             {
-                                label_key: 'wizard:subject_areas--biochemistry-chemical-biology',
+                                labelKey: 'wizard:subject_areas--biochemistry-chemical-biology',
                                 value: 'biochemistry_chemical_biology',
                             },
                             {
-                                label_key: 'wizard:subject_areas--cancer-biology',
+                                labelKey: 'wizard:subject_areas--cancer-biology',
                                 value: 'cancer_biology',
                             },
-                            { label_key: 'wizard:subject_areas--cell-biology', value: 'cell_biology' },
+                            { labelKey: 'wizard:subject_areas--cell-biology', value: 'cell_biology' },
                             {
-                                label_key: 'wizard:subject_areas--chromosomes-gene-expression',
+                                labelKey: 'wizard:subject_areas--chromosomes-gene-expression',
                                 value: 'chromosomes_gene_expression',
                             },
                             {
-                                label_key: 'wizard:subject_areas--computational-systems-biology',
+                                labelKey: 'wizard:subject_areas--computational-systems-biology',
                                 value: 'computational_systems_biology',
                             },
                             {
-                                label_key: 'wizard:subject_areas--developmental-biology',
+                                labelKey: 'wizard:subject_areas--developmental-biology',
                                 value: 'developmental_biology',
                             },
                             {
-                                label_key: 'wizard:subject_areas--ecology',
+                                labelKey: 'wizard:subject_areas--ecology',
                                 value: 'ecology',
                             },
                             {
-                                label_key: 'wizard:subject_areas--epidemiology-global-health',
+                                labelKey: 'wizard:subject_areas--epidemiology-global-health',
                                 value: 'epidemiology_global_health',
                             },
                             {
-                                label_key: 'wizard:subject_areas--evolutionary-biology',
+                                labelKey: 'wizard:subject_areas--evolutionary-biology',
                                 value: 'evolutionary_biology',
                             },
                             {
-                                label_key: 'wizard:subject_areas--genetics-genomics',
+                                labelKey: 'wizard:subject_areas--genetics-genomics',
                                 value: 'genetics_genomics',
                             },
                             {
-                                label_key: 'wizard:subject_areas--human-biology-medicine',
+                                labelKey: 'wizard:subject_areas--human-biology-medicine',
                                 value: 'human_biology_medicine',
                             },
                             {
-                                label_key: 'wizard:subject_areas--immunology-inflammation',
+                                labelKey: 'wizard:subject_areas--immunology-inflammation',
                                 value: 'immunology_inflammation',
                             },
                             {
-                                label_key: 'wizard:subject_areas--microbiology-infectious-disease',
+                                labelKey: 'wizard:subject_areas--microbiology-infectious-disease',
                                 value: 'microbiology_infectious_disease',
                             },
                             {
-                                label_key: 'wizard:subject_areas--neuroscience',
+                                labelKey: 'wizard:subject_areas--neuroscience',
                                 value: 'neuroscience',
                             },
                             {
-                                label_key: 'wizard:subject_areas--physics-living-systems',
+                                labelKey: 'wizard:subject_areas--physics-living-systems',
                                 value: 'physics_living_systems',
                             },
                             {
-                                label_key: 'wizard:subject_areas--plant-biology',
+                                labelKey: 'wizard:subject_areas--plant-biology',
                                 value: 'plant_biology',
                             },
                             {
-                                label_key: 'wizard:subject_areas--stem-cells-and-regenerative-medicine',
+                                labelKey: 'wizard:subject_areas--stem-cells-and-regenerative-medicine',
                                 value: 'stem_cells_and_regenerative_medicine',
                             },
                             {
-                                label_key: 'wizard:subject_areas--structural-biology-molecular-biophysics',
+                                labelKey: 'wizard:subject_areas--structural-biology-molecular-biophysics',
                                 value: 'structural_biology_molecular_biophysics',
                             },
                         ],
@@ -169,11 +169,11 @@ module.exports = {
                 {
                     id: 'previouslyDiscussed',
                     type: 'TOGGLE',
-                    label_key: 'wizard:details_step--previously-discussed-label',
+                    labelKey: 'wizard:details_step--previously-discussed-label',
                     components: [
                         {
                             id: 'details',
-                            label_key: 'wizard:details_step--previously-discussed-details-label',
+                            labelKey: 'wizard:details_step--previously-discussed-details-label',
                             type: 'MULTILINE_INPUT',
                             options: {
                                 validation: {
@@ -186,11 +186,11 @@ module.exports = {
                 {
                     id: 'previouslySubmitted',
                     type: 'TOGGLE',
-                    label_key: 'wizard:details_step--previously-submitted-label',
+                    labelKey: 'wizard:details_step--previously-submitted-label',
                     components: [
                         {
                             id: 'details',
-                            label_key: 'wizard:details_step--previously-submitted-details-label',
+                            labelKey: 'wizard:details_step--previously-submitted-details-label',
                             type: 'MULTILINE_INPUT',
                             options: {
                                 validation: {
@@ -203,11 +203,11 @@ module.exports = {
                 {
                     id: 'cosubmissions',
                     type: 'TOGGLE',
-                    label_key: 'wizard:details_step--cosubmissions-label',
+                    labelKey: 'wizard:details_step--cosubmissions-label',
                     components: [
                         {
                             id: 'first',
-                            label_key: 'wizard:details_step--first-cosubmissions-label',
+                            labelKey: 'wizard:details_step--first-cosubmissions-label',
                             type: 'TEXT_INPUT',
                             options: {
                                 validation: {
@@ -217,7 +217,7 @@ module.exports = {
                         },
                         {
                             id: 'second',
-                            label_key: 'wizard:details_step--second-cosubmissions-label',
+                            labelKey: 'wizard:details_step--second-cosubmissions-label',
                             type: 'TEXT_INPUT',
                             options: {
                                 validation: {
@@ -230,35 +230,35 @@ module.exports = {
             ],
         },
         {
-            name_key: 'wizard:editors_step--label',
+            nameKey: 'wizard:editors_step--label',
             path: 'editors',
             components: [
                 {
                     id: 'senior_editors',
                     type: 'PEOPLE_PICKER',
                     options: {
-                        key_prefix: 'senior_editors',
+                        keyPrefix: 'senior_editors',
                         roles: ['senior-editor', 'leadership'],
                     },
                 },
                 {
                     id: 'excluded_editors',
                     type: 'TOGGLE_EXCLUDED',
-                    name_key: 'wizard:editors_step--excluded-editors-label',
-                    toggle_text: 'senior editor',
+                    nameKey: 'wizard:editors_step--excluded-editors-label',
+                    toggleText: 'senior editor',
                     components: [
                         {
                             id: 'selected',
                             type: 'PEOPLE_PICKER',
                             options: {
-                                key_prefix: 'excluded_editors',
+                                keyPrefix: 'excluded_editors',
                                 roles: ['senior-editor', 'leadership'],
                                 excluded: 'senior_editors',
                             },
                         },
                         {
                             id: 'reason',
-                            label_key: 'wizard:editors_step--excluded-editors-reason-label',
+                            labelKey: 'wizard:editors_step--excluded-editors-reason-label',
                             type: 'MULTILINE_INPUT',
                             options: {
                                 validation: {
@@ -272,28 +272,28 @@ module.exports = {
                     id: 'reviewing_editor',
                     type: 'PEOPLE_PICKER',
                     options: {
-                        key_prefix: 'reviewing_editor',
+                        keyPrefix: 'reviewing_editor',
                         roles: ['reviewing-editor'],
                     },
                 },
                 {
                     id: 'excluded_reviewing_editor',
                     type: 'TOGGLE_EXCLUDED',
-                    name_key: 'wizard:editors_step--excluded-reviewing-editor-label',
-                    toggle_text: 'reviewing editor',
+                    nameKey: 'wizard:editors_step--excluded-reviewing-editor-label',
+                    toggleText: 'reviewing editor',
                     components: [
                         {
                             id: 'selected',
                             type: 'PEOPLE_PICKER',
                             options: {
-                                key_prefix: 'excluded_reviewing_editor',
+                                keyPrefix: 'excluded_reviewing_editor',
                                 roles: ['reviewing-editor'],
                                 excluded: 'reviewing_editor',
                             },
                         },
                         {
                             id: 'reason',
-                            label_key: 'wizard:editors_step--excluded-reviewing-editor-reason-label',
+                            labelKey: 'wizard:editors_step--excluded-reviewing-editor-reason-label',
                             type: 'MULTILINE_INPUT',
                             options: {
                                 validation: {
@@ -305,35 +305,35 @@ module.exports = {
                 },
                 {
                     id: 'sugested_reviewers',
-                    label_key: 'wizard:editors_step--suggested-reviewers-label',
+                    labelKey: 'wizard:editors_step--suggested-reviewers-label',
                     type: 'EXPANDING_NAME_EMAIL',
                     options: {
-                        name_label_key: 'wizard:editors_step--suggested-reviewers-name-label',
-                        email_label_key: 'wizard:editors_step--suggested-reviewers-name-label',
+                        nameLabelKey: 'wizard:editors_step--suggested-reviewers-name-label',
+                        emailLabelKey: 'wizard:editors_step--suggested-reviewers-name-label',
                         validation: true,
-                        max_rows: 6,
+                        maxRows: 6,
                     },
                 },
                 {
                     id: 'excluded_reviewers',
                     type: 'TOGGLE_EXCLUDED',
-                    name_key: 'wizard:editors_step--excluded-reviewers-label',
-                    toggle_text: 'reviewer',
+                    nameKey: 'wizard:editors_step--excluded-reviewers-label',
+                    toggleText: 'reviewer',
                     components: [
                         {
                             id: 'reviewers',
-                            label_key: 'wizard:editors_step--excluded-reviewers-label',
+                            labelKey: 'wizard:editors_step--excluded-reviewers-label',
                             type: 'EXPANDING_NAME_EMAIL',
                             options: {
-                                name_label_key: 'wizard:editors_step--excluded-reviewers-name-label',
-                                email_label_key: 'wizard:editors_step--excluded-reviewers-name-label',
+                                nameLabelKey: 'wizard:editors_step--excluded-reviewers-name-label',
+                                emailLabelKey: 'wizard:editors_step--excluded-reviewers-name-label',
                                 validation: true,
-                                max_rows: 2,
+                                maxRows: 2,
                             },
                         },
                         {
                             id: 'reason',
-                            label_key: 'wizard:editors_step--excluded-reviewers-reason-label',
+                            labelKey: 'wizard:editors_step--excluded-reviewers-reason-label',
                             type: 'MULTILINE_INPUT',
                             options: {
                                 validation: {
@@ -346,22 +346,22 @@ module.exports = {
             ],
         },
         {
-            name_key: 'wizard:disclosure_step--label',
+            nameKey: 'wizard:disclosure_step--label',
             path: 'disclosure',
             components: [
                 {
                     id: 'acknowledgment',
                     type: 'ACKNOWLEDGMENT',
-                    name_key: 'wizard:disclosure_step--acknowledgment-label',
+                    nameKey: 'wizard:disclosure_step--acknowledgment-label',
                     options: {
-                        show_title: true,
-                        show_author_name: true,
-                        show_type_and_date: true,
-                        text_block_key: 'wizard:disclosure_step--acknowledgment-text',
-                        text_inputs: [
+                        showTitle: true,
+                        showAuthorName: true,
+                        showTypeAndDate: true,
+                        textBlockKey: 'wizard:disclosure_step--acknowledgment-text',
+                        textInputs: [
                             {
                                 id: 'name',
-                                label_key: 'wizard:disclosure_step--acknowledgment-name-label',
+                                labelKey: 'wizard:disclosure_step--acknowledgment-name-label',
                                 options: {
                                     validation: {
                                         // How will we do this?
@@ -369,10 +369,10 @@ module.exports = {
                                 },
                             },
                         ],
-                        check_boxes: [
+                        checkBoxes: [
                             {
                                 id: 'consent',
-                                label_key: 'wizard:disclosure_step--disclosure-consent-label',
+                                labelKey: 'wizard:disclosure_step--disclosure-consent-label',
                                 options: {
                                     validation: {
                                         // How will we do this?
@@ -386,4 +386,3 @@ module.exports = {
         },
     ],
 };
-
