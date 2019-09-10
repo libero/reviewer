@@ -1,10 +1,14 @@
 ARG image_tag=latest
 
-FROM liberoadmin/reviewer_continuum-auth_typescript:${image_tag}
+FROM liberoadmin/reviewer_continuum-auth_typescript:${image_tag} AS auth_typescript
 
+FROM node:10-alpine
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
 
 WORKDIR /app
+
+COPY --from=auth_typescript /app/node_modules/ ./node_modules/
+COPY --from=auth_typescript /app/dist/ ./dist/
 
 EXPOSE 3000
 
