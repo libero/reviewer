@@ -1,0 +1,26 @@
+{
+  "name": "mock-continuum-login",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/libero/reviewer",
+  "license": "ISC",
+  "scripts": {
+    "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.1",
+    "@types/jsonwebtoken": "^8.3.3",
+    "dotenv-cli": "^2.0.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^1.19.2",
+    "typescript": "^3.6.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0"
+  }
+}

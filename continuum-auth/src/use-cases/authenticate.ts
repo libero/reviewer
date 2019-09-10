@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { DomainLogger as logger } from "../logger";
 import { Option } from "funfix";
-import { encode } from "../jwt";
+import { encode, decodeJournalToken } from "../jwt";
 import { ProfilesRepo } from "../repo/profiles";
 import { v4 } from "uuid";
 import config from '../config';
@@ -57,14 +57,21 @@ export const Authenticate = (profilesService: ProfilesRepo) => (
         // Controller: perform the requests to the various services and fetch the user data
 
         const  { auth: { authorised_redirect_url } } = config;
-        const maybeProfile = await profilesService.getProfileById(token);
+        const parsedToken = decodeJournalToken(token)
+
+        const id = parsedToken.map(parsed => parsed.id).getOrElseL(() => {
+            logger.error("Invalid token");
+            res.status(403).json({ ok: false, msg: "unauthorised" });
+            throw new Error
+        })
+        const maybeProfile = await profilesService.getProfileById(id);
 
         maybeProfile
           .map(profile => {
             logger.info("getProfile", profile);
             // TODO: Calculate user-role
 
-            const payload: UserIdentity = { 
+            const payload: UserIdentity = {
               token_id: v4(),
               token_version: "0.1-alpha",
               identity: {
