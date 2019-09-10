@@ -7,7 +7,7 @@
     "test": "echo not configured yet",
     "build": "tsc --build tsconfig.json",
     "lint": "echo not configured yet",
-    "start:dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts"
+    "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
     "@types/node-fetch": "^2.5.0",
     "@types/pino": "^5.8.10",
     "@types/uuid": "^3.4.5",
+    "dotenv-cli": "^2.0.1",
     "express": "^4.17.1",
     "funfix": "^7.0.1",
     "jsonwebtoken": "^8.5.1",

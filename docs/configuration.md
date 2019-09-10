@@ -38,3 +38,25 @@ For more info, see the [New Relic](https://docs.newrelic.com/docs/agents/nodejs-
 ### New Relic
 * `NEW_RELIC_CLIENT_LICENSE_KEY`: License key for browser agent.
 * `NEW_RELIC_CLIENT_APP_ID`: App ID for browser agent.
+
+## Authentication Service configuration
+
+These settings are used to configure the `continuum-auth` service
+
+### Listening Port and Url
+* `AUTHENTICATION_PORT`: port number where configuration service will listen to
+* `AUTHENTICATION_URL`: public url for the authentication
+
+### JWT Secret
+* `AUTHENTICATION_JWT_SECRET`: secret used to sign jwt tokens
+
+## Continuum login serve
+
+These settings are used to configure the `mock-continuum-login` service
+
+### Listening Port and Url
+* `CONTINUUM_LOGIN_PORT`: port number where configuration service will listen to
+* `CONTINUUM_LOGIN_URL`: public url for the authentication
+
+### JWT Secret
+* `CONTINUUM_LOGIN_JWT_SECRET`: secret used to sign jwt tokens

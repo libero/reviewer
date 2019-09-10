@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { sign } from "jsonwebtoken";
+import config from "../config";
 
 export const Submit = (req: Request, resp: Response) => {
     const token = sign({
@@ -11,5 +12,5 @@ export const Submit = (req: Request, resp: Response) => {
         expiresIn: '1d',
     })
 
-    resp.redirect(`http://localhost:3001/authenticate/${token}`);
+    resp.redirect(`${config.reviewerAuthUrl}/authenticate/${token}`);
 }

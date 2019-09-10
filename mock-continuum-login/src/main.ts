@@ -1,6 +1,9 @@
 import * as express from "express";
 import { Express } from "express";
 import { HealthCheck, Submit } from './use-cases';
+import config from './config';
+
+console.log(config)
 
 function init() {
     const app: Express = express();
@@ -11,4 +14,4 @@ function init() {
     return app;
 }
 
-init().listen(3003, () => console.log("Service listening on port 3003"));
+init().listen(config.port, () => console.log(`Service listening on port ${config.port}`));
