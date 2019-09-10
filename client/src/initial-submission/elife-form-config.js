@@ -27,7 +27,7 @@ module.exports = {
                     options: {
                         validation: true,
                         // If present, gives the block of customizable text before the input block. This should be stored in a translation file.
-                        description_key: 'coverletter_pretext',
+                        description_key: 'coverletter_description',
                     },
                 },
                 {
