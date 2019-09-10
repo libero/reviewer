@@ -83,11 +83,11 @@ services:
     networks:
       - infra_api
 
-  libero-dummy:
+  mock-continuum-login:
     image: node:10
     ports:
       - "3003:3003"
-    working_dir: "/libero-dummy"
+    working_dir: "/mock-continuum-login"
     healthcheck:
       test: "curl localhost:3003/health"
       interval: 1m
@@ -95,7 +95,7 @@ services:
       retries: 3
     command: ["bash", "-c", "yarn && yarn start:dev"]
     volumes:
-      - ./libero-dummy/:/libero-dummy/:z
+      - ./mock-continuum-login/:/mock-continuum-login/:z
     networks:
       - infra_api
 
