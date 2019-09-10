@@ -287,5 +287,43 @@ module.exports = {
           }
       ],
     },
+    {
+      "name_key": 'wizard:disclosure_step--label',
+      "components": [
+        {
+          "id": "acknowledgment",
+          "type": "ACKNOWLEDGMENT",
+          "name_key": "wizard:disclosure_step--acknowledgment-label",
+          "options": {
+            "show_title": true,
+            "show_author_name": true,
+            "show_type_and_date": true,
+            "text_block_key": "wizard:disclosure_step--acknowledgment-text",
+            "text_inputs": [
+              {
+                "id": "name",
+                "label_key": "wizard:disclosure_step--acknowledgment-name-label",
+                "options": {
+                  "validation": {
+                    // How will we do this?
+                  }
+                }
+              }
+            ],
+            "check_boxes": [
+              {
+                "id": "consent",
+                "label_key": "wizard:disclosure_step--disclosure-consent-label",
+                "options": {
+                  "validation": {
+                    // How will we do this?
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
   ]
 }
