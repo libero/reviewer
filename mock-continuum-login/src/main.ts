@@ -1,15 +1,14 @@
 import * as express from "express";
 import { Express } from "express";
+import { sign } from 'jsonwebtoken'
 import { HealthCheck, Submit } from './use-cases';
 import config from './config';
-
-console.log(config)
 
 function init() {
     const app: Express = express();
 
     app.get("/health", HealthCheck(undefined));
-    app.get('/submit', Submit);
+    app.get('/submit', Submit(config, sign));
 
     return app;
 }
