@@ -1,11 +1,6 @@
 
-export interface JwtPayload {
-  identifier: string;
-  iat: number;
-  iss: string;
-}
+// we just haven't set up a way of having a shared types module
 
-// TODO: Move this into somewhere else - no copy & paste!
 export interface UserIdentity { // don't forget this is merged with the rest of the JWT standard fields
   token_id: string; // Generated, unique per token
   token_version: '0.1-alpha'; // Generated, hardcoded
@@ -25,3 +20,5 @@ export interface UserIdentity { // don't forget this is merged with the rest of 
   }>;
   meta: unknown; // could be anything
 }
+
+// End of duplicated code

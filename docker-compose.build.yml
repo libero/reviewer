@@ -1,10 +1,21 @@
 version: '3'
 services:
+  # Shared packages container
+  shared_packages:
+    build:
+      context: "lib/"
+      dockerfile: "Dockerfile.packages"
+      args:
+        image_tag: ${IMAGE_TAG}
+    image: liberoadmin/reviewer_shared_packages:${IMAGE_TAG}
+
   # Server
   server_npm:
     build:
       context: 'server/'
       dockerfile: 'Dockerfile.packages'
+      args:
+        image_tag: ${IMAGE_TAG}
     image: liberoadmin/reviewer_server_packages:${IMAGE_TAG}
     networks: 
         - 'reviewer_build'
@@ -37,6 +48,8 @@ services:
     build:
       context: 'client/'
       dockerfile: 'Dockerfile.packages'
+      args:
+        image_tag: ${IMAGE_TAG}
     image: liberoadmin/reviewer_client_packages:${IMAGE_TAG}
     networks: 
         - 'reviewer_build'
@@ -80,6 +93,8 @@ services:
     build:
       context: 'continuum-auth/'
       dockerfile: 'Dockerfile.packages'
+      args:
+        image_tag: "${IMAGE_TAG}"
     image: liberoadmin/reviewer_continuum-auth_packages:${IMAGE_TAG}
     networks: 
         - 'reviewer_build'
