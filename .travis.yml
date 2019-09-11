@@ -1,8 +1,11 @@
 language: minimal
 env:
-  - IMAGE_TAG=$TRAVIS_COMMIT TEST_SUITE=server_ci
-  - IMAGE_TAG=$TRAVIS_COMMIT TEST_SUITE=client_ci
-  - IMAGE_TAG=$TRAVIS_COMMIT TEST_SUITE=continuum-auth_ci
+  global:
+    - IMAGE_TAG=$TRAVIS_COMMIT
+  matrix:
+    - TEST_SUITE=server_ci
+    - TEST_SUITE=client_ci
+    - TEST_SUITE=continuum-auth_ci
 
 services:
   - docker
