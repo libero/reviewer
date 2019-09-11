@@ -52,7 +52,7 @@ services:
     image: node:10
     ports:
       - "3002:3002"
-    working_dir: "/message-bus-tester"
+    working_dir: "/service/message-bus-tester"
     command: ["bash", "-c", "yarn && yarn start:dev"]
     healthcheck:
       test: "curl localhost:3002/health"
@@ -60,7 +60,8 @@ services:
       timeout: 10s
       retries: 3
     volumes:
-      - ./message-bus-tester/:/message-bus-tester/:z
+      - ./message-bus-tester/:/service/message-bus-tester/:z
+      - ./lib/:/service/lib/:z
     networks:
       - infra_api
       - infra_rabbit
@@ -71,7 +72,7 @@ services:
     image: node:10
     ports:
       - "${AUTHENTICATION_PORT}:${AUTHENTICATION_PORT}"
-    working_dir: "/continuum-auth"
+    working_dir: "/service/continuum-auth"
     healthcheck:
       test: "curl localhost:3001/health"
       interval: 1m
@@ -85,7 +86,8 @@ services:
       CONTINUUM_LOGIN_PORT: ${CONTINUUM_LOGIN_PORT}
       CLIENT_PORT: ${CLIENT_PORT}
     volumes:
-      - ./continuum-auth/:/continuum-auth/:z
+      - ./continuum-auth/:/service/continuum-auth/:z
+      - ./lib/:/service/lib/:z
     networks:
       - infra_api
 
@@ -122,7 +124,7 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
-    working_dir: "/server"
+    working_dir: "service/server"
     healthcheck:
       test: "curl localhost:3000/health"
       interval: 1m
@@ -130,7 +132,8 @@ services:
       retries: 3
     command: ["bash", "-c", "yarn && yarn run start:dev"]
     volumes:
-      - ./server/:/server/:z
+      - ./server/:/service/server/:z
+      - ./lib/:/service/lib/:z
     networks:
       - infra_postgres
       - infra_api
