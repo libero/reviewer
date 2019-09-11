@@ -1,5 +1,12 @@
 version: '3'
 services:
+  # Shared packages container
+  shared_packages:
+    build:
+      context: "lib/"
+      dockerfile: "Dockerfile.packages"
+    image: liberoadmin/reviewer_shared_packages:${IMAGE_TAG}
+
   # Server
   server_npm:
     build:

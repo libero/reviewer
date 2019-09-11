@@ -1,8 +1,13 @@
+ARG image_tag=latest
+
 FROM node:10-alpine
+FROM liberoadmin/reviewer_shared_packages:${image_tag} as lib
+
 
 WORKDIR /app
 
 COPY package.json .
+COPY --from=lib lib/. /lib/.
 
 RUN yarn
 
