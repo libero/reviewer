@@ -19,6 +19,8 @@ DOCKER_NETWORK_NAME=reviewer_build
 
 IMAGE_TAG ?= "local"
 
+PUSH_COMMAND = IMAGE_TAG=${IMAGE_TAG} .scripts/travis/push-image.sh
+
 DC_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
 ###########################
@@ -55,7 +57,7 @@ build_application_server_container: test_server lint_server
 	${DC_BUILD} build reviewer_server
 
 push_server_container: build_application_server_container
-    IMAGE_TAG=${IMAGE_TAG} .scripts/travis/push-image.sh reviewer_server
+    ${PUSH_COMMAND} reviewer_server
 
 client_ci: start_network
 	make build_client_container
