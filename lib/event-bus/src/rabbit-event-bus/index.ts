@@ -1,4 +1,4 @@
-import { EventIdentifier, EventSubscriber, EventPublisher, Event } from "../message-queue";
+import { EventIdentifier, EventSubscriber, EventPublisher, Event } from "../event-bus";
 import * as amqplib from "amqplib";
 import { Connection, Message } from "amqplib";
 import { Option, Some } from "funfix";

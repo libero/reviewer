@@ -1,5 +1,5 @@
 import { MockMessageQueue } from '.';
-import { EventIdentifier, Event } from '../message-queue';
+import { EventIdentifier, Event } from '../event-bus';
 
 type TestEventPayload = {
   x: number;

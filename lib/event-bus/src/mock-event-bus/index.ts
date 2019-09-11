@@ -3,7 +3,7 @@ import {
   EventSubscriber,
   EventIdentifier,
   Event
-} from "../message-queue";
+} from "../event-bus";
 import { InfraLogger as logger } from "../logger";
 import { Option, None, Some } from "funfix";
 
