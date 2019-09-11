@@ -51,7 +51,7 @@ build_and_test_shared_components:
 server_ci: start_network
 	make lint_server test_server push_server_container
 
-install_server_packages:
+install_server_packages: prepare_shared_container
 	${DC_BUILD} build server_npm
 
 build_server_source: install_server_packages
