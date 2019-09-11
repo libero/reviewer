@@ -217,6 +217,18 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
+auth-utils@../lib/auth-utils:
+  version "1.0.0"
+  dependencies:
+    "@types/jsonwebtoken" "^8.3.3"
+    "@types/pino" "^5.8.10"
+    "@types/uuid" "^3.4.5"
+    dotenv-cli "^2.0.1"
+    funfix "^7.0.1"
+    jsonwebtoken "^8.5.1"
+    pino "^5.13.2"
+    uuid "^3.3.3"
+
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
