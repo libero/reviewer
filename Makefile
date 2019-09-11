@@ -17,9 +17,9 @@ help:
 
 DOCKER_NETWORK_NAME=reviewer_build
 
-TRAVIS_COMMIT ?= "local"
+IMAGE_TAG ?= "local"
 
-DC_BUILD = IMAGE_TAG=${TRAVIS_COMMIT} docker-compose -f docker-compose.build.yml
+DC_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
 ###########################
 #

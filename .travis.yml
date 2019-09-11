@@ -3,6 +3,7 @@ env:
   - TEST_SUITE=server_ci
   - TEST_SUITE=client_ci
   - TEST_SUITE=continuum-auth_ci
+  - IMAGE_TAG=$TRAVIS_COMMIT
 
 services:
   - docker
@@ -24,3 +25,6 @@ jobs:
     - stage: Integration Tests
       name: "Browser Tests"
       script: make run_browser_tests
+
+after_success:
+    - .scripts/travis/push-image.sh reviewer_server

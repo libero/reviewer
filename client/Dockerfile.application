@@ -1,6 +1,6 @@
 ARG image_tag=latest
 
-FROM liberoadmin/reviewer_client_webpack:${image_tag} AS built
+FROM libero/reviewer_client_webpack:${image_tag} AS built
 FROM nginx:1-alpine
 
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>
