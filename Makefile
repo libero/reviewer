@@ -55,7 +55,7 @@ build_application_server_container: test_server lint_server
 	${DC_BUILD} build reviewer_server
 
 push_server_container: build_application_server_container
-	@echo "Push the container to a docker registry"
+    ${DC_BUILD} .scripts/travis/push-image.sh reviewer_server
 
 client_ci: start_network
 	make build_client_container
@@ -98,7 +98,7 @@ push_continuum-auth_container: build_application_continuum-auth_container
 	@echo "Push the container to a docker registry"
 
 local_ci:
-	make -j 4 server_ci continuum-auth_ci client_ci
+	make -j 4 lint_server test_server continuum-auth_ci client_ci
 
 ###########################
 #
