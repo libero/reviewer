@@ -1,7 +1,7 @@
 ARG image_tag=latest
 
+FROM liberoadmin/reviewer_shared_packages:local as lib
 FROM node:10-alpine
-FROM liberoadmin/reviewer_shared_packages:${image_tag} as lib
 
 
 WORKDIR /app
