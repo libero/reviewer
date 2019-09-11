@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo not configured yet",
-    "build": "tsc --build tsconfig.json",
+    "build": "tsc",
     "lint": "echo not configured yet",
     "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts"
   },
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/libero/reviewer"
   },
-  "author": "",
+  "author": "Peter East",
   "license": "ISC",
   "dependencies": {
     "@types/amqplib": "^0.5.13",
