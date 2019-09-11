@@ -93,6 +93,8 @@ services:
     build:
       context: 'continuum-auth/'
       dockerfile: 'Dockerfile.packages'
+      args:
+        image_tag: "${IMAGE_TAG}"
     image: liberoadmin/reviewer_continuum-auth_packages:${IMAGE_TAG}
     networks: 
         - 'reviewer_build'
