@@ -57,7 +57,7 @@ build_application_server_container: test_server lint_server
 	${DC_BUILD} build reviewer_server
 
 push_server_container: build_application_server_container
-    ${PUSH_COMMAND} reviewer_server
+	${PUSH_COMMAND} reviewer_server
 
 client_ci: start_network
 	make build_client_container
