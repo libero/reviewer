@@ -1,9 +1,7 @@
 import * as express from "express";
 import { Request, Response } from "express";
 import { InfraLogger as logger } from './logger';
-import { Event, EventIdentifier } from './message-queue';
-import { RabbitMessageQueue } from './rabbit-message-queue';
-import { MockMessageQueue } from './mock-message-queue';
+import { Event, EventIdentifier, RabbitMessageQueue, MockMessageQueue } from '@libero/event-bus';
 
 type TestEventPayload = {
   x: number;

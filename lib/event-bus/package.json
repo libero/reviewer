@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo not configured yet",
-    "build": "tsc --build tsconfig.json",
+    "build": "tsc",
     "lint": "echo not configured yet",
     "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts"
   },
@@ -13,11 +13,14 @@
     "type": "git",
     "url": "https://github.com/libero/reviewer"
   },
-  "author": "",
+  "author": "Peter East",
   "license": "ISC",
   "dependencies": {
+    "@types/amqplib": "^0.5.13",
+    "@types/jest": "^24.0.18",
     "@types/pino": "^5.8.10",
     "@types/uuid": "^3.4.5",
+    "amqplib": "^0.5.5",
     "dotenv-cli": "^2.0.1",
     "funfix": "^7.0.1",
     "jsonwebtoken": "^8.5.1",
@@ -25,9 +28,9 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "typescript": "^3.5.3",
     "nodemon": "^1.19.1",
     "pino-pretty": "^3.2.1",
-    "ts-node": "^8.3.0"
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
   }
 }
