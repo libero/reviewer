@@ -44,7 +44,7 @@ prepare_shared_container: build_shared_package_container
 build_shared_package_container:
 	${DC_BUILD} build shared_packages
 
-lib_ci:
+lib_ci: start_network
 	make build_auth-utils build_event-bus
 
 build_auth-utils: build_shared_package_container
