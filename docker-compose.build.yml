@@ -7,7 +7,7 @@ services:
       dockerfile: "Dockerfile.packages"
       args:
         image_tag: ${IMAGE_TAG}
-    image: liberoadmin/reviewer_shared_packages:${IMAGE_TAG}
+    image: libero/reviewer_shared_packages:${IMAGE_TAG}
 
   # Server
   server_npm:
@@ -16,8 +16,8 @@ services:
       dockerfile: 'Dockerfile.packages'
       args:
         image_tag: ${IMAGE_TAG}
-    image: liberoadmin/reviewer_server_packages:${IMAGE_TAG}
-    networks: 
+    image: libero/reviewer_server_packages:${IMAGE_TAG}
+    networks:
         - 'reviewer_build'
   server_typescript:
     build:
@@ -25,10 +25,10 @@ services:
       dockerfile: "Dockerfile.typescript"
       args:
         image_tag: ${IMAGE_TAG}
-    image: liberoadmin/reviewer_server_typescript:${IMAGE_TAG}
+    image: libero/reviewer_server_typescript:${IMAGE_TAG}
     depends_on:
       - server_npm
-    networks: 
+    networks:
         - 'reviewer_build'
   reviewer_server:
     build:
@@ -36,11 +36,11 @@ services:
       dockerfile: "Dockerfile.application"
       args:
         image_tag: ${IMAGE_TAG}
-    image: liberoadmin/reviewer_server:${IMAGE_TAG}
+    image: libero/reviewer_server:${IMAGE_TAG}
     depends_on:
       - server_npm
       - server_typescript
-    networks: 
+    networks:
         - 'reviewer_build'
 
   # Client
@@ -50,8 +50,8 @@ services:
       dockerfile: 'Dockerfile.packages'
       args:
         image_tag: ${IMAGE_TAG}
-    image: liberoadmin/reviewer_client_packages:${IMAGE_TAG}
-    networks: 
+    image: libero/reviewer_client_packages:${IMAGE_TAG}
+    networks:
         - 'reviewer_build'
 
   client_webpack:
@@ -60,10 +60,10 @@ services:
       dockerfile: 'Dockerfile.webpack'
       args:
         image_tag: ${IMAGE_TAG}
-    image: liberoadmin/reviewer_client_webpack:${IMAGE_TAG}
+    image: libero/reviewer_client_webpack:${IMAGE_TAG}
     depends_on:
       - client_npm
-    networks: 
+    networks:
         - 'reviewer_build'
 
   reviewer_client:
@@ -72,7 +72,7 @@ services:
       dockerfile: "Dockerfile.application"
       args:
         image_tag: "${IMAGE_TAG}"
-    image: liberoadmin/reviewer_client:${IMAGE_TAG}
+    image: libero/reviewer_client:${IMAGE_TAG}
     command: >
       /bin/sh -c
       "envsubt '
@@ -85,7 +85,7 @@ services:
     depends_on:
       - client_npm
       - client_webpack
-    networks: 
+    networks:
         - 'reviewer_build'
 
   # continuum-auth
@@ -95,8 +95,8 @@ services:
       dockerfile: 'Dockerfile.packages'
       args:
         image_tag: "${IMAGE_TAG}"
-    image: liberoadmin/reviewer_continuum-auth_packages:${IMAGE_TAG}
-    networks: 
+    image: libero/reviewer_continuum-auth_packages:${IMAGE_TAG}
+    networks:
         - 'reviewer_build'
   continuum-auth_typescript:
     build:
@@ -104,10 +104,10 @@ services:
       dockerfile: "Dockerfile.typescript"
       args:
         image_tag: ${IMAGE_TAG}
-    image: liberoadmin/reviewer_continuum-auth_typescript:${IMAGE_TAG}
+    image: libero/reviewer_continuum-auth_typescript:${IMAGE_TAG}
     depends_on:
       - continuum-auth_npm
-    networks: 
+    networks:
         - 'reviewer_build'
   reviewer_continuum-auth:
     build:
@@ -115,11 +115,11 @@ services:
       dockerfile: "Dockerfile.application"
       args:
         image_tag: ${IMAGE_TAG}
-    image: liberoadmin/reviewer_continuum-auth:${IMAGE_TAG}
+    image: libero/reviewer_continuum-auth:${IMAGE_TAG}
     depends_on:
       - continuum-auth_npm
       - continuum-auth_typescript
-    networks: 
+    networks:
         - 'reviewer_build'
 networks:
   reviewer_build:

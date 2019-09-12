@@ -1,6 +1,6 @@
 ARG image_tag=latest
 
-FROM liberoadmin/reviewer_continuum-auth_packages:${image_tag} AS auth_packages
+FROM libero/reviewer_continuum-auth_packages:${image_tag} AS auth_packages
 
 FROM node:10-alpine
 MAINTAINER eLife Reviewer Product Team <reviewer-product@elifesciences.org>

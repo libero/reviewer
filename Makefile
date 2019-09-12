@@ -17,9 +17,11 @@ help:
 
 DOCKER_NETWORK_NAME=reviewer_build
 
-TRAVIS_COMMIT ?= "local"
+IMAGE_TAG ?= "local"
 
-DC_BUILD = IMAGE_TAG=${TRAVIS_COMMIT} docker-compose -f docker-compose.build.yml
+PUSH_COMMAND = IMAGE_TAG=${IMAGE_TAG} .scripts/travis/push-image.sh
+
+DC_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
 ###########################
 #
@@ -67,7 +69,7 @@ build_application_server_container: test_server lint_server
 	${DC_BUILD} build reviewer_server
 
 push_server_container: build_application_server_container
-	@echo "Push the container to a docker registry"
+	${PUSH_COMMAND} reviewer_server
 
 client_ci: start_network
 	make build_client_container
@@ -110,7 +112,7 @@ push_continuum-auth_container: build_application_continuum-auth_container
 	@echo "Push the container to a docker registry"
 
 local_ci:
-	make -j 4 server_ci continuum-auth_ci client_ci
+	make -j 4 lint_server test_server continuum-auth_ci client_ci
 
 ###########################
 #

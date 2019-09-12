@@ -1,6 +1,6 @@
 ARG image_tag=latest
 
-FROM liberoadmin/reviewer_client_packages:${image_tag}
+FROM libero/reviewer_client_packages:${image_tag}
 
 WORKDIR /app
 
