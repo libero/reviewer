@@ -25,7 +25,7 @@ jobs:
     - stage: Lib Tests
       name: "Library Tests"
       script: make lib_ci
-    - state: Test
+    - stage: Test
     - stage: Integration Tests
       name: "API Tests"
       script: make run_api_tests
