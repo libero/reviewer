@@ -34,14 +34,26 @@ start_network:
 
 ###########################
 #
-# CI Build and Test
+# Build Shared Lib Container
+#
+###########################
+
+prepare_shared_container: build_and_test_shared_components
+	@echo "built shared components"
+
+build_and_test_shared_components:
+	${DC_BUILD} build shared_packages
+
+###########################
+#
+# CI Build and Test Services
 #
 ###########################
 
 server_ci: start_network
 	make lint_server test_server push_server_container
 
-install_server_packages:
+install_server_packages: prepare_shared_container
 	${DC_BUILD} build server_npm
 
 build_server_source: install_server_packages
@@ -62,7 +74,7 @@ push_server_container: build_application_server_container
 client_ci: start_network
 	make build_client_container
 
-install_client_packages:
+install_client_packages: prepare_shared_container
 	${DC_BUILD} build client_npm
 
 build_client_source: install_client_packages
@@ -81,7 +93,7 @@ build_client_container: test_client build_client_source
 continuum-auth_ci: start_network
 	make lint_continuum-auth test_continuum-auth push_continuum-auth_container
 
-install_continuum-auth_packages:
+install_continuum-auth_packages: prepare_shared_container
 	${DC_BUILD} build continuum-auth_npm
 
 build_continuum-auth_source: install_continuum-auth_packages

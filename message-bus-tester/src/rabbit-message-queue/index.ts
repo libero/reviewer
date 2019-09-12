@@ -65,6 +65,8 @@ export class RabbitMessageQueue implements EventSubscriber, EventPublisher {
           Buffer.from(JSON.stringify(this.eventToMessage(event)))
         );
 
+
+        channel.close();
         return true;
       })
       .getOrElse(false);

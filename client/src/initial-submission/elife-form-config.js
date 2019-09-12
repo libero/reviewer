@@ -350,37 +350,37 @@ module.exports = {
             path: 'disclosure',
             components: [
                 {
-                    id: 'acknowledgment',
-                    type: 'ACKNOWLEDGMENT',
-                    nameKey: 'wizard:disclosure_step--acknowledgment-label',
-                    options: {
-                        showTitle: true,
-                        showAuthorName: true,
-                        showTypeAndDate: true,
-                        textBlockKey: 'wizard:disclosure_step--acknowledgment-text',
-                        textInputs: [
-                            {
-                                id: 'name',
-                                labelKey: 'wizard:disclosure_step--acknowledgment-name-label',
-                                options: {
-                                    validation: {
-                                        // How will we do this?
-                                    },
-                                },
+                    id: 'acknowledgement',
+                    type: 'ACKNOWLEDGEMENT',
+                    nameKey: 'wizard:disclosure_step--acknowledgement-label',
+                    components: [
+                      {
+                          id: 'acknowledgedBy',
+                          type: 'TEXT_INPUT',
+                          labelKey: 'wizard:disclosure_step--acknowledgement-name-label',
+                          options: {
+                              validation: {
+                                  // How will we do this?
+                              },
+                          },
+                      },
+                      {
+                        id: 'consent',
+                        type: 'CHECKBOX',
+                        labelKey: 'wizard:disclosure_step--disclosure-consent-label',
+                        options: {
+                            validation: {
+                                // How will we do this?
                             },
-                        ],
-                        checkBoxes: [
-                            {
-                                id: 'consent',
-                                labelKey: 'wizard:disclosure_step--disclosure-consent-label',
-                                options: {
-                                    validation: {
-                                        // How will we do this?
-                                    },
-                                },
-                            },
-                        ],
+                        },
                     },
+                  ],
+                  options: {
+                      showTitle: true,
+                      showAuthorName: true,
+                      showTypeAndDate: true,
+                      textBlockKey: 'wizard:disclosure_step--acknowledgment-text',
+                  },
                 },
             ],
         },
