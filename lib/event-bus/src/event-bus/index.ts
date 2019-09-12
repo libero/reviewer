@@ -7,7 +7,7 @@ export interface EventIdentifier {
   namespace: string; // For origin/domain?
 }
 
-export interface Event<T extends object> extends EventIdentifier{
+export interface Event<T extends object> extends EventIdentifier {
   // This is event metadata
   id: string; // Generated when the event is emitted
   created: Date;
@@ -17,15 +17,14 @@ export interface Event<T extends object> extends EventIdentifier{
 }
 
 export interface EventPublisher {
-  init(event_definitions: EventIdentifier[], service_name: string): Promise<this>;
+  init(eventDefinitions: EventIdentifier[], serviceName: string): Promise<this>;
 
   publish<T extends object>(event: Event<T>): Promise<boolean>;
 }
 
 export interface EventSubscriber {
-  init(event_definitions: EventIdentifier[], service_name: string): Promise<this>;
+  init(eventDefinitions: EventIdentifier[], serviceName: string): Promise<this>;
 
-  subscribe<P extends object>(event_definition: EventIdentifier, handler: (ev: Event<P>)=>Promise<boolean>): void;
+  subscribe<P extends object>(eventDefinition: EventIdentifier, handler: (ev: Event<P>) => Promise<boolean>): void;
   // handler: returns weather or not we should ack the message
 }
-
