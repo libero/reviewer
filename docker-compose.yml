@@ -124,7 +124,7 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
-    working_dir: "service/server"
+    working_dir: "/service/server"
     healthcheck:
       test: "curl localhost:3000/health"
       interval: 1m
