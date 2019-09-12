@@ -6,7 +6,6 @@ env:
     - TEST_SUITE=server_ci
     - TEST_SUITE=client_ci
     - TEST_SUITE=continuum-auth_ci
-    - TEST_SUITE=lib_ci
 
 services:
   - docker
@@ -17,11 +16,16 @@ script:
   - make -j 4 $TEST_SUITE
 
 stages:
+  - name: Lib Tests
   - name: Test
   - name: Integration Tests
 
 jobs:
   include:
+    - stage: Lib Tests
+      name: "Library Tests"
+      script: make lib_ci
+    - state: Test
     - stage: Integration Tests
       name: "API Tests"
       script: make run_api_tests
