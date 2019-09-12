@@ -292,6 +292,20 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
+"@libero/event-bus@../lib/event-bus":
+  version "1.0.0"
+  dependencies:
+    "@types/amqplib" "^0.5.13"
+    "@types/jest" "^24.0.18"
+    "@types/pino" "^5.8.10"
+    "@types/uuid" "^3.4.5"
+    amqplib "^0.5.5"
+    dotenv-cli "^2.0.1"
+    funfix "^7.0.1"
+    jsonwebtoken "^8.5.1"
+    pino "^5.13.2"
+    uuid "^3.3.3"
+
 "@types/amqplib@^0.5.13":
   version "0.5.13"
   resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.5.13.tgz#a0dc9be08f38b91e5f7532acf0c89b0e515cdc6c"
@@ -1405,20 +1419,6 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
-
-event-bus@../lib/event-bus:
-  version "1.0.0"
-  dependencies:
-    "@types/amqplib" "^0.5.13"
-    "@types/jest" "^24.0.18"
-    "@types/pino" "^5.8.10"
-    "@types/uuid" "^3.4.5"
-    amqplib "^0.5.5"
-    dotenv-cli "^2.0.1"
-    funfix "^7.0.1"
-    jsonwebtoken "^8.5.1"
-    pino "^5.13.2"
-    uuid "^3.3.3"
 
 exec-sh@^0.3.2:
   version "0.3.2"
