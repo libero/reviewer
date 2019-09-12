@@ -8,31 +8,29 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     labelText: string;
     placeholder?: string;
 }
-const TextField = ({ id, labelText, placeholder, invalid, helperText, ...rest }: Props): JSX.Element => {
-    return (
-        <div className="text-field">
-            <label htmlFor={id} className="typography__label typography__label--primary">
-                {labelText}
-            </label>
-            <input
-                id={id}
-                className={`text-field__input ${invalid ? 'text-field__input--invalid' : ''}`}
-                type="text"
-                placeholder={placeholder}
-                {...rest}
-            />
-            {helperText && (
-                <span
-                    className={`text-field__label typography__label ${
-                        invalid ? 'typography__label--error' : 'typography__label--secondary'
-                    }`}
-                >
-                    {invalid && <Close fontSize="default" />}
-                    {helperText}
-                </span>
-            )}
-        </div>
-    );
-};
+const TextField = ({ id, labelText, placeholder, invalid, helperText, ...rest }: Props): JSX.Element => (
+    <div className="text-field">
+        <label htmlFor={id} className="typography__label typography__label--primary">
+            {labelText}
+        </label>
+        <input
+            id={id}
+            className={`text-field__input ${invalid ? 'text-field__input--invalid' : ''}`}
+            type="text"
+            placeholder={placeholder}
+            {...rest}
+        />
+        {helperText && (
+            <span
+                className={`text-field__label typography__label ${
+                    invalid ? 'typography__label--error' : 'typography__label--secondary'
+                }`}
+            >
+                {invalid && <Close fontSize="default" />}
+                {helperText}
+            </span>
+        )}
+    </div>
+);
 
 export default TextField;
