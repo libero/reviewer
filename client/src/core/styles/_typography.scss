@@ -136,8 +136,9 @@
   color: $colourError;
 }
 
-//helper text
-.typography__helper-text {
+.typography__label--helper-text {
+  margin-top: 0.375rem;
+  min-height: 1.125rem;
   display: flex;
   align-items: center;
 }

@@ -20,16 +20,14 @@ const TextField = ({ id, labelText, placeholder, invalid, helperText, ...rest }:
             placeholder={placeholder}
             {...rest}
         />
-        {helperText && (
-            <span
-                className={`typography__helper-text typography__label ${
-                    invalid ? 'typography__label--error' : 'typography__label--secondary'
-                }`}
-            >
-                {invalid && <Close fontSize="default" />}
-                {helperText}
-            </span>
-        )}
+        <span
+            className={`typography__label typography__label--helper-text ${
+                invalid ? 'typography__label--error' : 'typography__label--secondary'
+            }`}
+        >
+            {invalid && <Close fontSize="default" />}
+            {helperText}
+        </span>
     </div>
 );
 

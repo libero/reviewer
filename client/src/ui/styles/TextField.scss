@@ -27,5 +27,5 @@
 }
 
 .text-field__input--invalid {
-  border-color: $colourError;
+  border: $borderWidth $borderStyle $colourError;
 }
