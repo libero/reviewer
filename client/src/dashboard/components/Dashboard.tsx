@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import { Button, Paragraph } from '../../ui/atoms';
 import SubmissionList from './SubmissionList';
 import { getSubmissionsQuery } from '../graphql';
@@ -9,7 +9,7 @@ import { getSubmissionsQuery } from '../graphql';
 const Dashboard = withRouter(
     (): JSX.Element => {
         const { loading, data } = useQuery(getSubmissionsQuery);
-        const { t, i18n } = useTranslation();
+        const { t } = useTranslation();
 
         return (
             <div className="dashboard">

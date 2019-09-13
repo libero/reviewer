@@ -6,9 +6,7 @@ describe('TextField', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
-        expect(
-            (): RenderResult => render(<Checkbox id="test" invalid={false} labelText="some label" />),
-        ).not.toThrow();
+        expect((): RenderResult => render(<Checkbox id="test" invalid={false} labelText="some label" />)).not.toThrow();
     });
 
     it('should render the label text', (): void => {
@@ -26,7 +24,7 @@ describe('TextField', (): void => {
     });
 
     it('should render the error state', (): void => {
-        const { getByText, getByLabelText } = render(
+        const { getByText } = render(
             <Checkbox id="test" invalid={true} labelText="some label" helperText="helper text" />,
         );
         expect(getByText('helper text')).toHaveClass('typography__label--error');
@@ -36,13 +34,7 @@ describe('TextField', (): void => {
     it('should trigger onchange when callback is passed in', async (): Promise<void> => {
         const onChangeFn = jest.fn();
         const { container } = render(
-            <Checkbox
-                id="test"
-                invalid={true}
-                labelText="some label"
-                helperText="helper text"
-                onChange={onChangeFn}
-            />,
+            <Checkbox id="test" invalid={true} labelText="some label" helperText="helper text" onChange={onChangeFn} />,
         );
         await fireEvent.click(container.querySelector('input'));
         expect(onChangeFn).toHaveBeenCalled();

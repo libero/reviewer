@@ -12,9 +12,7 @@ declare var API_HOST: string;
 
 const authToken = localStorage.getItem('token');
 
-const Loader = () => (
-    <div>Loading...</div>
-)
+const Loader = (): JSX.Element => <div>Loading...</div>;
 
 const App: React.FC = (): JSX.Element => (
     <div>

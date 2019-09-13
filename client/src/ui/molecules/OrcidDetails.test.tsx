@@ -1,6 +1,6 @@
 import React from 'react';
 import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
-import OrcidDetails, { AuthorDetails } from './OrcidDetails';
+import OrcidDetails from './OrcidDetails';
 
 describe('Button', (): void => {
     afterEach(cleanup);
@@ -16,7 +16,7 @@ describe('Button', (): void => {
     });
 
     it('should hide the prefill text link when no function specified', async (): Promise<void> => {
-        const { container, getByText } = render(<OrcidDetails />);
+        const { container } = render(<OrcidDetails />);
         expect(container.querySelectorAll('.typography__body--primary').length).toBe(0);
     });
 
