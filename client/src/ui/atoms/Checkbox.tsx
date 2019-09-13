@@ -14,16 +14,14 @@ const Checkbox = ({ id, labelText, invalid, helperText, checked, ...rest }: Prop
     <label htmlFor={id} className={`checkbox-field__label${checked ? ' checkbox-field__label--checked' : ''}${invalid ? ' checkbox-field__label--invalid' : ''} typography__label typography__label--primary`}>
       { labelText }
     </label>
-    {helperText && (
-            <span
-                className={`typography__helper-text typography__label ${
-                    invalid ? 'typography__label--error' : 'typography__label--secondary'
-                }`}
-            >
-                {invalid && <Close fontSize="default" />}
-                {helperText}
-            </span>
-        )}
+    <span
+            className={`typography__label typography__label--helper-text ${
+                invalid ? 'typography__label--error' : 'typography__label--secondary'
+            }`}
+        >
+            {invalid && <Close fontSize="default" />}
+            {helperText}
+        </span>
   </div>
 );
 
