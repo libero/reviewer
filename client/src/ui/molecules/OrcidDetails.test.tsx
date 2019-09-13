@@ -23,6 +23,6 @@ describe('Button', (): void => {
     it('should fill the correct boxes with author information when the text is clicked', async (): Promise<void> => {
         const { container, getByLabelText } = render(<OrcidDetails getOrcidDetails={mockORCIDDetails} />);
         await fireEvent.click(container.querySelector('.typography__body--link'));
-        expect((getByLabelText('First name') as HTMLInputElement).value).toBe('Bob');
+        expect((getByLabelText('author-first-name') as HTMLInputElement).value).toBe('Bob');
     });
 });

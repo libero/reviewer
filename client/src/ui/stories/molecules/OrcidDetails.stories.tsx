@@ -6,7 +6,7 @@ import '../../../core/styles/index.scss';
 import centered from '@storybook/addon-centered/react';
 
 const getDetails = (): AuthorDetails => {
-    action('Prefilled Details');
+    action('Prefilled Details')();
     return {
         authorFirstName: 'Bob',
         authorLastName: 'Ross',
