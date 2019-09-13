@@ -9,7 +9,8 @@
     "test": "jest",
     "lint": "eslint --fix --ext .js,.ts,.tsx .",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "update:internal": "yarn upgrade -P @libero"
   },
   "devDependencies": {
     "@apollo/react-testing": "3.0.0",
