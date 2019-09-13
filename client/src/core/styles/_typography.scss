@@ -136,6 +136,12 @@
   color: $colourError;
 }
 
+//helper text
+.typography__helper-text {
+  display: flex;
+  align-items: center;
+}
+
 //xsmall
 .typography__xsmall {
   font-family: $defaultFontFamily;

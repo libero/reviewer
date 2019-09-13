@@ -51,3 +51,10 @@
     border-color: $colourPrimary;
   }
 }
+
+
+.checkbox-field__label--invalid {
+  &:before {
+    border-color: $colourError;
+  }
+}

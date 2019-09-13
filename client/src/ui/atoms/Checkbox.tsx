@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from 'react';
-import Check from '@material-ui/icons/Check';
+import Close from '@material-ui/icons/Close';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   helperText?: string;
@@ -8,12 +8,22 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   labelText: string;
 }
 
-const Checkbox = ({ id, labelText, helperText, checked, ...rest }: Props) : JSX.Element => (
+const Checkbox = ({ id, labelText, invalid, helperText, checked, ...rest }: Props) : JSX.Element => (
   <div className="checkbox-field">
     <input id={id} className="checkbox-field__input" type="checkbox" {...rest} checked={checked}/>
-    <label htmlFor={id} className={`checkbox-field__label ${checked ? 'checkbox-field__label--checked' : ''} typography__label typography__label--primary`}>
+    <label htmlFor={id} className={`checkbox-field__label${checked ? ' checkbox-field__label--checked' : ''}${invalid ? ' checkbox-field__label--invalid' : ''} typography__label typography__label--primary`}>
       { labelText }
     </label>
+    {helperText && (
+            <span
+                className={`typography__helper-text typography__label ${
+                    invalid ? 'typography__label--error' : 'typography__label--secondary'
+                }`}
+            >
+                {invalid && <Close fontSize="default" />}
+                {helperText}
+            </span>
+        )}
   </div>
 );
 

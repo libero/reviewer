@@ -22,7 +22,7 @@ const TextField = ({ id, labelText, placeholder, invalid, helperText, ...rest }:
         />
         {helperText && (
             <span
-                className={`text-field__label typography__label ${
+                className={`typography__helper-text typography__label ${
                     invalid ? 'typography__label--error' : 'typography__label--secondary'
                 }`}
             >
