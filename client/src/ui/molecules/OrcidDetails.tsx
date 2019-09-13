@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, TwoColumnLayout } from '../atoms';
+import { useTranslation } from 'react-i18next';
 
 export interface AuthorDetails {
     authorFirstName: string;
@@ -17,6 +18,7 @@ const OrcidDetails = ({ getOrcidDetails }: Props, authorDetails: AuthorDetails):
     const [authorLastName, setAuthorLastName] = useState(authorDetails.authorLastName || '');
     const [authorEmail, setAuthorEmail] = useState(authorDetails.authorEmail || '');
     const [institution, setInstitution] = useState(authorDetails.institution || '');
+    const { t } = useTranslation();
 
     const getDetails = (): void => {
         const {
@@ -36,16 +38,18 @@ const OrcidDetails = ({ getOrcidDetails }: Props, authorDetails: AuthorDetails):
             {getOrcidDetails && (
                 <div className="orcid-details__link_text">
                     <span onClick={getDetails} className="typography__body typography__body--link">
-                        Pre-fill my details{' '}
+                        {t('orcid-details:prefill--link')}{' '}
                     </span>
-                    <span className="typography__body typography__body--primary">using ORCID</span>
+                    <span className="typography__body typography__body--primary">
+                        {t('orcid-details:prefill--text')}
+                    </span>
                 </div>
             )}
             <TwoColumnLayout>
                 <TextField
                     id="authorFirstName"
                     invalid={false}
-                    labelText="First name"
+                    labelText={t('orcid-details:author-first-name')}
                     value={authorFirstName}
                     onChange={(event: React.FormEvent<HTMLInputElement>): void =>
                         setAuthorFirstName(event.currentTarget.value)
@@ -54,7 +58,7 @@ const OrcidDetails = ({ getOrcidDetails }: Props, authorDetails: AuthorDetails):
                 <TextField
                     id="authorLastName"
                     invalid={false}
-                    labelText="Last name"
+                    labelText={t('orcid-details:author-last-name')}
                     value={authorLastName}
                     onChange={(event: React.FormEvent<HTMLInputElement>): void =>
                         setAuthorLastName(event.currentTarget.value)
@@ -63,7 +67,7 @@ const OrcidDetails = ({ getOrcidDetails }: Props, authorDetails: AuthorDetails):
                 <TextField
                     id="authorEmail"
                     invalid={false}
-                    labelText="Email (correspondence)"
+                    labelText={t('orcid-details:author-email')}
                     value={authorEmail}
                     onChange={(event: React.FormEvent<HTMLInputElement>): void =>
                         setAuthorEmail(event.currentTarget.value)
@@ -72,7 +76,7 @@ const OrcidDetails = ({ getOrcidDetails }: Props, authorDetails: AuthorDetails):
                 <TextField
                     id="institution"
                     invalid={false}
-                    labelText="Institution"
+                    labelText={t('orcid-details:label')}
                     value={institution}
                     onChange={(event: React.FormEvent<HTMLInputElement>): void =>
                         setInstitution(event.currentTarget.value)
