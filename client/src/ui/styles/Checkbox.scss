@@ -6,10 +6,10 @@
   outline: 0;
   vertical-align: baseline;
   font-style: normal;
-  min-height: 1.2rem;
+  min-height: 1.8rem;
   font-size: 1rem;
-  line-height: 1.2rem;
-  min-width: 1.2rem;
+  line-height: 1.8rem;
+  min-width: 1.8rem;
 }
 
 .checkbox-field__input {
@@ -21,22 +21,23 @@
   opacity: 0!important;
   outline: 0;
   z-index: 3;
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.8rem;
+  height: 1.8rem;
 }
 
 .checkbox-field__label {
   position: relative;
   display: block;
-  padding-left: 1.85714em;
+  padding-left: 2.4rem;
   outline: 0;
   font-size: 1em;
+  line-height: 1.8rem;
   &:before {
     position: absolute;
     top: 0;
     left: 0;
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 1.8rem;
+    height: 1.8rem;
     content: '';
     background: #fff;
     border-radius: .21428571rem;
@@ -46,7 +47,7 @@
 
 .checkbox-field__label--checked {
   &:before {
-    background-color: $colourPrimary;
+    background: icon(check, $white) center center / 75% no-repeat, $colourPrimary;
     border-color: $colourPrimary;
   }
 }
