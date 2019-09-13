@@ -123,6 +123,7 @@ push_continuum-auth_container: build_application_continuum-auth_container
 	@echo "Push the container to a docker registry"
 
 local_ci:
+	make -j 4 lib_ci
 	make -j 4 lint_server test_server continuum-auth_ci client_ci
 
 ###########################
