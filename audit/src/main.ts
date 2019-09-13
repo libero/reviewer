@@ -3,20 +3,33 @@ import { InfraLogger as logger } from "./logger";
 import * as express from "express";
 import { Express, Request, Response } from "express";
 import { HealthCheck } from "./endpoints";
-import { EventBus, RabbitEventBus } from "@libero/event-bus";
+import { Event, EventBus, RabbitEventBus } from "@libero/event-bus";
 
 import { ServiceStartedPayload, serviceStartedIdentifier } from "./events";
+import { ServiceStartedHandler } from "./handlers";
 
 const setupEventBus = async (eventBus: EventBus) => {
   await eventBus.init([serviceStartedIdentifier], "audit");
 
   // setup subscribers
 
-  eventBus.subscribe<ServiceStartedPayload>(serviceStartedIdentifier, async (ev) => {
-    return true
-  });
+  eventBus.subscribe<ServiceStartedPayload>(
+    serviceStartedIdentifier,
+    ServiceStartedHandler(undefined)
+  );
 
   // publish "ServiceStarted"
+  const event: Event<ServiceStartedPayload> = {
+    id: "some-wevent-id",
+    created: new Date(),
+    payload: {
+      type: "support",
+      name: "audit"
+    },
+    ...serviceStartedIdentifier
+  };
+
+  await eventBus.publish(event);
   return eventBus;
 };
 
@@ -27,7 +40,6 @@ const setupWebServer = (server: Express) => {
   });
 
   server.get("/health", HealthCheck());
-
 
   return server;
 };
