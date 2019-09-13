@@ -68,6 +68,26 @@ services:
     depends_on:
       - rabbitmq
 
+  audit:
+    image: node:10
+    ports:
+      - "3004:3004"
+    working_dir: "/service/audit"
+    command: ["bash", "-c", "yarn && yarn start:dev"]
+    healthcheck:
+      test: "curl localhost:3004/health"
+      interval: 1m
+      timeout: 10s
+      retries: 3
+    volumes:
+      - ./audit/:/service/audit/:z
+      - ./lib/:/service/lib/:z
+    networks:
+      - infra_api
+      - infra_rabbit
+    depends_on:
+      - rabbitmq
+
   continuum-auth:
     image: node:10
     ports:
@@ -124,7 +144,7 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
-    working_dir: "service/server"
+    working_dir: "/service/server"
     healthcheck:
       test: "curl localhost:3000/health"
       interval: 1m

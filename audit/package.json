@@ -7,7 +7,7 @@
     "test": "echo not configured yet",
     "build": "tsc --build tsconfig.json",
     "lint": "echo not configured yet",
-    "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts",
+    "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts | pino-pretty",
     "update:internal": "yarn upgrade -P @libero"
   },
   "repository": {
