@@ -8,8 +8,11 @@ import { Event, EventBus, RabbitEventBus } from "@libero/event-bus";
 import { ServiceStartedPayload, serviceStartedIdentifier } from "./events";
 import { ServiceStartedHandler } from "./handlers";
 
-const setupEventBus = async (eventBus: EventBus) => {
-  await eventBus.init([serviceStartedIdentifier], "audit");
+const setupEventBus = async (freshEventBus: EventBus) => {
+  const eventBus = await freshEventBus.init(
+    [serviceStartedIdentifier],
+    "audit"
+  );
 
   // setup subscribers
 
@@ -29,7 +32,9 @@ const setupEventBus = async (eventBus: EventBus) => {
     ...serviceStartedIdentifier
   };
 
-  await eventBus.publish(event);
+  await eventBus.publish(event).then(() => {
+    logger.debug("emittedServiceStarted");
+  });
   return eventBus;
 };
 
@@ -52,6 +57,11 @@ const main = async () => {
 
   // Create express instance
   const app = setupWebServer(express());
-
-  // express.listen();
+  return app;
 };
+
+main().then(app =>
+  app.listen(3004, () => {
+    logger.info("serviceStarted");
+  })
+);
