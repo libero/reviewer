@@ -21,7 +21,7 @@ const TextField = ({ id, labelText, placeholder, invalid, helperText, ...rest }:
             {...rest}
         />
         <span
-            className={`text-field__helper_text typography__label ${
+            className={`typography__label typography__label--helper-text ${
                 invalid ? 'typography__label--error' : 'typography__label--secondary'
             }`}
         >

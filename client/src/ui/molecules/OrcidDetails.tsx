@@ -9,7 +9,7 @@ export interface AuthorDetails {
 }
 
 interface Props {
-    getOrcidDetails(): AuthorDetails;
+    getOrcidDetails?(): AuthorDetails;
 }
 
 const OrcidDetails = ({ getOrcidDetails }: Props, authorDetails: AuthorDetails): JSX.Element => {
@@ -33,12 +33,14 @@ const OrcidDetails = ({ getOrcidDetails }: Props, authorDetails: AuthorDetails):
 
     return (
         <div>
-            <div className="orcid-details__link_text">
-                <span onClick={getDetails} className="typography__body typography__body--link">
-                    Pre-fill my details{' '}
-                </span>
-                <span className="typography__body typography__body--primary">using ORCID</span>
-            </div>
+            {getOrcidDetails && (
+                <div className="orcid-details__link_text">
+                    <span onClick={getDetails} className="typography__body typography__body--link">
+                        Pre-fill my details{' '}
+                    </span>
+                    <span className="typography__body typography__body--primary">using ORCID</span>
+                </div>
+            )}
             <TwoColumnLayout>
                 <TextField
                     id="authorFirstName"
