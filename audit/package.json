@@ -1,5 +1,5 @@
 {
-  "name": "continuum-auth",
+  "name": "audit-service",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -16,12 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "auth-utils": "../lib/auth-utils",
-    "@types/express": "^4.17.1",
-    "@types/jsonwebtoken": "^8.3.3",
-    "@types/node-fetch": "^2.5.0",
-    "@types/pino": "^5.8.10",
-    "@types/uuid": "^3.4.5",
+    "auth-utils": "../../lib/auth-utils",
     "dotenv-cli": "^2.0.1",
     "express": "^4.17.1",
     "funfix": "^7.0.1",
@@ -33,6 +28,11 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "@types/express": "^4.17.1",
+    "@types/jsonwebtoken": "^8.3.3",
+    "@types/node-fetch": "^2.5.0",
+    "@types/pino": "^5.8.10",
+    "@types/uuid": "^3.4.5",
     "pino-pretty": "^3.2.1",
     "ts-node": "^8.3.0"
   }
