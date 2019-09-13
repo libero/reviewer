@@ -5,7 +5,7 @@ import { encode, decodeJournalToken } from "../jwt";
 import { ProfilesRepo } from "../repo/profiles";
 import { v4 } from "uuid";
 import config from '../config';
-import {UserIdentity} from 'auth-utils';
+import {UserIdentity} from '@libero/auth-utils';
 
 // This is the endpoint that does the actual token exchange/user lookup and signing the output token
 // And yeah, I know the controller/usecase code shouldn't be mixed but idec, we can refactor it at some point
