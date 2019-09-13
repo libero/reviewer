@@ -16,7 +16,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "auth-utils": "../../lib/auth-utils",
+    "@libero/auth-utils": "../lib/auth-utils",
+    "@libero/event-bus": "../lib/event-bus",
     "dotenv-cli": "^2.0.1",
     "express": "^4.17.1",
     "funfix": "^7.0.1",
