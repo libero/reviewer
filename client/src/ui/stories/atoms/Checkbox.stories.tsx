@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text, withKnobs } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import { Checkbox } from '../../atoms';
 import '../../../core/styles/index.scss';
@@ -13,7 +14,7 @@ const CheckboxComponent = (): JSX.Element => {
     return (
         <Checkbox
             id="someid"
-            onChange={(): void => setChecked(!checked)}
+            onChange={(event: React.FormEvent<HTMLInputElement>): void => { action('checked')(event); setChecked(!checked)}}
             checked={checked}
             invalid={inValid}
             labelText={label}
