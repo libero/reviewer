@@ -7,7 +7,7 @@ import {
 import { InfraLogger as logger } from '../logger';
 import { Option, None, Some } from 'funfix';
 
-export class MockMessageQueue implements EventPublisher, EventSubscriber {
+export class MockEventBus implements EventPublisher, EventSubscriber {
   private queues: Option<
     Map<string, (ev: Event<object>) => Promise<boolean>>
   > = None;

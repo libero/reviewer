@@ -28,3 +28,5 @@ export interface EventSubscriber {
   subscribe<P extends object>(eventDefinition: EventIdentifier, handler: (ev: Event<P>) => Promise<boolean>): void;
   // handler: returns weather or not we should ack the message
 }
+
+export interface EventBus extends EventPublisher, EventSubscriber {}

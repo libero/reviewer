@@ -13,7 +13,7 @@ interface MessageWrapper<T> {
   };
 }
 
-export class RabbitMessageQueue implements EventSubscriber, EventPublisher {
+export class RabbitEventBus implements EventSubscriber, EventPublisher {
   connection: Option<Connection>;
   serviceName: string = 'unknown_service';
 
