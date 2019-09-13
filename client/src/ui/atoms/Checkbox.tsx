@@ -1,5 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 import Close from '@material-ui/icons/Close';
+import Check from '@material-ui/icons/Check';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
     helperText?: string;
@@ -17,6 +18,9 @@ const Checkbox = ({ id, labelText, invalid, helperText, checked, ...rest }: Prop
                 invalid ? ' checkbox-field__label--invalid' : ''
             } typography__label typography__label--primary`}
         >
+            {
+                checked && <Check aria-hidden="true" className="checkbox-field__label-check"/>
+            }
             {labelText}
         </label>
         <span
