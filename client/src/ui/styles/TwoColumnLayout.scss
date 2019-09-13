@@ -1,8 +1,8 @@
 .two-column-layout {
   display: flex;
   flex-wrap: wrap;
-  margin-left: -0.125rem;
-  margin-right: -0.125rem;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
   margin-bottom: 3rem;
   @include forSize('desktopUp') {
     margin-bottom: 7.5rem;
@@ -10,8 +10,8 @@
 }
 
 .two-column-layout__item {
-  padding-left: 0.125rem;
-  padding-right: 0.125rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
   @include forSize('desktopUp') {
     width: 50%;
   }
