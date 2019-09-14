@@ -2,17 +2,18 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../ui/atoms';
-import { getTokenFromUrl, setToken, decodeToken, getToken } from '../utils/tokenUtils';
 import Image from '../../core/assets/welcome.jpg';
+import * as Auth from '../../core/utils/auth';
+
+declare var LOGIN_URL: string;
 
 const Login = (): JSX.Element => {
     const { t } = useTranslation();
-    const token = getTokenFromUrl();
 
-    if (token) {
-        setToken(token);
+    Auth.importToken();
 
-        return (<Redirect to="/" />);
+    if (Auth.isAuthenticated()) {
+        return <Redirect to="/" />;
     }
 
     return (
@@ -37,7 +38,7 @@ const Login = (): JSX.Element => {
                     </div>
 
                     <div className="login-page__buttons">
-                        <a className="login-page__buttons--orcid" href="http://localhost:3003/submit">
+                        <a className="login-page__buttons--orcid" href={LOGIN_URL}>
                             <Button type="orcid">{t('login:login-orcid')}</Button>
                         </a>
                         <Paragraph type="writing">

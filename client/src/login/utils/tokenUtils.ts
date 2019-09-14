@@ -4,7 +4,7 @@ export const exchangeToken = (token: string): void => {
 
 export const getToken = (): string => {
     return window.localStorage.getItem('token');
-}
+};
 
 export const setToken = (token: string): void => {
     window.localStorage.setItem('token', token);

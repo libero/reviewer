@@ -14,7 +14,10 @@ const CheckboxComponent = (): JSX.Element => {
     return (
         <Checkbox
             id="someid"
-            onChange={(event: React.FormEvent<HTMLInputElement>): void => { action('checked')(event); setChecked(!checked)}}
+            onChange={(event: React.FormEvent<HTMLInputElement>): void => {
+                action('checked')(event);
+                setChecked(!checked);
+            }}
             checked={checked}
             invalid={inValid}
             labelText={label}

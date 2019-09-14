@@ -1,39 +1,49 @@
 import React from 'react';
 import { cleanup, render, RenderResult } from '@testing-library/react';
-import { MemoryRouter, Route } from 'react-router-dom'
-import * as tokenUtils from '../utils/tokenUtils';
+import { MemoryRouter, Route } from 'react-router-dom';
+import * as Auth from '../../core/utils/auth';
 import Login from './Login';
 
 describe('Login', (): void => {
-    afterEach(cleanup)
+    afterEach(cleanup);
 
     it('should render correctly', (): void => {
         expect((): RenderResult => render(<Login />)).not.toThrow();
     });
 
-    it('should get set and decode token if present and redirect', (): void => {
-        jest.spyOn(tokenUtils, 'getTokenFromUrl').mockImplementationOnce(() => 'token');
-        jest.spyOn(tokenUtils, 'setToken').mockImplementationOnce(() => {});
+    it('should import the token', (): void => {
+        jest.spyOn(Auth, 'importToken').mockImplementationOnce(jest.fn());
 
-        const { container } = render(<MemoryRouter initialEntries={['/login']}>
-            <Route exact path="/login" render={() => <Login></Login>} />
-            <Route path="/" render={() => 'Root'} />
-        </MemoryRouter>)
-
-        expect(tokenUtils.getTokenFromUrl).toHaveBeenCalledTimes(1)
-        expect(tokenUtils.setToken).toHaveBeenCalledTimes(1)
-        expect(tokenUtils.setToken).toHaveBeenCalledWith('token')
-        expect(container.textContent).toBe('Root')
+        render(<Login />);
+        expect(Auth.importToken).toHaveBeenCalledTimes(1);
     });
 
-    it('should render login page if no token set in url', (): void  => {
-        const { container } = render(<MemoryRouter initialEntries={['/login']}>
-            <Route exact path="/login" render={() => <Login></Login>} />
-            <Route path="/" render={() => 'Root'} />
-        </MemoryRouter>)
+    it('should redirect if authenticated', (): void => {
+        jest.spyOn(Auth, 'importToken').mockImplementationOnce(jest.fn());
+        jest.spyOn(Auth, 'isAuthenticated').mockImplementationOnce((): boolean => true);
 
-        jest.spyOn(tokenUtils, 'getTokenFromUrl').mockImplementationOnce(() => '');
+        const { container } = render(
+            <MemoryRouter initialEntries={['/login']}>
+                <Route exact path="/login" render={(): JSX.Element => <Login></Login>} />
+                <Route path="/" render={(): string => 'Root'} />
+            </MemoryRouter>,
+        );
 
-        expect(container.querySelector('.login-page')).not.toBe(null)
+        expect(container.querySelector('.login-page')).toBe(null);
+        expect(container.textContent).toBe('Root');
+    });
+
+    it('should render login page if not authenticated', (): void => {
+        jest.spyOn(Auth, 'importToken').mockImplementationOnce(jest.fn());
+        jest.spyOn(Auth, 'isAuthenticated').mockImplementationOnce((): boolean => false);
+
+        const { container } = render(
+            <MemoryRouter initialEntries={['/login']}>
+                <Route exact path="/login" render={(): JSX.Element => <Login></Login>} />
+                <Route path="/" render={(): string => 'Root'} />
+            </MemoryRouter>,
+        );
+
+        expect(container.querySelector('.login-page')).not.toBe(null);
     });
 });

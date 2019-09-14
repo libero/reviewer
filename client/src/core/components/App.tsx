@@ -7,7 +7,6 @@ import NavBar from './NavBar';
 import createApolloClient from '../utils/createApolloClient';
 import Login from '../../login/components/Login';
 import { getToken } from '../../login/utils/tokenUtils';
-import Authenticated from './Authenticated';
 import '@khanacademy/tota11y';
 import '../styles/index.scss';
 
@@ -24,12 +23,10 @@ const App: React.FC = (): JSX.Element => (
                 <React.Suspense fallback={<Loader />}>
                     <NavBar />
                     <Route component={Login} exact path="/login"></Route>
-                    <Authenticated token={authToken}>
-                        <div className="site-content">
-                            <InitialSubmissionRoutes />
-                            <DashboardRoutes />
-                        </div>
-                    </Authenticated>
+                    <div className="site-content">
+                        <InitialSubmissionRoutes />
+                        <DashboardRoutes />
+                    </div>
                 </React.Suspense>
             </Router>
         </ApolloProvider>
