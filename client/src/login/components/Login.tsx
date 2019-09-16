@@ -1,10 +1,20 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { TwoColumnLayout, Paragraph, Button, ImageWithAttribution } from '../../ui/atoms';
 import Image from '../../core/assets/welcome.jpg';
+import * as Auth from '../../core/utils/auth';
+
+declare var LOGIN_URL: string;
 
 const Login = (): JSX.Element => {
     const { t } = useTranslation();
+
+    Auth.importToken();
+
+    if (Auth.isAuthenticated()) {
+        return <Redirect to="/" />;
+    }
 
     return (
         <div className="login-page site-content__centered">
@@ -28,7 +38,7 @@ const Login = (): JSX.Element => {
                     </div>
 
                     <div className="login-page__buttons">
-                        <a className="login-page__buttons--orcid" href={'/'}>
+                        <a className="login-page__buttons--orcid" href={LOGIN_URL}>
                             <Button type="orcid">{t('login:login-orcid')}</Button>
                         </a>
                         <Paragraph type="writing">

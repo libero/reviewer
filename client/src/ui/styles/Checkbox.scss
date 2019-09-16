@@ -34,6 +34,7 @@
   line-height: 1.8rem;
   &:before {
     position: absolute;
+    box-sizing: border-box;
     top: 0;
     left: 0;
     width: 1.8rem;
@@ -49,6 +50,9 @@
   &:before {
     background-color: $colourPrimary;
     border-color: $colourPrimary;
+  }
+  .MuiSvgIcon-root {
+    font-size: 1.4rem;
   }
 }
 

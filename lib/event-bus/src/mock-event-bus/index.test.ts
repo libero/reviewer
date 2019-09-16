@@ -1,4 +1,4 @@
-import { MockMessageQueue } from '.';
+import { MockEventBus } from '.';
 import { EventIdentifier, Event } from '../event-bus';
 
 interface TestEventPayload {
@@ -17,7 +17,7 @@ describe('mock message queue', () => {
       const handlerMock = jest.fn(async () => true);
 
       // Mock bus
-      const mockMq = await (new MockMessageQueue()).init([testEventDef, testEventDef], 'message-bus-test');
+      const mockMq = await (new MockEventBus()).init([testEventDef, testEventDef], 'message-bus-test');
 
       mockMq.subscribe<TestEventPayload>(testEventDef, handlerMock);
 

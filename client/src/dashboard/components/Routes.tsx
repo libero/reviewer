@@ -1,10 +1,11 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import Dashboard from './Dashboard';
+import AuthRoute from '../../core/components/AuthRoute';
 
 const Routes: React.FC = (): JSX.Element => (
     <Switch>
-        <Route exact path="/" component={Dashboard} />
+        <AuthRoute exact path="/" component={Dashboard} />
     </Switch>
 );
 

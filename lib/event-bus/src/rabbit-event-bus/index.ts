@@ -13,7 +13,7 @@ interface MessageWrapper<T> {
   };
 }
 
-export class RabbitMessageQueue implements EventSubscriber, EventPublisher {
+export class RabbitEventBus implements EventSubscriber, EventPublisher {
   connection: Option<Connection>;
   serviceName: string = 'unknown_service';
 
@@ -22,7 +22,7 @@ export class RabbitMessageQueue implements EventSubscriber, EventPublisher {
   }
 
   private defToQueue(def: EventIdentifier) {
-    return `consumer-${def.kind}-${def.namespace}__${this.serviceName}`;
+    return `consumer__${def.kind}-${def.namespace}__${this.serviceName}`;
   }
 
   private eventToMessage<T extends object>(event: Event<T>): MessageWrapper<Event<T>> {
@@ -43,6 +43,9 @@ export class RabbitMessageQueue implements EventSubscriber, EventPublisher {
   }
 
   public async init(eventDefs: EventIdentifier[], serviceName: string): Promise<this> {
+    // The eventDefs are the names of events that this service will emit
+    // It's probably good practice to always declare the events that the service emits
+
     this.serviceName = serviceName;
     // First things first
     this.connection = Option.of(
