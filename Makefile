@@ -31,16 +31,16 @@ ifeq "${TRAVIS_PULL_REQUEST}" "false"
 ORIGIN_BRANCH = master
 COMPARE_REF = ${TRAVIS_BRANCH}
 else
-ORIGIN_BRANCH = master^
+ORIGIN_BRANCH = master
 COMPARE_REF = HEAD
 endif
 
 # TODO: Make this generic somehow
 define CONDITIONAL_BUILD =
-ifneq "$(strip $(filter lib/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${TRAVIS_BRANCH})))" ""
+ifneq "$(strip $(filter lib/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${COMPARE_REF})))" ""
 lib_if_needed:
 	make lib_ci
-else ifeq ("${TRAVIS_BRANCH}", "master")
+else ifeq ("${COMPARE_REF}", "master")
 lib_if_needed:
 	ifeq ("${TRAVIS_PULL_REQUEST}", "false")
 	@echo "working on master building everything"
@@ -79,9 +79,9 @@ lib_ci: start_network
 	make build_auth-utils build_event-bus
 
 lib_if_needed:
-ifneq "$(strip $(filter lib/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${TRAVIS_BRANCH})))" ""
+ifneq "$(strip $(filter lib/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${COMPARE_REF})))" ""
 	make lib_ci
-else ifeq ("${TRAVIS_BRANCH}", "master")
+else ifeq ("${COMPARE_REF}", "master")
 ifeq ("${TRAVIS_PULL_REQUEST}", "false")
 	@echo "working on master building everything"
 	make lib_ci
@@ -108,9 +108,9 @@ server_ci: start_network
 	make lint_server test_server push_server_container
 
 server_if_needed:
-ifneq "$(strip $(filter server/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${TRAVIS_BRANCH})))" ""
+ifneq "$(strip $(filter server/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${COMPARE_REF})))" ""
 	make server_ci
-else ifeq ("${TRAVIS_BRANCH}", "master")
+else ifeq ("${COMPARE_REF}", "master")
 ifeq ("${TRAVIS_PULL_REQUEST}", "false")
 	@echo "working on master building everything"
 	make server_ci
@@ -141,10 +141,10 @@ client_ci: start_network
 	make build_client_container
 
 client_if_needed:
-ifneq "$(strip $(filter client/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${TRAVIS_BRANCH})))" ""
+ifneq "$(strip $(filter client/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${COMPARE_REF})))" ""
 	@echo "found a change, building this"
 	make client_ci
-else ifeq ("${TRAVIS_BRANCH}", "master")
+else ifeq ("${COMPARE_REF}", "master")
 ifeq ("${TRAVIS_PULL_REQUEST}", "false")
 	@echo "working on master building everything"
 	make client_ci
@@ -173,9 +173,9 @@ continuum-auth_ci: start_network
 	make lint_continuum-auth test_continuum-auth push_continuum-auth_container
 
 continuum-auth_if_needed:
-ifneq "$(strip $(filter continuum-auth/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${TRAVIS_BRANCH})))" ""
+ifneq "$(strip $(filter continuum-auth/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${COMPARE_REF})))" ""
 	make continuum-auth_ci
-else ifeq ("${TRAVIS_BRANCH}", "master")
+else ifeq ("${COMPARE_REF}", "master")
 ifeq ("${TRAVIS_PULL_REQUEST}", "false")
 	@echo "working on master building everything"
 	make continuum-auth_ci
