@@ -1,7 +1,3 @@
-export const exchangeToken = (token: string): void => {
-    //Server token exchange
-};
-
 export const getToken = (): string => {
     return window.localStorage.getItem('token');
 };
