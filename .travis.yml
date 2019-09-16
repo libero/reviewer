@@ -6,7 +6,6 @@ env:
     - TEST_SUITE=server_if_needed
     - TEST_SUITE=client_if_needed
     - TEST_SUITE=continuum-auth_if_needed
-    - TEST_SUITE=local_ci
 
 services:
   - docker
