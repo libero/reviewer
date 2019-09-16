@@ -1,5 +1,5 @@
 {
-  "name": "@libero-reviewer/clients",
+  "name": "@libero-reviewer/client",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",

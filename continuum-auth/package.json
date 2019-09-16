@@ -1,5 +1,5 @@
 {
-  "name": "@libero/continuum-auth",
+  "name": "continuum-auth",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
