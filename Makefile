@@ -26,9 +26,16 @@ DC_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 TRAVIS_BRANCH ?= `git rev-parse --abbrev-ref HEAD -- | head -n 1`
 TRAVIS_PULL_REQUEST ?= false
 
+# Control where we build from
+ifeq "${TRAVIS_PULL_REQUEST}" "false"
+ORIGIN_BRANCH = master
+else
+ORIGIN_BRANCH = master^
+endif
+
 # TODO: Make this generic somehow
 define CONDITIONAL_BUILD =
-ifneq "$(strip $(filter lib/%, $(shell git diff --name-only master...${TRAVIS_BRANCH})))" ""
+ifneq "$(strip $(filter lib/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${TRAVIS_BRANCH})))" ""
 lib_if_needed:
 	make lib_ci
 else ifeq ("${TRAVIS_BRANCH}", "master")
@@ -70,7 +77,7 @@ lib_ci: start_network
 	make build_auth-utils build_event-bus
 
 lib_if_needed:
-ifneq "$(strip $(filter lib/%, $(shell git diff --name-only master...${TRAVIS_BRANCH})))" ""
+ifneq "$(strip $(filter lib/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${TRAVIS_BRANCH})))" ""
 	make lib_ci
 else ifeq ("${TRAVIS_BRANCH}", "master")
 ifeq ("${TRAVIS_PULL_REQUEST}", "false")
@@ -99,7 +106,7 @@ server_ci: start_network
 	make lint_server test_server push_server_container
 
 server_if_needed:
-ifneq "$(strip $(filter server/%, $(shell git diff --name-only master...${TRAVIS_BRANCH})))" ""
+ifneq "$(strip $(filter server/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${TRAVIS_BRANCH})))" ""
 	make server_ci
 else ifeq ("${TRAVIS_BRANCH}", "master")
 ifeq ("${TRAVIS_PULL_REQUEST}", "false")
@@ -132,7 +139,8 @@ client_ci: start_network
 	make build_client_container
 
 client_if_needed:
-ifneq "$(strip $(filter client/%, $(shell git diff --name-only master...${TRAVIS_BRANCH})))" ""
+ifneq "$(strip $(filter client/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${TRAVIS_BRANCH})))" ""
+	@echo "found a change, building this"
 	make client_ci
 else ifeq ("${TRAVIS_BRANCH}", "master")
 ifeq ("${TRAVIS_PULL_REQUEST}", "false")
@@ -163,7 +171,7 @@ continuum-auth_ci: start_network
 	make lint_continuum-auth test_continuum-auth push_continuum-auth_container
 
 continuum-auth_if_needed:
-ifneq "$(strip $(filter continuum-auth/%, $(shell git diff --name-only master...${TRAVIS_BRANCH})))" ""
+ifneq "$(strip $(filter continuum-auth/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${TRAVIS_BRANCH})))" ""
 	make continuum-auth_ci
 else ifeq ("${TRAVIS_BRANCH}", "master")
 ifeq ("${TRAVIS_PULL_REQUEST}", "false")
