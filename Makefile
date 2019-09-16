@@ -23,6 +23,28 @@ PUSH_COMMAND = IMAGE_TAG=${IMAGE_TAG} .scripts/travis/push-image.sh
 
 DC_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
+TRAVIS_BRANCH ?= `git rev-parse --abbrev-ref HEAD -- | head -n 1`
+TRAVIS_PULL_REQUEST ?= false
+
+# TODO: Make this generic somehow
+define CONDITIONAL_BUILD =
+ifneq "$(strip $(filter lib/%, $(shell git diff --name-only master...${TRAVIS_BRANCH})))" ""
+lib_if_needed:
+	make lib_ci
+else ifeq ("${TRAVIS_BRANCH}", "master")
+lib_if_needed:
+  ifeq ("${TRAVIS_PULL_REQUEST}", "false")
+	@echo "working on master building everything"
+	make lib_ci
+  else
+	@echo "this is a pr, no action necessary"
+  endif
+else
+lib_if_needed:
+	@echo "no need to build lib"
+endif
+endef
+
 ###########################
 #
 # Docker Setup
@@ -47,6 +69,18 @@ build_shared_package_container:
 lib_ci: start_network
 	make build_auth-utils build_event-bus
 
+lib_if_needed:
+ifneq "$(strip $(filter lib/%, $(shell git diff --name-only master...${TRAVIS_BRANCH})))" ""
+  make lib_ci
+else ifeq ("${TRAVIS_BRANCH}", "master")
+  ifeq ("${TRAVIS_PULL_REQUEST}", "false")
+  @echo "working on master building everything"
+  make lib_ci
+  else
+  @echo "this is a pr, no action necessary"
+  endif
+endif
+
 build_auth-utils: build_shared_package_container
 	${DC_BUILD} run shared_packages sh -c "cd /lib/auth-utils && yarn lint"
 	${DC_BUILD} run shared_packages sh -c "cd /lib/auth-utils && yarn test"
@@ -63,6 +97,22 @@ build_event-bus: build_shared_package_container
 
 server_ci: start_network
 	make lint_server test_server push_server_container
+
+ifneq "$(strip $(filter server/%, $(shell git diff --name-only master...${TRAVIS_BRANCH})))" ""
+server_if_needed:
+	make server_ci
+else ifeq ("${TRAVIS_BRANCH}", "master")
+server_if_needed:
+  ifeq ("${TRAVIS_PULL_REQUEST}", "false")
+	@echo "working on master building everything"
+	make server_ci
+  else
+	@echo "this is a pr, no action necessary"
+  endif
+else
+server_if_needed:
+	@echo "no need to build server"
+endif
 
 install_server_packages: prepare_shared_container
 	${DC_BUILD} build server_npm
@@ -85,6 +135,22 @@ push_server_container: build_application_server_container
 client_ci: start_network
 	make build_client_container
 
+ifneq "$(strip $(filter client/%, $(shell git diff --name-only master...${TRAVIS_BRANCH})))" ""
+client_if_needed:
+	make client_ci
+else ifeq ("${TRAVIS_BRANCH}", "master")
+client_if_needed:
+  ifeq ("${TRAVIS_PULL_REQUEST}", "false")
+	@echo "working on master building everything"
+	make client_ci 
+  else
+	@echo "this is a pr, no action necessary"
+  endif
+else
+client_if_needed:
+	@echo "no need to build client"
+endif
+
 install_client_packages: prepare_shared_container
 	${DC_BUILD} build client_npm
 
@@ -103,6 +169,22 @@ build_client_container: test_client build_client_source
 # continuum-auth
 continuum-auth_ci: start_network
 	make lint_continuum-auth test_continuum-auth push_continuum-auth_container
+
+ifneq "$(strip $(filter continumum-auth/%, $(shell git diff --name-only master...${TRAVIS_BRANCH})))" ""
+continuum-auth_if_needed:
+	make continuum-auth_ci
+else ifeq ("${TRAVIS_BRANCH}", "master")
+continuum-auth_if_needed:
+  ifeq ("${TRAVIS_PULL_REQUEST}", "false")
+	@echo "working on master building everything"
+	make continuum-auth_ci
+  else
+	@echo "this is a pr, no action necessary"
+  endif
+else
+continuum-auth_if_needed:
+	@echo "no need to build continuum-auth"
+endif
 
 install_continuum-auth_packages: prepare_shared_container
 	${DC_BUILD} build continuum-auth_npm
@@ -124,7 +206,7 @@ push_continuum-auth_container: build_application_continuum-auth_container
 
 local_ci:
 	make -j 4 lib_ci
-	make -j 4 lint_server test_server continuum-auth_ci client_ci
+	make -j 4 server_ci continuum-auth_ci client_ci
 
 ###########################
 #

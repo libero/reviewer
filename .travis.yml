@@ -3,9 +3,10 @@ env:
   global:
     - IMAGE_TAG=$TRAVIS_COMMIT
   matrix:
-    - TEST_SUITE=server_ci
-    - TEST_SUITE=client_ci
-    - TEST_SUITE=continuum-auth_ci
+    - TEST_SUITE=server_if_needed
+    - TEST_SUITE=client_if_needed
+    - TEST_SUITE=continuum-auth_if_needed
+    - TEST_SUITE=local_ci
 
 services:
   - docker
@@ -20,11 +21,16 @@ stages:
   - name: Test
   - name: Integration Tests
 
+before_install:
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash -c "git remote set-branches --add origin master"; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash -c "git fetch origin"; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash -c "git branch master remotes/origin/master"; fi'
+
 jobs:
   include:
     - stage: Lib Tests
       name: "Library Tests"
-      script: make lib_ci
+      script: make lib_if_needed
     - stage: Integration Tests
       name: "API Tests"
       script: make run_api_tests
