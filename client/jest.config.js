@@ -11,5 +11,6 @@ module.exports = {
     },
     globals: {
         API_HOST: '',
+        LOGIN_URL: '',
     },
 };
