@@ -29,8 +29,10 @@ TRAVIS_PULL_REQUEST ?= false
 # Control where we build from
 ifeq "${TRAVIS_PULL_REQUEST}" "false"
 ORIGIN_BRANCH = master
+COMPARE_REF = ${TRAVIS_BRANCH}
 else
 ORIGIN_BRANCH = master^
+COMPARE_REF = HEAD
 endif
 
 # TODO: Make this generic somehow
