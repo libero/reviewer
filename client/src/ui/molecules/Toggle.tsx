@@ -5,16 +5,17 @@ interface Props {
   id: string;
   children?: ReactNode;
   toggleLabel: string;
+  open?: boolean;
 }
 
-const Toggle = ({ children, toggleLabel, id }: Props) => {
-  const [toggled, setToggled] = useState(true);
+const Toggle = ({ children, toggleLabel, id, open = false }: Props) => {
+  const [opened, setOpened] = useState(open);
 
   return (
     <Fragment>
-      <Checkbox id={`${id}.toggle`} invalid={false} labelText={toggleLabel} onChange={(event): void => setToggled(event.target.checked)} initialValue={toggled}/>
+      <Checkbox id={`${id}.toggle`} labelText={toggleLabel} onChange={(event): void => setOpened(event.target.checked)} initialValue={opened}/>
       {
-        toggled && <div className="toggle-field__panel">{children}</div>
+        opened && <div className="toggle-field__panel">{children}</div>
       }
     </Fragment>
   )

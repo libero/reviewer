@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 import Checkbox from './Checkbox';
 
-describe('TextField', (): void => {
+describe('Checkbox', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
@@ -50,7 +50,10 @@ describe('TextField', (): void => {
         expect(container.querySelector('.checkbox-field__label--checked')).toBeNull();
         await fireEvent.click(container.querySelector('input'));
         expect(container.querySelector('input').checked).toBe(true);
-        expect(container.querySelector('.checkbox-field__label--checked')).toBeInTheDocument()
+        expect(container.querySelector('.checkbox-field__label--checked')).toBeInTheDocument();
+        await fireEvent.click(container.querySelector('input'));
+        expect(container.querySelector('input').checked).toBe(false);
+        expect(container.querySelector('.checkbox-field__label--checked')).toBeNull();
     })
 
     it('should trigger onchange when callback is passed in', async (): Promise<void> => {

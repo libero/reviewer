@@ -5,7 +5,7 @@ import Check from '@material-ui/icons/Check';
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
     helperText?: string;
     id: string;
-    invalid: boolean;
+    invalid?: boolean;
     initialValue?: boolean;
     labelText: string;
 }
