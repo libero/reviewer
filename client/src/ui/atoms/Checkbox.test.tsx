@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 import Checkbox from './Checkbox';
 
-describe('TextField', (): void => {
+describe('Checkbox', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
@@ -30,6 +30,31 @@ describe('TextField', (): void => {
         expect(getByText('helper text')).toHaveClass('typography__label--error');
         expect(getByText('some label')).toHaveClass('checkbox-field__label--invalid');
     });
+
+    it('should load with checked value if initialValue true', async (): Promise<void> => {
+        <Checkbox id="test" invalid={false} labelText="some label" />
+        const { container } = render(<Checkbox id="test" invalid={false} labelText="some label" initialValue={true}/>);
+        expect(container.querySelector('input').checked).toBe(true);
+    })
+
+    it('should load with unchecked value if initialValue false', async (): Promise<void> => {
+        <Checkbox id="test" invalid={false} labelText="some label" />
+        const { container } = render(<Checkbox id="test" invalid={false} labelText="some label" initialValue={false}/>);
+        expect(container.querySelector('input').checked).toBe(false);
+    })
+
+    it('should update checked value of label when clicked', async (): Promise<void> => {
+        <Checkbox id="test" invalid={false} labelText="some label" />
+        const { container } = render(<Checkbox id="test" invalid={false} labelText="some label" initialValue={false}/>);
+        expect(container.querySelector('input').checked).toBe(false);
+        expect(container.querySelector('.checkbox-field__label--checked')).toBeNull();
+        await fireEvent.click(container.querySelector('input'));
+        expect(container.querySelector('input').checked).toBe(true);
+        expect(container.querySelector('.checkbox-field__label--checked')).toBeInTheDocument();
+        await fireEvent.click(container.querySelector('input'));
+        expect(container.querySelector('input').checked).toBe(false);
+        expect(container.querySelector('.checkbox-field__label--checked')).toBeNull();
+    })
 
     it('should trigger onchange when callback is passed in', async (): Promise<void> => {
         const onChangeFn = jest.fn();
