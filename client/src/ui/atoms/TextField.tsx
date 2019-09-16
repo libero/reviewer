@@ -4,7 +4,7 @@ import Close from '@material-ui/icons/Close';
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
     helperText?: string;
     id: string;
-    invalid: boolean;
+    invalid?: boolean;
     labelText: string;
     placeholder?: string;
 }
