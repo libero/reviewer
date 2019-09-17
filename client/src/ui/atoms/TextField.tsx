@@ -25,7 +25,7 @@ const TextField = ({ id, labelText, placeholder, invalid, helperText, ...rest }:
                 invalid ? 'typography__label--error' : 'typography__label--secondary'
             }`}
         >
-            {invalid && <Close fontSize="default" />}
+            {invalid && <Close fontSize="small" />}
             {helperText}
         </span>
     </div>

@@ -41,6 +41,8 @@
     "@types/storybook__react": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
+    "@types/lodash": "^4.14.138",
+    "@types/react-select": "^3.0.4",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
@@ -76,7 +78,6 @@
     "@khanacademy/tota11y": "^0.2.0",
     "@material-ui/core": "^4.3.0",
     "@material-ui/icons": "^4.2.1",
-    "@types/lodash": "^4.14.138",
     "apollo-boost": "^0.4.4",
     "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.0.0",
@@ -90,6 +91,7 @@
     "react-dom": "^16.9.0",
     "react-i18next": "^10.12.2",
     "react-router-dom": "^5.0.1",
+    "react-select": "^3.0.4",
     "react-tabs": "^3.0.0"
   }
 }
