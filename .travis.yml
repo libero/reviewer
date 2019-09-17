@@ -6,6 +6,7 @@ env:
     - TEST_SUITE=server_ci
     - TEST_SUITE=client_ci
     - TEST_SUITE=continuum-auth_ci
+    - TEST_SUITE=audit_ci
 
 services:
   - docker
