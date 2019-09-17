@@ -16,18 +16,22 @@ storiesOf('ui | molecules/ExcludedToggle', module)
             const toggleActionText = text('Toggle action text', 'exclude a senior editor');
             const panelHeading = text('Panel heading', 'Excluded a senior editor');
             const toggleContent = boolean('Display inner content', false);
-            const containerWidth = number('Container width', 600)
+            const containerWidth = number('Container width', 600);
             return (
-                <div style={{width: `${containerWidth}px`}}>
-                  <ExcludedToggle togglePrefixText={togglePrefixText} toggleActionText={toggleActionText} panelHeading={panelHeading}>
-                      {toggleContent && (
-                          <Fragment>
-                              <TextField id="someInput1" labelText="Some Lablel" />
-                              <TextField id="someInput2" labelText="Some Lablel" />
-                              <TextField id="someInput3" labelText="Some Lablel" />
-                          </Fragment>
-                      )}
-                  </ExcludedToggle>
+                <div style={{ width: `${containerWidth}px` }}>
+                    <ExcludedToggle
+                        togglePrefixText={togglePrefixText}
+                        toggleActionText={toggleActionText}
+                        panelHeading={panelHeading}
+                    >
+                        {toggleContent && (
+                            <Fragment>
+                                <TextField id="someInput1" labelText="Some Lablel" />
+                                <TextField id="someInput2" labelText="Some Lablel" />
+                                <TextField id="someInput3" labelText="Some Lablel" />
+                            </Fragment>
+                        )}
+                    </ExcludedToggle>
                 </div>
             );
         },
