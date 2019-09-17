@@ -1,25 +1,29 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean, text, withKnobs } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import { boolean, text, number, withKnobs } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered/react';
-import { Checkbox } from '../../atoms';
+import { MultilineTextField } from '../../atoms';
 import '../../../core/styles/index.scss';
 
-storiesOf('ui | atoms/Checkbox', module)
+storiesOf('ui | atoms/MultilineTextField', module)
     .addDecorator(withKnobs)
     .addDecorator(centered)
     .add(
-        'Checkbox',
+        'MultilineTextField',
         (): JSX.Element => {
-            const label = text('Label', 'Check me?');
+            const placeholder = text('Placeholder', 'e.g. John Smith');
+            const label = text('Label', 'What is your name?');
             const inValid = boolean('Invalid', false);
             const helperText = text('Helper Text', '');
+            const rows = number('Rows', 3);
+            const cols = number('Columns', 50);
             return (
-                <Checkbox
+                <MultilineTextField
                     id="someid"
-                    onChange={(event: React.FormEvent<HTMLInputElement>): void => action('checked')(event)}
+                    placeholder={placeholder}
                     invalid={inValid}
+                    rows={rows}
+                    cols={cols}
                     labelText={label}
                     helperText={helperText}
                 />

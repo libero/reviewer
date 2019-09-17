@@ -5,5 +5,6 @@ export { default as TextField } from './TextField';
 export { default as Checkbox } from './Checkbox';
 export { default as ImageWithAttribution } from './ImageWithAttribution';
 export { default as Modal } from './Modal';
+export { default as MultilineTextField } from './MultilineTextField';
 export { default as Paragraph } from './Paragraph';
 export { default as TwoColumnLayout } from './TwoColumnLayout';
