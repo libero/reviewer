@@ -10,24 +10,37 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     labelText: string;
 }
 
-const Checkbox = ({ id, labelText, invalid, helperText, initialValue, onChange = (): void => {}, ...rest }: Props): JSX.Element => {
+const Checkbox = ({
+    id,
+    labelText,
+    invalid,
+    helperText,
+    initialValue,
+    onChange = (): void => {},
+    ...rest
+}: Props): JSX.Element => {
     const [checked, setChecked] = useState(initialValue);
     const onChangeCallback = (event: ChangeEvent<HTMLInputElement>): void => {
         setChecked(event.target.checked);
-        onChange(event); 
+        onChange(event);
     };
     return (
         <div className="checkbox-field">
-            <input id={id} className="checkbox-field__input" type="checkbox" onChange={onChangeCallback} defaultChecked={initialValue} {...rest} />
+            <input
+                id={id}
+                className="checkbox-field__input"
+                type="checkbox"
+                onChange={onChangeCallback}
+                defaultChecked={initialValue}
+                {...rest}
+            />
             <label
                 htmlFor={id}
                 className={`checkbox-field__label${checked ? ' checkbox-field__label--checked' : ''}${
                     invalid ? ' checkbox-field__label--invalid' : ''
                 } typography__label typography__label--primary`}
             >
-                {
-                    checked && <Check aria-hidden="true" className="checkbox-field__label-check"/>
-                }
+                {checked && <Check aria-hidden="true" className="checkbox-field__label-check" />}
                 {labelText}
             </label>
             <span
@@ -39,7 +52,7 @@ const Checkbox = ({ id, labelText, invalid, helperText, initialValue, onChange =
                 {helperText}
             </span>
         </div>
-    )
+    );
 };
 
 export default Checkbox;
