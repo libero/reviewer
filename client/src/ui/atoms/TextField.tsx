@@ -6,7 +6,6 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     id: string;
     invalid?: boolean;
     labelText: string;
-    placeholder?: string;
 }
 const TextField = ({ id, labelText, placeholder, invalid, helperText, ...rest }: Props): JSX.Element => (
     <div className="text-field">
@@ -18,7 +17,6 @@ const TextField = ({ id, labelText, placeholder, invalid, helperText, ...rest }:
             name={id}
             className={`text-field__input ${invalid ? 'text-field__input--invalid' : ''}`}
             type="text"
-            placeholder={placeholder}
             {...rest}
         />
         <span
