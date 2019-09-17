@@ -16,7 +16,7 @@ const ExcludedToggle = ({ open = false, togglePrefixText, toggleActionText, chil
                 <div className="excluded-toggle__panel">
                   <div className="excluded-toggle__panel-header">
                     <h3 className="excluded-toggle__panel-heading">{panelHeading}</h3>
-                    <button className="excluded-toggle__close-button" onClick={(): void => setOpened(!opened)}><Close /></button>
+                    <button className="excluded-toggle__close-button" onClick={(): void => setOpened(!opened)}><Close />close</button>
                   </div>
                   {children}
                 </div>

@@ -34,4 +34,7 @@
   border: none;
   padding: 0;
   cursor: pointer;
+  color: $colourTextSecondary;
+  //hide the inner text used for accessibility
+  font-size: 0;
 }
