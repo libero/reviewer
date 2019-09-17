@@ -92,19 +92,19 @@ services:
   audit_npm:
     build:
       context: 'audit/'
-      dockerfile: 'dockerfile.packages'
+      dockerfile: 'Dockerfile.packages'
       args:
-        image_tag: "${image_tag}"
-    image: libero/reviewer_audit_packages:${image_tag}
+        image_tag: "${IMAGE_TAG}"
+    image: libero/reviewer_audit_packages:${IMAGE_TAG}
     networks:
         - 'reviewer_build'
   audit_typescript:
     build:
       context: 'audit/'
-      dockerfile: "dockerfile.typescript"
+      dockerfile: "Dockerfile.typescript"
       args:
-        image_tag: ${image_tag}
-    image: libero/reviewer_audit_typescript:${image_tag}
+        image_tag: "${IMAGE_TAG}"
+    image: libero/reviewer_audit_typescript:${IMAGE_TAG}
     depends_on:
       - audit_npm
     networks:
@@ -112,10 +112,10 @@ services:
   reviewer_audit:
     build:
       context: 'audit/'
-      dockerfile: "dockerfile.application"
+      dockerfile: "Dockerfile.application"
       args:
-        image_tag: ${image_tag}
-    image: libero/reviewer_audit:${image_tag}
+        image_tag: "${IMAGE_TAG}"
+    image: libero/reviewer_audit:${IMAGE_TAG}
     depends_on:
       - audit_npm
       - audit_typescript
@@ -126,19 +126,19 @@ services:
   continuum-auth_npm:
     build:
       context: 'continuum-auth/'
-      dockerfile: 'dockerfile.packages'
+      dockerfile: 'Dockerfile.packages'
       args:
-        image_tag: "${image_tag}"
-    image: libero/reviewer_continuum-auth_packages:${image_tag}
+        image_tag: "${IMAGE_TAG}"
+    image: libero/reviewer_continuum-auth_packages:${IMAGE_TAG}
     networks:
         - 'reviewer_build'
   continuum-auth_typescript:
     build:
       context: 'continuum-auth/'
-      dockerfile: "dockerfile.typescript"
+      dockerfile: "Dockerfile.typescript"
       args:
-        image_tag: ${image_tag}
-    image: libero/reviewer_continuum-auth_typescript:${image_tag}
+        image_tag: "${IMAGE_TAG}"
+    image: libero/reviewer_continuum-auth_typescript:${IMAGE_TAG}
     depends_on:
       - continuum-auth_npm
     networks:
@@ -146,10 +146,10 @@ services:
   reviewer_continuum-auth:
     build:
       context: 'continuum-auth/'
-      dockerfile: "dockerfile.application"
+      dockerfile: "Dockerfile.application"
       args:
-        image_tag: ${image_tag}
-    image: libero/reviewer_continuum-auth:${image_tag}
+        image_tag: "${IMAGE_TAG}"
+    image: libero/reviewer_continuum-auth:${IMAGE_TAG}
     depends_on:
       - continuum-auth_npm
       - continuum-auth_typescript
