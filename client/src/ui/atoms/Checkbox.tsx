@@ -28,6 +28,7 @@ const Checkbox = ({
         <div className="checkbox-field">
             <input
                 id={id}
+                name={id}
                 className="checkbox-field__input"
                 type="checkbox"
                 onChange={onChangeCallback}

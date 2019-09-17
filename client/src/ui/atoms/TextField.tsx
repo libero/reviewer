@@ -15,6 +15,7 @@ const TextField = ({ id, labelText, placeholder, invalid, helperText, ...rest }:
         </label>
         <input
             id={id}
+            name={id}
             className={`text-field__input ${invalid ? 'text-field__input--invalid' : ''}`}
             type="text"
             placeholder={placeholder}
