@@ -35,25 +35,6 @@ ORIGIN_BRANCH = master
 COMPARE_REF = HEAD
 endif
 
-# TODO: Make this generic somehow
-define CONDITIONAL_BUILD =
-ifneq "$(strip $(filter lib/%, $(shell git diff --name-only ${ORIGIN_BRANCH}...${COMPARE_REF})))" ""
-lib_if_needed:
-	make lib_ci
-else ifeq ("${COMPARE_REF}", "master")
-lib_if_needed:
-	ifeq ("${TRAVIS_PULL_REQUEST}", "false")
-	@echo "working on master building everything"
-	make lib_ci
-	else
-	@echo "this is a pr, no action necessary"
-	endif
-else
-lib_if_needed:
-	@echo "no need to build lib"
-endif
-endef
-
 ###########################
 #
 # Docker Setup
