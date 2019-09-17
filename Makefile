@@ -141,7 +141,7 @@ test_audit: build_audit_source
 build_application_audit_container: test_audit lint_audit
 	${DC_BUILD} build reviewer_audit
 
-push_continuum-auth_container: build_application_continuum-auth_container
+push_audit_container: build_application_continuum-auth_container
 	@echo "Push the container to a docker registry"
 
 local_ci:
