@@ -7,7 +7,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     invalid?: boolean;
     labelText: string;
 }
-const TextField = ({ id, labelText, placeholder, invalid, helperText, ...rest }: Props): JSX.Element => (
+const TextField = ({ id, labelText, invalid, helperText, ...rest }: Props): JSX.Element => (
     <div className="text-field">
         <label htmlFor={id} className="typography__label typography__label--primary">
             {labelText}
