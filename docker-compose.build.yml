@@ -88,23 +88,57 @@ services:
     networks:
         - 'reviewer_build'
 
+  # audit
+  audit_npm:
+    build:
+      context: 'audit/'
+      dockerfile: 'dockerfile.packages'
+      args:
+        image_tag: "${image_tag}"
+    image: libero/reviewer_audit_packages:${image_tag}
+    networks:
+        - 'reviewer_build'
+  audit_typescript:
+    build:
+      context: 'audit/'
+      dockerfile: "dockerfile.typescript"
+      args:
+        image_tag: ${image_tag}
+    image: libero/reviewer_audit_typescript:${image_tag}
+    depends_on:
+      - audit_npm
+    networks:
+        - 'reviewer_build'
+  reviewer_audit:
+    build:
+      context: 'audit/'
+      dockerfile: "dockerfile.application"
+      args:
+        image_tag: ${image_tag}
+    image: libero/reviewer_audit:${image_tag}
+    depends_on:
+      - audit_npm
+      - audit_typescript
+    networks:
+        - 'reviewer_build'
+
   # continuum-auth
   continuum-auth_npm:
     build:
       context: 'continuum-auth/'
-      dockerfile: 'Dockerfile.packages'
+      dockerfile: 'dockerfile.packages'
       args:
-        image_tag: "${IMAGE_TAG}"
-    image: libero/reviewer_continuum-auth_packages:${IMAGE_TAG}
+        image_tag: "${image_tag}"
+    image: libero/reviewer_continuum-auth_packages:${image_tag}
     networks:
         - 'reviewer_build'
   continuum-auth_typescript:
     build:
       context: 'continuum-auth/'
-      dockerfile: "Dockerfile.typescript"
+      dockerfile: "dockerfile.typescript"
       args:
-        image_tag: ${IMAGE_TAG}
-    image: libero/reviewer_continuum-auth_typescript:${IMAGE_TAG}
+        image_tag: ${image_tag}
+    image: libero/reviewer_continuum-auth_typescript:${image_tag}
     depends_on:
       - continuum-auth_npm
     networks:
@@ -112,10 +146,10 @@ services:
   reviewer_continuum-auth:
     build:
       context: 'continuum-auth/'
-      dockerfile: "Dockerfile.application"
+      dockerfile: "dockerfile.application"
       args:
-        image_tag: ${IMAGE_TAG}
-    image: libero/reviewer_continuum-auth:${IMAGE_TAG}
+        image_tag: ${image_tag}
+    image: libero/reviewer_continuum-auth:${image_tag}
     depends_on:
       - continuum-auth_npm
       - continuum-auth_typescript
