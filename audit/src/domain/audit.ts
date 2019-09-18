@@ -1,11 +1,15 @@
-// Define the interface for the audit repo
+import { AuditRepository, AuditLogItem } from './types';
 
-export interface AuditLogItem {
-  subject: string;
-  verb: string;
-  entity: string;
+export class AuditController {
+  public constructor(private readonly auditRepo: AuditRepository) {}
+
+  public async recordAudit(item: AuditLogItem): Promise<boolean> {
+    return this.auditRepo.putLog(item);
+  }
 }
 
-export interface AuditRepository {
-  putLog(item: AuditLogItem): Promise<boolean>;
-}
+/**
+* Thoughts:
+* - How to do the thing?
+* - How to do the other thing? :thinking-face:
+*/
