@@ -1,8 +1,14 @@
-import { EventIdentifier, EventSubscriber, EventPublisher, Event } from '../event-bus';
+import {
+  EventIdentifier,
+  EventSubscriber,
+  EventPublisher,
+  Event,
+} from '../event-bus';
 import * as amqplib from 'amqplib';
 import { Connection, Message } from 'amqplib';
-import { Option, Some } from 'funfix';
+import { Option, Some, None } from 'funfix';
 import { InfraLogger as logger } from '../logger';
+import { debounce } from 'lodash';
 
 interface MessageWrapper<T> {
   event: T;
@@ -14,8 +20,37 @@ interface MessageWrapper<T> {
 }
 
 export class RabbitEventBus implements EventSubscriber, EventPublisher {
-  connection: Option<Connection>;
+  private connection: Option<Connection> = None;
   serviceName: string = 'unknown_service';
+  private connectionString: string = 'amqp://rabbitmq';
+  private _amqplib: any;
+
+  public constructor(amqpUrl: string, _amqplib = amqplib) {
+    this.connectionString = amqpUrl;
+    this._amqplib = _amqplib;
+  }
+
+  private async connect() {
+    // This function does two things:
+    // - It creates a connection to the RabbitMQ server
+    // - It starts heartbeat and reconnect logic;
+
+    const connectionfn = debounce(
+      async () => {
+        this.connection = Option.of(
+          await this._amqplib.connect(this.connectionString),
+        );
+      },
+      100,
+      {
+        leading: true,
+      },
+    );
+
+    // Do the heartbeat here - if we can't connect, then debounce the reconnects!
+
+    await connectionfn();
+  }
 
   private defToExchange(def: EventIdentifier) {
     return `event__${def.kind}-${def.namespace}`;
@@ -25,7 +60,9 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
     return `consumer__${def.kind}-${def.namespace}__${this.serviceName}`;
   }
 
-  private eventToMessage<T extends object>(event: Event<T>): MessageWrapper<Event<T>> {
+  private eventToMessage<T extends object>(
+    event: Event<T>,
+  ): MessageWrapper<Event<T>> {
     // Wrap the event in some internal transport layer format, in effect transforming the
     // event into a message
     return {
@@ -38,21 +75,22 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
     };
   }
 
-  private messageToEvent<T extends object>(message: MessageWrapper<Event<T>>): Option<Event<T>> {
+  private messageToEvent<T extends object>(
+    message: MessageWrapper<Event<T>>,
+  ): Option<Event<T>> {
     return Option.of(message.event);
   }
 
-  public async init(eventDefs: EventIdentifier[], serviceName: string): Promise<this> {
+  public async init(
+    eventDefs: EventIdentifier[],
+    serviceName: string,
+  ): Promise<this> {
     // The eventDefs are the names of events that this service will emit
     // It's probably good practice to always declare the events that the service emits
 
     this.serviceName = serviceName;
     // First things first
-    this.connection = Option.of(
-      // TODO: put this in configuration
-      await amqplib.connect('amqp://rabbitmq').catch(() => undefined),
-    );
-    // This is where we setup the queue structure in RabbitMQ
+    await this.connect();
 
     const channel = await this.connection.get().createChannel();
     await Promise.all(
@@ -65,7 +103,7 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
   }
 
   public async publish<T extends object>(event: Event<T>): Promise<boolean> {
-    // Publishes an event to it's queue
+    // Publishes an event to it's queue -- Do we want local queueing, in case of a connection drop?
     const whereTo = this.defToExchange(event);
     return this.connection
       .map(async connection => {
@@ -86,16 +124,16 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
   public async subscribe<P extends object>(
     eventIdentifier: EventIdentifier,
     handler: (ev: Event<P>) => Promise<boolean>,
-  ) {
+  ): Promise<void> {
     // For the event identifier:
     //  - Declare a subscriber queue
     //  - bind that queue to event exchange
     // Runs the handler function on any event that matches that type
-    this.connection
+    return this.connection
       .map(async (conn: Connection) => {
         const channel = await conn.createChannel();
 
-        await channel
+        return await channel
           .assertQueue(this.defToQueue(eventIdentifier))
           .then(async () => {
             await channel.bindQueue(
@@ -103,12 +141,15 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
               this.defToExchange(eventIdentifier),
               '',
             );
+            console.log("subscribe")
 
             await channel.consume(
               this.defToQueue(eventIdentifier),
               async (msg: Message) => {
                 try {
-                  const message: MessageWrapper<Event<P>> = JSON.parse(msg.content.toString());
+                  const message: MessageWrapper<Event<P>> = JSON.parse(
+                    msg.content.toString(),
+                  );
                   logger.info('eventRecv', { message });
 
                   handler(this.messageToEvent(message).get()).then(isOk => {
@@ -133,8 +174,9 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
           });
       })
       .getOrElseL(() => {
-        logger.fatal('Can\'t subscribe');
-        process.exit(-1);
+        // Do we want to handle reconnects &/or retries here?
+        setTimeout(() => this.subscribe(eventIdentifier, handler), 1000);
+        logger.warn("No connection, can't subscribe, trying again soon!")
       });
   }
 }
