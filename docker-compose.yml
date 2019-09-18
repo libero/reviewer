@@ -85,6 +85,7 @@ services:
     networks:
       - infra_api
       - infra_rabbit
+      - infra_postgres
     depends_on:
       - rabbitmq
 
