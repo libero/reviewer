@@ -100,6 +100,9 @@ test_client: build_client_source
 build_client_container: test_client build_client_source
 	${DC_BUILD} build reviewer_client
 
+push_client_container: build_client_container
+	${PUSH_COMMAND} reviewer_client
+
 # continuum-auth
 continuum-auth_ci: start_network
 	make lint_continuum-auth test_continuum-auth push_continuum-auth_container
