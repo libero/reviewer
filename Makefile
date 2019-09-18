@@ -44,6 +44,11 @@ start_services: start_infra
 	docker-compose -f docker-compose.yml up -d
 	docker-compose -f docker-compose.yml logs -f
 
+stop_services:
+	docker-compose -f docker-compose.yml down
+	docker-compose -f docker-compose.infra.yml down
+	docker network prune
+
 ###########################
 #
 # Docker Setup
