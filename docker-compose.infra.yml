@@ -1,0 +1,57 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:11
+    ports:
+      - "5432:${DB_PORT}"
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    networks:
+      - infra_postgres
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - infra_rabbit
+
+  etcd1:
+    image: gcr.io/etcd-development/etcd:v3.3
+    restart: unless-stopped
+    healthcheck:
+      test: "etcdctl endpoint health"
+      interval: 1m
+      timeout: 10s
+      retries: 3
+    command: /usr/local/bin/etcd --data-dir=/etcd-data
+    environment:
+      ETCDCTL_API: 3
+      ETCD_DEBUG: 1
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://127.0.0.1:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_ADVERTISE_CLIENT_URLS: http://127.0.0.1:2379
+      ETCD_INITIAL_CLUSTER: default=http://127.0.0.1:2380
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    volumes:
+      - ./data:/etcd-data
+networks:
+  infra_postgres:
+    external:
+      name: "infra_postgres"
+  infra_api:
+    external:
+      name: "infra_api"
+  infra_rabbit:
+    external:
+      name: "infra_rabbit"
+volumes:
+  pg-data:

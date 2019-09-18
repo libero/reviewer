@@ -25,12 +25,34 @@ DC_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
 ###########################
 #
+# Local Dev Environment
+#
+###########################
+
+start_networks:
+	-docker network create infra_postgres
+	-docker network create infra_api
+	-docker network create infra_rabbit
+
+start_infra: start_networks
+	# don't forget this just starts the containers, it doesn't assert that a particular
+	# thing is running
+	docker-compose -f docker-compose.infra.yml up -d
+	sleep 10
+
+start_services: start_infra
+	docker-compose -f docker-compose.yml up -d
+	docker-compose -f docker-compose.yml logs -f
+
+###########################
+#
 # Docker Setup
 #
 ###########################
 
 start_network:
 	-docker network create ${DOCKER_NETWORK_NAME}
+
 
 ###########################
 #
