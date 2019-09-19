@@ -24,7 +24,7 @@ const TextField = ({ id, labelText, invalid, helperText, ...rest }: Props): JSX.
                 invalid ? 'typography__label--error' : 'typography__label--secondary'
             }`}
         >
-            {invalid && <Close fontSize="default" />}
+            {invalid && <Close fontSize="small" />}
             {helperText}
         </span>
     </div>
