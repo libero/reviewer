@@ -6,6 +6,7 @@ env:
     - TEST_SUITE=server_ci
     - TEST_SUITE=client_ci
     - TEST_SUITE=continuum-auth_ci
+    - TEST_SUITE=audit_ci
 
 services:
   - docker
@@ -31,3 +32,8 @@ jobs:
     - stage: Integration Tests
       name: "Browser Tests"
       script: make run_browser_tests
+
+if: |
+    branch = master OR \
+    tag IS present OR \
+    type = pull_request

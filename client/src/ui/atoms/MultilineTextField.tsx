@@ -1,22 +1,22 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { TextareaHTMLAttributes } from 'react';
 import Close from '@material-ui/icons/Close';
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     helperText?: string;
     id: string;
     invalid?: boolean;
     labelText: string;
 }
-const TextField = ({ id, labelText, invalid, helperText, ...rest }: Props): JSX.Element => (
-    <div className="text-field">
+
+const MultilineTextField = ({ id, labelText, helperText, invalid, ...rest }: Props): JSX.Element => (
+    <div className="multiline-text-field">
         <label htmlFor={id} className="typography__label typography__label--primary">
             {labelText}
         </label>
-        <input
+        <textarea
             id={id}
             name={id}
-            className={`text-field__input ${invalid ? 'text-field__input--invalid' : ''}`}
-            type="text"
+            className={`multiline-text-field__input ${invalid ? 'multiline-text-field__input--invalid' : ''}`}
             {...rest}
         />
         <span
@@ -24,10 +24,10 @@ const TextField = ({ id, labelText, invalid, helperText, ...rest }: Props): JSX.
                 invalid ? 'typography__label--error' : 'typography__label--secondary'
             }`}
         >
-            {invalid && <Close fontSize="small" />}
+            {invalid && <Close fontSize="default" />}
             {helperText}
         </span>
     </div>
 );
 
-export default TextField;
+export default MultilineTextField;

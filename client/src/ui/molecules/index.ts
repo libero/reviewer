@@ -1,4 +1,5 @@
 export { default as BurgerMenu } from './BurgerMenu';
+export { default as ExcludedToggle } from './ExcludedToggle';
 export { default as ManuscriptUpload } from './ManuscriptUpload';
 export { default as Menu } from './Menu';
 export { default as OrcidDetails, AuthorDetails } from './OrcidDetails';

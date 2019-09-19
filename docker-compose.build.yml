@@ -75,7 +75,7 @@ services:
     image: libero/reviewer_client:${IMAGE_TAG}
     command: >
       /bin/sh -c
-      "envsubt '
+      "envsubst '
       $${CLIENT_PORT}
       $${SERVER_PORT}
       $${CLIENT_API_PROXY_URL}
@@ -85,6 +85,40 @@ services:
     depends_on:
       - client_npm
       - client_webpack
+    networks:
+        - 'reviewer_build'
+
+  # audit
+  audit_npm:
+    build:
+      context: 'audit/'
+      dockerfile: 'Dockerfile.packages'
+      args:
+        image_tag: "${IMAGE_TAG}"
+    image: libero/reviewer_audit_packages:${IMAGE_TAG}
+    networks:
+        - 'reviewer_build'
+  audit_typescript:
+    build:
+      context: 'audit/'
+      dockerfile: "Dockerfile.typescript"
+      args:
+        image_tag: "${IMAGE_TAG}"
+    image: libero/reviewer_audit_typescript:${IMAGE_TAG}
+    depends_on:
+      - audit_npm
+    networks:
+        - 'reviewer_build'
+  reviewer_audit:
+    build:
+      context: 'audit/'
+      dockerfile: "Dockerfile.application"
+      args:
+        image_tag: "${IMAGE_TAG}"
+    image: libero/reviewer_audit:${IMAGE_TAG}
+    depends_on:
+      - audit_npm
+      - audit_typescript
     networks:
         - 'reviewer_build'
 
@@ -103,7 +137,7 @@ services:
       context: 'continuum-auth/'
       dockerfile: "Dockerfile.typescript"
       args:
-        image_tag: ${IMAGE_TAG}
+        image_tag: "${IMAGE_TAG}"
     image: libero/reviewer_continuum-auth_typescript:${IMAGE_TAG}
     depends_on:
       - continuum-auth_npm
@@ -114,7 +148,7 @@ services:
       context: 'continuum-auth/'
       dockerfile: "Dockerfile.application"
       args:
-        image_tag: ${IMAGE_TAG}
+        image_tag: "${IMAGE_TAG}"
     image: libero/reviewer_continuum-auth:${IMAGE_TAG}
     depends_on:
       - continuum-auth_npm
