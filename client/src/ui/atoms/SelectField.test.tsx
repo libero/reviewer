@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
+import { cleanup, render, RenderResult, fireEvent, waitForElement } from '@testing-library/react';
 import SelectField from './SelectField';
 
 describe('TextField', (): void => {
@@ -26,27 +26,27 @@ describe('TextField', (): void => {
     });
 
     it('should render the error state', (): void => {
-        const { getByText, getByLabelText } = render(
+        const { getByText } = render(
             <SelectField values={[]} id="test" invalid={true} labelText="some label" helperText="helper text" />,
         );
         expect(getByText('helper text')).toHaveClass('typography__label--error');
     });
 
-    //it('should trigger onchange when callback is passed in', async (): Promise<void> => {
-    //    const onChangeFn = jest.fn();
-    //    const { container, getByText } = render(
-    //        <SelectField
-    //            values={[{ label: 'test-option', value: 'test' }]}
-    //            id="test"
-    //            invalid={true}
-    //            labelText="some label"
-    //            helperText="helper text"
-    //            onChange={onChangeFn}
-    //        />,
-    //    );
-    //    await fireEvent.click(container.querySelector('.select-field__value-container'));
-    //    expect(container.querySelector('.select-field__option')).toBeInTheDocument();
-    //   await fireEvent.click(container.querySelector('.select-field__option'));
-    //   expect(onChangeFn).toHaveBeenCalled();
-    //});
+    it('should trigger onchange when callback is passed in', async (): Promise<void> => {
+        const onChangeFn = jest.fn();
+        const { container, getByText } = render(
+            <SelectField
+                values={[{ label: 'test-option', value: 'test' }]}
+                id="test"
+                invalid={true}
+                labelText="some label"
+                helperText="helper text"
+                onChange={onChangeFn}
+            />,
+        );
+        await fireEvent.keyDown(container.querySelector('.select-field'), { key: 'ArrowDown', keyCode: 40 });
+        await waitForElement((): Element => getByText('test-option'));
+        await fireEvent.click(getByText('test-option'));
+        expect(onChangeFn).toHaveBeenCalled();
+    });
 });
