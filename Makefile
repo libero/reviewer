@@ -83,7 +83,7 @@ push_server_container: build_application_server_container
 	${PUSH_COMMAND} reviewer_server
 
 client_ci: start_network
-	make build_client_container
+	make build_client_container push_client_container
 
 install_client_packages: prepare_shared_container
 	${DC_BUILD} build client_npm
