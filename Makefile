@@ -83,7 +83,7 @@ push_server_container: build_application_server_container
 	${PUSH_COMMAND} reviewer_server
 
 client_ci: start_network
-	make build_client_container
+	make build_client_container push_client_container
 
 install_client_packages: prepare_shared_container
 	${DC_BUILD} build client_npm
@@ -99,6 +99,9 @@ test_client: build_client_source
 
 build_client_container: test_client build_client_source
 	${DC_BUILD} build reviewer_client
+
+push_client_container: build_client_container
+	${PUSH_COMMAND} reviewer_client
 
 # continuum-auth
 continuum-auth_ci: start_network

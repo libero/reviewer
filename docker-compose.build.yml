@@ -75,7 +75,7 @@ services:
     image: libero/reviewer_client:${IMAGE_TAG}
     command: >
       /bin/sh -c
-      "envsubt '
+      "envsubst '
       $${CLIENT_PORT}
       $${SERVER_PORT}
       $${CLIENT_API_PROXY_URL}
