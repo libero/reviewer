@@ -7,3 +7,4 @@ export { default as ImageWithAttribution } from './ImageWithAttribution';
 export { default as Modal } from './Modal';
 export { default as Paragraph } from './Paragraph';
 export { default as TwoColumnLayout } from './TwoColumnLayout';
+export { default as UploadIcon } from './UploadIcon';
