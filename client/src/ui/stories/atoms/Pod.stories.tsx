@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, text, withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -20,21 +20,23 @@ storiesOf('ui | atoms/Pod', module)
             const icon = select('Type', ['Delete', 'Add', 'SwapHoriz'], 'Add');
             const containerWidth = text('Container Width', '300px');
 
-            const getIcon = () => {
-              switch(icon) {
-                case 'Delete': 
-                  return <Delete />;
-                case 'Add': 
-                  return <Add />;
-                case 'SwapHoriz': 
-                  return <SwapHoriz />;
-              }
-              return null;
-            }
+            const getIcon = (): JSX.Element => {
+                switch (icon) {
+                    case 'Delete':
+                        return <Delete />;
+                    case 'Add':
+                        return <Add />;
+                    case 'SwapHoriz':
+                        return <SwapHoriz />;
+                }
+                return null;
+            };
             return (
-              <div style={{width: containerWidth}}>
-                <Pod buttonIcon={getIcon()} buttonText={buttonText} onClick={action('onClick')}>{innerText}</Pod>
-              </div>
+                <div style={{ width: containerWidth }}>
+                    <Pod buttonIcon={getIcon()} buttonText={buttonText} onClick={action('onClick')}>
+                        {innerText}
+                    </Pod>
+                </div>
             );
         },
     );

@@ -4,7 +4,7 @@ interface Props {
     onClick: (event: MouseEvent) => void;
     buttonIcon: JSX.Element;
     buttonText: string;
-    children: ReactNode;
+    children?: ReactNode;
 }
 
 const Pod = ({ children, buttonIcon, buttonText, onClick }: Props): JSX.Element => (
