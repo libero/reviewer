@@ -1,5 +1,9 @@
 {
    "image-attribution": "Illustration by ",
+   "manuscript-upload": {
+        "active-content": "Drop the files here ...",
+        "inactive-content": "Upload your manuscript or drag it here."
+   },
    "search-box--label": "Search",
    "search-box--helper": "Search..."
 }
