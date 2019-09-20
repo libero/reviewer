@@ -10,3 +10,4 @@ export { default as MultilineTextField } from './MultilineTextField';
 export { default as Paragraph } from './Paragraph';
 export { default as Pod } from './Pod';
 export { default as TwoColumnLayout } from './TwoColumnLayout';
+export { default as UploadIcon } from './UploadIcon';

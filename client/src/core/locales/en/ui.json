@@ -1,3 +1,7 @@
 {
-   "image-attribution": "Illustration by "
+   "image-attribution": "Illustration by ",
+   "manuscript-upload": {
+        "active-content": "Drop the files here ...",
+        "inactive-content": "Upload your manuscript or drag it here."
+   }
 }
