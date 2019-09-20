@@ -2,7 +2,7 @@ import React from 'react';
 import Pod from './Pod';
 import { cleanup, render, RenderResult, fireEvent } from '@testing-library/react';
 
-describe('AppBar', (): void => {
+describe('Pod', (): void => {
     afterEach(cleanup);
 
     it('should render correctly', (): void => {
