@@ -8,4 +8,5 @@ export { default as ImageWithAttribution } from './ImageWithAttribution';
 export { default as Modal } from './Modal';
 export { default as MultilineTextField } from './MultilineTextField';
 export { default as Paragraph } from './Paragraph';
+export { default as Pod } from './Pod';
 export { default as TwoColumnLayout } from './TwoColumnLayout';
