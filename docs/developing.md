@@ -40,6 +40,16 @@ yarn run start:dev
 
 ## Running in containers
 
+### Mac OS X
+Docker performance can be slow on mac and result in Yarn install throwing errors. A docker compose override file attempts to mitigate that. Copy the
+example file:
+```
+cp docker-compose.override-macos.yml docker-compose.override.yml
+```
+
+before starting the containers.
+
+
 Bring up all the containers using docker compose:
 
 ```
