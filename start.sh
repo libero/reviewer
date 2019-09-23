@@ -9,6 +9,11 @@ else
 	MAKE_OPTS="-j 1"
 fi
 
-echo $DET_OS so need options $MAKE_OPTS
+# Symlink in the environment if missing
+if [ ! -e .env ] ; then ln -s .env .env.example ; fi 
 
+echo Stopping on ${DET_OS}...
+make ${MAKE_OPTS} stop_services
+echo Starting on ${DET_OS}...
+make ${MAKE_OPTS} start_services
 
