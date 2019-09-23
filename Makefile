@@ -47,7 +47,9 @@ start_services: start_infra
 stop_services:
 	docker-compose -f docker-compose.yml down
 	docker-compose -f docker-compose.infra.yml down
-	docker network prune
+	docker network rm infra_postgres
+	docker network rm infra_api
+	docker network rm infra_rabbit
 
 ###########################
 #
