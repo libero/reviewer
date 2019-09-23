@@ -62,7 +62,7 @@ typings/
 .env
 
 # docker compose
-.docker-compose.override.yml
+docker-compose.override.yml
 
 # next.js build output
 .next
