@@ -13,8 +13,8 @@ export class KnexSubmissionRepository implements SubmissionRepository {
     // TODO: Add a method for handling when the table does/doesn't exist
     // as this will error if the table already exists
     // XXX: Maybe move this to migrations
-    const hasTable = await this.knex.schema.hasTable(this.TABLE_NAME)
-  
+    const hasTable = await this.knex.schema.hasTable(this.TABLE_NAME);
+
     if (hasTable) {
       return hasTable;
     }
