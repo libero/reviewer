@@ -38,12 +38,17 @@ const Modal = ({
                               <div className={`modal__content ${fullscreen ? 'modal__content--fullscreen' : ''}`}>
                                   {children}
                               </div>
-                              {fullscreen && <div className="modal__separator" />}
-                              <div className={`modal__buttons ${fullscreen ? 'modal__buttons--fullscreen' : ''}`}>
-                                  <Button onClick={(): void => hide()}>Cancel</Button>
-                                  <Button onClick={(): void => accept()} type={buttonType}>
-                                      {buttonText || t('ui:modal--default-button')}
-                                  </Button>
+                              <div
+                                  className={`modal__buttons_container ${
+                                      fullscreen ? 'modal__buttons_container--fullscreen' : ''
+                                  }`}
+                              >
+                                  <div className={`modal__buttons ${fullscreen ? 'modal__buttons--fullscreen' : ''}`}>
+                                      <Button onClick={(): void => hide()}>Cancel</Button>
+                                      <Button onClick={(): void => accept()} type={buttonType}>
+                                          {buttonText || t('ui:modal--default-button')}
+                                      </Button>
+                                  </div>
                               </div>
                           </div>
                       </div>
