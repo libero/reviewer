@@ -5,7 +5,7 @@
   width: 100vw;
   height: 100vh;
   z-index: 1500;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(255,255,255, 0.9);
   transition: opacity 0.2s ease;
   overflow-y: auto;
 }
@@ -24,10 +24,45 @@
   padding: 24px;
 }
 
+.modal__fullscreen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__content--fullscreen {
+  @include forSize('tabletLandscapeUp') {
+    margin-left: 16.666%;
+    margin-right: 16.666%;
+  }
+}
+
+.modal__separator {
+  width: 100%;
+  height: 1px;
+  background-color: $borderColour;
+  margin-top: auto;
+  margin-bottom: 36px;
+}
+
 .modal__buttons {
   bottom: 0;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.modal__buttons--fullscreen {
+  justify-content: flex-start;
+
+  @include forSize('tabletLandscapeUp') {
+    margin-left: 16.666%;
+    margin-right: 16.666%;
+  }
+
+  button {
+    margin-right: 1.5rem;
+  }
 }
