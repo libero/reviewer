@@ -7,7 +7,7 @@ interface Props {
     toggleHandler(event: MouseEvent): void;
     name?: string;
     institution?: string;
-    tags?: [string?];
+    tags?: string[];
 }
 
 const PersonPod = ({ initialySelected, toggleHandler, institution, name, tags = [] }: Props): JSX.Element => {
