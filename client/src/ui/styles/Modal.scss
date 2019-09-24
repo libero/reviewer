@@ -11,14 +11,17 @@
 }
 
 .modal__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
 }
 
 .modal {
-  width: 408px;
+  width: 25.5rem;
   background-color: $white;
   text-align: center;
-  padding: 24px;
+  padding: 1.5rem;
 }
 
 .modal__fullscreen {
@@ -39,19 +42,19 @@
   height: 1px;
   background-color: $borderColour;
   margin-top: auto;
-  margin-bottom: 36px;
+  margin-bottom: 2.25rem;
 }
 
 .modal__buttons_container {
   width: 100%;
-  height: 132px;
+  height: 8.25rem;
   bottom: 0;
 }
 
 .modal__buttons_container--fullscreen {
   border-top: 1px solid $borderColour;
-  position: absolute;
-  padding-top: 36px;
+  position: fixed;
+  padding-top: 2.25rem;
 }
 
 .modal__buttons {
@@ -63,7 +66,7 @@
 
 .modal__buttons--fullscreen {
   justify-content: flex-start;
-  margin-bottom: 48px;
+  margin-bottom: 3rem;
 
   @include forSize('tabletLandscapeUp') {
     margin-left: 16.666%;
