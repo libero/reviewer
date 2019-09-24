@@ -13,7 +13,9 @@ const PersonInfo = ({ name, institution, expertises, focuses }: Props): JSX.Elem
             <span className="typography__heading typography__heading--h2">{name}</span>
             <span className="typography__body typography__body--primary">{institution}</span>
             <span className="typography__small typography__small--primary">{expertises.join(', ')}</span>
-            <span className="typography__small typography__small--secondary">{focuses.join(', ')}</span>
+            <span className="typography__small typography__small--secondary typography__small--no-margin">
+                {focuses.join(', ')}
+            </span>
         </div>
     );
 };
