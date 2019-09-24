@@ -1,6 +1,6 @@
 import React, { useState, MouseEvent } from 'react';
 import { Pod } from '../atoms';
-import { Add, CheckCircle, Info, TagFacesSharp } from '@material-ui/icons';
+import { Add, CheckCircle, Info } from '@material-ui/icons';
 
 interface Props {
     initialySelected?: boolean;
