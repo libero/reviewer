@@ -29,17 +29,35 @@ describe('Button', (): void => {
     });
 
     it('should render name prop text', (): void => {
-        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} name="A TEST NAME"/>);
+        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} name="A TEST NAME" />);
         expect(getByText('A TEST NAME')).toBeInTheDocument();
     });
 
     it('should render institution prop text', (): void => {
-        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} institution="A TEST INSTITUTION"/>);
+        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} institution="A TEST INSTITUTION" />);
         expect(getByText('A TEST INSTITUTION')).toBeInTheDocument();
     });
 
-    it('should render a comma seperated list of tags', (): void => {
-        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} tags={['TagA', 'TagB', 'TagC']}/>);
-        expect(getByText('TagA, TagB, TagC')).toBeInTheDocument();
+    it('should render a comma seperated list of focuses', (): void => {
+        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} focuses={['FocusA', 'FocusB', 'FocusC']} />);
+        expect(getByText('FocusA, FocusB, FocusC')).toBeInTheDocument();
+    });
+
+    it('should render a comma seperated list of expertiese', (): void => {
+        const { getByText } = render(
+            <PersonPod toggleHandler={jest.fn()} expertises={['Expertise1', 'Expertise2', 'Expertise3']} />,
+        );
+        expect(getByText('Expertise1, Expertise2, Expertise3')).toBeInTheDocument();
+    });
+
+    it('should render a comma seperated list of focuses and expertises', (): void => {
+        const { getByText } = render(
+            <PersonPod
+                toggleHandler={jest.fn()}
+                focuses={['FocusA', 'FocusB', 'FocusC']}
+                expertises={['Expertise1', 'Expertise2', 'Expertise3']}
+            />,
+        );
+        expect(getByText('FocusA, FocusB, FocusC, Expertise1, Expertise2, Expertise3')).toBeInTheDocument();
     });
 });
