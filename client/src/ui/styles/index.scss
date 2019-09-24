@@ -4,7 +4,7 @@
 @import './Button';
 @import './Checkbox.scss';
 @import './ImageWithAttributions';
-@import './MultilineTextField.scss';
+@import './MultilineTextField';
 @import './Paragraph';
 @import './Pod';
 @import './SelectField';
@@ -13,13 +13,14 @@
 
 /* All molecule ui components should live here */
 @import './BurgerMenu';
-@import './ExcludedToggle.scss';
+@import './ExcludedToggle';
 @import './ManuscriptUpload';
 @import './Modal';
 @import './Menu';
-@import './OrcidDetails.scss';
+@import './OrcidDetails';
+@import './PersonPod';
 @import './ProfileDropdown';
-@import './ProgressBar.scss';
+@import './ProgressBar';
 @import './SelectedOption';
 @import './Toggle.scss';
 
