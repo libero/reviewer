@@ -16,7 +16,7 @@ const PersonPod = ({ initialySelected, toggleHandler, institution, name, tags = 
         setSelected(!selected);
         toggleHandler(event);
     };
-    const commaSeperatedTags = tags.join(',');
+    const commaSeperatedTags = tags.join(', ');
     return (
         <Pod
             buttonIcon={

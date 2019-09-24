@@ -14,7 +14,7 @@ storiesOf('ui | molecules/PersonPod', module)
         (): JSX.Element => {
             const name = text('Name', 'Bob Ross');
             const institution = text('Institution', 'Little Happy Trees');
-            const tags = text('Tags','Tag 1, Tage 2').split(',');
+            const tags = text('Tags','Tag 1,Tag 2').split(',');
             return (
                 <PersonPod
                     initialySelected={false}
