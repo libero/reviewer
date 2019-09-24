@@ -10,7 +10,10 @@ else
 fi
 
 # Symlink in the environment if missing
-if [ ! -e .env ] ; then ln -s .env .env.example ; fi 
+if [ ! -e .env ] ; then ln -s .env .env.example ; fi
+
+# Create an override file if not present
+if [ ! -e docker-compose.override.yml ] ; then echo "version: '3'" > docker-compose.override.yml ; fi
 
 echo Stopping on ${DET_OS}...
 make ${MAKE_OPTS} stop_services

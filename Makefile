@@ -41,11 +41,11 @@ start_infra: start_networks
 	sleep 10
 
 start_services: start_infra
-	docker-compose -f docker-compose.yml up -d
+	docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 	docker-compose -f docker-compose.yml logs -f
 
 stop_services:
-	docker-compose -f docker-compose.yml down
+	docker-compose -f docker-compose.yml -f docker-compose.override.yml down
 	docker-compose -f docker-compose.infra.yml down
 	docker network rm infra_postgres
 	docker network rm infra_api
