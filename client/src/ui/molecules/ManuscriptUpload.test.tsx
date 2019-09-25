@@ -1,34 +1,34 @@
 import React from 'react';
 import { render, RenderResult, fireEvent, cleanup, act, queryByText } from '@testing-library/react';
-import  ManuscriptUpload from './ManuscriptUpload';
+import ManuscriptUpload from './ManuscriptUpload';
 
 function flushPromises(ui: React.ReactElement<any>, container: HTMLElement) {
     return new Promise(resolve =>
         setImmediate(() => {
-            render(ui, { container })
-            resolve(container)
-        })
-    )
+            render(ui, { container });
+            resolve(container);
+        }),
+    );
 }
 
 function dispatchEvt(node: Document | Element | Window, type: string, data: any) {
-    const event = new Event(type, { bubbles: true })
-    Object.assign(event, data)
-    fireEvent(node, event)
+    const event = new Event(type, { bubbles: true });
+    Object.assign(event, data);
+    fireEvent(node, event);
 }
 
-function mockData(files: Array<File>) {
+function mockData(files: File[]) {
     return {
-      dataTransfer: {
-        files,
-        items: files.map(file => ({
-          kind: 'file',
-          type: file.type,
-          getAsFile: () => file
-        })),
-        types: ['Files']
-      }
-    }
+        dataTransfer: {
+            files,
+            items: files.map(file => ({
+                kind: 'file',
+                type: file.type,
+                getAsFile: () => file,
+            })),
+            types: ['Files'],
+        },
+    };
 }
 
 describe('ManuscriptUpload', (): void => {
@@ -49,13 +49,11 @@ describe('ManuscriptUpload', (): void => {
         const ui = <ManuscriptUpload />;
         const { container } = render(ui);
         const dropzone = container.querySelector('.manuscript-upload__dropzone');
-        const file = new File([
-            JSON.stringify({ping: true})
-          ], 'ping.json', { type: 'application/json' });
+        const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
         const data = mockData([file]);
 
         await act(async () => {
-            dispatchEvt(dropzone, 'dragenter', data)
+            dispatchEvt(dropzone, 'dragenter', data);
             await flushPromises(ui, container);
         });
 
@@ -74,13 +72,11 @@ describe('ManuscriptUpload', (): void => {
         const ui = <ManuscriptUpload activeContent="custom active content" />;
         const { container } = render(ui);
         const dropzone = container.querySelector('.manuscript-upload__dropzone');
-        const file = new File([
-            JSON.stringify({ping: true})
-          ], 'ping.json', { type: 'application/json' });
+        const file = new File([JSON.stringify({ ping: true })], 'ping.json', { type: 'application/json' });
         const data = mockData([file]);
 
         await act(async () => {
-            dispatchEvt(dropzone, 'dragenter', data)
+            dispatchEvt(dropzone, 'dragenter', data);
             await flushPromises(ui, container);
         });
 

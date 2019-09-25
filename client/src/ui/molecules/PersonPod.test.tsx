@@ -29,17 +29,17 @@ describe('Button', (): void => {
     });
 
     it('should render name prop text', (): void => {
-        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} name="A TEST NAME"/>);
+        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} name="A TEST NAME" />);
         expect(getByText('A TEST NAME')).toBeInTheDocument();
     });
 
     it('should render institution prop text', (): void => {
-        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} institution="A TEST INSTITUTION"/>);
+        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} institution="A TEST INSTITUTION" />);
         expect(getByText('A TEST INSTITUTION')).toBeInTheDocument();
     });
 
     it('should render a comma seperated list of tags', (): void => {
-        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} tags={['TagA', 'TagB', 'TagC']}/>);
+        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} tags={['TagA', 'TagB', 'TagC']} />);
         expect(getByText('TagA, TagB, TagC')).toBeInTheDocument();
     });
 });
