@@ -90,6 +90,7 @@ build_event-bus: build_shared_package_container
 #
 ###########################
 
+# server
 server_ci: start_network
 	make lint_server test_server push_server_container
 
@@ -111,6 +112,7 @@ build_application_server_container: test_server lint_server
 push_server_container: build_application_server_container
 	${PUSH_COMMAND} reviewer_server
 
+# client
 client_ci: start_network
 	make build_client_container push_client_container
 
