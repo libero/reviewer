@@ -43,7 +43,7 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
   }
 
   private async connect(): Promise<Connection> {
-    let done
+    let done;
 
     const attemptConnect = () => {
       // TODO: put this in configuration
@@ -55,7 +55,7 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
           logger.info('Couldn\'t connect to message queue, retrying in 10s');
           setTimeout (attemptConnect, 10000);
         });
-    }
+    };
 
     return new Promise(resolve => {
       done = resolve;
