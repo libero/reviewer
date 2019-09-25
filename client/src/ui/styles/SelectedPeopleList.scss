@@ -5,6 +5,9 @@
 
 .selected_people_list__item {
   width: 50%;
+  @include forSize('phoneOnly') {
+    width: 100%;
+  }
   padding: 0.75rem;
   display: inline-block;
 }
