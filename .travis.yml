@@ -36,12 +36,12 @@ jobs:
     - stage: Deploy Storybook
       name: "Deploy Storybook"
       script:
-        make build_client_source
-        mkdir storybook-static
-        docker run -d --name client_storybook__$IMAGE_TAG libero/reviewer_client_webpack:$IMAGE_TAG
-        docker cp client_storybook__$IMAGE_TAG:/app/storybook-static/. storybook-static/
-        docker stop client_storybook__$IMAGE_TAG
-        docker rm client_storybook__$IMAGE_TAG
+        - make build_client_source
+        - mkdir storybook-static
+        - docker run -d --name client_storybook__$IMAGE_TAG libero/reviewer_client_webpack:$IMAGE_TAG
+        - docker cp client_storybook__$IMAGE_TAG:/app/storybook-static/. storybook-static/
+        - docker stop client_storybook__$IMAGE_TAG
+        - docker rm client_storybook__$IMAGE_TAG
 
 if: |
     branch = master OR \
