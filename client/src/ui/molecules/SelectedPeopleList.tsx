@@ -17,7 +17,7 @@ const SelectedPeopleList = ({ people = [] }: Props): JSX.Element => {
             ))}
             <div className="selected_people_list__item">
                 <Pod onClick={()=>{}} buttonIcon={<Add />} buttonText="Add" >
-                        Choose editor (required)
+                        <span>Choose editor (required)</span>
                 </Pod>
             </div>
         </div>
