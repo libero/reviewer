@@ -43,7 +43,7 @@ describe('Button', (): void => {
         expect(getByText('FocusA, FocusB, FocusC')).toBeInTheDocument();
     });
 
-    it('should render a comma seperated list of expertiese', (): void => {
+    it('should render a comma seperated list of expertieses', (): void => {
         const { getByText } = render(
             <PersonPod toggleHandler={jest.fn()} expertises={['Expertise1', 'Expertise2', 'Expertise3']} />,
         );

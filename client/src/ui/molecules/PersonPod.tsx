@@ -56,7 +56,12 @@ const PersonPod = ({
                     {institution}
                 </span>
                 <div className="person-pod__inline_text">
-                    <Info fontSize="small" onClick={(): void => toggle()} />
+                    <Info
+                        aria-label="Info"
+                        className="person-pod__info_icon"
+                        fontSize="small"
+                        onClick={(): void => toggle()}
+                    />
                     <span className="typography__small typography__small--secondary typography__small--no-margin">
                         {commaSeperatedTags}
                     </span>
