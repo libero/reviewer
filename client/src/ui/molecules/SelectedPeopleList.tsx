@@ -1,5 +1,7 @@
 import React from 'react';
 import Delete from '@material-ui/icons/Delete';
+import Add from '@material-ui/icons/Add';
+import { Pod } from '../atoms';
 import { PersonPod, PersonProps } from '.';
 
 interface Props {
@@ -13,6 +15,11 @@ const SelectedPeopleList = ({ people = [] }: Props): JSX.Element => {
                   <PersonPod {...person} toggleHandler={():void => {}} selectedButtonIcon={<Delete />} initialySelected/>
                 </div>
             ))}
+            <div className="selected_people_list__item">
+                <Pod onClick={()=>{}} buttonIcon={<Add />} buttonText="Add" >
+                        Choose editor (required)
+                </Pod>
+            </div>
         </div>
     );
 };
