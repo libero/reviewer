@@ -14,11 +14,13 @@ storiesOf('ui | molecules/PersonPod', module)
         (): JSX.Element => {
             const name = text('Name', 'Bob Ross');
             const institution = text('Institution', 'Little Happy Trees');
-            const tags = text('Tags','Tag 1,Tag 2').split(',');
+            const focuses = text('Focuses', 'Focus 1, Focus 2, Focus 3').split(',');
+            const expertises = text('Exxpertises', 'Expertise 1,Expertise 2').split(',');
             return (
                 <PersonPod
                     initialySelected={false}
-                    tags={tags}
+                    focuses={focuses}
+                    expertises={expertises}
                     name={name}
                     institution={institution}
                     toggleHandler={(event: React.MouseEvent): void => action('toggles')(event)}
