@@ -42,6 +42,27 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
     return Option.of(message.event);
   }
 
+  private async connect(): Promise<Connection> {
+    let done;
+
+    const attemptConnect = () => {
+      // TODO: put this in configuration
+      return amqplib.connect('amqp://rabbitmq')
+        .then((connection) => {
+          done(connection);
+        })
+        .catch(e => {
+          logger.info('Couldn\'t connect to message queue, retrying in 10s');
+          setTimeout (attemptConnect, 10000);
+        });
+    };
+
+    return new Promise(resolve => {
+      done = resolve;
+      attemptConnect();
+    });
+  }
+
   public async init(eventDefs: EventIdentifier[], serviceName: string): Promise<this> {
     // The eventDefs are the names of events that this service will emit
     // It's probably good practice to always declare the events that the service emits
@@ -49,8 +70,7 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
     this.serviceName = serviceName;
     // First things first
     this.connection = Option.of(
-      // TODO: put this in configuration
-      await amqplib.connect('amqp://rabbitmq').catch(() => undefined),
+      await this.connect(),
     );
     // This is where we setup the queue structure in RabbitMQ
 

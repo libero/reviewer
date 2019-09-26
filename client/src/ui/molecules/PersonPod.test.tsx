@@ -38,8 +38,26 @@ describe('Button', (): void => {
         expect(getByText('A TEST INSTITUTION')).toBeInTheDocument();
     });
 
-    it('should render a comma seperated list of tags', (): void => {
-        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} tags={['TagA', 'TagB', 'TagC']} />);
-        expect(getByText('TagA, TagB, TagC')).toBeInTheDocument();
+    it('should render a comma seperated list of focuses', (): void => {
+        const { getByText } = render(<PersonPod toggleHandler={jest.fn()} focuses={['FocusA', 'FocusB', 'FocusC']} />);
+        expect(getByText('FocusA, FocusB, FocusC')).toBeInTheDocument();
+    });
+
+    it('should render a comma seperated list of expertieses', (): void => {
+        const { getByText } = render(
+            <PersonPod toggleHandler={jest.fn()} expertises={['Expertise1', 'Expertise2', 'Expertise3']} />,
+        );
+        expect(getByText('Expertise1, Expertise2, Expertise3')).toBeInTheDocument();
+    });
+
+    it('should render a comma seperated list of focuses and expertises', (): void => {
+        const { getByText } = render(
+            <PersonPod
+                toggleHandler={jest.fn()}
+                focuses={['FocusA', 'FocusB', 'FocusC']}
+                expertises={['Expertise1', 'Expertise2', 'Expertise3']}
+            />,
+        );
+        expect(getByText('FocusA, FocusB, FocusC, Expertise1, Expertise2, Expertise3')).toBeInTheDocument();
     });
 });
