@@ -46,6 +46,9 @@ deploy:
     access_key_id: "$STORYBOOK_ACCESS_KEY"
     secret_access_key: "$STORYBOOK_SECRET_KEY"
     bucket: "reviewer_storybook"
+    skip_cleanup: true
+    local_dir: storybook-static
+
 
 if: |
     branch = master OR \
