@@ -41,6 +41,11 @@ jobs:
         - docker run --name client_storybook__$IMAGE_TAG libero/reviewer_client_webpack:$IMAGE_TAG
         - docker cp client_storybook__$IMAGE_TAG:/app/storybook-static/. storybook-static/
         - docker rm client_storybook__$IMAGE_TAG
+deploy:
+    provider: s3
+    access_key_id: "$STORYBOOK_ACCESS_KEY"
+    secret_access_key: "$STORYBOOK_SECRET_KEY"
+    bucket: "reviewer_storybook"
 
 if: |
     branch = master OR \
