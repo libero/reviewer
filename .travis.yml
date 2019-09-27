@@ -33,14 +33,15 @@ jobs:
     - stage: Integration Tests
       name: "Browser Tests"
       script: make run_browser_tests
-    - stage: Deploy Storybook
-      name: "Deploy Storybook"
+    - stage: Build Storybook
+      name: "Build Storybook"
       script:
         - make build_client_source
         - mkdir storybook-static
         - docker run --name client_storybook__$IMAGE_TAG libero/reviewer_client_webpack:$IMAGE_TAG
         - docker cp client_storybook__$IMAGE_TAG:/app/storybook-static/. storybook-static/
         - docker rm client_storybook__$IMAGE_TAG
+
 deploy:
     provider: s3
     access_key_id: "$STORYBOOK_ACCESS_KEY"
@@ -48,7 +49,6 @@ deploy:
     bucket: "reviewer_storybook"
     skip_cleanup: true
     local_dir: storybook-static
-
 
 if: |
     branch = master OR \
