@@ -16,6 +16,15 @@ describe('Pod', (): void => {
         ).not.toThrow();
     });
 
+    it('should have the "pod__error" class if invalid passed in', (): void => {
+        const { container } = render(
+            <Pod buttonIcon={<div />} buttonText="B" onClick={(): void => {}} invalid={true}>
+                A
+            </Pod>,
+        );
+        expect(container.querySelector('.pod')).toHaveClass('pod__error');
+    });
+
     it('should call onClick callback when button is clicked', async (): Promise<void> => {
         const callback = jest.fn();
         const { container } = render(

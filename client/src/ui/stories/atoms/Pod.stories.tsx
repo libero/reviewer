@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, text, withKnobs } from '@storybook/addon-knobs';
+import { boolean, select, text, withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import centered from '@storybook/addon-centered/react';
 import Delete from '@material-ui/icons/Delete';
@@ -19,7 +19,7 @@ storiesOf('ui | atoms/Pod', module)
             const buttonText = text('Button text for accessibility', 'A button');
             const icon = select('Type', ['Delete', 'Add', 'SwapHoriz'], 'Add');
             const containerWidth = text('Container Width', '300px');
-
+            const invalid = boolean('Invalid', false);
             const getIcon = (): JSX.Element => {
                 switch (icon) {
                     case 'Delete':
@@ -33,7 +33,7 @@ storiesOf('ui | atoms/Pod', module)
             };
             return (
                 <div style={{ width: containerWidth }}>
-                    <Pod buttonIcon={getIcon()} buttonText={buttonText} onClick={action('onClick')}>
+                    <Pod buttonIcon={getIcon()} buttonText={buttonText} onClick={action('onClick')} invalid={invalid}>
                         {innerText}
                     </Pod>
                 </div>
