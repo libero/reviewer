@@ -44,8 +44,8 @@ jobs:
 
 deploy:
     provider: s3
-    access_key_id: "$STORYBOOK_ACCESS_KEY"
-    secret_access_key: "$STORYBOOK_SECRET_KEY"
+    access_key_id: "$AWS_ACCESS_KEY_ID"
+    secret_access_key: "$AWS_SECRET_ACCESS_KEY"
     bucket: "reviewer_storybook"
     skip_cleanup: true
     local_dir: storybook-static
