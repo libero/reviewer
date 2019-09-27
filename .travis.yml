@@ -41,14 +41,7 @@ jobs:
         - docker run --name client_storybook__$IMAGE_TAG libero/reviewer_client_webpack:$IMAGE_TAG
         - docker cp client_storybook__$IMAGE_TAG:/app/storybook-static/. storybook-static/
         - docker rm client_storybook__$IMAGE_TAG
-
-deploy:
-    provider: s3
-    access_key_id: "$AWS_ACCESS_KEY_ID"
-    secret_access_key: "$AWS_SECRET_ACCESS_KEY"
-    bucket: "reviewer_storybook"
-    skip_cleanup: true
-    local_dir: storybook-static
+        - docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -v $(pwd)/storybook-static:/aws mikesir87/aws-cli aws s3 sync . s3://unstable-reviewer-storybook/$TRAVIS_PULL_REQUEST_SLUG
 
 if: |
     branch = master OR \
