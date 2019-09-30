@@ -62,21 +62,18 @@ describe('Button', (): void => {
     });
 
     it('should use an override select icon if passed', () => {
-        const { container, rerender } = render(
+        const { container, rerender } = render(<PersonPod initialySelected={true} toggleHandler={jest.fn()} />);
+        expect(container.querySelector('.pod__button').querySelector('.person-pod__selected_icon')).toBeInTheDocument();
+        rerender(
             <PersonPod
                 initialySelected={true}
+                selectedButtonIcon={<div className="testIcon" />}
                 toggleHandler={jest.fn()}
             />,
         );
-        expect(container.querySelector('.pod__button').querySelector('.person-pod__selected_icon')).toBeInTheDocument();
-        rerender(<PersonPod
-            initialySelected={true}
-            selectedButtonIcon={<div className="testIcon" />}
-            toggleHandler={jest.fn()}
-        />)
-        expect(container.querySelector('.pod__button').querySelector('.person-pod__selected_icon')).not.toBeInTheDocument();
+        expect(
+            container.querySelector('.pod__button').querySelector('.person-pod__selected_icon'),
+        ).not.toBeInTheDocument();
         expect(container.querySelector('.pod__button').querySelector('.testIcon')).toBeInTheDocument();
-
-
-    })
+    });
 });

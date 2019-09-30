@@ -23,8 +23,8 @@ storiesOf('ui | molecules/SelectedOption', module)
 
             return (
                 <div>
-                    {items.map(text => (
-                        <div style={{ display: 'inline-flex', margin: '8px' }}>
+                    {items.map((text, index) => (
+                        <div key={index} style={{ display: 'inline-flex', margin: '8px' }}>
                             <SelectedOption text={text} />
                         </div>
                     ))}
