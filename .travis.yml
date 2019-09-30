@@ -35,13 +35,14 @@ jobs:
       script: make run_browser_tests
     - stage: Build Storybook
       name: "Build Storybook"
+      if: type = pull_request
       script:
         - make build_client_source
         - mkdir storybook-static
         - docker run --name client_storybook__$IMAGE_TAG libero/reviewer_client_webpack:$IMAGE_TAG
         - docker cp client_storybook__$IMAGE_TAG:/app/storybook-static/. storybook-static/
         - docker rm client_storybook__$IMAGE_TAG
-        - docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -v $(pwd)/storybook-static:/aws mikesir87/aws-cli aws s3 sync . s3://unstable-reviewer-storybook/$TRAVIS_PULL_REQUEST_BRANCH
+        - docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -v $(pwd)/storybook-static:/aws mikesir87/aws-cli aws s3 sync /aws s3://unstable-reviewer-storybook/$TRAVIS_PULL_REQUEST_BRANCH
 
 if: |
     branch = master OR \
