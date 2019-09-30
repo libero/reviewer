@@ -14,11 +14,12 @@ export interface PersonProps {
 
 interface Props extends PersonProps {
     initialySelected?: boolean;
-    toggleHandler(event: MouseEvent): void;
+    toggleHandler(id: string): void;
     selectedButtonIcon?: JSX.Element;
 }
 
 const PersonPod = ({
+    id,
     initialySelected,
     toggleHandler,
     institution,
@@ -30,21 +31,21 @@ const PersonPod = ({
     const [selected, setSelected] = useState(initialySelected || false);
     const { isShowing, toggle } = useModal();
 
-    const onClick = (event: MouseEvent): void => {
+    const onClick = (id: string): void => {
         setSelected(!selected);
-        toggleHandler(event);
+        toggleHandler(id);
     };
     const commaSeperatedTags = [...focuses, ...expertises].join(', ');
     return (
         <Pod
             buttonIcon={selected ? selectedButtonIcon : <Add />}
             buttonText={selected ? 'Remove' : 'Add'}
-            onClick={onClick}
+            onClick={() => onClick(id)}
         >
             <Modal
                 hide={toggle}
                 isShowing={isShowing}
-                onAccept={onClick}
+                onAccept={() => onClick(id)}
                 buttonType="primary"
                 buttonText={`${selected ? 'Remove' : 'Add'} Editor`}
             >

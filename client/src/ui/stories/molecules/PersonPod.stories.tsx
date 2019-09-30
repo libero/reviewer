@@ -26,7 +26,7 @@ storiesOf('ui | molecules/PersonPod', module)
                     name={name}
                     institution={institution}
                     selectedButtonIcon={deleteIcon ? <Delete /> : undefined}
-                    toggleHandler={(event: React.MouseEvent): void => action('toggles')(event)}
+                    toggleHandler={(id:string): void => action('toggles')(id)}
                 />
             );
         },
