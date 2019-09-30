@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { object, withKnobs } from '@storybook/addon-knobs';
+import { object, boolean, text, withKnobs } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered/react';
 import { SelectedPeopleList } from '../../molecules';
 import '../../../core/styles/index.scss';
@@ -11,6 +11,8 @@ storiesOf('ui | molecules/SelectedPeopleList', module)
     .add(
         'SelectedPeopleList',
         (): JSX.Element => {
+            const required = boolean('Required', false);
+            const openSelectorText = text('Open Picker Button text', 'Choose Editor');
             const people = object('Menu Items', [
                 {
                   id: '1',
@@ -32,7 +34,7 @@ storiesOf('ui | molecules/SelectedPeopleList', module)
               },
             ]);
             return (
-                <SelectedPeopleList people={people} />
+                <SelectedPeopleList required={required} openSelectorText={openSelectorText} people={people} />
             );
         },
     );

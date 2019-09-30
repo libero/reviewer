@@ -6,8 +6,10 @@ import { PersonPod, PersonProps } from '.';
 
 interface Props {
     people?: PersonProps[];
+    openSelectorText: string;
+    required?: boolean;
 }
-const SelectedPeopleList = ({ people = [] }: Props): JSX.Element => {
+const SelectedPeopleList = ({ people = [], openSelectorText, required }: Props): JSX.Element => {
     return (
         <div className="selected_people_list">
             {people.map((person: PersonProps) => (
@@ -17,7 +19,7 @@ const SelectedPeopleList = ({ people = [] }: Props): JSX.Element => {
             ))}
             <div className="selected_people_list__item">
                 <Pod onClick={()=>{}} buttonIcon={<Add />} buttonText="Add" >
-                        <span>Choose editor (required)</span>
+                        <div className="selected_people_list__pod-content">{openSelectorText} ({ required ? 'required': 'optional' })</div>
                 </Pod>
             </div>
         </div>

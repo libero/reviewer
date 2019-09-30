@@ -9,5 +9,12 @@
     width: 100%;
   }
   padding: 0.75rem;
+  overflow: hidden;
   display: inline-block;
+}
+
+.selected_people_list__pod-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
 }

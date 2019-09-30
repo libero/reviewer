@@ -4,6 +4,6 @@ import SelectedPeopleList  from './SelectedPeopleList';
 
 describe('SelectedPeopleList', (): void => {
     it('should render correctly', (): void => {
-        expect((): RenderResult => render(<SelectedPeopleList people={[]} />)).not.toThrow();
+        expect((): RenderResult => render(<SelectedPeopleList people={[]} openSelectorText=" "/>)).not.toThrow();
     });
 });
