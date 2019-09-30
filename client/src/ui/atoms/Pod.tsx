@@ -5,10 +5,11 @@ interface Props {
     buttonIcon: JSX.Element;
     buttonText: string;
     children?: ReactNode;
+    invalid?: boolean;
 }
 
-const Pod = ({ children, buttonIcon, buttonText, onClick }: Props): JSX.Element => (
-    <div className="pod">
+const Pod = ({ children, buttonIcon, buttonText, onClick, invalid = false }: Props): JSX.Element => (
+    <div className={`${invalid ? 'pod pod__error' : 'pod'}`}>
         <div className="pod__body">{children}</div>
         <button onClick={onClick} className="pod__button">
             {buttonIcon}
