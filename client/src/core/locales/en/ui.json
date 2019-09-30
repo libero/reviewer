@@ -6,6 +6,9 @@
     },
     "search-box--label": "Search",
     "search-box--helper": "Search...",
-    "modal--default-button": "Accept"
+    "modal--default-button": "Accept",
+    "selected_people_list--open": "Open Picker",
+    "validation--optional": "optional",
+    "validation--required": "required"
 }
 

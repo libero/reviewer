@@ -12,4 +12,4 @@ describe('SelectedOption', (): void => {
 
         expect(container.querySelector('.selected-option__text').textContent).toBe('Ian Malcolm');
     });
-})
+});

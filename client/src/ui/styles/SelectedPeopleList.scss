@@ -1,0 +1,20 @@
+.selected_people_list {
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+}
+
+.selected_people_list__item {
+  width: 50%;
+  @include forSize('phoneOnly') {
+    width: 100%;
+  }
+  padding: 0.75rem;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.selected_people_list__pod-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
