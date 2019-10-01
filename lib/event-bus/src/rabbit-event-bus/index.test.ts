@@ -1,15 +1,14 @@
 // amqp driver tests
-import { Some } from "funfix";
-const amqplib = require("amqplib");
-import { RabbitEventBus } from ".";
+import { Some } from 'funfix';
+const amqplib = require('amqplib');
+import { RabbitEventBus } from '.';
 
-jest.mock("amqplib");
+jest.mock('amqplib');
 jest.useFakeTimers();
 
-
-describe("RabbitMQ event-bus driver", () => {
-  describe("Event publishing", () => {
-    it("can publish an event", async () => {
+describe('RabbitMQ event-bus driver', () => {
+  describe('Event publishing', () => {
+    it('can publish an event', async () => {
       const publishMock = jest.fn();
       const channelCloseMock = jest.fn();
 
@@ -17,15 +16,15 @@ describe("RabbitMQ event-bus driver", () => {
         connect: jest.fn( async () => ({
           createChannel: jest.fn(() => ({
             publish: publishMock,
-            close: channelCloseMock
+            close: channelCloseMock,
           })),
-          createExchange: jest.fn()
-        }))
+          createExchange: jest.fn(),
+        })),
       };
 
-      const eb = await new RabbitEventBus("never", mockAmqplib as any).init(
+      const eb = await new RabbitEventBus('never', mockAmqplib as any).init(
         [],
-        "testing service"
+        'testing service',
       );
 
       await eb.publish({ mock_event: true } as any);
@@ -35,20 +34,20 @@ describe("RabbitMQ event-bus driver", () => {
     });
 
     // This is not the desired behaviour,  but it's the current behaviour
-    it("errors when trying to publish messages without a connection", async () => {
+    it('errors when trying to publish messages without a connection', async () => {
       const publishMock = jest.fn();
       const channelCloseMock = jest.fn();
 
       amqplib.connect.mockResolvedValue(undefined);
 
-      const eb = new RabbitEventBus("never").init([], "testing service");
+      const eb = new RabbitEventBus('never').init([], 'testing service');
 
-      expect(eb).rejects.toThrow("Option.get");
+      expect(eb).rejects.toThrow('Option.get');
     });
   });
 
-  describe("Event subscriptions", () => {
-    it("allows you to subscribe to an event when there is a connection", async () => {
+  describe('Event subscriptions', () => {
+    it('allows you to subscribe to an event when there is a connection', async () => {
       const consumeMock = jest.fn(async () => ({}));
       const assertQueueMock = jest.fn(async () => ({}));
       const bindQueueMock = jest.fn(async () => undefined);
@@ -62,20 +61,20 @@ describe("RabbitMQ event-bus driver", () => {
             consume: consumeMock,
             ack: jest.fn(),
             nack: jest.fn(),
-            close: channelCloseMock
+            close: channelCloseMock,
           })),
-          createExchange: jest.fn()
-        }))
+          createExchange: jest.fn(),
+        })),
       };
 
-      const eb = await (new RabbitEventBus("test", mockAmqplib as any).init([], "testing service"));
+      const eb = await (new RabbitEventBus('test', mockAmqplib as any).init([], 'testing service'));
 
       await eb.subscribe<{ a: number }>(
         {
-          kind: "something",
-          namespace: "events"
+          kind: 'something',
+          namespace: 'events',
         },
-        jest.fn()
+        jest.fn(),
       );
 
       expect(assertQueueMock).toHaveBeenCalledTimes(1);
@@ -87,25 +86,25 @@ describe("RabbitMQ event-bus driver", () => {
       expect(channelCloseMock).toHaveBeenCalledTimes(0);
     });
 
-    it("allows you to subscribe to an event even when there is no connection", async () => {});
+    it('allows you to subscribe to an event even when there is no connection', async () => {});
 
-    it("acks the message when the handler successfully returns true", async () => {});
+    it('acks the message when the handler successfully returns true', async () => {});
 
-    it("nacks and requeues the message when the handler errors", async () => {});
+    it('nacks and requeues the message when the handler errors', async () => {});
 
-    it("nacks and requeues the message when the handler returns false", async () => {});
+    it('nacks and requeues the message when the handler returns false', async () => {});
   });
 
-  describe("Connection and DX logic", () => {
-    it("Fails gracefully if  you use the class without calling .init()", async () => {
-      const eb = new RabbitEventBus("never");
+  describe('Connection and DX logic', () => {
+    it('Fails gracefully if  you use the class without calling .init()', async () => {
+      const eb = new RabbitEventBus('never');
 
       const exitMock = jest.fn();
       expect(eb.publish({ mock_event: true } as any)).resolves.toBe(false);
 
       await eb.subscribe(
-        { namespace: "something", kind: "something" },
-        async () => false
+        { namespace: 'something', kind: 'something' },
+        async () => false,
       );
     });
 
@@ -122,16 +121,15 @@ describe("RabbitMQ event-bus driver", () => {
             ack: jest.fn(),
             nack: jest.fn(),
           })),
-          createExchange: jest.fn()
-        }))
+          createExchange: jest.fn(),
+        })),
       };
 
-      const eb = new RabbitEventBus("never", mockAmqplib as any);
-
+      const eb = new RabbitEventBus('never', mockAmqplib as any);
 
       await eb.subscribe(
-        { namespace: "something", kind: "something" },
-        async () => false
+        { namespace: 'something', kind: 'something' },
+        async () => false,
       );
 
       expect(consumeMock).toHaveBeenCalledTimes(0);

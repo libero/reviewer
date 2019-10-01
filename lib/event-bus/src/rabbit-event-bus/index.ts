@@ -23,11 +23,9 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
   private connection: Option<Connection> = None;
   serviceName: string = 'unknown_service';
   private connectionString: string = 'amqp://rabbitmq';
-  private _amqplib: any;
 
-  public constructor(amqpUrl: string, _amqplib = amqplib) {
+  public constructor(amqpUrl: string) {
     this.connectionString = amqpUrl;
-    this._amqplib = _amqplib;
   }
 
   private async connect() {
@@ -38,7 +36,7 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
     const connectionfn = debounce(
       async () => {
         this.connection = Option.of(
-          await this._amqplib.connect(this.connectionString),
+          await amqplib.connect(this.connectionString),
         );
       },
       100,
@@ -141,7 +139,7 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
               this.defToExchange(eventIdentifier),
               '',
             );
-            console.log("subscribe")
+            console.log('subscribe');
 
             await channel.consume(
               this.defToQueue(eventIdentifier),
@@ -176,7 +174,7 @@ export class RabbitEventBus implements EventSubscriber, EventPublisher {
       .getOrElseL(() => {
         // Do we want to handle reconnects &/or retries here?
         setTimeout(() => this.subscribe(eventIdentifier, handler), 1000);
-        logger.warn("No connection, can't subscribe, trying again soon!")
+        logger.warn('No connection, can\'t subscribe, trying again soon!');
       });
   }
 }
