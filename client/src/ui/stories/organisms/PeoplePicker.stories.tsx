@@ -59,6 +59,11 @@ storiesOf('ui | organisms/PeoplePicker', module)
             const min = number('Min', 2);
             const max = number('Max', 6);
             button('Add Person', addPerson);
+            button('Add 20 People', (): void => {
+                for (let i = 0; i < 20; i++) {
+                    addPerson();
+                }
+            });
             return (
                 <PeoplePicker
                     required={required}
@@ -71,4 +76,3 @@ storiesOf('ui | organisms/PeoplePicker', module)
             );
         },
     );
-
