@@ -7,7 +7,7 @@ import { EventIdentifier, Event } from '../event-bus';
 import { Subscription, StateChange, MessageWrapper } from './types';
 import { EventUtils } from './event-utils';
 
-export class AMQPConnector<M extends object> {
+export default class AMQPConnector<M extends object> {
   private externalConnector: {
     send: Sender<StateChange<M>>;
   };

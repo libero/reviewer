@@ -6,11 +6,11 @@ import { InfraLogger as logger } from '../logger';
 import { EventIdentifier, Event, EventBus } from '../event-bus';
 import { Subscription, StateChange } from './types';
 import { EventUtils } from './event-utils';
-import { AMQPConnector } from './amqp-connector';
+import AMQPConnector from './amqp-connector';
 
 // <M> doesn't refer to the event types, M refers to the internal statechange message type
 // It probably doesn't even make sense to paramatise it here
-export class RabbitEventBus<M extends object> implements EventBus {
+export default class RabbitEventBus<M extends object> implements EventBus {
   private connector: Option<AMQPConnector<M>> = None;
   private innerChannel: Channel<StateChange<M>> = channel<StateChange<M>>();
   private eventDefinitions: EventIdentifier[];
@@ -18,7 +18,11 @@ export class RabbitEventBus<M extends object> implements EventBus {
 
   private flowing: boolean = false;
 
-  private queue: Array<{ ev: Event<unknown & object>, resolve: (arg0: boolean) => void, reject: (arg0: boolean) => void}> = [];
+  private queue: Array<{
+    ev: Event<unknown & object>;
+    resolve: (arg0: boolean) => void;
+    reject: (arg0: boolean) => void;
+  }> = [];
   private subscriptions: Array<Subscription<unknown & object>> = [];
 
   public constructor(eventDefinitions: EventIdentifier[], serviceName: string) {
@@ -72,8 +76,10 @@ export class RabbitEventBus<M extends object> implements EventBus {
       .map(() => undefined)
       .forEach(() => {
         Option.of(this.queue.shift()).map(item => {
-          const {ev, resolve, reject} = item;
-          return this.publish(ev).then((res) => resolve(res)).catch(() => reject(false));
+          const { ev, resolve, reject } = item;
+          return this.publish(ev)
+            .then(res => resolve(res))
+            .catch(() => reject(false));
         });
       });
   }
@@ -100,19 +106,21 @@ export class RabbitEventBus<M extends object> implements EventBus {
         const published = await this.connector.get().publish(msg);
 
         if (!published) {
-          this.queue.push({ ev: msg, resolve, reject} );
+          this.queue.push({ ev: msg, resolve, reject });
         } else {
           resolve(published);
         }
-
       } else {
-        this.queue.push({ ev: msg, resolve, reject} );
+        this.queue.push({ ev: msg, resolve, reject });
       }
     });
   }
 
-  public async subscribe<P extends object>(eventIdentifier: EventIdentifier, handler: (event: Event<P>) => Promise<boolean>) {
-    this.connector.map((connector) => {
+  public async subscribe<P extends object>(
+    eventIdentifier: EventIdentifier,
+    handler: (event: Event<P>) => Promise<boolean>,
+  ) {
+    this.connector.map(connector => {
       connector.subscribe(eventIdentifier, handler);
     });
     return this.subscriptions.push({
