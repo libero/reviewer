@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState } from 'react';
 import { Pod, Modal } from '../atoms';
 import PersonInfo from './PersonInfo';
 import { Add, CheckCircle, Info } from '@material-ui/icons';
@@ -14,7 +14,7 @@ export interface PersonProps {
 
 interface Props extends PersonProps {
     initialySelected?: boolean;
-    toggleHandler(id: string): void;
+    toggleHandler(id: string, selected: boolean): void;
     selectedButtonIcon?: JSX.Element;
 }
 
@@ -33,19 +33,19 @@ const PersonPod = ({
 
     const onClick = (id: string): void => {
         setSelected(!selected);
-        toggleHandler(id);
+        toggleHandler(id, !selected);
     };
     const commaSeperatedTags = [...focuses, ...expertises].join(', ');
     return (
         <Pod
             buttonIcon={selected ? selectedButtonIcon : <Add />}
             buttonText={selected ? 'Remove' : 'Add'}
-            onClick={() => onClick(id)}
+            onClick={(): void => onClick(id)}
         >
             <Modal
                 hide={toggle}
                 isShowing={isShowing}
-                onAccept={() => onClick(id)}
+                onAccept={(): void => onClick(id)}
                 buttonType="primary"
                 buttonText={`${selected ? 'Remove' : 'Add'} Editor`}
             >

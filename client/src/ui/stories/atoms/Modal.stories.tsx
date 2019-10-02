@@ -19,6 +19,7 @@ const ModalWithButton = (): JSX.Element => {
                 hide={toggle}
                 isShowing={isShowing}
                 onAccept={action('accept')}
+                onCancel={action('cancel')}
                 fullscreen={fullscreen}
                 buttonType={buttonType}
                 buttonText={buttonText}
@@ -44,6 +45,7 @@ storiesOf('ui | atoms/Modal', module)
                     hide={action('hide')}
                     isShowing={isShowing}
                     onAccept={action('accept')}
+                    onCancel={action('cancel')}
                     buttonType={buttonType}
                     fullscreen={fullscreen}
                     buttonText={buttonText}

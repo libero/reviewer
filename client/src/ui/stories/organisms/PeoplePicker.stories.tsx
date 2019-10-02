@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { object, boolean, button, number, text, withKnobs } from '@storybook/addon-knobs';
-import centered from '@storybook/addon-centered/react';
+import { boolean, button, number, text, withKnobs } from '@storybook/addon-knobs';
 import { PeoplePicker } from '../../organisms';
 import '../../../core/styles/index.scss';
+import { PersonProps } from '../../molecules';
 
 let people = [
     {
@@ -30,49 +30,67 @@ let people = [
     },
 ];
 
-const addPerson = (): void => {
-    const focuses = ['Tag 1', 'Tage 2'];
-    const expertises = ['Tag 3'];
-    const id = (Number.parseInt(people[people.length - 1].id) + 1).toString();
-    people.push({
-        id: id,
-        name: `Name ${id}`,
-        institution: `Institution ${id}`,
-        focuses: focuses,
-        expertises: expertises,
+const PeoplePickerStory = (): JSX.Element => {
+    const [selectedPeople, setSelectedPeople] = useState<PersonProps[]>([
+        {
+            id: '1',
+            name: 'Name 1',
+            institution: 'Institution 1',
+            focuses: ['Tag 1', 'Tage 2'],
+            expertises: ['Tag 3'],
+        },
+    ]);
+
+    const addPerson = (): void => {
+        const focuses = ['Tag 1', 'Tage 2'];
+        const expertises = ['Tag 3'];
+        const id = (Number.parseInt(people[people.length - 1].id) + 1).toString();
+        people.push({
+            id: id,
+            name: `Name ${id}`,
+            institution: `Institution ${id}`,
+            focuses: focuses,
+            expertises: expertises,
+        });
+        action(`Added person ${id}`)();
+    };
+
+    const togglePerson = (id: string): void => {
+        if (selectedPeople.find((selectedPerson: PersonProps): boolean => selectedPerson.id === id)) {
+            setSelectedPeople(selectedPeople.filter((person: PersonProps): boolean => person.id !== id));
+            action(`Removed person ${id}`)();
+        } else {
+            setSelectedPeople([...selectedPeople, people.find((person: PersonProps): boolean => person.id === id)]);
+            action(`Added person ${id}`)();
+        }
+    };
+
+    const required = boolean('Required', false);
+    const label = text('Label', 'People Picker');
+    const min = number('Min', 2);
+    const max = number('Max', 6);
+
+    button('Add Person', addPerson);
+    button('Add 20 People', (): void => {
+        for (let i = 0; i < 20; i++) {
+            addPerson();
+        }
     });
-    action(`Added person ${id}`)();
-};
-const removePerson = (id: string): void => {
-    people = people.filter(person => person.id !== id);
-    action(`Removed person ${id}`);
+
+    return (
+        <PeoplePicker
+            required={required}
+            people={people}
+            selectedPeople={selectedPeople}
+            onRemove={togglePerson}
+            label={label}
+            min={min}
+            max={max}
+            setSelectedPeople={(selectedPeople: PersonProps[]): void => setSelectedPeople(selectedPeople)}
+        />
+    );
 };
 
 storiesOf('ui | organisms/PeoplePicker', module)
-    .addDecorator(centered)
     .addDecorator(withKnobs)
-    .add(
-        'SelectedPeopleList',
-        (): JSX.Element => {
-            const required = boolean('Required', false);
-            const label = text('Label', 'People Picker');
-            const min = number('Min', 2);
-            const max = number('Max', 6);
-            button('Add Person', addPerson);
-            button('Add 20 People', (): void => {
-                for (let i = 0; i < 20; i++) {
-                    addPerson();
-                }
-            });
-            return (
-                <PeoplePicker
-                    required={required}
-                    people={people}
-                    onRemove={removePerson}
-                    label={label}
-                    min={min}
-                    max={max}
-                />
-            );
-        },
-    );
+    .add('SelectedPeopleList', (): JSX.Element => <PeoplePickerStory />);

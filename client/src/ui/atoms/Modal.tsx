@@ -8,6 +8,7 @@ interface Props {
     hide: Function;
     children?: JSX.Element[] | JSX.Element;
     onAccept?: Function;
+    onCancel?: Function;
     buttonText?: string;
     fullscreen?: boolean;
     buttonType?: string;
@@ -18,6 +19,7 @@ const Modal = ({
     hide,
     children,
     onAccept,
+    onCancel,
     fullscreen = false,
     buttonType = 'danger',
     buttonText,
@@ -26,6 +28,12 @@ const Modal = ({
     const accept = (): void => {
         if (onAccept) {
             onAccept();
+        }
+        hide();
+    };
+    const cancel = (): void => {
+        if (onCancel) {
+            onCancel();
         }
         hide();
     };
@@ -44,7 +52,7 @@ const Modal = ({
                                   }`}
                               >
                                   <div className={`modal__buttons ${fullscreen ? 'modal__buttons--fullscreen' : ''}`}>
-                                      <Button onClick={(): void => hide()}>Cancel</Button>
+                                      <Button onClick={(): void => cancel()}>Cancel</Button>
                                       <Button onClick={(): void => accept()} type={buttonType}>
                                           {buttonText || t('ui:modal--default-button')}
                                       </Button>
