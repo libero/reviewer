@@ -5,11 +5,7 @@ set -e
 unique_id=$(uuidgen)
 temp_file="github-commit-status-${unique_id}.log"
 
-repository = git remote -v 2>&1 \
-    | grep '(fetch)' \
-    | grep -P "^origin\t" \
-    | sed -e 's/.*github.com[:/]\([A-Za-z0-9/-]*\)\(.git\)\{0,1\} .*/\1/g'
-
+repository="libero/reviewer"
 commit=$(git rev-parse HEAD)
 status="success"
 context="travis"
