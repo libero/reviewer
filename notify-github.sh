@@ -14,6 +14,9 @@ commit=$(git rev-parse HEAD)
 status="success"
 context="travis"
 
+echo "Github API url: https://api.github.com/repos/$repository/statuses/$commit?access_token=$GITHUB_TOKEN"
+echo "payload: {\"state\": \"$status\", \"description\": \"$description\", \"context\": \"$context\", \"target_url\": \"$target_url\"}"
+
 status_code=$(curl \
     -s \
     -o "${temp_file}" \
@@ -23,7 +26,14 @@ status_code=$(curl \
     -X POST \
     -d "{\"state\": \"$status\", \"description\": \"$description\", \"context\": \"$context\", \"target_url\": \"$target_url\"}")
 
+echo "status code: $status_code"
+
 if [[ $status_code -eq 201 ]]; then
     rm "${temp_file}"
     exit 0
 fi
+
+echo "HTTP ${status_code}"
+cat "${temp_file}"
+rm "${temp_file}"
+exit 22 # standard curl -f exit code
