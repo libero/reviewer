@@ -17,3 +17,4 @@ about the user, provided by the `profiles` service.
 - Also this service needs to know about the journal secret so it can verify the tokens provided by it. I think we should use a separate secret to sign and verify tokens issued internally to by libero reviewer, theres no reason for reviewer to know about the secrets used by journal.
 
 
+There are proper docs here: [Spec document](https://docs.google.com/document/d/1Lk0U22AIa2RIN6cIV7Smp87gGLngbyVWB9-PFJUORak/edit?usp=sharing)
