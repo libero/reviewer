@@ -78,7 +78,6 @@ export class AMQPConnector<M extends object> {
     eventIdentifier: EventIdentifier,
     handler: (ev: Event<P>) => Promise<boolean>,
   ): Promise<void> {
-    console.log('subscribe backer end');
     // For the event identifier:
     //  - Declare a subscriber queue
     //  - bind that queue to event exchange
