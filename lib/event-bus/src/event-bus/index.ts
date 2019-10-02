@@ -32,4 +32,4 @@ export interface EventSubscriber {
 export interface EventBus extends EventPublisher, EventSubscriber {}
 
 // Event handler type - has the event-bus injected into it
-export type EventHandler<T extends object> = (eventbus: object extends EventPublisher) => (event: Event<T>) => Promise<boolean>;
+export type EventHandler<T extends object> = (arg0: EventBus) => (event: Event<T>) => Promise<boolean>;

@@ -1,7 +1,8 @@
 import { Event, EventIdentifier } from '../event-bus';
 import { MessageWrapper } from './types';
+import { Option } from 'funfix';
 
-export class Serialization {
+export class EventUtils {
   // Maybe merge this class with AMQPConnector
   public static defToExchange(def: EventIdentifier) {
     return `event__${def.kind}-${def.namespace}`;
@@ -24,5 +25,11 @@ export class Serialization {
         failures: 0, // increments each failure
       },
     };
+  }
+
+  public static messageToEvent<T extends object>(
+    message: MessageWrapper<Event<T>>,
+  ): Option<Event<T>> {
+    return Option.of(message.event);
   }
 }
