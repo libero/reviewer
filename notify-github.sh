@@ -10,7 +10,7 @@ commit=$(git rev-parse HEAD)
 status="success"
 context="travis"
 
-echo "Github API url: https://api.github.com/repos/$repository/statuses/$commit?access_token=$GITHUB_TOKEN"
+echo "Github API url: https://api.github.com/repos/$repository/statuses/$commit"
 echo "payload: {\"state\": \"$status\", \"description\": \"$description\", \"context\": \"$context\", \"target_url\": \"$target_url\"}"
 
 status_code=$(curl \
@@ -19,7 +19,7 @@ status_code=$(curl \
     -w '%{http_code}' \
     "https://api.github.com/repos/$repository/statuses/$commit" \
     -H "Content-Type: application/json" \
-    -H "Authorization: token $GITHUB_TOKEN"
+    -H "Authorization: token $GITHUB_TOKEN" \
     -X POST \
     -d "{\"state\": \"$status\", \"description\": \"$description\", \"context\": \"$context\", \"target_url\": \"$target_url\"}")
 
