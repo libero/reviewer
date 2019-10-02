@@ -1,7 +1,7 @@
 import * as express from "express";
 import { Request, Response } from "express";
 import { InfraLogger as logger } from './logger';
-import { Event, EventIdentifier, RabbitMessageQueue, MockMessageQueue } from '@libero/event-bus';
+import { Event, EventIdentifier, RabbitEventBus, MockEventBus} from '@libero/event-bus';
 
 type TestEventPayload = {
   x: number;
@@ -15,7 +15,7 @@ const init_mq = async () => {
   };
 
   // Mock bus
-  const mock_mq = await (new MockMessageQueue()).init([test_event_def, test_event_def], "message-bus-test");
+  const mock_mq = await (new MockEventBus()).init([test_event_def, test_event_def], "message-bus-test");
   logger.info("messageQueueStarted");
 
   mock_mq.subscribe<TestEventPayload>(test_event_def, async (event) => {
@@ -38,7 +38,7 @@ const init_mq = async () => {
   }, 10000)
 
   // Rabbit bus
-  const rabbitmq_mq = await (new RabbitMessageQueue()).init([test_event_def, test_event_def], "message-bus-test");
+  const rabbitmq_mq = new RabbitEventBus([test_event_def, test_event_def], "message-bus-test");
   logger.info("messageQueueStarted");
 
   rabbitmq_mq.subscribe<TestEventPayload>(test_event_def, async (event) => {
@@ -46,7 +46,7 @@ const init_mq = async () => {
     return true;
   });
 
-  setTimeout(() => {
+  setInterval(async () => {
     const event: Event<TestEventPayload> = {
       id: 'some-wevent-id',
       created: new Date(),
@@ -57,8 +57,9 @@ const init_mq = async () => {
       ...test_event_def
     }
 
-    rabbitmq_mq.publish(event);
-  }, 5000)
+    console.log("send attempt");
+    rabbitmq_mq.publish(event).then(() => console.log("send complete"));
+  }, 500)
 
 };
 
