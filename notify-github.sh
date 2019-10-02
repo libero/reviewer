@@ -6,7 +6,7 @@ unique_id=$(uuidgen)
 temp_file="github-commit-status-${unique_id}.log"
 
 repository="libero/reviewer"
-commit=$(git rev-parse HEAD)
+commit=$TRAVIS_COMMIT
 status="success"
 context="travis"
 
