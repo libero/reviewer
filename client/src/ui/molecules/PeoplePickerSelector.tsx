@@ -41,15 +41,14 @@ const PeoplePickerSelector = ({ initialySelected, people, onDone, label, isShowi
         const person = data[rowIndex * 2 + columnIndex];
         const selected =
             person &&
-            initialySelected.find((selectedPerson: PersonProps): boolean => person.id === selectedPerson.id) !==
+            locallySelected.find((selectedPerson: PersonProps): boolean => person.id === selectedPerson.id) !==
                 undefined;
         return person ? (
-            <div style={style} className="people-picker__modal_list--item">
+            <div key={person.id} style={style} className="people-picker__modal_list--item">
                 <PersonPod {...person} toggleHandler={togglePerson} initialySelected={selected} />
             </div>
         ) : null;
     };
-
     return (
         <Modal
             hide={toggle}
