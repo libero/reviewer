@@ -43,7 +43,7 @@ jobs:
         - docker cp client_storybook__$IMAGE_TAG:/app/storybook-static/. storybook-static/
         - docker rm client_storybook__$IMAGE_TAG
         - docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -v $(pwd)/storybook-static:/aws mikesir87/aws-cli aws s3 sync /aws s3://unstable-reviewer-storybook/$TRAVIS_PULL_REQUEST_BRANCH
-        - target_url="https://unstable-reviewer-storybook.s3.amazonaws.com/$TRAVIS_PULL_REQUEST_BRANCH/index.html" repository="libero/reviewer" description='Deployed storybook' commit=$(git rev-parse HEAD^2) ./notify-github.sh
+        - target_url="https://unstable-reviewer-storybook.s3.amazonaws.com/$TRAVIS_PULL_REQUEST_BRANCH/index.html" repository="libero/reviewer" description='Deployed storybook' context='storybook' commit=$(git rev-parse HEAD^2) ./notify-github.sh
 
 if: |
     branch = master OR \

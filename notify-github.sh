@@ -6,7 +6,7 @@ unique_id=$(uuidgen)
 temp_file="github-commit-status-${unique_id}.log"
 
 function usage () {
-  echo "Usage: target_url=\"https://example.org\" repository=\"owner/repo\" description='Action finished' commit=<commit sha> ./notify-github.sh";
+  echo "Usage: target_url=\"https://example.org\" repository=\"owner/repo\" description='Action finished' context=<context> commit=<commit sha> ./notify-github.sh";
 }
 
 if [ -z "$commit" ]; then
@@ -33,8 +33,13 @@ if [ -z "$target_url" ]; then
   exit 1;
 fi
 
+if [ -z "$context" ]; then
+  echo "Missing context variable";
+  usage
+  exit 1;
+fi
+
 status="success"
-context="travis"
 
 status_code=$(curl \
     -s \
