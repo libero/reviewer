@@ -62,8 +62,8 @@ export default class RabbitEventBus<M extends object> implements EventBus {
         this.onDisconnect();
 
         // Start reconnecting
-        const reconnect = debounce(() => this.connect(this.url), 100, { 'maxWait' : 2000 });
-        reconnect()
+        const reconnect = debounce(() => this.connect(this.url), 100, { maxWait : 2000 });
+        reconnect();
       } else if (payload.newState === 'CONNECTED') {
         // logger.info('connection confirmed');
         this.onConnect();
