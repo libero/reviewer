@@ -6,10 +6,11 @@ unique_id=$(uuidgen)
 temp_file="github-commit-status-${unique_id}.log"
 
 repository="libero/reviewer"
-commit=$TRAVIS_COMMIT
+# Travis CI builds a merge commit on pull requests, so
+# we want to refer to the second parent of this merge commit
+commit=$(git rev-parse HEAD^2)
 status="success"
 context="travis"
-git log | head -n 100
 
 echo "Github API url: https://api.github.com/repos/$repository/statuses/$commit"
 echo "payload: {\"state\": \"$status\", \"description\": \"$description\", \"context\": \"$context\", \"target_url\": \"$target_url\"}"
