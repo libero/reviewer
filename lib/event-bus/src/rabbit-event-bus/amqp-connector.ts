@@ -17,6 +17,7 @@ export default class AMQPConnector<M extends object> {
   private subscriptions: Array<Subscription<object>>;
 
   public constructor(
+    url: string,
     [sender]: Channel<StateChange<M>>,
     eventDefs: EventIdentifier[],
     subscriptions: Array<Subscription<unknown & object>>,
@@ -28,7 +29,7 @@ export default class AMQPConnector<M extends object> {
     this.serviceName = serviceName;
 
     // Set up the connections to the AMQP server
-    this.connect('amqp://rabbitmq')
+    this.connect(url)
       .then(async connection => {
         this.connection = connection;
         // Setup the exchanges
@@ -58,7 +59,7 @@ export default class AMQPConnector<M extends object> {
       })
       .catch(() => {
         // notify the manager object that the connection has failed
-        logger.debug('connectionFailed, retrying');
+        // logger.debug('connectionFailed, retrying');
         this.disconnected();
       });
   }
@@ -106,7 +107,6 @@ export default class AMQPConnector<M extends object> {
                   const message: MessageWrapper<Event<P>> = JSON.parse(
                     msg.content.toString(),
                   );
-                  logger.info('eventRecv', { message });
 
                   handler(EventUtils.messageToEvent(message).get()).then(
                     isOk => {

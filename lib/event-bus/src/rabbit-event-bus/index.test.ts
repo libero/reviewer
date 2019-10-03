@@ -14,7 +14,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line
       (AMQPConnector as any).mockImplementation(
-        ([send, _]: Channel<StateChange<{}>>) => {
+        (__, [send, _]: Channel<StateChange<{}>>) => {
           send({
             newState: 'CONNECTED',
           });
@@ -24,7 +24,7 @@ describe('AMQP Connection Manager', () => {
           };
         },
       );
-      const manager = new RabbitEventBus([], '');
+      const manager = await (new RabbitEventBus({url: ''})).init([], '');
       await manager.publish({
         kind: 'test',
         namespace: 'test',
@@ -42,7 +42,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line
       (AMQPConnector as any).mockImplementation(
-        ([send, _]: Channel<StateChange<{}>>) => {
+        (__, [send, _]: Channel<StateChange<{}>>) => {
           send({
             newState: 'CONNECTED',
           });
@@ -55,7 +55,7 @@ describe('AMQP Connection Manager', () => {
         },
       );
 
-      const manager = new RabbitEventBus([], '');
+      const manager = await ( new RabbitEventBus({url: ''})).init([], '');
 
       await manager.subscribe(
         {
@@ -78,7 +78,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line
       (AMQPConnector as any).mockImplementation(
-        ([send, _]: Channel<StateChange<{}>>, __, subscriptions) => {
+        (___, [send, _]: Channel<StateChange<{}>>, __, subscriptions) => {
           send({
             newState: 'CONNECTED',
           });
@@ -95,7 +95,7 @@ describe('AMQP Connection Manager', () => {
         },
       );
 
-      const manager = new RabbitEventBus([], '');
+      const manager = await ( new RabbitEventBus({url: ''})).init([], '');
 
       const publishPromise = Promise.all([
         manager.publish({
@@ -142,7 +142,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line
       (AMQPConnector as any).mockImplementation(
-        ([send, _]: Channel<StateChange<{}>>, __, subscriptions) => {
+        (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
           send({
             newState: 'CONNECTED',
           });
@@ -160,7 +160,7 @@ describe('AMQP Connection Manager', () => {
         },
       );
 
-      const manager = new RabbitEventBus([], '');
+      const manager = await ( new RabbitEventBus({url: ''})).init([], '');
 
       await manager.subscribe(
         {

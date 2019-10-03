@@ -8,6 +8,10 @@ import { Subscription, StateChange } from './types';
 import { EventUtils } from './event-utils';
 import AMQPConnector from './amqp-connector';
 
+export interface RabbitEventBusConnectionOptions {
+  url: string;
+}
+
 // <M> doesn't refer to the event types, M refers to the internal statechange message type
 // It probably doesn't even make sense to paramatise it here
 export default class RabbitEventBus<M extends object> implements EventBus {
@@ -19,6 +23,7 @@ export default class RabbitEventBus<M extends object> implements EventBus {
   private serviceName: string = 'unknown-service';
 
   private flowing: boolean = false;
+  private url: string = '';
 
   private queue: Array<{
     ev: Event<unknown & object>;
@@ -27,19 +32,20 @@ export default class RabbitEventBus<M extends object> implements EventBus {
   }> = [];
   private subscriptions: Array<Subscription<unknown & object>> = [];
 
-  public constructor(eventDefinitions: EventIdentifier[], serviceName: string) {
+  public constructor(connectionOpts: RabbitEventBusConnectionOptions) {
     // constructor
     // TODO: Constructor takes connection information
+    this.url = connectionOpts.url;
+  }
+
+  public async init(eventDefinitions: EventIdentifier[], serviceName: string) {
+    // TODO: init takes events information
     this.eventDefinitions = eventDefinitions;
     this.serviceName = serviceName;
 
     this.observeStateChange();
 
-    this.connect();
-  }
-
-  public async init() {
-    // TODO: init takes events information
+    this.connect(this.url);
     return this;
   }
 
@@ -55,9 +61,9 @@ export default class RabbitEventBus<M extends object> implements EventBus {
         this.onDisconnect();
 
         // Start reconnecting
-        this.connect();
+        this.connect(this.url);
       } else if (payload.newState === 'CONNECTED') {
-        logger.info('connection confirmed');
+        // logger.info('connection confirmed');
         this.onConnect();
       }
     }
@@ -85,11 +91,12 @@ export default class RabbitEventBus<M extends object> implements EventBus {
       });
   }
 
-  private connect() {
+  private connect(url) {
     // logger.debug('attemptingConnection');
     // Should I debounce this?
     this.connector = Some(
       new AMQPConnector(
+        url,
         this.innerChannel,
         this.eventDefinitions,
         this.subscriptions,
