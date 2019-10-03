@@ -5,8 +5,8 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { Modal } from '../atoms';
 
 interface Props {
-    people: PersonProps[];
-    initialySelected: string[];
+    people?: PersonProps[];
+    initialySelected?: string[];
     onDone: (selectedPeople: string[]) => void;
     label: string;
     toggle: Function;
@@ -20,12 +20,19 @@ interface RendererProps {
     style: React.CSSProperties;
 }
 
-const PeoplePickerSelector = ({ initialySelected, people, onDone, label, isShowing, toggle }: Props): JSX.Element => {
+const PeoplePickerSelector = ({
+    initialySelected = [],
+    people = [],
+    onDone,
+    label,
+    isShowing,
+    toggle,
+}: Props): JSX.Element => {
     const [locallySelected, setLocallySelected] = useState(initialySelected);
-    useEffect(() => {
+    useEffect((): void => {
         setLocallySelected(initialySelected);
     }, [initialySelected]);
-    
+
     const accept = (): void => {
         onDone(locallySelected);
     };
