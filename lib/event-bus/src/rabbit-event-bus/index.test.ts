@@ -3,7 +3,6 @@ import { Channel, channel } from 'rs-channel-node';
 import { StateChange } from './types';
 import AMQPConnector from './amqp-connector';
 import * as logger from '../logger';
-// Hide log messages
 jest.mock('../logger');
 jest.mock('./amqp-connector');
 
@@ -70,8 +69,8 @@ describe('AMQP Connection Manager', () => {
       expect(subscribeMock).toBeCalled();
     });
 
-    it('passes on subscribes that are registered after the connector is ready', async ( done ) => {
-      const subscribeMock = jest.fn();
+    it('it resolves publishes once they\'ve actually been published', async done => {
+      const publishMock = jest.fn();
 
       // This channel is used to simulate startup delay in the connector
       const [readyNotify, readyWait] = channel<{}>();
@@ -79,16 +78,82 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line
       (AMQPConnector as any).mockImplementation(
-        ([send, _]: Channel<StateChange<{}>>) => {
+        ([send, _]: Channel<StateChange<{}>>, __, subscriptions) => {
           send({
             newState: 'CONNECTED',
           });
           readyWait().then(() => {
             send({
               newState: 'NOT_CONNECTED',
-            }); },
-          );
+            });
+          });
           return {
+            subscriptions,
+            publish: publishMock,
+            subscribe: jest.fn(),
+          };
+        },
+      );
+
+      const manager = new RabbitEventBus([], '');
+
+      const publishPromise = Promise.all([
+        manager.publish({
+          kind: 'test',
+          namespace: 'test',
+          id: 'soemthing',
+          created: new Date(),
+          payload: {},
+        }),
+        manager.publish({
+          kind: 'test',
+          namespace: 'test',
+          id: 'soemthing',
+          created: new Date(),
+          payload: {},
+        }),
+        manager.publish({
+          kind: 'test',
+          namespace: 'test',
+          id: 'soemthing',
+          created: new Date(),
+          payload: {},
+        }),
+      ]);
+
+      expect(publishMock).toBeCalledTimes(0);
+
+      // simulate some startup delay in the connector
+      setTimeout(() => {
+        readyNotify({});
+        // Expect the connector to be created with subscriptions
+        expect(publishMock).toBeCalledTimes(3);
+        done();
+      }, 50);
+    });
+
+    it('passes on subscribes that are registered after the connector is ready', async done => {
+      const subscribeMock = jest.fn();
+      const connectMock = jest.fn();
+
+      // This channel is used to simulate startup delay in the connector
+      const [readyNotify, readyWait] = channel<{}>();
+
+      // (...as any) needed because jest is magic
+      // tslint:disable-next-line
+      (AMQPConnector as any).mockImplementation(
+        ([send, _]: Channel<StateChange<{}>>, __, subscriptions) => {
+          send({
+            newState: 'CONNECTED',
+          });
+          readyWait().then(() => {
+            send({
+              newState: 'NOT_CONNECTED',
+            });
+          });
+          return {
+            subscriptions,
+            connect: connectMock,
             publish: jest.fn(),
             subscribe: subscribeMock,
           };
@@ -119,15 +184,20 @@ describe('AMQP Connection Manager', () => {
         jest.fn(),
       );
 
+      // tslint:disable-next-line
+      expect((manager as any).subscriptions.length).toEqual(3);
       expect(subscribeMock).toBeCalledTimes(3);
 
       // simulate some startup delay in the connector
       setTimeout(() => {
         readyNotify({});
-        // It should call the subscribes again for the mock function
-        expect(subscribeMock).toBeCalledTimes(6);
+        // Expect the connector to be created with subscriptions
+        // tslint:disable-next-line
+        expect((manager as any).connector.get().subscriptions.length).toEqual(
+          3,
+        );
         done();
-      }, 200);
+      }, 50);
     });
   });
 

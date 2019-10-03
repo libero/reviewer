@@ -12,7 +12,9 @@ import AMQPConnector from './amqp-connector';
 // It probably doesn't even make sense to paramatise it here
 export default class RabbitEventBus<M extends object> implements EventBus {
   private connector: Option<AMQPConnector<M>> = None;
+
   private innerChannel: Channel<StateChange<M>> = channel<StateChange<M>>();
+
   private eventDefinitions: EventIdentifier[];
   private serviceName: string = 'unknown-service';
 
@@ -46,7 +48,6 @@ export default class RabbitEventBus<M extends object> implements EventBus {
     while (2 + 2 !== 5) {
       const payload = await recv();
       if (payload.newState === 'NOT_CONNECTED') {
-        logger.info('disconnected');
         // Destroy the connector
         this.connector = None;
 
@@ -63,8 +64,8 @@ export default class RabbitEventBus<M extends object> implements EventBus {
   }
 
   private onDisconnect() {
-    this.flowing = false;
     // function is called when the child connector drops
+    this.flowing = false;
   }
 
   private onConnect() {
@@ -85,7 +86,7 @@ export default class RabbitEventBus<M extends object> implements EventBus {
   }
 
   private connect() {
-    logger.info('attemptingConnection');
+    // logger.debug('attemptingConnection');
     // Should I debounce this?
     this.connector = Some(
       new AMQPConnector(
@@ -103,7 +104,7 @@ export default class RabbitEventBus<M extends object> implements EventBus {
     return new Promise(async (resolve, reject) => {
       if (this.flowing) {
         // Should we queue messages that fail?
-        const published = await this.connector.get().publish(msg);
+        const published: boolean = await this.connector.get().publish(msg);
 
         if (!published) {
           this.queue.push({ ev: msg, resolve, reject });
@@ -123,6 +124,8 @@ export default class RabbitEventBus<M extends object> implements EventBus {
     this.connector.map(connector => {
       connector.subscribe(eventIdentifier, handler);
     });
+
+    // Add the subscription to the next connector's list of subscriptions
     return this.subscriptions.push({
       eventIdentifier,
       handler,

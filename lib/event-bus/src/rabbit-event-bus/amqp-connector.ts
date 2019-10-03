@@ -14,6 +14,7 @@ export default class AMQPConnector<M extends object> {
   private serviceName: string = 'unknown-service';
 
   private connection: Connection;
+  private subscriptions: Array<Subscription<object>>;
 
   public constructor(
     [sender]: Channel<StateChange<M>>,
@@ -22,6 +23,7 @@ export default class AMQPConnector<M extends object> {
     serviceName: string,
   ) {
     this.externalConnector = { send: sender };
+    this.subscriptions = subscriptions;
 
     this.serviceName = serviceName;
 
@@ -56,7 +58,7 @@ export default class AMQPConnector<M extends object> {
       })
       .catch(() => {
         // notify the manager object that the connection has failed
-        logger.error('connectionFailed, retrying');
+        logger.debug('connectionFailed, retrying');
         this.disconnected();
       });
   }
