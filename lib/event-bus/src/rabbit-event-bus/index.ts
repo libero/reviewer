@@ -2,6 +2,7 @@ import { Sender, Receiver, Channel, channel } from 'rs-channel-node';
 import { Option, None, Some } from 'funfix';
 import { Connection } from 'amqplib';
 import * as amqplib from 'amqplib';
+import { debounce } from 'lodash';
 import { InfraLogger as logger } from '../logger';
 import { EventIdentifier, Event, EventBus } from '../event-bus';
 import { Subscription, StateChange } from './types';
@@ -61,7 +62,8 @@ export default class RabbitEventBus<M extends object> implements EventBus {
         this.onDisconnect();
 
         // Start reconnecting
-        this.connect(this.url);
+        const reconnect = debounce(() => this.connect(this.url), 100, { 'maxWait' : 2000 });
+        reconnect()
       } else if (payload.newState === 'CONNECTED') {
         // logger.info('connection confirmed');
         this.onConnect();

@@ -201,5 +201,58 @@ describe('AMQP Connection Manager', () => {
     });
   });
 
-  describe('behaviour with a failed connection', () => {});
+  describe('degraded state', () => {
+    it ('publish promises are not resolved after a failed connection', async done => {
+        const subscribeMock = jest.fn();
+        const connectMock = jest.fn();
+
+        // tslint:disable-next-line
+        (AMQPConnector as any).mockImplementation(
+            (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
+                send({
+                    newState: 'NOT_CONNECTED',
+                });
+
+                return {
+                    subscriptions,
+                    connect: connectMock,
+                    publish: jest.fn(),
+                    subscribe: subscribeMock,
+                };
+            },
+        );
+
+        const manager = await ( new RabbitEventBus({url: ''})).init([], '');
+        const then = jest.fn()
+
+        manager.publish({
+            kind: 'test',
+            namespace: 'test',
+            id: 'soemthing',
+            created: new Date(),
+            payload: {},
+        }).then(then)
+
+        manager.publish({
+            kind: 'test',
+            namespace: 'test',
+            id: 'soemthing',
+            created: new Date(),
+            payload: {},
+        }).then(then)
+
+        manager.publish({
+            kind: 'test',
+            namespace: 'test',
+            id: 'soemthing',
+            created: new Date(),
+            payload: {},
+        }).then(then)
+
+        setTimeout(() => {
+            expect(then).toHaveBeenCalledTimes(0)
+            done()
+        }, 50)
+    })
+  })
 });
