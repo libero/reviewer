@@ -9,6 +9,7 @@ repository="libero/reviewer"
 commit=$TRAVIS_COMMIT
 status="success"
 context="travis"
+git log | head -n 100
 
 echo "Github API url: https://api.github.com/repos/$repository/statuses/$commit"
 echo "payload: {\"state\": \"$status\", \"description\": \"$description\", \"context\": \"$context\", \"target_url\": \"$target_url\"}"
