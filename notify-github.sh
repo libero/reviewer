@@ -12,25 +12,25 @@ function usage () {
 if [ -z "$commit" ]; then
   echo "Missing commit variable";
   usage
-  exit 22;
+  exit 1;
 fi
 
 if [ -z "$repository" ]; then
   echo "Missing repository variable";
   usage
-  exit 22;
+  exit 1;
 fi
 
 if [ -z "$description" ]; then
   echo "Missing description variable";
   usage
-  exit 22;
+  exit 1;
 fi
 
 if [ -z "$target_url" ]; then
   echo "Missing target_url variable";
   usage
-  exit 22;
+  exit 1;
 fi
 
 status="success"
