@@ -319,4 +319,7 @@ describe('AMQP Connection Manager', () => {
       }, 250);
     });
   });
+
+  // Tests that it queues up messages that it can't send and that resends then when it can
+  // If a message fails to send it will retry it
 });
