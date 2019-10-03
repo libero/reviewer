@@ -228,7 +228,7 @@ describe('AMQP Connection Manager', () => {
         manager.publish({
             kind: 'test',
             namespace: 'test',
-            id: 'soemthing',
+            id: 'something',
             created: new Date(),
             payload: {},
         }).then(then)
@@ -236,7 +236,7 @@ describe('AMQP Connection Manager', () => {
         manager.publish({
             kind: 'test',
             namespace: 'test',
-            id: 'soemthing',
+            id: 'something',
             created: new Date(),
             payload: {},
         }).then(then)
@@ -244,13 +244,66 @@ describe('AMQP Connection Manager', () => {
         manager.publish({
             kind: 'test',
             namespace: 'test',
-            id: 'soemthing',
+            id: 'something',
             created: new Date(),
             payload: {},
         }).then(then)
 
         setTimeout(() => {
             expect(then).toHaveBeenCalledTimes(0)
+            done()
+        }, 50)
+    })
+
+    it ('publish promises are resolved after a successful connection', async done => {
+        const subscribeMock = jest.fn();
+        const connectMock = jest.fn();
+
+        // tslint:disable-next-line
+        (AMQPConnector as any).mockImplementation(
+            (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
+                send({
+                    newState: 'CONNECTED',
+                });
+
+                return {
+                    subscriptions,
+                    connect: connectMock,
+                    publish: jest.fn(),
+                    subscribe: subscribeMock,
+                };
+            },
+        );
+
+        const manager = await ( new RabbitEventBus({url: ''})).init([], '');
+        const then = jest.fn()
+
+        manager.publish({
+            kind: 'test',
+            namespace: 'test',
+            id: 'something',
+            created: new Date(),
+            payload: {},
+        }).then(then)
+
+        manager.publish({
+            kind: 'test',
+            namespace: 'test',
+            id: 'something',
+            created: new Date(),
+            payload: {},
+        }).then(then)
+
+        manager.publish({
+            kind: 'test',
+            namespace: 'test',
+            id: 'something',
+            created: new Date(),
+            payload: {},
+        }).then(then)
+
+        setTimeout(() => {
+            expect(then).toHaveBeenCalledTimes(3)
             done()
         }, 50)
     })
