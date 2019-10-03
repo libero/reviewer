@@ -4,7 +4,6 @@ import { action } from '@storybook/addon-actions';
 import { boolean, button, number, text, withKnobs } from '@storybook/addon-knobs';
 import { PeoplePicker } from '../../organisms';
 import '../../../core/styles/index.scss';
-import { PersonProps } from '../../molecules';
 
 let people = [
     {
@@ -31,15 +30,7 @@ let people = [
 ];
 
 const PeoplePickerStory = (): JSX.Element => {
-    const [selectedPeople, setSelectedPeople] = useState<PersonProps[]>([
-        {
-            id: '1',
-            name: 'Name 1',
-            institution: 'Institution 1',
-            focuses: ['Tag 1', 'Tage 2'],
-            expertises: ['Tag 3'],
-        },
-    ]);
+    const [selectedPeople, setSelectedPeople] = useState<string[]>(['1']);
 
     const addPerson = (): void => {
         const focuses = ['Tag 1', 'Tage 2'];
@@ -55,14 +46,9 @@ const PeoplePickerStory = (): JSX.Element => {
         action(`Added person ${id}`)();
     };
 
-    const togglePerson = (id: string): void => {
-        if (selectedPeople.find((selectedPerson: PersonProps): boolean => selectedPerson.id === id)) {
-            setSelectedPeople(selectedPeople.filter((person: PersonProps): boolean => person.id !== id));
-            action(`Removed person ${id}`)();
-        } else {
-            setSelectedPeople([...selectedPeople, people.find((person: PersonProps): boolean => person.id === id)]);
-            action(`Added person ${id}`)();
-        }
+    const removePerson = (id: string): void => {
+        setSelectedPeople(selectedPeople.filter((personId: string): boolean => personId !== id));
+        action(`Removed person ${id}`)();
     };
 
     const required = boolean('Required', false);
@@ -82,11 +68,11 @@ const PeoplePickerStory = (): JSX.Element => {
             required={required}
             people={people}
             selectedPeople={selectedPeople}
-            onRemove={togglePerson}
+            onRemove={removePerson}
             label={label}
             min={min}
             max={max}
-            setSelectedPeople={(selectedPeople: PersonProps[]): void => setSelectedPeople(selectedPeople)}
+            setSelectedPeople={(selectedPeople: string[]): void => setSelectedPeople(selectedPeople)}
         />
     );
 };

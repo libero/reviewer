@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PersonProps, PersonPod } from '.';
 import { FixedSizeGrid as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
@@ -6,8 +6,8 @@ import { Modal } from '../atoms';
 
 interface Props {
     people: PersonProps[];
-    initialySelected: PersonProps[];
-    onDone: (selectedPeople: PersonProps[]) => void;
+    initialySelected: string[];
+    onDone: (selectedPeople: string[]) => void;
     label: string;
     toggle: Function;
     isShowing: boolean;
@@ -22,33 +22,31 @@ interface RendererProps {
 
 const PeoplePickerSelector = ({ initialySelected, people, onDone, label, isShowing, toggle }: Props): JSX.Element => {
     const [locallySelected, setLocallySelected] = useState(initialySelected);
+    useEffect(() => {
+        setLocallySelected(initialySelected);
+    }, [initialySelected]);
+    
     const accept = (): void => {
         onDone(locallySelected);
     };
     const togglePerson = (id: string, selected: boolean): void => {
-        console.log(`ID: ${id} .... selected: ${selected}`);
         if (!selected) {
-            setLocallySelected(locallySelected.filter((localPerson: PersonProps): boolean => localPerson.id !== id));
+            setLocallySelected(locallySelected.filter((listId: string): boolean => listId !== id));
         } else {
-            setLocallySelected([
-                ...locallySelected,
-                people.find((localPerson: PersonProps): boolean => localPerson.id === id),
-            ]);
+            setLocallySelected([...locallySelected, id]);
         }
     };
 
     const ItemRenderer = ({ rowIndex, columnIndex, data, style }: RendererProps): JSX.Element => {
         const person = data[rowIndex * 2 + columnIndex];
-        const selected =
-            person &&
-            locallySelected.find((selectedPerson: PersonProps): boolean => person.id === selectedPerson.id) !==
-                undefined;
+        const selected = person && locallySelected.includes(person.id);
         return person ? (
             <div key={person.id} style={style} className="people-picker__modal_list--item">
                 <PersonPod {...person} toggleHandler={togglePerson} initialySelected={selected} />
             </div>
         ) : null;
     };
+
     return (
         <Modal
             hide={toggle}

@@ -4,13 +4,13 @@ import useModal from '../../ui/hooks/useModal';
 
 interface Props {
     people?: PersonProps[];
-    selectedPeople?: PersonProps[];
+    selectedPeople?: string[];
     label: string;
     required: boolean;
     min?: number;
     max?: number;
     onRemove: (personId: string) => void;
-    setSelectedPeople: (selectedPeople: PersonProps[]) => void;
+    setSelectedPeople: (selectedPeople: string[]) => void;
 }
 
 const PeoplePicker = ({
@@ -24,12 +24,12 @@ const PeoplePicker = ({
     setSelectedPeople,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
-
+    
     return (
         <div className="people-picker">
             <h2 className="typography__heading typography__heading--h2">{label}</h2>
             <SelectedPeopleList
-                people={selectedPeople}
+                people={people.filter(person => selectedPeople.includes(person.id))}
                 required={required}
                 onRemove={onRemove}
                 onOpen={(): void => toggle()}
