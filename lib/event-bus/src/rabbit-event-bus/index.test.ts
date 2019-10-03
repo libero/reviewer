@@ -24,7 +24,7 @@ describe('AMQP Connection Manager', () => {
           };
         },
       );
-      const manager = await (new RabbitEventBus({url: ''})).init([], '');
+      const manager = await new RabbitEventBus({ url: '' }).init([], '');
       await manager.publish({
         kind: 'test',
         namespace: 'test',
@@ -55,7 +55,7 @@ describe('AMQP Connection Manager', () => {
         },
       );
 
-      const manager = await ( new RabbitEventBus({url: ''})).init([], '');
+      const manager = await new RabbitEventBus({ url: '' }).init([], '');
 
       await manager.subscribe(
         {
@@ -95,7 +95,7 @@ describe('AMQP Connection Manager', () => {
         },
       );
 
-      const manager = await ( new RabbitEventBus({url: ''})).init([], '');
+      const manager = await new RabbitEventBus({ url: '' }).init([], '');
 
       const publishPromise = Promise.all([
         manager.publish({
@@ -160,7 +160,7 @@ describe('AMQP Connection Manager', () => {
         },
       );
 
-      const manager = await ( new RabbitEventBus({url: ''})).init([], '');
+      const manager = await new RabbitEventBus({ url: '' }).init([], '');
 
       await manager.subscribe(
         {
@@ -202,110 +202,121 @@ describe('AMQP Connection Manager', () => {
   });
 
   describe('degraded state', () => {
-    it ('publish promises are not resolved after a failed connection', async done => {
-        const subscribeMock = jest.fn();
-        const connectMock = jest.fn();
+    it('publish promises are not resolved after a failed connection', async done => {
+      const subscribeMock = jest.fn();
+      const connectMock = jest.fn();
 
-        // tslint:disable-next-line
-        (AMQPConnector as any).mockImplementation(
-            (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
-                send({
-                    newState: 'NOT_CONNECTED',
-                });
+      // tslint:disable-next-line
+      (AMQPConnector as any).mockImplementation(
+        (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
+          send({
+            newState: 'NOT_CONNECTED',
+          });
 
-                return {
-                    subscriptions,
-                    connect: connectMock,
-                    publish: jest.fn(),
-                    subscribe: subscribeMock,
-                };
-            },
-        );
+          return {
+            subscriptions,
+            connect: connectMock,
+            publish: jest.fn(() => false),
+            subscribe: subscribeMock,
+          };
+        },
+      );
 
-        const manager = await ( new RabbitEventBus({url: ''})).init([], '');
-        const then = jest.fn()
+      const manager = await new RabbitEventBus({ url: '' }).init([], '');
+      const then = jest.fn();
 
-        manager.publish({
-            kind: 'test',
-            namespace: 'test',
-            id: 'something',
-            created: new Date(),
-            payload: {},
-        }).then(then)
+      manager
+        .publish({
+          kind: 'test',
+          namespace: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
 
-        manager.publish({
-            kind: 'test',
-            namespace: 'test',
-            id: 'something',
-            created: new Date(),
-            payload: {},
-        }).then(then)
+      manager
+        .publish({
+          kind: 'test',
+          namespace: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
 
-        manager.publish({
-            kind: 'test',
-            namespace: 'test',
-            id: 'something',
-            created: new Date(),
-            payload: {},
-        }).then(then)
+      manager
+        .publish({
+          kind: 'test',
+          namespace: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
 
-        setTimeout(() => {
-            expect(then).toHaveBeenCalledTimes(0)
-            done()
-        }, 50)
-    })
+      setTimeout(() => {
+        expect(then).toHaveBeenCalledTimes(0);
+        done();
+      }, 50);
+    });
 
-    it ('publish promises are resolved after a successful connection', async done => {
-        const subscribeMock = jest.fn();
-        const connectMock = jest.fn();
+    it('publish promises are resolved after a successful connection', async done => {
+      const subscribeMock = jest.fn();
+      const connectMock = jest.fn();
 
-        // tslint:disable-next-line
-        (AMQPConnector as any).mockImplementation(
-            (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
-                send({
-                    newState: 'CONNECTED',
-                });
+      // tslint:disable-next-line
+      (AMQPConnector as any).mockImplementation(
+        (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
+          send({
+            newState: 'CONNECTED',
+          });
 
-                return {
-                    subscriptions,
-                    connect: connectMock,
-                    publish: jest.fn(),
-                    subscribe: subscribeMock,
-                };
-            },
-        );
+          return {
+            subscriptions,
+            publish: jest.fn(() => true),
+            subscribe: subscribeMock,
+          };
+        },
+      );
 
-        const manager = await ( new RabbitEventBus({url: ''})).init([], '');
-        const then = jest.fn()
+      const manager = await new RabbitEventBus({ url: '' }).init([], '');
+      const then = jest.fn();
 
-        manager.publish({
-            kind: 'test',
-            namespace: 'test',
-            id: 'something',
-            created: new Date(),
-            payload: {},
-        }).then(then)
+      manager
+        .publish({
+          kind: 'test',
+          namespace: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
 
-        manager.publish({
-            kind: 'test',
-            namespace: 'test',
-            id: 'something',
-            created: new Date(),
-            payload: {},
-        }).then(then)
+      manager
+        .publish({
+          kind: 'test',
+          namespace: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
 
-        manager.publish({
-            kind: 'test',
-            namespace: 'test',
-            id: 'something',
-            created: new Date(),
-            payload: {},
-        }).then(then)
+      manager
+        .publish({
+          kind: 'test',
+          namespace: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
 
-        setTimeout(() => {
-            expect(then).toHaveBeenCalledTimes(3)
-            done()
-        }, 50)
-    })
-  })
+      setTimeout(() => {
+        expect(then).toHaveBeenCalledTimes(3);
+        done();
+      }, 250);
+    });
+  });
 });
