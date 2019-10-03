@@ -5,15 +5,36 @@ set -e
 unique_id=$(uuidgen)
 temp_file="github-commit-status-${unique_id}.log"
 
-repository="libero/reviewer"
-# Travis CI builds a merge commit on pull requests, so
-# we want to refer to the second parent of this merge commit
-commit=$(git rev-parse HEAD^2)
+function usage () {
+  echo "Usage: target_url=\"https://example.org\" repository=\"owner/repo\" description='Action finished' commit=<commit sha> ./notify-github.sh";
+}
+
+if [ -z "$commit" ]; then
+  echo "Missing commit variable";
+  usage
+  exit 22;
+fi
+
+if [ -z "$repository" ]; then
+  echo "Missing repository variable";
+  usage
+  exit 22;
+fi
+
+if [ -z "$description" ]; then
+  echo "Missing description variable";
+  usage
+  exit 22;
+fi
+
+if [ -z "$target_url" ]; then
+  echo "Missing target_url variable";
+  usage
+  exit 22;
+fi
+
 status="success"
 context="travis"
-
-echo "Github API url: https://api.github.com/repos/$repository/statuses/$commit"
-echo "payload: {\"state\": \"$status\", \"description\": \"$description\", \"context\": \"$context\", \"target_url\": \"$target_url\"}"
 
 status_code=$(curl \
     -s \
