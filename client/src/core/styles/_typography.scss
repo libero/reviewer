@@ -7,6 +7,10 @@
   margin-bottom: 1.5rem;
 }
 
+.typography__body--no-margin {
+  margin: 0;
+};
+
 .typography__body--primary {
   color: $colourText;
 }
@@ -37,7 +41,12 @@
   margin-bottom: 1.5rem;
 }
 
+.typography__small--no-margin {
+  margin: 0;
+};
+
 .typography__small--primary {
+
   color: $colourText;
 }
 
@@ -122,6 +131,10 @@
   font-weight: 400;
   margin-bottom: 0.188rem;
   margin-top: 0.188rem;
+
+  .MuiSvgIcon-fontSizeSmall {
+    font-size: 1.125rem;
+  }
 }
 
 .typography__label--primary {

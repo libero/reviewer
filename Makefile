@@ -25,12 +25,41 @@ DC_BUILD = IMAGE_TAG=${IMAGE_TAG} docker-compose -f docker-compose.build.yml
 
 ###########################
 #
+# Local Dev Environment
+#
+###########################
+
+start_networks:
+	-docker network create infra_postgres
+	-docker network create infra_api
+	-docker network create infra_rabbit
+
+start_infra: start_networks
+	# don't forget this just starts the containers, it doesn't assert that a particular
+	# thing is running
+	docker-compose -f docker-compose.infra.yml up -d
+	sleep 10
+
+start_services: start_infra
+	docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+	docker-compose -f docker-compose.yml logs -f
+
+stop_services:
+	docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+	docker-compose -f docker-compose.infra.yml down
+	docker network rm infra_postgres
+	docker network rm infra_api
+	docker network rm infra_rabbit
+
+###########################
+#
 # Docker Setup
 #
 ###########################
 
 start_network:
 	-docker network create ${DOCKER_NETWORK_NAME}
+
 
 ###########################
 #
@@ -61,6 +90,7 @@ build_event-bus: build_shared_package_container
 #
 ###########################
 
+# server
 server_ci: start_network
 	make lint_server test_server push_server_container
 
@@ -82,8 +112,9 @@ build_application_server_container: test_server lint_server
 push_server_container: build_application_server_container
 	${PUSH_COMMAND} reviewer_server
 
+# client
 client_ci: start_network
-	make build_client_container
+	make build_client_container push_client_container
 
 install_client_packages: prepare_shared_container
 	${DC_BUILD} build client_npm
@@ -99,6 +130,9 @@ test_client: build_client_source
 
 build_client_container: test_client build_client_source
 	${DC_BUILD} build reviewer_client
+
+push_client_container: build_client_container
+	${PUSH_COMMAND} reviewer_client
 
 # continuum-auth
 continuum-auth_ci: start_network

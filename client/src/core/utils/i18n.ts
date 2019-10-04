@@ -1,5 +1,5 @@
 import i18n, { InitOptions } from 'i18next';
-import { merge } from 'lodash';
+import merge from 'lodash/merge';
 import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-xhr-backend';
 

@@ -1,0 +1,24 @@
+.person-pod__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.person-pod__selected_icon {
+  color: $colourPrimary;
+}
+
+.person-pod__inline_text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: $colourPrimary;
+  margin-top: 0.118rem;
+
+  span {
+    margin-left: 0.563rem;
+  }
+}
+
+.person-pod__info_icon {
+  cursor: pointer;
+}
