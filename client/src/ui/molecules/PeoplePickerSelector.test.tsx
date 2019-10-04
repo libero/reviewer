@@ -40,20 +40,35 @@ describe('PeoplePickerSelector', (): void => {
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
-                render(<PeoplePickerSelector onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />),
+                render(<PeoplePickerSelector initialySelected={[]} onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />),
         ).not.toThrow();
     });
 
     it('it renders all of the passed people', async (): Promise<void> => {
         mockOffsetSize(1920, 1080);
         const { baseElement } = render(
-            <PeoplePickerSelector people={people} onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />,
+            <PeoplePickerSelector initialySelected={[]} people={people} onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />,
         );
         await waitForElement(
             (): NodeListOf<Element> => baseElement.querySelectorAll('.people-picker__modal_list--item'),
         );
         expect(baseElement.querySelectorAll('.people-picker__modal_list--item')).toHaveLength(4);
     });
+    
+    it('outputs the passed label text', ():void => {
+        const { getByText } = render(
+            <PeoplePickerSelector
+                people={people}
+                initialySelected={[]}
+                onDone={jest.fn()}
+                label="SomeTestLabel"
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+        );
+
+        expect(getByText('SomeTestLabel')).toBeInTheDocument();
+    })
 
     it('it renders all of the selected people with the correct icon', (): void => {
         const { baseElement } = render(
@@ -87,7 +102,7 @@ describe('PeoplePickerSelector', (): void => {
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(1);
     });
 
-    it('it adds the selected people when clicked and confirmed', async (): Promise<void> => {
+    it('it adds the selected people when clicked and confirmed', (): void => {
         // this test will be fragile, needs a rethink
         const doneMock = jest.fn();
         const { baseElement } = render(
@@ -101,12 +116,12 @@ describe('PeoplePickerSelector', (): void => {
             />,
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(0);
-        await fireEvent.click(baseElement.querySelector('.pod__button'));
-        await fireEvent.click(baseElement.querySelector('.modal .button--primary'));
+        fireEvent.click(baseElement.querySelector('.pod__button'));
+        fireEvent.click(baseElement.querySelector('.modal .button--primary'));
         expect(doneMock).toHaveBeenCalledWith(['1']);
     });
 
-    it('it does not add the selected people when clicked and confirmed', async (): Promise<void> => {
+    it('it does not add the selected people when clicked and confirmed', (): void => {
         // this test will be fragile, needs a rethink
         const doneMock = jest.fn();
         const { baseElement } = render(
@@ -120,8 +135,8 @@ describe('PeoplePickerSelector', (): void => {
             />,
         );
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(0);
-        await fireEvent.click(baseElement.querySelector('.pod__button'));
-        await fireEvent.click(baseElement.querySelector('.modal .button'));
+        fireEvent.click(baseElement.querySelector('.pod__button'));
+        fireEvent.click(baseElement.querySelector('.modal .button'));
         expect(doneMock).not.toHaveBeenCalled();
     });
 });

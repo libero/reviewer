@@ -79,4 +79,4 @@ const PeoplePickerStory = (): JSX.Element => {
 
 storiesOf('ui | organisms/PeoplePicker', module)
     .addDecorator(withKnobs)
-    .add('SelectedPeopleList', (): JSX.Element => <PeoplePickerStory />);
+    .add('PeoplePicker', (): JSX.Element => <PeoplePickerStory />);

@@ -6,7 +6,7 @@ import { Modal } from '../atoms';
 
 interface Props {
     people?: PersonProps[];
-    initialySelected?: string[];
+    initialySelected: string[];
     onDone: (selectedPeople: string[]) => void;
     label: string;
     toggle: Function;
@@ -21,7 +21,7 @@ interface RendererProps {
 }
 
 const PeoplePickerSelector = ({
-    initialySelected = [],
+    initialySelected,
     people = [],
     onDone,
     label,
