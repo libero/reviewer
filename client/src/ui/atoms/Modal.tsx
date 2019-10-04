@@ -14,7 +14,7 @@ interface Props {
     buttonType?: string;
 }
 
-const Modal = ({
+const Modal = React.forwardRef(({
     isShowing,
     hide,
     children,
@@ -22,8 +22,8 @@ const Modal = ({
     onCancel,
     fullscreen = false,
     buttonType = 'danger',
-    buttonText,
-}: Props): JSX.Element => {
+    buttonText
+}: Props, ref: React.Ref<HTMLDivElement>): JSX.Element => {
     const { t } = useTranslation();
     const accept = (): void => {
         if (onAccept) {
@@ -36,13 +36,13 @@ const Modal = ({
             onCancel();
         }
         hide();
-    };
+    };    
     return isShowing
         ? ReactDOM.createPortal(
               <React.Fragment>
                   <div className="modal__overlay">
                       <div className="modal__wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
-                          <div className={`modal ${fullscreen ? 'modal__fullscreen' : ''}`}>
+                          <div className={`modal ${fullscreen ? 'modal__fullscreen' : ''}`} ref={ref}>
                               <div className={`modal__content ${fullscreen ? 'modal__content--fullscreen' : ''}`}>
                                   {children}
                               </div>
@@ -65,6 +65,6 @@ const Modal = ({
               document.body,
           )
         : null;
-};
+});
 
 export default Modal;

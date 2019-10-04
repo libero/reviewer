@@ -31,10 +31,10 @@
   padding: 0;
   overflow-y: auto;
   position: fixed;
+  padding-bottom: 8.25rem;
 }
 
 .modal__content--fullscreen {
-  padding-bottom: 8.25rem;
   @include forSize('tabletLandscapeUp') {
     margin-left: 16.666%;
     margin-right: 16.666%;
