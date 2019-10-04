@@ -36,7 +36,18 @@ let people = [
 
 describe('PeoplePickerSelector', (): void => {
     afterEach(cleanup);
-
+    const originalGetComputedStyle = window.getComputedStyle;
+    beforeAll(() => {
+        mockOffsetSize(1920, 1080);
+        window.getComputedStyle = jest.fn().mockImplementation(() => {
+            return { marginTop: 50, marginBottom: 50, paddingBottom: 50};
+        })
+    });
+    
+    afterAll(() => {
+        window.getComputedStyle = originalGetComputedStyle;
+    });
+    
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
@@ -45,7 +56,6 @@ describe('PeoplePickerSelector', (): void => {
     });
 
     it('it renders all of the passed people', async (): Promise<void> => {
-        mockOffsetSize(1920, 1080);
         const { baseElement } = render(
             <PeoplePickerSelector initialySelected={[]} people={people} onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />,
         );

@@ -59,13 +59,12 @@ const PeoplePickerSelector = ({
         ) : null;
     };
 
-    let h2Styles;
+    
     let h2Height = 0;
     if (ref.current) {
-        h2Styles = window.getComputedStyle(ref.current);
-        h2Height = Number.parseInt(h2Styles.marginBottom) + Number.parseInt(h2Styles.marginTop) + ref.current.offsetHeight;
+        const { marginTop, marginBottom } = window.getComputedStyle(ref.current);
+        h2Height = Number.parseInt(marginBottom) + Number.parseInt(marginTop) + ref.current.offsetHeight;     
     }
-
     return (
         <Modal            
             hide={toggle}
