@@ -38,7 +38,6 @@ start_infra: start_networks
 	# don't forget this just starts the containers, it doesn't assert that a particular
 	# thing is running
 	docker-compose -f docker-compose.infra.yml up -d
-	sleep 10
 
 start_services: start_infra
 	docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
