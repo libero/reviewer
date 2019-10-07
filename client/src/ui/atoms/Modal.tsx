@@ -8,20 +8,22 @@ interface Props {
     hide: Function;
     children?: JSX.Element[] | JSX.Element;
     onAccept?: Function;
+    onCancel?: Function;
     buttonText?: string;
     fullscreen?: boolean;
     buttonType?: string;
 }
 
-const Modal = ({
+const Modal = React.forwardRef(({
     isShowing,
     hide,
     children,
     onAccept,
+    onCancel,
     fullscreen = false,
     buttonType = 'danger',
-    buttonText,
-}: Props): JSX.Element => {
+    buttonText
+}: Props, ref: React.Ref<HTMLDivElement>): JSX.Element => {
     const { t } = useTranslation();
     const accept = (): void => {
         if (onAccept) {
@@ -29,12 +31,18 @@ const Modal = ({
         }
         hide();
     };
+    const cancel = (): void => {
+        if (onCancel) {
+            onCancel();
+        }
+        hide();
+    };    
     return isShowing
         ? ReactDOM.createPortal(
               <React.Fragment>
                   <div className="modal__overlay">
                       <div className="modal__wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
-                          <div className={`modal ${fullscreen ? 'modal__fullscreen' : ''}`}>
+                          <div className={`modal ${fullscreen ? 'modal__fullscreen' : ''}`} ref={ref}>
                               <div className={`modal__content ${fullscreen ? 'modal__content--fullscreen' : ''}`}>
                                   {children}
                               </div>
@@ -44,7 +52,7 @@ const Modal = ({
                                   }`}
                               >
                                   <div className={`modal__buttons ${fullscreen ? 'modal__buttons--fullscreen' : ''}`}>
-                                      <Button onClick={(): void => hide()}>Cancel</Button>
+                                      <Button onClick={(): void => cancel()}>Cancel</Button>
                                       <Button onClick={(): void => accept()} type={buttonType}>
                                           {buttonText || t('ui:modal--default-button')}
                                       </Button>
@@ -57,6 +65,6 @@ const Modal = ({
               document.body,
           )
         : null;
-};
+});
 
 export default Modal;

@@ -20,13 +20,14 @@ storiesOf('ui | molecules/PersonPod', module)
             const expertises = text('Exxpertises', 'Expertise 1,Expertise 2').split(',');
             return (
                 <PersonPod
+                    id="id1"
                     initialySelected={false}
                     focuses={focuses}
                     expertises={expertises}
                     name={name}
                     institution={institution}
                     selectedButtonIcon={deleteIcon ? <Delete /> : undefined}
-                    toggleHandler={(id: string): void => action('toggles')(id)}
+                    toggleHandler={(id: string, selected: boolean): void => action('toggles')(id, selected)}
                 />
             );
         },
