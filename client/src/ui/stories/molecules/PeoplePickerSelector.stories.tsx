@@ -59,7 +59,7 @@ storiesOf('ui | molecules/PeoplePickerSelector', module)
                     initialySelected={[]}
                     label={label}                    
                     onDone={action('Done')}
-                    onSearch={(value)=> {}}
+                    onSearch={action('Search')}
                     toggle={() => {}}
                     isShowing={isShowing}
                 />
