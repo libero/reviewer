@@ -45,6 +45,7 @@ const PeoplePicker = ({
                 label={label}
                 toggle={toggle}
                 isShowing={isShowing}
+                min={min}
             />
         </div>
     );

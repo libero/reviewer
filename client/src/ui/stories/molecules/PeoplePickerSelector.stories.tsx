@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { text, withKnobs, boolean, button } from '@storybook/addon-knobs';
+import { text, withKnobs, boolean, button, number } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered/react';
 import { PeoplePickerSelector } from '../../molecules';
 import '../../../core/styles/index.scss';
@@ -52,6 +52,8 @@ storiesOf('ui | molecules/PeoplePickerSelector', module)
         (): JSX.Element => {
             const label = text('Label', 'People Picker');
             const isShowing = boolean('Shown', true);
+            const min = number('Minimum required people', 2);
+
             button('Add Person', addPerson);
             return (
                 <PeoplePickerSelector
@@ -62,6 +64,7 @@ storiesOf('ui | molecules/PeoplePickerSelector', module)
                     onSearch={action('Search')}
                     toggle={() => {}}
                     isShowing={isShowing}
+                    min={min}
                 />
             );
         },
