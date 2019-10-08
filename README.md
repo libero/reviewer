@@ -4,8 +4,6 @@
 
 # Welcome to Libero Reviewer
 
-Malcolm (https://www.imdb.com/title/tt0107290/fullcredits) is a Proof of Concept for eLife Sciences' Libero Reviewer Product.
-
 [The Product Roadmap](https://trello.com/b/NShRx4VE/libero-reviewer-product-roadmap)
 for Libero Reviewer has been revisted after the launch of libero.pub site. This roadmap
 combined with the site sets out the objectives and our commitments for the product vision.
