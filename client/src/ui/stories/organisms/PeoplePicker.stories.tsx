@@ -62,6 +62,11 @@ const PeoplePickerStory = (): JSX.Element => {
             addPerson();
         }
     });
+    button('Add 1000 People', (): void => {
+        for (let i = 0; i < 1000; i++) {
+            addPerson();
+        }
+    });
 
     return (
         <PeoplePicker
