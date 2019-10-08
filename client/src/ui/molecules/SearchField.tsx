@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, InputHTMLAttributes } from 'react';
 import { TextField } from '../atoms';
 import { Search, Close } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';

@@ -51,13 +51,13 @@ describe('PeoplePickerSelector', (): void => {
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
-                render(<PeoplePickerSelector initialySelected={[]} onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />),
+                render(<PeoplePickerSelector initialySelected={[]} onDone={jest.fn()} onSearch={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />),
         ).not.toThrow();
     });
 
     it('it renders all of the passed people', async (): Promise<void> => {
         const { baseElement } = render(
-            <PeoplePickerSelector initialySelected={[]} people={people} onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />,
+            <PeoplePickerSelector initialySelected={[]} people={people} onDone={jest.fn()} onSearch={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />,
         );
         await waitForElement(
             (): NodeListOf<Element> => baseElement.querySelectorAll('.people-picker__modal_list--item'),
@@ -71,6 +71,7 @@ describe('PeoplePickerSelector', (): void => {
                 people={people}
                 initialySelected={[]}
                 onDone={jest.fn()}
+                onSearch={jest.fn()}
                 label="SomeTestLabel"
                 toggle={jest.fn()}
                 isShowing={true}
@@ -86,6 +87,7 @@ describe('PeoplePickerSelector', (): void => {
                 people={people}
                 initialySelected={['1', '3']}
                 onDone={jest.fn()}
+                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -100,6 +102,7 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={jest.fn()}
+                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -120,6 +123,7 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={doneMock}
+                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -139,6 +143,7 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={doneMock}
+                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}

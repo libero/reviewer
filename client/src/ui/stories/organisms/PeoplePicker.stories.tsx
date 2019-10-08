@@ -69,6 +69,7 @@ const PeoplePickerStory = (): JSX.Element => {
             people={people}
             selectedPeople={selectedPeople}
             onRemove={removePerson}
+            onSearch={()=> {}}
             label={label}
             min={min}
             max={max}
