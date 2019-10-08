@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PersonProps, PersonPod } from '.';
+import { PersonProps, PersonPod, SearchField } from '.';
 import { Modal } from '../atoms';
 
 interface Props {
@@ -23,7 +23,7 @@ const PeoplePickerSelector = ({
     useEffect((): void => {
         setLocallySelected(initialySelected);
     }, [initialySelected, isShowing]);
-    
+
     const accept = (): void => {
         onDone(locallySelected);
     };
@@ -34,9 +34,9 @@ const PeoplePickerSelector = ({
             setLocallySelected([...locallySelected, id]);
         }
     };
-    
+
     return (
-        <Modal            
+        <Modal
             hide={toggle}
             isShowing={isShowing}
             onAccept={accept}
@@ -45,17 +45,21 @@ const PeoplePickerSelector = ({
             buttonText="Add"
         >
             <h2 className="typography__heading typography__heading--h2">{label}</h2>
+            <div className="people-picker__search_box">
+                <SearchField id="peoplePickerSearch" />
+                <span className="typography__body typography__body--primary">BLAH!</span>
+            </div>
             <div className="people-picker__modal_list">
-                {
-                    people.map(person => {
+                {people.map(
+                    (person): React.ReactNode => {
                         const selected = locallySelected.includes(person.id);
                         return (
                             <div key={person.id} className="people-picker__modal_list--item">
                                 <PersonPod {...person} toggleHandler={togglePerson} initialySelected={selected} />
                             </div>
                         );
-                    })
-                }
+                    },
+                )}
             </div>
         </Modal>
     );
