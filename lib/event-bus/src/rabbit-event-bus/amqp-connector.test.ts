@@ -1,6 +1,6 @@
 import { connect, Connection } from 'amqplib';
 import * as flushPromises from 'flush-promises';
-import AMQPConnector from "./amqp-connector";
+import AMQPConnector from './amqp-connector';
 import { channel } from 'rs-channel-node';
 import { StateChange } from './types';
 
@@ -24,11 +24,12 @@ describe('AMQP connector', () => {
     it('should connect properly and create a channel', async () => {
         const mockConnection = {
             createChannel: jest.fn(),
-            on: jest.fn()
+            on: jest.fn(),
         } as unknown as Connection;
 
+        // tslint:disable-next-line
         (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
-        new AMQPConnector<{}>(url, channel<StateChange<{}>>(), [], [], 'service');
+        const _ = new AMQPConnector<{}>(url, channel<StateChange<{}>>(), [], [], 'service');
 
         await flushPromises();
         expect(connect).toHaveBeenCalledTimes(1);
@@ -37,10 +38,11 @@ describe('AMQP connector', () => {
     });
 
     it.only('should throw an error when connection fails', async () => {
+        // tslint:disable-next-line
         (connect as any).mockImplementation(async (): Promise<Connection> => Promise.reject());
         // mock this somehow
         const sender = (___: StateChange<{}>) => jest.fn();
-        const receiver = async (): Promise<StateChange<{}>> => { return {} as StateChange<{}>};
+        const receiver = async (): Promise<StateChange<{}>> => ({} as StateChange<{}>);
 
         const connector = new AMQPConnector<{}>(url, [sender, receiver], [], [], 'service');
 
