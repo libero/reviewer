@@ -115,6 +115,52 @@ describe('PeoplePickerSelector', (): void => {
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(2);
     });
 
+    it('renders guidance text string with min value shown when min selected not met', (): void => {
+        const min = 2;
+        const { baseElement } = render(
+            <PeoplePickerSelector
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                min={min}
+                isShowing={true}
+            />,
+        );
+        expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('validation--peoplepicker_guidance-prefix ' + min + ' validation--peoplepicker_guidance-suffix');
+    });
+
+    it('does not render guidance text if min value is 0', (): void => {
+        const min = 0;
+        const { baseElement } = render(
+            <PeoplePickerSelector
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                min={min}
+                isShowing={true}
+            />,
+        );
+        expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('');
+    });
+
+    it('does not render guidance text if no min selected is passed', (): void => {
+        const { baseElement } = render(
+            <PeoplePickerSelector
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+        );
+        expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('');
+    });
+
     it('it adds the selected people when clicked', async (): Promise<void> => {
         const { baseElement } = render(
             <PeoplePickerSelector

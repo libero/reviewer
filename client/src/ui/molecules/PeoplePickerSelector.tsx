@@ -6,7 +6,7 @@ import useDebounce from '../hooks/useDebounce';
 
 interface Props {
     people?: PersonProps[];
-    initialySelected: string[];
+    initialySelected?: string[];
     onDone: (selectedPeople: string[]) => void;
     onSearch: (value: string) => void;
     label: string;
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const PeoplePickerSelector = ({
-    initialySelected,
+    initialySelected = [],
     people = [],
     onDone,
     onSearch,
