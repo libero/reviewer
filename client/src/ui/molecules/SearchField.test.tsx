@@ -9,13 +9,8 @@ describe('TextField', (): void => {
         expect((): RenderResult => render(<SearchField id="test" />)).not.toThrow();
     });
 
-    it('should render the label text', (): void => {
-        const { getByText } = render(<SearchField id="test" />);
-        expect(getByText('search-box--label')).toBeInTheDocument();
-    });
-
     it('should render the helper text when it is passed in', (): void => {
-        const { getByText } = render(<SearchField id="test" />);
+        const { getByText } = render(<SearchField showHelpText id="test" />);
         expect(getByText('search-box--helper')).toBeInTheDocument();
     });
 
