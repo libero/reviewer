@@ -112,5 +112,34 @@ describe('AMQP connector', () => {
                 failures: 0, // increments each failure
             }
         })));
-    })
+    });
+
+    it('should subscribe to the right queue', async () => {
+        const mockChannel = {
+            assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
+            bindQueue: jest.fn(),
+            consume: jest.fn(),
+            publish: jest.fn(),
+            on: jest.fn(),
+            close: jest.fn(),
+        };
+        const mockConnection = {
+            createChannel: () => mockChannel,
+            on: jest.fn(),
+        } as unknown as Connection;
+
+        // tslint:disable-next-line
+        (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
+        const connector = new AMQPConnector<{}>(url, channel(), [], [], 'service');
+
+        await flushPromises();
+        await connector.subscribe({ kind: 'foo', namespace: 'bar' }, jest.fn());
+
+        expect(mockChannel.assertQueue).toHaveBeenCalledTimes(1);
+        expect(mockChannel.assertQueue).toHaveBeenCalledWith('consumer__foo-bar__service');
+        expect(mockChannel.bindQueue).toHaveBeenCalledTimes(1);
+        expect(mockChannel.bindQueue).toHaveBeenCalledWith('consumer__foo-bar__service', 'event__foo-bar', '');
+        expect(mockChannel.consume).toHaveBeenCalledTimes(1);
+        expect(mockChannel.consume.mock.calls[0][0]).toBe('consumer__foo-bar__service');
+    });
 });
