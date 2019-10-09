@@ -6,7 +6,7 @@ interface Props {
     people?: PersonProps[];
     selectedPeople?: string[];
     label: string;
-    required: boolean;
+    required?: boolean;
     min?: number;
     max?: number;
     onRemove: (personId: string) => void;
