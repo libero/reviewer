@@ -11,6 +11,6 @@ export const ServiceStartedHandler = (auditRepo: unknown) => async (
   ev: Event<ServiceStartedPayload>
 ) => {
   // Ack the message without doing anything
-  logger.info("serviceStartedRecieved", ev.payload);
+  logger.info("serviceStartedReceived", ev.payload);
   return true;
 };

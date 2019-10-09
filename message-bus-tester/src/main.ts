@@ -19,7 +19,7 @@ const init_mq = async () => {
   logger.info("messageQueueStarted");
 
   mock_mq.subscribe<TestEventPayload>(test_event_def, async (event) => {
-    logger.info('mockEventRecieved', event);
+    logger.info('mockEventReceived', event);
     return true;
   });
 
@@ -42,7 +42,7 @@ const init_mq = async () => {
   logger.info("messageQueueStarted");
 
   rabbitmq_mq.subscribe<TestEventPayload>(test_event_def, async (event) => {
-    logger.info('rabbitEventRecieved', event);
+    logger.info('rabbitEventReceived', event);
     return true;
   });
 
