@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PersonProps, PersonPod, SearchField } from '.';
-import { Modal, Banner } from '../atoms';
+import { Modal } from '../atoms';
 import useDebounce from '../hooks/useDebounce';
 
 interface Props {

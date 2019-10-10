@@ -52,10 +52,14 @@ const PeoplePickerStory = (): JSX.Element => {
         setSelectedPeople(selectedPeople.filter((personId: string): boolean => personId !== id));
         action(`Removed person ${id}`)();
     };
-    
-    const onSearch = (value:string) => {
-        setFilteredPeople(people.filter(person => `${person.name} ${person.institution} ${person.expertises} ${person.focuses}`.includes(value)));
-        action('Search filter')(value)
+
+    const onSearch = (value: string) => {
+        setFilteredPeople(
+            people.filter(person =>
+                `${person.name} ${person.institution} ${person.expertises} ${person.focuses}`.includes(value),
+            ),
+        );
+        action('Search filter')(value);
     };
 
     const required = boolean('Required', false);
