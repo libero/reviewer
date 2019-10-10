@@ -186,7 +186,6 @@ describe('AMQP connector', () => {
                 publish: jest.fn(),
                 on: jest.fn(),
                 ack: jest.fn(),
-                nack: jest.fn(),
                 close: jest.fn(),
             };
             const mockConnection = {
@@ -206,6 +205,37 @@ describe('AMQP connector', () => {
             expect(handler).toHaveBeenCalledTimes(1);
             expect(handler).toHaveBeenCalledWith('foo');
             expect(mockChannel.ack).toHaveBeenCalledTimes(1);
+        });
+
+        it('it should call the subscription handler and unacknowledge if not ok', async () => {
+            const mockChannel = {
+                assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
+                bindQueue: jest.fn(),
+                consume: (___, callback) => {
+                    callback({
+                        content: { toString: () => '{ "event": "foo" }' },
+                    });
+                },
+                publish: jest.fn(),
+                on: jest.fn(),
+                nack: jest.fn(),
+            };
+            const mockConnection = {
+                createChannel: () => mockChannel,
+                on: jest.fn(),
+            } as unknown as Connection;
+
+            // tslint:disable-next-line: no-any
+            (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
+            const connector = new AMQPConnector<{}>(url, channel(), [], [], 'service');
+            const handler = jest.fn().mockImplementation(async () => Promise.resolve());
+
+            await flushPromises();
+            await connector.subscribe({ kind: 'foo', namespace: 'bar' }, handler);
+
+            await flushPromises();
+            expect(handler).toHaveBeenCalledTimes(1);
+            expect(mockChannel.nack).toHaveBeenCalledTimes(1);
         });
     });
 });
