@@ -12,7 +12,7 @@ describe('AMQP Connection Manager', () => {
       const publishMock = jest.fn(async () => true);
 
       // (...as any) needed because jest is magic
-      // tslint:disable-next-line
+      // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
         (__, [send, _]: Channel<StateChange<{}>>) => {
           send({
@@ -40,7 +40,7 @@ describe('AMQP Connection Manager', () => {
       const subscribeMock = jest.fn();
       const [readyNotify, readyWait] = channel<{}>();
       // (...as any) needed because jest is magic
-      // tslint:disable-next-line
+      // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
         (__, [send, _]: Channel<StateChange<{}>>) => {
           send({
@@ -76,7 +76,7 @@ describe('AMQP Connection Manager', () => {
       const [readyNotify, readyWait] = channel<{}>();
 
       // (...as any) needed because jest is magic
-      // tslint:disable-next-line
+      // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
         (___, [send, _]: Channel<StateChange<{}>>, __, subscriptions) => {
           send({
@@ -140,7 +140,7 @@ describe('AMQP Connection Manager', () => {
       const [readyNotify, readyWait] = channel<{}>();
 
       // (...as any) needed because jest is magic
-      // tslint:disable-next-line
+      // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
         (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
           send({
@@ -184,7 +184,7 @@ describe('AMQP Connection Manager', () => {
         jest.fn(),
       );
 
-      // tslint:disable-next-line
+      // tslint:disable-next-line: no-any
       expect((manager as any).subscriptions.length).toEqual(3);
       expect(subscribeMock).toBeCalledTimes(3);
 
@@ -192,7 +192,7 @@ describe('AMQP Connection Manager', () => {
       setTimeout(() => {
         readyNotify({});
         // Expect the connector to be created with subscriptions
-        // tslint:disable-next-line
+        // tslint:disable-next-line: no-any
         expect((manager as any).connector.get().subscriptions.length).toEqual(
           3,
         );
@@ -206,7 +206,7 @@ describe('AMQP Connection Manager', () => {
       const subscribeMock = jest.fn();
       const connectMock = jest.fn();
 
-      // tslint:disable-next-line
+      // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
         (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
           send({
@@ -265,7 +265,7 @@ describe('AMQP Connection Manager', () => {
       const subscribeMock = jest.fn();
       const connectMock = jest.fn();
 
-      // tslint:disable-next-line
+      // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
         (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
           send({
