@@ -18,6 +18,7 @@
   padding: 0.75rem;
   border: $border;
   border-radius: 0.188rem;
+  width: 100%;
 
   &::placeholder {
     color: $colourTextPlaceholder;
@@ -34,14 +35,12 @@
   margin-top: 0.375rem;
   margin-bottom: 0.375rem;
   align-items: center;
-  position: relative;
 }
 
 .text-field__icon_container {
-  position: absolute;
-  top: 0.938rem;
-  right: 0.938rem;
-  bottom: 0.938rem;
+  margin-top: -0.938rem;
+  margin-left: -1.875rem;
+  margin-bottom: -0.938rem;
   color: $colourTextSecondary;
 
   .MuiSvgIcon-fontSizeSmall {

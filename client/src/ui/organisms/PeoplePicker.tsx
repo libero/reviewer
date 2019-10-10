@@ -6,10 +6,11 @@ interface Props {
     people?: PersonProps[];
     selectedPeople?: string[];
     label: string;
-    required: boolean;
+    required?: boolean;
     min?: number;
     max?: number;
     onRemove: (personId: string) => void;
+    onSearch: (value: string) => void;
     setSelectedPeople: (selectedPeople: string[]) => void;
 }
 
@@ -21,6 +22,7 @@ const PeoplePicker = ({
     min,
     max,
     onRemove,
+    onSearch,
     setSelectedPeople,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
@@ -39,9 +41,11 @@ const PeoplePicker = ({
                 people={people}
                 initialySelected={selectedPeople}
                 onDone={setSelectedPeople}
+                onSearch={onSearch}
                 label={label}
                 toggle={toggle}
                 isShowing={isShowing}
+                min={min}
             />
         </div>
     );

@@ -31,9 +31,10 @@ let people = [
 
 const PeoplePickerStory = (): JSX.Element => {
     const [selectedPeople, setSelectedPeople] = useState<string[]>(['1']);
+    const [filteredPeople, setFilteredPeople] = useState(people);
 
     const addPerson = (): void => {
-        const focuses = ['Tag 1', 'Tage 2'];
+        const focuses = ['Tag 1', 'Tag 2'];
         const expertises = ['Tag 3'];
         const id = (Number.parseInt(people[people.length - 1].id) + 1).toString();
         people.push({
@@ -43,12 +44,18 @@ const PeoplePickerStory = (): JSX.Element => {
             focuses: focuses,
             expertises: expertises,
         });
+        setFilteredPeople(people);
         action(`Added person ${id}`)();
     };
 
     const removePerson = (id: string): void => {
         setSelectedPeople(selectedPeople.filter((personId: string): boolean => personId !== id));
         action(`Removed person ${id}`)();
+    };
+    
+    const onSearch = (value:string) => {
+        setFilteredPeople(people.filter(person => `${person.name} ${person.institution} ${person.expertises} ${person.focuses}`.includes(value)));
+        action('Search filter')(value)
     };
 
     const required = boolean('Required', false);
@@ -66,9 +73,10 @@ const PeoplePickerStory = (): JSX.Element => {
     return (
         <PeoplePicker
             required={required}
-            people={people}
+            people={filteredPeople}
             selectedPeople={selectedPeople}
             onRemove={removePerson}
+            onSearch={onSearch}
             label={label}
             min={min}
             max={max}

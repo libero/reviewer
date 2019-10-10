@@ -1,5 +1,5 @@
-import React from 'react';
-import { render, cleanup, RenderResult, waitForElement, fireEvent } from '@testing-library/react';
+import React, { CSSProperties } from 'react';
+import { render, cleanup, RenderResult, waitForElement, fireEvent, act } from '@testing-library/react';
 import PeoplePickerSelector from './PeoplePickerSelector';
 import mockOffsetSize from '../../../test-utils/offsetSizeMock';
 
@@ -37,40 +37,60 @@ let people = [
 describe('PeoplePickerSelector', (): void => {
     afterEach(cleanup);
     const originalGetComputedStyle = window.getComputedStyle;
-    beforeAll(() => {
+    beforeAll((): void => {
         mockOffsetSize(1920, 1080);
-        window.getComputedStyle = jest.fn().mockImplementation(() => {
-            return { marginTop: 50, marginBottom: 50, paddingBottom: 50};
-        })
+        window.getComputedStyle = jest.fn().mockImplementation(
+            (): CSSProperties => {
+                return { marginTop: 50, marginBottom: 50, paddingBottom: 50 };
+            },
+        );
     });
-    
-    afterAll(() => {
+
+    afterAll((): void => {
         window.getComputedStyle = originalGetComputedStyle;
     });
-    
+
     it('should render correctly', (): void => {
         expect(
             (): RenderResult =>
-                render(<PeoplePickerSelector initialySelected={[]} onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />),
+                render(
+                    <PeoplePickerSelector
+                        initialySelected={[]}
+                        onDone={jest.fn()}
+                        onSearch={jest.fn()}
+                        label=" "
+                        toggle={jest.fn()}
+                        isShowing={true}
+                    />,
+                ),
         ).not.toThrow();
     });
 
     it('it renders all of the passed people', async (): Promise<void> => {
         const { baseElement } = render(
-            <PeoplePickerSelector initialySelected={[]} people={people} onDone={jest.fn()} label=" " toggle={jest.fn()} isShowing={true} />,
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
         );
         await waitForElement(
             (): NodeListOf<Element> => baseElement.querySelectorAll('.people-picker__modal_list--item'),
         );
         expect(baseElement.querySelectorAll('.people-picker__modal_list--item')).toHaveLength(4);
     });
-    
-    it('outputs the passed label text', ():void => {
+
+    it('outputs the passed label text', (): void => {
         const { getByText } = render(
             <PeoplePickerSelector
                 people={people}
                 initialySelected={[]}
                 onDone={jest.fn()}
+                onSearch={jest.fn()}
                 label="SomeTestLabel"
                 toggle={jest.fn()}
                 isShowing={true}
@@ -78,7 +98,7 @@ describe('PeoplePickerSelector', (): void => {
         );
 
         expect(getByText('SomeTestLabel')).toBeInTheDocument();
-    })
+    });
 
     it('it renders all of the selected people with the correct icon', (): void => {
         const { baseElement } = render(
@@ -86,6 +106,7 @@ describe('PeoplePickerSelector', (): void => {
                 people={people}
                 initialySelected={['1', '3']}
                 onDone={jest.fn()}
+                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -94,12 +115,59 @@ describe('PeoplePickerSelector', (): void => {
         expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(2);
     });
 
+    it('renders guidance text string with min value shown when min selected not met', (): void => {
+        const min = 2;
+        const { baseElement } = render(
+            <PeoplePickerSelector
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                min={min}
+                isShowing={true}
+            />,
+        );
+        expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('validation--peoplepicker_guidance-prefix ' + min + ' validation--peoplepicker_guidance-suffix');
+    });
+
+    it('does not render guidance text if min value is 0', (): void => {
+        const min = 0;
+        const { baseElement } = render(
+            <PeoplePickerSelector
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                min={min}
+                isShowing={true}
+            />,
+        );
+        expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('');
+    });
+
+    it('does not render guidance text if no min selected is passed', (): void => {
+        const { baseElement } = render(
+            <PeoplePickerSelector
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+        );
+        expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('');
+    });
+
     it('it adds the selected people when clicked', async (): Promise<void> => {
         const { baseElement } = render(
             <PeoplePickerSelector
                 initialySelected={[]}
                 people={people}
                 onDone={jest.fn()}
+                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -120,6 +188,7 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={doneMock}
+                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -139,6 +208,7 @@ describe('PeoplePickerSelector', (): void => {
                 initialySelected={[]}
                 people={people}
                 onDone={doneMock}
+                onSearch={jest.fn()}
                 label=" "
                 toggle={jest.fn()}
                 isShowing={true}
@@ -148,5 +218,27 @@ describe('PeoplePickerSelector', (): void => {
         fireEvent.click(baseElement.querySelector('.pod__button'));
         fireEvent.click(baseElement.querySelector('.modal .button'));
         expect(doneMock).not.toHaveBeenCalled();
+    });
+
+    it('should call the onSearch callback when the user types a string into the search box', async (): Promise<
+        void
+    > => {
+        jest.useFakeTimers();
+        
+        const searchMock = jest.fn();
+        const { baseElement } = render(
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={people}
+                onDone={jest.fn()}
+                onSearch={searchMock}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+        );
+        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'someSearch' } });
+        act(()=>jest.advanceTimersByTime(510));
+        expect(searchMock).toBeCalledWith('someSearch');
     });
 });
