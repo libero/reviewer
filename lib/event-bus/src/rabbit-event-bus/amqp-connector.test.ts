@@ -32,6 +32,7 @@ describe('AMQP connector', () => {
         on: jest.fn(),
         ack: jest.fn(),
         nack: jest.fn(),
+        close: jest.fn(),
         ...options,
     });
 
