@@ -30,6 +30,7 @@ describe('AMQP connector', () => {
         close: jest.fn(),
         ...options,
     });
+    const mockContentToString = (toString?: string) => toString ? () => toString : () => '{ "event": "foo" }';
 
     describe('constructor', () => {
         it('should create a channel and set connected state', async () => {
@@ -151,11 +152,12 @@ describe('AMQP connector', () => {
         });
 
         it('it should call the subscription handler and acknowledge', async () => {
+            const contentToString = mockContentToString();
             const mockChannel = makeChannel({
                 assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
                 consume: (___, callback) => {
                     callback({
-                        content: { toString: () => '{ "event": "foo" }' },
+                        content: { toString: contentToString },
                     });
                 },
             });
@@ -174,16 +176,17 @@ describe('AMQP connector', () => {
             expect(handler).toHaveBeenCalledWith('foo');
             expect(mockChannel.ack).toHaveBeenCalledTimes(1);
             expect(mockChannel.ack).toHaveBeenCalledWith({
-                content: { toString: () => '{ "event": "foo" }' },
+                content: { toString: contentToString },
             });
         });
 
         it('it should call the subscription handler and unacknowledge if not ok', async () => {
+            const contentToString = mockContentToString();
             const mockChannel = makeChannel({
                 assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
                 consume: (___, callback) => {
                     callback({
-                        content: { toString: () => '{ "event": "foo" }' },
+                        content: { toString: contentToString },
                     });
                 },
             });
@@ -203,17 +206,18 @@ describe('AMQP connector', () => {
             expect(logger.warn).toHaveBeenCalledWith('eventHandlerFailure');
             expect(mockChannel.nack).toHaveBeenCalledTimes(1);
             expect(mockChannel.nack).toHaveBeenCalledWith({
-                content: { toString: () => '{ "event": "foo" }' },
+                content: { toString: contentToString },
             }, false, true);
         });
     });
 
     it('it should not acknowledge message with invalid event', async () => {
+        const contentToString = mockContentToString('not json');
         const mockChannel = makeChannel({
             assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
             consume: (___, callback) => {
                 callback({
-                    content: { toString: () => 'not json' },
+                    content: { toString: contentToString },
                 });
             },
         });
@@ -233,7 +237,7 @@ describe('AMQP connector', () => {
         expect(logger.warn).toHaveBeenCalledWith('Can\'t parse JSON');
         expect(mockChannel.nack).toHaveBeenCalledTimes(1);
         expect(mockChannel.nack).toHaveBeenCalledWith({
-            content: { toString: () => 'not json' },
+            content: { toString: contentToString },
         }, false, false);
     });
 });
