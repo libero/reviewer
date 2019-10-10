@@ -205,4 +205,30 @@ describe('AMQP connector', () => {
             expect(mockChannel.nack).toHaveBeenCalledTimes(1);
         });
     });
+
+    it('it should not acknowledge message with invalid event', async () => {
+        const mockChannel = makeChannel({
+            assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
+            consume: (___, callback) => {
+                callback({
+                    content: { toString: () => 'not json' },
+                });
+            },
+        });
+        const mockConnection = makeConnection(mockChannel);
+
+        // tslint:disable-next-line: no-any
+        (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
+        const connector = new AMQPConnector<{}>(url, channel(), [], [], 'service');
+        const handler = jest.fn().mockImplementation(async () => Promise.resolve());
+
+        await flushPromises();
+        await connector.subscribe({ kind: 'foo', namespace: 'bar' }, handler);
+
+        await flushPromises();
+        expect(handler).toHaveBeenCalledTimes(0);
+        expect(logger.warn).toHaveBeenCalledTimes(1);
+        expect(logger.warn).toHaveBeenCalledWith('Can\'t parse JSON');
+        expect(mockChannel.nack).toHaveBeenCalledTimes(1);
+    });
 });
