@@ -15,6 +15,9 @@ import { InfraLogger as logger } from '../logger';
 jest.mock('amqplib');
 jest.mock('../logger');
 
+// const mockedLogger = logger as unknown as jest.Mock<typeof logger>;
+beforeEach(() => jest.resetAllMocks())
+
 describe('AMQP connector', () => {
     const url = 'http://example.com';
     const makeConnection = (mockChannel?) => ({
