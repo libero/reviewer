@@ -22,6 +22,7 @@ describe('AMQP connector', () => {
         createChannel: mockChannel ? () => mockChannel : jest.fn(),
         on: jest.fn(),
     } as unknown as Connection);
+    // tslint:disable-next-line: no-any
     const makeChannel = (options: any = {}) => ({
         assertQueue: jest.fn(),
         assertExchange: jest.fn(),
@@ -31,8 +32,8 @@ describe('AMQP connector', () => {
         on: jest.fn(),
         ack: jest.fn(),
         nack: jest.fn(),
-        ...options
-    })
+        ...options,
+    });
 
     describe('constructor', () => {
         it('should create a channel and set connected state', async () => {
