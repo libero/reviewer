@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, InputHTMLAttributes } from 'react';
 import { TextField } from '../atoms';
 import { Search, Close } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
@@ -6,9 +6,11 @@ import { useTranslation } from 'react-i18next';
 interface Props {
     id: string;
     onChange?(event: React.FormEvent<HTMLInputElement>): void;
+    showHelpText?: boolean;
+    placeholder?: string;
 }
 
-const SearchField = ({ id, onChange }: Props): JSX.Element => {
+const SearchField = ({ id, onChange, showHelpText = false, placeholder }: Props): JSX.Element => {
     const { t } = useTranslation();
     const [search, setSearch] = useState('');
     const [empty, setEmpty] = useState(true);
@@ -29,11 +31,11 @@ const SearchField = ({ id, onChange }: Props): JSX.Element => {
     return (
         <TextField
             id={id}
-            icon={empty ? <Search fontSize="small" /> : <Close fontSize="small" onClick={clearSearch} />}
+            icon={empty ? <Search /> : <Close onClick={clearSearch} />}
             value={search}
             onChange={change}
-            labelText={t('ui:search-box--label')}
-            helperText={t('ui:search-box--helper')}
+            helperText={showHelpText ? t('ui:search-box--helper') : null}
+            placeholder={placeholder}
         />
     );
 };

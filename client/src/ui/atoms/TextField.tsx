@@ -5,15 +5,17 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     helperText?: string;
     id: string;
     invalid?: boolean;
-    labelText: string;
+    labelText?: string;
     icon?: JSX.Element;
 }
 const TextField = ({ id, labelText, invalid, helperText, icon, ...rest }: Props): JSX.Element => {
     return (
         <div className="text-field">
-            <label htmlFor={id} className="typography__label typography__label--primary">
-                {labelText}
-            </label>
+            {labelText && (
+                <label htmlFor={id} className="typography__label typography__label--primary">
+                    {labelText}
+                </label>
+            )}
             <div className="text-field__input_container">
                 <input
                     id={id}

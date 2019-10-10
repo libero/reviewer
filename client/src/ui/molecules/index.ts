@@ -5,6 +5,7 @@ export { default as Menu } from './Menu';
 export { default as OrcidDetails, AuthorDetails } from './OrcidDetails';
 export { default as PersonPod, PersonProps } from './PersonPod';
 export { default as PersonInfo } from './PersonInfo';
+export { default as PeoplePickerSelector } from './PeoplePickerSelector';
 export { default as ProfileDropdown } from './ProfileDropdown';
 export { default as ProgressBar } from './ProgressBar';
 export { default as SearchField } from './SearchField';
