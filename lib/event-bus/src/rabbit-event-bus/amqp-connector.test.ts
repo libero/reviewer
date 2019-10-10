@@ -234,6 +234,6 @@ describe('AMQP connector', () => {
         expect(mockChannel.nack).toHaveBeenCalledTimes(1);
         expect(mockChannel.nack).toHaveBeenCalledWith({
             content: { toString: () => 'not json' },
-        }, false, true);
+        }, false, false);
     });
 });
