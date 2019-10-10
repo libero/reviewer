@@ -201,6 +201,7 @@ describe('AMQP connector', () => {
 
             await flushPromises();
             expect(handler).toHaveBeenCalledTimes(1);
+            // logger.warn('eventHandlerFailure'); is expected.
             expect(mockChannel.nack).toHaveBeenCalledTimes(1);
         });
     });
