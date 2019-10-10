@@ -4,16 +4,16 @@ import AMQPConnector from './amqp-connector';
 import { StateChange } from './types';
 import { channel } from 'rs-channel-node';
 import { Event } from 'event-bus';
+import { InfraLogger as logger } from '../logger';
 
 // Tests for the amqp connector
-// - acknowledges the message when it handles the event correctly
-// - unacknowledges the message when it handles the event incorrectly
 
 // Tests for integration of amqp connector and index
 
 // Test against running amqp instance - this will be when it's it's own repository
 
 jest.mock('amqplib');
+jest.mock('../logger');
 
 describe('AMQP connector', () => {
     const url = 'http://example.com';
@@ -200,7 +200,8 @@ describe('AMQP connector', () => {
 
             await flushPromises();
             expect(handler).toHaveBeenCalledTimes(1);
-            // logger.warn('eventHandlerFailure'); is expected.
+            expect(logger.warn).toHaveBeenCalledTimes(1);
+            expect(logger.warn).toHaveBeenCalledWith('eventHandlerFailure');
             expect(mockChannel.nack).toHaveBeenCalledTimes(1);
         });
     });
