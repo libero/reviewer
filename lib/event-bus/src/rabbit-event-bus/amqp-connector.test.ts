@@ -173,6 +173,9 @@ describe('AMQP connector', () => {
             expect(handler).toHaveBeenCalledTimes(1);
             expect(handler).toHaveBeenCalledWith('foo');
             expect(mockChannel.ack).toHaveBeenCalledTimes(1);
+            expect(mockChannel.ack).toHaveBeenCalledWith({
+                content: { toString: () => '{ "event": "foo" }' },
+            });
         });
 
         it('it should call the subscription handler and unacknowledge if not ok', async () => {
@@ -199,6 +202,9 @@ describe('AMQP connector', () => {
             expect(logger.warn).toHaveBeenCalledTimes(1);
             expect(logger.warn).toHaveBeenCalledWith('eventHandlerFailure');
             expect(mockChannel.nack).toHaveBeenCalledTimes(1);
+            expect(mockChannel.nack).toHaveBeenCalledWith({
+                content: { toString: () => '{ "event": "foo" }' },
+            }, false, true);
         });
     });
 
@@ -226,5 +232,8 @@ describe('AMQP connector', () => {
         expect(logger.warn).toHaveBeenCalledTimes(1);
         expect(logger.warn).toHaveBeenCalledWith('Can\'t parse JSON');
         expect(mockChannel.nack).toHaveBeenCalledTimes(1);
+        expect(mockChannel.nack).toHaveBeenCalledWith({
+            content: { toString: () => 'not json' },
+        }, false, true);
     });
 });
