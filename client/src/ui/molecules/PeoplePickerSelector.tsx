@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PersonProps, PersonPod, SearchField } from '.';
-import { Modal } from '../atoms';
+import { Modal, Banner } from '../atoms';
 import useDebounce from '../hooks/useDebounce';
 
 interface Props {
@@ -13,6 +13,7 @@ interface Props {
     toggle: Function;
     isShowing: boolean;
     min?: number;
+    max?: number;
 }
 
 const PeoplePickerSelector = ({
@@ -24,6 +25,7 @@ const PeoplePickerSelector = ({
     isShowing,
     toggle,
     min,
+    max,
 }: Props): JSX.Element => {
     const { t } = useTranslation();
     const [locallySelected, setLocallySelected] = useState(initialySelected);
@@ -49,10 +51,10 @@ const PeoplePickerSelector = ({
         onDone(locallySelected);
     };
     const togglePerson = (id: string, selected: boolean): void => {
-        if (!selected) {
-            setLocallySelected(locallySelected.filter((listId: string): boolean => listId !== id));
-        } else {
+        if (selected && (!max || locallySelected.length < max)) {
             setLocallySelected([...locallySelected, id]);
+        } else {
+            setLocallySelected(locallySelected.filter((listId: string): boolean => listId !== id));
         }
     };
 
@@ -64,15 +66,21 @@ const PeoplePickerSelector = ({
             fullscreen={true}
             buttonType="primary"
             buttonText="Add"
+            bannerContent={
+                max && locallySelected.length >= max
+                    ? `${t('ui:validation--peoplepicker_maximum-prefix')} ${max} ${t(
+                          'ui:validation--peoplepicker_maximum-suffix',
+                      )}`
+                    : null
+            }
         >
             <h2 className="typography__heading typography__heading--h2">{label}</h2>
             <div className="people-picker__search_box">
                 <SearchField
                     id="peoplePickerSearch"
                     onChange={(event: React.FormEvent<HTMLInputElement>): void => {
-                            setSearchTerm(event.currentTarget.value)
-                        }
-                    }
+                        setSearchTerm(event.currentTarget.value);
+                    }}
                 />
                 <span className="typography__body typography__body--primary people-picker__guidance">
                     {min

@@ -26,7 +26,7 @@ const PeoplePicker = ({
     setSelectedPeople,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
-    
+
     return (
         <div className="people-picker">
             <h2 className="typography__heading typography__heading--h2">{label}</h2>
@@ -46,6 +46,7 @@ const PeoplePicker = ({
                 toggle={toggle}
                 isShowing={isShowing}
                 min={min}
+                max={max}
             />
         </div>
     );
