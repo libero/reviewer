@@ -26,8 +26,9 @@ describe('AMQP connector', () => {
                 on: jest.fn(),
             } as unknown as Connection;
 
-            // tslint:disable-next-line
+            // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
+            // tslint:disable-next-line: no-empty
             const sender = jest.fn().mockImplementation((___: StateChange<{}>) => {});
             const receiver = async (): Promise<StateChange<{}>> => ({} as StateChange<{}>);
             const _ = new AMQPConnector<{}>(url, [sender, receiver], [], [], 'service');
@@ -41,8 +42,9 @@ describe('AMQP connector', () => {
         });
 
         it('should set to not connected state on connection error', async () => {
-            // tslint:disable-next-line
+            // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => Promise.reject());
+            // tslint:disable-next-line: no-empty
             const sender = jest.fn().mockImplementation((___: StateChange<{}>) => {});
             const receiver = async (): Promise<StateChange<{}>> => ({} as StateChange<{}>);
             const _ = new AMQPConnector<{}>(url, [sender, receiver], [], [], 'service');
@@ -54,21 +56,21 @@ describe('AMQP connector', () => {
 
         it('should assert the right exchanges', async () => {
             const mockChannel = {
-                assertExchange: jest.fn()
+                assertExchange: jest.fn(),
             };
             const mockConnection = {
                 createChannel: () => mockChannel,
                 on: jest.fn(),
             } as unknown as Connection;
 
-            // tslint:disable-next-line
+            // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
             const _ = new AMQPConnector<{}>(url, channel(), [{ kind: 'foo', namespace: 'bar' }], [], 'service');
 
             await flushPromises();
             expect(mockChannel.assertExchange).toHaveBeenCalledTimes(1);
             expect(mockChannel.assertExchange).toHaveBeenCalledWith('event__foo-bar', 'fanout');
-        })
+        });
 
         it('should subscribe to the right queue', async () => {
             const mockChannel = {
@@ -85,7 +87,7 @@ describe('AMQP connector', () => {
             } as unknown as Connection;
             const eventIdentifier = { kind: 'foo', namespace: 'bar' };
 
-            // tslint:disable-next-line
+            // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
             const connector = new AMQPConnector<{}>(url, channel(), [], [{ eventIdentifier, handler: jest.fn()}], 'service');
 
@@ -116,10 +118,10 @@ describe('AMQP connector', () => {
                 namespace: 'bar',
                 id: 'id',
                 created: new Date(),
-                payload: { data: 'payload' }
+                payload: { data: 'payload' },
             };
 
-            // tslint:disable-next-line
+            // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
             const connector = new AMQPConnector<{}>(url, channel(), [{ kind: 'foo', namespace: 'bar' }], [], 'service');
 
@@ -137,11 +139,10 @@ describe('AMQP connector', () => {
                     attempts: 0,
                     retries: 10,
                     failures: 0, // increments each failure
-                }
+                },
             })));
         });
-    })
-
+    });
 
     describe('subscribe', () => {
         it('should subscribe to the right queue', async () => {
@@ -158,7 +159,7 @@ describe('AMQP connector', () => {
                 on: jest.fn(),
             } as unknown as Connection;
 
-            // tslint:disable-next-line
+            // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
             const connector = new AMQPConnector<{}>(url, channel(), [], [], 'service');
 
