@@ -6,17 +6,10 @@ import { channel } from 'rs-channel-node';
 import { Event } from 'event-bus';
 import { InfraLogger as logger } from '../logger';
 
-// Tests for the amqp connector
-
-// Tests for integration of amqp connector and index
-
-// Test against running amqp instance - this will be when it's it's own repository
-
 jest.mock('amqplib');
 jest.mock('../logger');
 
-// const mockedLogger = logger as unknown as jest.Mock<typeof logger>;
-beforeEach(() => jest.resetAllMocks())
+beforeEach(() => jest.resetAllMocks());
 
 describe('AMQP connector', () => {
     const url = 'http://example.com';
