@@ -12,6 +12,7 @@ interface Props {
     buttonText?: string;
     fullscreen?: boolean;
     buttonType?: string;
+    buttonDisabled?: boolean;
     bannerContent?: React.ReactNode;
 }
 
@@ -26,6 +27,7 @@ const Modal = React.forwardRef(
             fullscreen = false,
             buttonType = 'danger',
             buttonText,
+            buttonDisabled = false,
             bannerContent,
         }: Props,
         ref: React.Ref<HTMLDivElement>,
@@ -62,7 +64,11 @@ const Modal = React.forwardRef(
                                           className={`modal__buttons ${fullscreen ? 'modal__buttons--fullscreen' : ''}`}
                                       >
                                           <Button onClick={(): void => cancel()}>Cancel</Button>
-                                          <Button onClick={(): void => accept()} type={buttonType}>
+                                          <Button
+                                              onClick={(): void => accept()}
+                                              type={buttonType}
+                                              disabled={buttonDisabled}
+                                          >
                                               {buttonText || t('ui:modal--default-button')}
                                           </Button>
                                       </div>

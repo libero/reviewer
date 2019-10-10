@@ -66,6 +66,7 @@ const PeoplePickerSelector = ({
             fullscreen={true}
             buttonType="primary"
             buttonText="Add"
+            buttonDisabled={min && locallySelected.length < min}
             bannerContent={
                 max && locallySelected.length >= max
                     ? `${t('ui:validation--peoplepicker_maximum-prefix')} ${max} ${t(
