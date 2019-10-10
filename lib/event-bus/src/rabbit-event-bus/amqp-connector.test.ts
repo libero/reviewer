@@ -18,13 +18,25 @@ jest.mock('amqplib');
 
 describe('AMQP connector', () => {
     const url = 'http://example.com';
+    const makeConnection = (mockChannel?) => ({
+        createChannel: mockChannel ? () => mockChannel : jest.fn(),
+        on: jest.fn(),
+    } as unknown as Connection);
+    const makeChannel = (options: any = {}) => ({
+        assertQueue: jest.fn(),
+        assertExchange: jest.fn(),
+        bindQueue: jest.fn(),
+        consume: jest.fn(),
+        publish: jest.fn(),
+        on: jest.fn(),
+        ack: jest.fn(),
+        nack: jest.fn(),
+        ...options
+    })
 
     describe('constructor', () => {
         it('should create a channel and set connected state', async () => {
-            const mockConnection = {
-                createChannel: jest.fn(),
-                on: jest.fn(),
-            } as unknown as Connection;
+            const mockConnection = makeConnection();
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
@@ -55,13 +67,8 @@ describe('AMQP connector', () => {
         });
 
         it('should assert the right exchanges', async () => {
-            const mockChannel = {
-                assertExchange: jest.fn(),
-            };
-            const mockConnection = {
-                createChannel: () => mockChannel,
-                on: jest.fn(),
-            } as unknown as Connection;
+            const mockChannel = makeChannel({ assertExchange: jest.fn() });
+            const mockConnection = makeConnection(mockChannel);
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
@@ -73,23 +80,13 @@ describe('AMQP connector', () => {
         });
 
         it('should subscribe to the right queue', async () => {
-            const mockChannel = {
-                assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
-                bindQueue: jest.fn(),
-                consume: jest.fn(),
-                publish: jest.fn(),
-                on: jest.fn(),
-                close: jest.fn(),
-            };
-            const mockConnection = {
-                createChannel: () => mockChannel,
-                on: jest.fn(),
-            } as unknown as Connection;
+            const mockChannel = makeChannel({ assertQueue: jest.fn().mockImplementation(() => Promise.resolve()) });
+            const mockConnection = makeConnection(mockChannel);
             const eventIdentifier = { kind: 'foo', namespace: 'bar' };
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
-            const connector = new AMQPConnector<{}>(url, channel(), [], [{ eventIdentifier, handler: jest.fn()}], 'service');
+            const _ = new AMQPConnector<{}>(url, channel(), [], [{ eventIdentifier, handler: jest.fn()}], 'service');
 
             await flushPromises();
             expect(mockChannel.assertQueue).toHaveBeenCalledTimes(1);
@@ -103,16 +100,8 @@ describe('AMQP connector', () => {
 
     describe('publish', () => {
         it('should publish to the right exchanges', async () => {
-            const mockChannel = {
-                assertExchange: jest.fn(),
-                publish: jest.fn(),
-                on: jest.fn(),
-                close: jest.fn(),
-            };
-            const mockConnection = {
-                createChannel: () => mockChannel,
-                on: jest.fn(),
-            } as unknown as Connection;
+            const mockChannel = makeChannel();
+            const mockConnection = makeConnection(mockChannel);
             const event = {
                 kind: 'foo',
                 namespace: 'bar',
@@ -146,18 +135,8 @@ describe('AMQP connector', () => {
 
     describe('subscribe', () => {
         it('should subscribe to the right queue', async () => {
-            const mockChannel = {
-                assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
-                bindQueue: jest.fn(),
-                consume: jest.fn(),
-                publish: jest.fn(),
-                on: jest.fn(),
-                close: jest.fn(),
-            };
-            const mockConnection = {
-                createChannel: () => mockChannel,
-                on: jest.fn(),
-            } as unknown as Connection;
+            const mockChannel = makeChannel({ assertQueue: jest.fn().mockImplementation(() => Promise.resolve()) });
+            const mockConnection = makeConnection(mockChannel);
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
@@ -175,23 +154,15 @@ describe('AMQP connector', () => {
         });
 
         it('it should call the subscription handler and acknowledge', async () => {
-            const mockChannel = {
+            const mockChannel = makeChannel({
                 assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
-                bindQueue: jest.fn(),
                 consume: (___, callback) => {
                     callback({
                         content: { toString: () => '{ "event": "foo" }' },
                     });
                 },
-                publish: jest.fn(),
-                on: jest.fn(),
-                ack: jest.fn(),
-                close: jest.fn(),
-            };
-            const mockConnection = {
-                createChannel: () => mockChannel,
-                on: jest.fn(),
-            } as unknown as Connection;
+            });
+            const mockConnection = makeConnection(mockChannel);
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
@@ -208,22 +179,15 @@ describe('AMQP connector', () => {
         });
 
         it('it should call the subscription handler and unacknowledge if not ok', async () => {
-            const mockChannel = {
+            const mockChannel = makeChannel({
                 assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
-                bindQueue: jest.fn(),
                 consume: (___, callback) => {
                     callback({
                         content: { toString: () => '{ "event": "foo" }' },
                     });
                 },
-                publish: jest.fn(),
-                on: jest.fn(),
-                nack: jest.fn(),
-            };
-            const mockConnection = {
-                createChannel: () => mockChannel,
-                on: jest.fn(),
-            } as unknown as Connection;
+            });
+            const mockConnection = makeConnection(mockChannel);
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
