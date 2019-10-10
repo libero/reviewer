@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PersonProps, PersonPod, SearchField } from '.';
 import { Modal } from '../atoms';
@@ -30,11 +30,18 @@ const PeoplePickerSelector = ({
     const [searchTerm, setSearchTerm] = useState('');
     const debouncedSearchTerm = useDebounce<string>(searchTerm, 500);
 
+    // don't run onSearch on first render
+    const isFirstRender = useRef(true);
+
     useEffect((): void => {
         setLocallySelected(initialySelected);
     }, [initialySelected, isShowing]);
 
     useEffect((): void => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
         onSearch(debouncedSearchTerm);
     }, [debouncedSearchTerm]);
 
@@ -62,8 +69,9 @@ const PeoplePickerSelector = ({
             <div className="people-picker__search_box">
                 <SearchField
                     id="peoplePickerSearch"
-                    onChange={(event: React.FormEvent<HTMLInputElement>): void =>
-                        setSearchTerm(event.currentTarget.value)
+                    onChange={(event: React.FormEvent<HTMLInputElement>): void => {
+                            setSearchTerm(event.currentTarget.value)
+                        }
                     }
                 />
                 <span className="typography__body typography__body--primary people-picker__guidance">

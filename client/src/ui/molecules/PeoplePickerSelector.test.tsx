@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { render, cleanup, RenderResult, waitForElement, fireEvent } from '@testing-library/react';
+import { render, cleanup, RenderResult, waitForElement, fireEvent, act } from '@testing-library/react';
 import PeoplePickerSelector from './PeoplePickerSelector';
 import mockOffsetSize from '../../../test-utils/offsetSizeMock';
 
@@ -223,6 +223,8 @@ describe('PeoplePickerSelector', (): void => {
     it('should call the onSearch callback when the user types a string into the search box', async (): Promise<
         void
     > => {
+        jest.useFakeTimers();
+        
         const searchMock = jest.fn();
         const { baseElement } = render(
             <PeoplePickerSelector
@@ -235,7 +237,8 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
         );
-        await fireEvent.click(baseElement.querySelector('input'), { target: { value: 'someSearch' } });
-        expect(searchMock).toHaveBeenCalledTimes(1);
+        await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'someSearch' } });
+        act(()=>jest.advanceTimersByTime(510));
+        expect(searchMock).toBeCalledWith('someSearch');
     });
 });
