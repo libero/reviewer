@@ -6,7 +6,6 @@ import { channel } from 'rs-channel-node';
 import { Event } from 'event-bus';
 
 // Tests for the amqp connector
-// - runs the handler
 // - acknowledges the message when it handles the event correctly
 // - unacknowledges the message when it handles the event incorrectly
 
