@@ -1,5 +1,6 @@
 import React from 'react';
 import { PeoplePickerSelector, PersonProps, SelectedPeopleList } from '../molecules';
+import { useTranslation } from 'react-i18next';
 import useModal from '../../ui/hooks/useModal';
 
 interface Props {
@@ -26,7 +27,7 @@ const PeoplePicker = ({
     setSelectedPeople,
 }: Props): JSX.Element => {
     const { isShowing, toggle } = useModal();
-
+    const { t } = useTranslation();
     return (
         <div className="people-picker">
             <h2 className="typography__heading typography__heading--h2">{label}</h2>
@@ -35,7 +36,7 @@ const PeoplePicker = ({
                 required={required}
                 onRemove={onRemove}
                 onOpen={(): void => toggle()}
-                openSelectorText="bob"
+                openSelectorText={t('ui:people_picker--open-selector')}
             />
             <PeoplePickerSelector
                 people={people}
