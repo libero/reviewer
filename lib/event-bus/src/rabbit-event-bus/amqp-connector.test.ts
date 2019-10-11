@@ -1,4 +1,4 @@
-import { connect, Connection, ConsumeMessage } from 'amqplib';
+import { connect, Connection } from 'amqplib';
 import * as flushPromises from 'flush-promises';
 import AMQPConnector from './amqp-connector';
 import { StateChange } from './types';
@@ -30,7 +30,6 @@ describe('AMQP connector', () => {
         close: jest.fn(),
         ...options,
     });
-    const mockContentToString = (toString?: string) => () => toString ? toString : '{ "event": "foo" }';
 
     describe('constructor', () => {
         it('should create a channel and set connected state', async () => {
@@ -45,7 +44,7 @@ describe('AMQP connector', () => {
 
             await flushPromises();
             expect(connect).toHaveBeenCalledTimes(1);
-            expect(connect).toHaveBeenCalledWith(url);
+            expect(connect).toHaveBeenCalledWith('http://example.com');
             expect(mockConnection.createChannel).toHaveBeenCalledTimes(1);
             expect(sender).toHaveBeenCalledTimes(1);
             expect(sender).toHaveBeenCalledWith({ newState: 'CONNECTED'});
@@ -152,12 +151,11 @@ describe('AMQP connector', () => {
         });
 
         it('it should call the subscription handler and acknowledge', async () => {
-            const contentToString = mockContentToString();
             const mockChannel = makeChannel({
                 assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
                 consume: (___, callback) => {
                     callback({
-                        content: { toString: contentToString },
+                        content: { toString: () => '{ "event": "foo" }' },
                     });
                 },
             });
@@ -175,18 +173,15 @@ describe('AMQP connector', () => {
             expect(handler).toHaveBeenCalledTimes(1);
             expect(handler).toHaveBeenCalledWith('foo');
             expect(mockChannel.ack).toHaveBeenCalledTimes(1);
-            expect(mockChannel.ack).toHaveBeenCalledWith({
-                content: { toString: contentToString },
-            });
+            expect(mockChannel.ack.mock.calls[0][0].content.toString()).toBe('{ "event": "foo" }');
         });
 
         it('it should call the subscription handler and unacknowledge if not ok', async () => {
-            const contentToString = mockContentToString();
             const mockChannel = makeChannel({
                 assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
                 consume: (___, callback) => {
                     callback({
-                        content: { toString: contentToString },
+                        content: { toString: () => '{ "event": "foo" }' },
                     });
                 },
             });
@@ -205,19 +200,18 @@ describe('AMQP connector', () => {
             expect(logger.warn).toHaveBeenCalledTimes(1);
             expect(logger.warn).toHaveBeenCalledWith('eventHandlerFailure');
             expect(mockChannel.nack).toHaveBeenCalledTimes(1);
-            expect(mockChannel.nack).toHaveBeenCalledWith({
-                content: { toString: contentToString },
-            }, false, true);
+            expect(mockChannel.nack.mock.calls[0][0].content.toString()).toBe('{ "event": "foo" }');
+            expect(mockChannel.nack.mock.calls[0][1]).toBe(false);
+            expect(mockChannel.nack.mock.calls[0][2]).toBe(true);
         });
     });
 
     it('it should not acknowledge message with invalid event', async () => {
-        const contentToString = mockContentToString('not json');
         const mockChannel = makeChannel({
             assertQueue: jest.fn().mockImplementation(() => Promise.resolve()),
             consume: (___, callback) => {
                 callback({
-                    content: { toString: contentToString },
+                    content: { toString: () => 'not json' },
                 });
             },
         });
@@ -236,8 +230,8 @@ describe('AMQP connector', () => {
         expect(logger.warn).toHaveBeenCalledTimes(1);
         expect(logger.warn).toHaveBeenCalledWith('Can\'t parse JSON');
         expect(mockChannel.nack).toHaveBeenCalledTimes(1);
-        expect(mockChannel.nack).toHaveBeenCalledWith({
-            content: { toString: contentToString },
-        }, false, false);
+        expect(mockChannel.nack.mock.calls[0][0].content.toString()).toBe('not json');
+        expect(mockChannel.nack.mock.calls[0][1]).toBe(false);
+        expect(mockChannel.nack.mock.calls[0][2]).toBe(false);
     });
 });
