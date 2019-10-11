@@ -31,9 +31,9 @@ export class MockEventBus implements EventPublisher, EventSubscriber {
   }
 
   public async subscribe<P extends object>(
-    type : EventType,
+    eventType: EventType,
     handler: (ev: Event<P>) => Promise<boolean>,
   ) {
-    this.queues.get().set(`${type}`, handler);
+    this.queues.get().set(`${eventType}`, handler);
   }
 }

@@ -36,9 +36,9 @@ export default class AMQPConnector<M extends object> {
 
         const rabbitChannel = await this.connection.createChannel();
         await Promise.all(
-          eventDefs.map(async (def: EventType) =>
+          eventDefs.map(async (eventType: EventType) =>
             rabbitChannel.assertExchange(
-              EventUtils.eventTypeToExchange(def),
+              EventUtils.eventTypeToExchange(eventType),
               'fanout',
             ),
           ),
@@ -52,7 +52,7 @@ export default class AMQPConnector<M extends object> {
         subscriptions.forEach(async subscription => {
           // subscribe
           await this.subscribe(
-            subscription.EventType,
+            subscription.eventType,
             subscription.handler,
           );
         });
@@ -78,7 +78,7 @@ export default class AMQPConnector<M extends object> {
   }
 
   public async subscribe<P extends object>(
-    EventType: EventType,
+    eventType: EventType,
     handler: (ev: Event<P>) => Promise<boolean>,
   ): Promise<void> {
     // For the event identifier:
@@ -91,17 +91,17 @@ export default class AMQPConnector<M extends object> {
         rabbitChannel.on('error', () => this.disconnected());
 
         return await rabbitChannel
-          .assertQueue(EventUtils.eventTypeToQueue(EventType, this.serviceName))
+          .assertQueue(EventUtils.eventTypeToQueue(eventType, this.serviceName))
           .then(async () => {
             await rabbitChannel.bindQueue(
-              EventUtils.eventTypeToQueue(EventType, this.serviceName),
-              EventUtils.eventTypeToExchange(EventType),
+              EventUtils.eventTypeToQueue(eventType, this.serviceName),
+              EventUtils.eventTypeToExchange(eventType),
               '',
             );
             logger.trace('subscribe');
 
             await rabbitChannel.consume(
-              EventUtils.eventTypeToQueue(EventType, this.serviceName),
+              EventUtils.eventTypeToQueue(eventType, this.serviceName),
               async (msg: Message) => {
                 try {
                   const message: MessageWrapper<Event<P>> = JSON.parse(
@@ -133,7 +133,7 @@ export default class AMQPConnector<M extends object> {
       })
       .getOrElseL(() => {
         // Do we want to handle reconnects &/or retries here?
-        setTimeout(() => this.subscribe(EventType, handler), 1000);
+        setTimeout(() => this.subscribe(eventType, handler), 1000);
         logger.warn('No connection, can\'t subscribe, trying again soon!');
       });
   }

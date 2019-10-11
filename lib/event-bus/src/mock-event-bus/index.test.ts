@@ -9,7 +9,7 @@ interface TestEventPayload {
 describe('mock message queue', () => {
   describe('you can publish and subscribe', () => {
     it('can do the full flow', async () => {
-      const eventType: EventType = "libero:mock:test";
+      const eventType: EventType = 'libero:mock:test';
 
       const handlerMock = jest.fn(async () => true);
 

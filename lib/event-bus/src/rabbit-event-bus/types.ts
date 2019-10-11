@@ -15,6 +15,6 @@ export interface MessageWrapper<T> {
 }
 
 export interface Subscription<P extends object> {
-  EventType: EventType;
+  eventType: EventType;
   handler: (ev: Event<P>) => Promise<boolean>;
 }

@@ -127,16 +127,16 @@ export default class RabbitEventBus<M extends object> implements EventBus {
   }
 
   public async subscribe<P extends object>(
-    EventType: EventType,
+    eventType: EventType,
     handler: (event: Event<P>) => Promise<boolean>,
   ) {
     this.connector.map(connector => {
-      connector.subscribe(EventType, handler);
+      connector.subscribe(eventType, handler);
     });
 
     // Add the subscription to the next connector's list of subscriptions
     return this.subscriptions.push({
-      EventType,
+      eventType,
       handler,
     });
   }

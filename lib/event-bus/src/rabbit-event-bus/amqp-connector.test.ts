@@ -69,7 +69,7 @@ describe('AMQP connector', () => {
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
-            const _ = new AMQPConnector<{}>(url, channel(), ["test:event"], [], 'service');
+            const _ = new AMQPConnector<{}>(url, channel(), ['test:event'], [], 'service');
 
             await flushPromises();
             expect(mockChannel.assertExchange).toHaveBeenCalledTimes(1);
@@ -79,11 +79,11 @@ describe('AMQP connector', () => {
         it('should subscribe to the right queue', async () => {
             const mockChannel = makeChannel({ assertQueue: jest.fn().mockImplementation(() => Promise.resolve()) });
             const mockConnection = makeConnection(mockChannel);
-            const EventType = "test:event";
+            const eventType = 'test:event';
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
-            const _ = new AMQPConnector<{}>(url, channel(), [], [{ EventType, handler: jest.fn()}], 'service');
+            const _ = new AMQPConnector<{}>(url, channel(), [], [{ eventType, handler: jest.fn()}], 'service');
 
             await flushPromises();
             expect(mockChannel.assertQueue).toHaveBeenCalledTimes(1);
@@ -108,7 +108,7 @@ describe('AMQP connector', () => {
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
-            const connector = new AMQPConnector<{}>(url, channel(), ["test:event"], [], 'service');
+            const connector = new AMQPConnector<{}>(url, channel(), ['test:event'], [], 'service');
 
             // we need to wait for connection to be stored before we can publish
             await flushPromises();
@@ -139,7 +139,7 @@ describe('AMQP connector', () => {
             const connector = new AMQPConnector<{}>(url, channel(), [], [], 'service');
 
             await flushPromises();
-            await connector.subscribe("test:event", jest.fn());
+            await connector.subscribe('test:event', jest.fn());
 
             expect(mockChannel.assertQueue).toHaveBeenCalledTimes(1);
             expect(mockChannel.assertQueue).toHaveBeenCalledWith('consumer__test:event__service');
@@ -166,7 +166,7 @@ describe('AMQP connector', () => {
             const handler = jest.fn().mockImplementation(async () => Promise.resolve(true));
 
             await flushPromises();
-            await connector.subscribe("test:event", handler);
+            await connector.subscribe('test:event', handler);
 
             await flushPromises();
             expect(handler).toHaveBeenCalledTimes(1);
@@ -192,7 +192,7 @@ describe('AMQP connector', () => {
             const handler = jest.fn().mockImplementation(async () => Promise.resolve());
 
             await flushPromises();
-            await connector.subscribe("test:event", handler);
+            await connector.subscribe('test:event', handler);
 
             await flushPromises();
             expect(handler).toHaveBeenCalledTimes(1);
@@ -222,7 +222,7 @@ describe('AMQP connector', () => {
         const handler = jest.fn().mockImplementation(async () => Promise.resolve());
 
         await flushPromises();
-        await connector.subscribe("test:event", handler);
+        await connector.subscribe('test:event', handler);
 
         await flushPromises();
         expect(handler).toHaveBeenCalledTimes(0);
