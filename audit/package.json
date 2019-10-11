@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo not configured yet",
     "build": "tsc --build tsconfig.json",
-    "lint": "echo not configured yet",
+    "lint": "tslint --project tsconfig.json",
     "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts | pino-pretty",
     "update:internal": "yarn upgrade -P @libero"
   },
@@ -38,6 +38,7 @@
     "@types/pino": "^5.8.10",
     "@types/uuid": "^3.4.5",
     "pino-pretty": "^3.2.1",
-    "ts-node": "^8.3.0"
+    "ts-node": "^8.3.0",
+    "tslint": "^5.20.0"
   }
 }
