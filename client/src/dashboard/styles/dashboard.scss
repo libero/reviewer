@@ -4,12 +4,6 @@
 .dashboard {
   font-family: Noto Sans, Arial, Helvetica, sans-serif, sans-serif;
   padding-bottom: 7.5em;
-
-  @include forSize('tabletLandscapeUp') {
-    padding-bottom: 0;
-    margin-left: 16.666%;
-    margin-right: 16.666%;
-  }
 }
 
 .dashboard__new_submission {

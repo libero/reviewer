@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Banner } from './index';
+import { Button } from './index';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -13,7 +13,6 @@ interface Props {
     fullscreen?: boolean;
     buttonType?: string;
     buttonDisabled?: boolean;
-    bannerContent?: React.ReactNode;
 }
 
 const Modal = React.forwardRef(
@@ -28,7 +27,6 @@ const Modal = React.forwardRef(
             buttonType = 'danger',
             buttonText,
             buttonDisabled = false,
-            bannerContent,
         }: Props,
         ref: React.Ref<HTMLDivElement>,
     ): JSX.Element => {
@@ -51,17 +49,16 @@ const Modal = React.forwardRef(
                       <div className="modal__overlay">
                           <div className="modal__wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
                               <div className={`modal ${fullscreen ? 'modal__fullscreen' : ''}`} ref={ref}>
-                                  {fullscreen && bannerContent && <Banner>{bannerContent}</Banner>}
-                                  <div className={`modal__content ${fullscreen ? 'modal__content--fullscreen' : ''}`}>
-                                      {children}
-                                  </div>
+                                  <div className="modal__content">{children}</div>
                                   <div
                                       className={`modal__buttons_container ${
                                           fullscreen ? 'modal__buttons_container--fullscreen' : ''
                                       }`}
                                   >
                                       <div
-                                          className={`modal__buttons ${fullscreen ? 'modal__buttons--fullscreen' : ''}`}
+                                          className={`modal__buttons ${
+                                              fullscreen ? 'modal__buttons--fullscreen main-content--centered' : ''
+                                          }`}
                                       >
                                           <Button onClick={(): void => cancel()}>Cancel</Button>
                                           <Button
