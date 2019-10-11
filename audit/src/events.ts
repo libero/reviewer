@@ -5,10 +5,7 @@ export type ServiceStartedPayload = {
   type: string;
 };
 
-export const serviceStartedIdentifier: EventType = {
-  kind: "ServiceStarted",
-  namespace: "infra-global"
-};
+export const serviceStartedIdentifier: EventType = "libero:infra:audit:ServiceStarted";
 
 export type UserLoggedInPayload = {
   name: string;
@@ -17,7 +14,4 @@ export type UserLoggedInPayload = {
   timestamp: Date;
 };
 
-export const userLoggedInIdentifier: EventType = {
-  kind: "UserLoggedIn",
-  namespace: "user-audit",
-};
+export const userLoggedInIdentifier: EventType = "libero:audit:user:LoggedIn";
