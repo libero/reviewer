@@ -12,7 +12,7 @@ const Dashboard = withRouter(
         const { t } = useTranslation();
 
         return (
-            <div className="dashboard">
+            <div className="dashboard main-content--centered">
                 <div className="dashboard__button_container">
                     <Button type="primary" onClick={(): void => {}}>
                         {t('dashboard:new-submission')}

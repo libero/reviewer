@@ -1,5 +1,7 @@
 .people-picker__modal_list {
   height: 65vh;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
 }
 
 .people-picker__modal_list--item {
@@ -14,6 +16,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
   .text-field{
     padding-left: 0.75rem;
     padding-right: 0.75rem;

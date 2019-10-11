@@ -25,6 +25,13 @@ describe('Modal', (): void => {
         expect(getByText(buttonText)).toBeInTheDocument();
     });
 
+    it('Should render with the button disabled if the disabled prop is passed in', (): void => {
+        const { getByText } = render(
+            <Modal isShowing={true} hide={(): void => {}} buttonDisabled={true} buttonText="test" />,
+        );
+        expect(getByText('test')).toBeDisabled();
+    });
+
     it('should change the type of button depending on what is passed in', (): void => {
         const { getByText } = render(
             <Modal isShowing={true} hide={(): void => {}} buttonText="Accept" buttonType="primary" />,

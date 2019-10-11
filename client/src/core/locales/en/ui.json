@@ -7,10 +7,13 @@
     "search-box--label": "Search",
     "search-box--helper": "Search...",
     "modal--default-button": "Accept",
+    "people_picker--open-selector": "Choose editor",
     "selected_people_list--open": "Open Picker",
     "validation--optional": "optional",
     "validation--required": "required",
     "validation--peoplepicker_guidance-prefix": "At least",
-    "validation--peoplepicker_guidance-suffix": "suggestions required"
+    "validation--peoplepicker_guidance-suffix": "suggestions required",
+    "validation--peoplepicker_maximum-prefix": "Maximum",
+    "validation--peoplepicker_maximum-suffix": "people selected"
 }
 

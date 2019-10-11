@@ -10,6 +10,6 @@ storiesOf('ui | atoms/Banner', module)
         'Banner',
         (): JSX.Element => {
             const content = text('Content', 'Maximum 6 people selected');
-            return <Banner>{ content }</Banner>;
+            return <Banner>{content}</Banner>;
         },
     );
