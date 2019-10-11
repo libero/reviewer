@@ -7,7 +7,7 @@
     "search-box--label": "Search",
     "search-box--helper": "Search...",
     "modal--default-button": "Accept",
-    "people_picker--open-selector": "Choose editor...",
+    "people_picker--open-selector": "Choose editor",
     "selected_people_list--open": "Open Picker",
     "validation--optional": "optional",
     "validation--required": "required",
