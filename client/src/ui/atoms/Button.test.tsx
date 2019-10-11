@@ -26,4 +26,9 @@ describe('Button', (): void => {
         expect(getByText('test')).toHaveClass('some-class');
         expect(getByText('test')).toHaveClass('button');
     });
+
+    it('should be disabled if the disabled prop is true', (): void => {
+        const { getByText } = render(<Button disabled={true}>test</Button>);
+        expect(getByText('test')).toBeDisabled();
+    });
 });

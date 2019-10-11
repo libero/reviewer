@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import { InfraLogger as logger } from './logger';
-import { Event, EventIdentifier, RabbitEventBus, MockEventBus } from '@libero/event-bus';
+import { Event, EventType, RabbitEventBus, MockEventBus } from '@libero/event-bus';
 
 interface TestEventPayload {
   x: number;
@@ -9,7 +9,7 @@ interface TestEventPayload {
 }
 
 const initMq = async () => {
-  const testEventDef: EventIdentifier = {
+  const testEventDef: EventType = {
     kind: 'something_else',
     namespace: 'service_01',
   };

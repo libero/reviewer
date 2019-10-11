@@ -38,7 +38,7 @@ const setupEventBus = async (freshEventBus: EventBus) => {
       type: 'support/audit',
       name: auditServiceName,
     },
-    ...serviceStartedIdentifier,
+    eventType: serviceStartedIdentifier
   };
 
   await eventBus.publish(event).then(() => {

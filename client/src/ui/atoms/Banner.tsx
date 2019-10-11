@@ -1,11 +1,7 @@
 import React, { ReactNode } from 'react';
 
 interface Props {
-  children?: ReactNode
+    children?: ReactNode;
 }
-const Banner = ({ children }: Props): JSX.Element => (
-  <div className="banner">
-    { children }
-  </div>
-)
+const Banner = ({ children }: Props): JSX.Element => <div className="banner">{children}</div>;
 export default Banner;

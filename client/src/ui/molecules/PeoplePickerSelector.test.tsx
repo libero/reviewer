@@ -128,7 +128,9 @@ describe('PeoplePickerSelector', (): void => {
                 isShowing={true}
             />,
         );
-        expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe('validation--peoplepicker_guidance-prefix ' + min + ' validation--peoplepicker_guidance-suffix');
+        expect(baseElement.querySelector('.people-picker__guidance').textContent).toBe(
+            'validation--peoplepicker_guidance-prefix ' + min + ' validation--peoplepicker_guidance-suffix',
+        );
     });
 
     it('does not render guidance text if min value is 0', (): void => {
@@ -201,7 +203,6 @@ describe('PeoplePickerSelector', (): void => {
     });
 
     it('it does not add the selected people when clicked and confirmed', (): void => {
-        // this test will be fragile, needs a rethink
         const doneMock = jest.fn();
         const { baseElement } = render(
             <PeoplePickerSelector
@@ -220,11 +221,57 @@ describe('PeoplePickerSelector', (): void => {
         expect(doneMock).not.toHaveBeenCalled();
     });
 
+    it('it should show the banner when the maximum selected has been reached', (): void => {
+        const { baseElement } = render(
+            <PeoplePickerSelector
+                initialySelected={['1', '2', '3', '4']}
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+                max={4}
+            />,
+        );
+        expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(4);
+        expect(baseElement.querySelector('.banner')).toBeInTheDocument();
+    });
+
+    it('should disable the button if min is passed in and there are not enough people selected', (): void => {
+        const { baseElement, rerender } = render(
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=""
+                toggle={jest.fn()}
+                isShowing={true}
+                min={2}
+            />,
+        );
+        expect(baseElement.querySelector('.button--primary')).not.toBeEnabled();
+        rerender(
+            <PeoplePickerSelector
+                initialySelected={['1', '2']}
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=""
+                toggle={jest.fn()}
+                isShowing={true}
+                min={2}
+            />,
+        );
+        expect(baseElement.querySelector('.button--primary')).toBeEnabled();
+    });
+
     it('should call the onSearch callback when the user types a string into the search box', async (): Promise<
         void
     > => {
         jest.useFakeTimers();
-        
+
         const searchMock = jest.fn();
         const { baseElement } = render(
             <PeoplePickerSelector
@@ -238,7 +285,7 @@ describe('PeoplePickerSelector', (): void => {
             />,
         );
         await fireEvent.change(baseElement.querySelector('input'), { target: { value: 'someSearch' } });
-        act(()=>jest.advanceTimersByTime(510));
+        act(() => jest.advanceTimersByTime(510));
         expect(searchMock).toBeCalledWith('someSearch');
     });
 });

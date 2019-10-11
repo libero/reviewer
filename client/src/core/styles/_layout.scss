@@ -1,0 +1,11 @@
+.main-content--centered {
+  padding-left: $gutterSize;
+  padding-right: $gutterSize;
+  @include forSize('tabletLandscapeUp') {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    margin-left: 16.666%;
+    margin-right: 16.666%;
+  }
+}

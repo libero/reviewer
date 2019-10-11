@@ -53,18 +53,20 @@ storiesOf('ui | molecules/PeoplePickerSelector', module)
             const label = text('Label', 'People Picker');
             const isShowing = boolean('Shown', true);
             const min = number('Minimum required people', 2);
+            const max = number('Maximum allowed people', 6);
 
             button('Add Person', addPerson);
             return (
                 <PeoplePickerSelector
                     people={people}
                     initialySelected={[]}
-                    label={label}                    
+                    label={label}
                     onDone={action('Done')}
                     onSearch={action('Search')}
                     toggle={() => {}}
                     isShowing={isShowing}
                     min={min}
+                    max={max}
                 />
             );
         },
