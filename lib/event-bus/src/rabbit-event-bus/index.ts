@@ -1,160 +1,143 @@
-import { EventIdentifier, EventSubscriber, EventPublisher, Event } from '../event-bus';
+import { Sender, Receiver, Channel, channel } from 'rs-channel-node';
+import { Option, None, Some } from 'funfix';
+import { Connection } from 'amqplib';
 import * as amqplib from 'amqplib';
-import { Connection, Message } from 'amqplib';
-import { Option, Some } from 'funfix';
+import { debounce } from 'lodash';
 import { InfraLogger as logger } from '../logger';
+import { EventIdentifier, Event, EventBus } from '../event-bus';
+import { Subscription, StateChange } from './types';
+import { EventUtils } from './event-utils';
+import AMQPConnector from './amqp-connector';
 
-interface MessageWrapper<T> {
-  event: T;
-  meta: {
-    attempts: number;
-    retries: number;
-    failures: number;
-  };
+export interface RabbitEventBusConnectionOptions {
+  url: string;
 }
 
-export class RabbitEventBus implements EventSubscriber, EventPublisher {
-  connection: Option<Connection>;
-  serviceName: string = 'unknown_service';
+// <M> doesn't refer to the event types, M refers to the internal statechange message type
+// It probably doesn't even make sense to paramatise it here
+export default class RabbitEventBus<M extends object> implements EventBus {
+  private connector: Option<AMQPConnector<M>> = None;
 
-  private defToExchange(def: EventIdentifier) {
-    return `event__${def.kind}-${def.namespace}`;
+  private innerChannel: Channel<StateChange<M>> = channel<StateChange<M>>();
+
+  private eventDefinitions: EventIdentifier[];
+  private serviceName: string = 'unknown-service';
+
+  private flowing: boolean = false;
+  private url: string = '';
+
+  private queue: Array<{
+    ev: Event<unknown & object>;
+    resolve: (arg0: boolean) => void;
+    reject: (arg0: boolean) => void;
+  }> = [];
+  private subscriptions: Array<Subscription<unknown & object>> = [];
+
+  public constructor(connectionOpts: RabbitEventBusConnectionOptions) {
+    // constructor
+    // TODO: Constructor takes connection information
+    this.url = connectionOpts.url;
   }
 
-  private defToQueue(def: EventIdentifier) {
-    return `consumer__${def.kind}-${def.namespace}__${this.serviceName}`;
-  }
-
-  private eventToMessage<T extends object>(event: Event<T>): MessageWrapper<Event<T>> {
-    // Wrap the event in some internal transport layer format, in effect transforming the
-    // event into a message
-    return {
-      event,
-      meta: {
-        attempts: 0, // increments each process
-        retries: 10, // total retries
-        failures: 0, // increments each failure
-      },
-    };
-  }
-
-  private messageToEvent<T extends object>(message: MessageWrapper<Event<T>>): Option<Event<T>> {
-    return Option.of(message.event);
-  }
-
-  private async connect(): Promise<Connection> {
-    let done;
-
-    const attemptConnect = () => {
-      // TODO: put this in configuration
-      return amqplib.connect('amqp://rabbitmq')
-        .then((connection) => {
-          done(connection);
-        })
-        .catch(e => {
-          logger.info('Couldn\'t connect to message queue, retrying in 10s');
-          setTimeout (attemptConnect, 10000);
-        });
-    };
-
-    return new Promise(resolve => {
-      done = resolve;
-      attemptConnect();
-    });
-  }
-
-  public async init(eventDefs: EventIdentifier[], serviceName: string): Promise<this> {
-    // The eventDefs are the names of events that this service will emit
-    // It's probably good practice to always declare the events that the service emits
-
+  public async init(eventDefinitions: EventIdentifier[], serviceName: string) {
+    // TODO: init takes events information
+    this.eventDefinitions = eventDefinitions;
     this.serviceName = serviceName;
-    // First things first
-    this.connection = Option.of(
-      await this.connect(),
-    );
-    // This is where we setup the queue structure in RabbitMQ
 
-    const channel = await this.connection.get().createChannel();
-    await Promise.all(
-      eventDefs.map(async (def: EventIdentifier) => {
-        return channel.assertExchange(this.defToExchange(def), 'fanout');
-      }),
-    ).catch(() => logger.fatal('can\'t create exchanges'));
+    this.observeStateChange();
 
+    this.connect(this.url);
     return this;
   }
 
-  public async publish<T extends object>(event: Event<T>): Promise<boolean> {
-    // Publishes an event to it's queue
-    const whereTo = this.defToExchange(event);
-    return this.connection
-      .map(async connection => {
-        const channel = await connection.createChannel();
+  private async observeStateChange() {
+    const [_, recv] = this.innerChannel;
+    while (2 + 2 !== 5) {
+      const payload = await recv();
+      if (payload.newState === 'NOT_CONNECTED') {
+        // Destroy the connector
+        this.connector = None;
 
-        await channel.publish(
-          whereTo,
-          '',
-          Buffer.from(JSON.stringify(this.eventToMessage(event))),
-        );
+        // Execute the hooks
+        this.onDisconnect();
 
-        channel.close();
-        return true;
-      })
-      .getOrElse(false);
+        // Start reconnecting
+        const reconnect = debounce(() => this.connect(this.url), 100, { maxWait : 2000 });
+        reconnect();
+      } else if (payload.newState === 'CONNECTED') {
+        // logger.info('connection confirmed');
+        this.onConnect();
+      }
+    }
+  }
+
+  private onDisconnect() {
+    // function is called when the child connector drops
+    this.flowing = false;
+  }
+
+  private onConnect() {
+    this.flowing = true;
+
+    this.queue
+      // Create a new array so we don't mutate the queue as we iterate over it
+      // (which would lead to undefined behaviour)
+      .map(() => undefined)
+      .forEach(() => {
+        Option.of(this.queue.shift()).map(item => {
+          const { ev, resolve, reject } = item;
+          return this.publish(ev)
+            .then(res => resolve(res))
+            .catch(() => reject(false));
+        });
+      });
+  }
+
+  private connect(url) {
+    // logger.debug('attemptingConnection');
+    // Should I debounce this?
+    this.connector = Some(
+      new AMQPConnector(
+        url,
+        this.innerChannel,
+        this.eventDefinitions,
+        this.subscriptions,
+        this.serviceName,
+      ),
+    );
+  }
+
+  // This method will not resolve until the event has been successfully published so that
+  // the user never has to know about the internal queue
+  public publish<P extends object>(msg: Event<P>): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      if (this.flowing) {
+        // Should we queue messages that fail?
+        const published: boolean = await this.connector.get().publish(msg);
+
+        if (!published) {
+          this.queue.push({ ev: msg, resolve, reject });
+        } else {
+          resolve(published);
+        }
+      } else {
+        this.queue.push({ ev: msg, resolve, reject });
+      }
+    });
   }
 
   public async subscribe<P extends object>(
     eventIdentifier: EventIdentifier,
-    handler: (ev: Event<P>) => Promise<boolean>,
+    handler: (event: Event<P>) => Promise<boolean>,
   ) {
-    // For the event identifier:
-    //  - Declare a subscriber queue
-    //  - bind that queue to event exchange
-    // Runs the handler function on any event that matches that type
-    this.connection
-      .map(async (conn: Connection) => {
-        const channel = await conn.createChannel();
+    this.connector.map(connector => {
+      connector.subscribe(eventIdentifier, handler);
+    });
 
-        await channel
-          .assertQueue(this.defToQueue(eventIdentifier))
-          .then(async () => {
-            await channel.bindQueue(
-              this.defToQueue(eventIdentifier),
-              this.defToExchange(eventIdentifier),
-              '',
-            );
-
-            await channel.consume(
-              this.defToQueue(eventIdentifier),
-              async (msg: Message) => {
-                try {
-                  const message: MessageWrapper<Event<P>> = JSON.parse(msg.content.toString());
-                  logger.info('eventRecv', { message });
-
-                  handler(this.messageToEvent(message).get()).then(isOk => {
-                    if (isOk) {
-                      // Ack
-                      channel.ack(msg);
-                    } else {
-                      // Nack
-                      logger.warn('eventHandlerFailure');
-                      channel.nack(msg, false, true);
-                    }
-                  });
-                } catch (e) {
-                  channel.nack(msg, false, false);
-                  logger.warn('Can\'t parse JSON');
-                }
-              },
-            );
-          })
-          .catch(() => {
-            logger.fatal('can\'t create subscriber queues');
-          });
-      })
-      .getOrElseL(() => {
-        logger.fatal('Can\'t subscribe');
-        process.exit(-1);
-      });
+    // Add the subscription to the next connector's list of subscriptions
+    return this.subscriptions.push({
+      eventIdentifier,
+      handler,
+    });
   }
 }

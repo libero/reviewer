@@ -20,7 +20,7 @@ interface Props extends PersonProps {
 
 const PersonPod = ({
     id,
-    initialySelected,
+    initialySelected = false,
     toggleHandler,
     institution,
     name,
@@ -28,18 +28,16 @@ const PersonPod = ({
     expertises = [],
     selectedButtonIcon = <CheckCircle data-selected="true" fontSize="large" className="person-pod__selected_icon" />,
 }: Props): JSX.Element => {
-    const [selected, setSelected] = useState(initialySelected || false);
     const { isShowing, toggle } = useModal();
 
     const onClick = (id: string): void => {
-        setSelected(!selected);
-        toggleHandler(id, !selected);
+        toggleHandler(id, !initialySelected);
     };
     const commaSeperatedTags = [...focuses, ...expertises].join(', ');
     return (
         <Pod
-            buttonIcon={selected ? selectedButtonIcon : <Add />}
-            buttonText={selected ? 'Remove' : 'Add'}
+            buttonIcon={initialySelected ? selectedButtonIcon : <Add />}
+            buttonText={initialySelected ? 'Remove' : 'Add'}
             onClick={(): void => onClick(id)}
         >
             <Modal
@@ -47,7 +45,7 @@ const PersonPod = ({
                 isShowing={isShowing}
                 onAccept={(): void => onClick(id)}
                 buttonType="primary"
-                buttonText={`${selected ? 'Remove' : 'Add'} Editor`}
+                buttonText={`${initialySelected ? 'Remove' : 'Add'} Editor`}
             >
                 <PersonInfo name={name} institution={institution} focuses={focuses} expertises={expertises} />
             </Modal>

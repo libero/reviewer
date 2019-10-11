@@ -14,13 +14,6 @@ describe('Button', (): void => {
         expect(container.querySelectorAll('[data-selected]').length).toBe(1);
     });
 
-    it('should toggle the check if the button is clicked', async (): Promise<void> => {
-        const mockHandler = jest.fn();
-        const { container } = render(<PersonPod toggleHandler={mockHandler} />);
-        await fireEvent.click(container.querySelector('.pod__button'));
-        expect(container.querySelectorAll('[data-selected]').length).toBe(1);
-    });
-
     it('should call the callback if the button is clicked', async (): Promise<void> => {
         const mockHandler = jest.fn();
         const { container } = render(<PersonPod toggleHandler={mockHandler} />);
@@ -61,7 +54,7 @@ describe('Button', (): void => {
         expect(getByText('FocusA, FocusB, FocusC, Expertise1, Expertise2, Expertise3')).toBeInTheDocument();
     });
 
-    it('should use an override select icon if passed', () => {
+    it('should use an override select icon if passed', (): void => {
         const { container, rerender } = render(<PersonPod initialySelected={true} toggleHandler={jest.fn()} />);
         expect(container.querySelector('.pod__button').querySelector('.person-pod__selected_icon')).toBeInTheDocument();
         rerender(

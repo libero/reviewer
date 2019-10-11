@@ -13,15 +13,16 @@ storiesOf('ui | molecules/PersonPod', module)
     .add(
         'PersonPod',
         (): JSX.Element => {
+            const selected = boolean('Selected', false);
+            const deleteIcon = boolean('Selected uses delete icon?', false);
             const name = text('Name', 'Bob Ross');
             const institution = text('Institution', 'Little Happy Trees');
-            const deleteIcon = boolean('Selected uses delete icon?', false);
             const focuses = text('Focuses', 'Focus 1, Focus 2, Focus 3').split(',');
-            const expertises = text('Exxpertises', 'Expertise 1,Expertise 2').split(',');
+            const expertises = text('Expertises', 'Expertise 1,Expertise 2').split(',');
             return (
                 <PersonPod
                     id="id1"
-                    initialySelected={false}
+                    initialySelected={selected}
                     focuses={focuses}
                     expertises={expertises}
                     name={name}

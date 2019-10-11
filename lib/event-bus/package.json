@@ -25,10 +25,13 @@
     "dotenv-cli": "^2.0.1",
     "funfix": "^7.0.1",
     "jsonwebtoken": "^8.5.1",
+    "lodash.debounce": "^4.0.8",
     "pino": "^5.13.2",
+    "rs-channel-node": "^0.0.3",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "flush-promises": "^1.0.2",
     "jest": "^24.9.0",
     "nodemon": "^1.19.1",
     "pino-pretty": "^3.2.1",

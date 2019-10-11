@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jeset",
     "compile": "tsc",
+    "lint": "tslint --project tsconfig.json",
     "start:dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts",
     "update:internal": "yarn upgrade -P @libero"
   },
@@ -27,6 +28,7 @@
     "@types/pino": "^5.8.10",
     "nodemon": "^1.19.2",
     "ts-jest": "^24.0.2",
-    "ts-node": "^8.3.0"
+    "ts-node": "^8.3.0",
+    "tslint": "^5.20.0"
   }
 }
