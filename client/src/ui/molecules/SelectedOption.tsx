@@ -6,7 +6,7 @@ interface Props {
     onClose?: () => void;
 }
 
-export const SelectedOption: React.FC<Props> = ({ text, onClose }: Props): JSX.Element => {
+const SelectedOption: React.FC<Props> = ({ text, onClose }: Props): JSX.Element => {
     let classes = 'selected-option';
 
     if (onClose) {
@@ -26,3 +26,5 @@ export const SelectedOption: React.FC<Props> = ({ text, onClose }: Props): JSX.E
         </div>
     );
 };
+
+export default SelectedOption;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
-import { SelectedOption } from './SelectedOption';
+import SelectedOption from './SelectedOption';
 
 describe('SelectedOption', (): void => {
     it('should render correctly', (): void => {

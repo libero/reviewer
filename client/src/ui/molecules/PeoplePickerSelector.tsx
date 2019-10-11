@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PersonProps, PersonPod, SearchField } from '.';
+import { PersonProps, PersonPod, SearchField, SelectedOption } from '.';
 import { Modal } from '../atoms';
 import useDebounce from '../hooks/useDebounce';
 
@@ -81,6 +81,23 @@ const PeoplePickerSelector = ({
                           )}`
                         : null}
                 </span>
+            </div>
+            <div className="people-picker__selected-tabs">
+                {
+                    locallySelected.map(selectedPersonId => {
+                        const selectedPerson = people.find(person => person.id === selectedPersonId);
+                        return (
+                            <div style={{ display: 'inline-flex', margin: '8px' }} key={selectedPersonId}>
+                                <SelectedOption
+                                    text={selectedPerson.name}
+                                    onClose={() => {
+                                        togglePerson(selectedPersonId, false);
+                                    }}
+                                />
+                            </div>
+                        );
+                    })
+                }
             </div>
             <div className="people-picker__modal_list">
                 {people.map(
