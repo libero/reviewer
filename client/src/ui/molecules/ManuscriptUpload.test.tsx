@@ -1,15 +1,7 @@
 import React from 'react';
 import { render, RenderResult, fireEvent, cleanup, act, queryByText } from '@testing-library/react';
+import flushPromises from '../../../test-utils/flushPromises';
 import ManuscriptUpload from './ManuscriptUpload';
-
-function flushPromises(ui: React.ReactElement<any>, container: HTMLElement) {
-    return new Promise(resolve =>
-        setImmediate(() => {
-            render(ui, { container });
-            resolve(container);
-        }),
-    );
-}
 
 function dispatchEvt(node: Document | Element | Window, type: string, data: any) {
     const event = new Event(type, { bubbles: true });
@@ -54,7 +46,7 @@ describe('ManuscriptUpload', (): void => {
 
         await act(async () => {
             dispatchEvt(dropzone, 'dragenter', data);
-            await flushPromises(ui, container);
+            await flushPromises();
         });
 
         expect(queryByText(container, 'manuscript-upload.active-content')).not.toBeNull();
@@ -77,7 +69,7 @@ describe('ManuscriptUpload', (): void => {
 
         await act(async () => {
             dispatchEvt(dropzone, 'dragenter', data);
-            await flushPromises(ui, container);
+            await flushPromises();
         });
 
         expect(queryByText(container, 'custom active content')).not.toBeNull();

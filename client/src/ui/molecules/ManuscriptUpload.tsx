@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
-import { default as UploadIcon } from '../atoms/UploadIcon';
 
 interface Props {
     inactiveContent?: string | JSX.Element | JSX.Element[];
