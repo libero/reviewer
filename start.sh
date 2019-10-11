@@ -15,6 +15,10 @@ if [ ! -e .env ] ; then ln -s .env.example .env ; fi
 # Create an override file if not present
 if [ ! -e docker-compose.override.yml ] ; then echo "version: '3'" > docker-compose.override.yml ; fi
 
+# Ensure the .scripts folder is updated
+git submodule init
+git submodule update
+
 echo Stopping on ${DET_OS}...
 make ${MAKE_OPTS} stop_services
 echo Starting on ${DET_OS}...
