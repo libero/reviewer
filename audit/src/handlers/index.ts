@@ -14,7 +14,7 @@ export const ServiceStartedHandler = (auditDomain: AuditController) => async (
   ev: Event<ServiceStartedPayload>
 ) => {
   // Transform the event payload into an auditable event
-  
+
   const auditItem: AuditLogItem = {
     id: v4(),
     subject: `${ev.payload.name}-${ev.payload.type}`,

@@ -22,6 +22,7 @@ $fontStrong: "Noto Sans SemiBold", Arial, Helvetica, sans-serif;
 $altFontFamily: "Noto Serif", serif;
 $fontReading: "Noto Serif", serif;
 $fontWriting: "Noto Sans", Arial, Helvetica, sans-serif;
+$fontSize: 16px;
 $fontSizeSmall: 14px;
 
 //sizing
@@ -34,6 +35,7 @@ $borderWidth: 1px;
 $borderStyle: solid;
 
 $border: $borderWidth $borderStyle $borderColour;
+$borderError: $borderWidth $borderStyle $colourError;
 
 // breakpoints
 $phone: 480px;

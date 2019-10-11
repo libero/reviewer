@@ -9,5 +9,6 @@ COPY globals.d.ts index.html index.tsx .babelrc .eslintrc.js .eslintignore webpa
 COPY test-utils/ test-utils/
 COPY webpack/ webpack/
 COPY src/ ./src/
+COPY .storybook/ ./.storybook
 
-RUN yarn build
+RUN yarn build && yarn build-storybook

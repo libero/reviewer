@@ -1,21 +1,31 @@
 /* All atom ui components should live here */
 @import './AppBar';
 @import './AppBarIcon';
+@import './Banner';
 @import './Button';
 @import './Checkbox.scss';
 @import './ImageWithAttributions';
-@import './MultilineTextField.scss';
+@import './MultilineTextField';
 @import './Paragraph';
+@import './Pod';
+@import './SelectField';
 @import './TextField';
 @import './TwoColumnLayout';
 
 /* All molecule ui components should live here */
 @import './BurgerMenu';
-@import './ExcludedToggle.scss';
+@import './ExcludedToggle';
+@import './ManuscriptUpload';
 @import './Modal';
 @import './Menu';
-@import './OrcidDetails.scss';
+@import './OrcidDetails';
+@import './PersonInfo';
+@import './PersonPod';
 @import './ProfileDropdown';
-@import './ProgressBar.scss';
+@import './ProgressBar';
+@import './SelectedOption';
+@import './SelectedPeopleList';
 @import './Toggle.scss';
 
+/* All organism ui components should live here */
+@import './PeoplePicker';

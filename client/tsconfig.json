@@ -1,12 +1,13 @@
 {
-  "compilerOptions": {
-      "jsx": "react",
-      "lib": ["dom", "es2015"],
-      "module": "commonjs",
-      "noImplicitAny": true,
-      "outDir": "./dist/",
-      "sourceMap": true,
-      "target": "es5",
-      "esModuleInterop": true
-  }
+    "compilerOptions": {
+        "jsx": "react",
+        "lib": ["dom", "es2015"],
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "target": "es5",
+        "esModuleInterop": true,
+        "resolveJsonModule": true
+    }
 }
