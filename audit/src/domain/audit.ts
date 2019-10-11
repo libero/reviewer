@@ -7,9 +7,3 @@ export class AuditController {
     return this.auditRepo.putLog(item);
   }
 }
-
-/**
-* Thoughts:
-* - How to do the thing?
-* - How to do the other thing? :thinking-face:
-*/
