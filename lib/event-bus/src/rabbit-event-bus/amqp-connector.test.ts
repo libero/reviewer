@@ -69,29 +69,29 @@ describe('AMQP connector', () => {
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
-            const _ = new AMQPConnector<{}>(url, channel(), [{ kind: 'foo', namespace: 'bar' }], [], 'service');
+            const _ = new AMQPConnector<{}>(url, channel(), ['test:event'], [], 'service');
 
             await flushPromises();
             expect(mockChannel.assertExchange).toHaveBeenCalledTimes(1);
-            expect(mockChannel.assertExchange).toHaveBeenCalledWith('event__foo-bar', 'fanout');
+            expect(mockChannel.assertExchange).toHaveBeenCalledWith('event__test:event', 'fanout');
         });
 
         it('should subscribe to the right queue', async () => {
             const mockChannel = makeChannel({ assertQueue: jest.fn().mockImplementation(() => Promise.resolve()) });
             const mockConnection = makeConnection(mockChannel);
-            const eventIdentifier = { kind: 'foo', namespace: 'bar' };
+            const eventType = 'test:event';
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
-            const _ = new AMQPConnector<{}>(url, channel(), [], [{ eventIdentifier, handler: jest.fn()}], 'service');
+            const _ = new AMQPConnector<{}>(url, channel(), [], [{ eventType, handler: jest.fn()}], 'service');
 
             await flushPromises();
             expect(mockChannel.assertQueue).toHaveBeenCalledTimes(1);
-            expect(mockChannel.assertQueue).toHaveBeenCalledWith('consumer__foo-bar__service');
+            expect(mockChannel.assertQueue).toHaveBeenCalledWith('consumer__test:event__service');
             expect(mockChannel.bindQueue).toHaveBeenCalledTimes(1);
-            expect(mockChannel.bindQueue).toHaveBeenCalledWith('consumer__foo-bar__service', 'event__foo-bar', '');
+            expect(mockChannel.bindQueue).toHaveBeenCalledWith('consumer__test:event__service', 'event__test:event', '');
             expect(mockChannel.consume).toHaveBeenCalledTimes(1);
-            expect(mockChannel.consume.mock.calls[0][0]).toBe('consumer__foo-bar__service');
+            expect(mockChannel.consume.mock.calls[0][0]).toBe('consumer__test:event__service');
         });
     });
 
@@ -100,8 +100,7 @@ describe('AMQP connector', () => {
             const mockChannel = makeChannel();
             const mockConnection = makeConnection(mockChannel);
             const event = {
-                kind: 'foo',
-                namespace: 'bar',
+                eventType: 'test:event',
                 id: 'id',
                 created: new Date(),
                 payload: { data: 'payload' },
@@ -109,7 +108,7 @@ describe('AMQP connector', () => {
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
-            const connector = new AMQPConnector<{}>(url, channel(), [{ kind: 'foo', namespace: 'bar' }], [], 'service');
+            const connector = new AMQPConnector<{}>(url, channel(), ['test:event'], [], 'service');
 
             // we need to wait for connection to be stored before we can publish
             await flushPromises();
@@ -117,7 +116,7 @@ describe('AMQP connector', () => {
 
             await flushPromises();
             expect(mockChannel.publish).toHaveBeenCalledTimes(1);
-            expect(mockChannel.publish.mock.calls[0][0]).toBe('event__foo-bar');
+            expect(mockChannel.publish.mock.calls[0][0]).toBe('event__test:event');
             expect(mockChannel.publish.mock.calls[0][1]).toBe('');
             expect(mockChannel.publish.mock.calls[0][2]).toEqual(Buffer.from(JSON.stringify({
                 event,
@@ -140,14 +139,14 @@ describe('AMQP connector', () => {
             const connector = new AMQPConnector<{}>(url, channel(), [], [], 'service');
 
             await flushPromises();
-            await connector.subscribe({ kind: 'foo', namespace: 'bar' }, jest.fn());
+            await connector.subscribe('test:event', jest.fn());
 
             expect(mockChannel.assertQueue).toHaveBeenCalledTimes(1);
-            expect(mockChannel.assertQueue).toHaveBeenCalledWith('consumer__foo-bar__service');
+            expect(mockChannel.assertQueue).toHaveBeenCalledWith('consumer__test:event__service');
             expect(mockChannel.bindQueue).toHaveBeenCalledTimes(1);
-            expect(mockChannel.bindQueue).toHaveBeenCalledWith('consumer__foo-bar__service', 'event__foo-bar', '');
+            expect(mockChannel.bindQueue).toHaveBeenCalledWith('consumer__test:event__service', 'event__test:event', '');
             expect(mockChannel.consume).toHaveBeenCalledTimes(1);
-            expect(mockChannel.consume.mock.calls[0][0]).toBe('consumer__foo-bar__service');
+            expect(mockChannel.consume.mock.calls[0][0]).toBe('consumer__test:event__service');
         });
 
         it('it should call the subscription handler and acknowledge', async () => {
@@ -167,7 +166,7 @@ describe('AMQP connector', () => {
             const handler = jest.fn().mockImplementation(async () => Promise.resolve(true));
 
             await flushPromises();
-            await connector.subscribe({ kind: 'foo', namespace: 'bar' }, handler);
+            await connector.subscribe('test:event', handler);
 
             await flushPromises();
             expect(handler).toHaveBeenCalledTimes(1);
@@ -193,7 +192,7 @@ describe('AMQP connector', () => {
             const handler = jest.fn().mockImplementation(async () => Promise.resolve());
 
             await flushPromises();
-            await connector.subscribe({ kind: 'foo', namespace: 'bar' }, handler);
+            await connector.subscribe('test:event', handler);
 
             await flushPromises();
             expect(handler).toHaveBeenCalledTimes(1);
@@ -223,7 +222,7 @@ describe('AMQP connector', () => {
         const handler = jest.fn().mockImplementation(async () => Promise.resolve());
 
         await flushPromises();
-        await connector.subscribe({ kind: 'foo', namespace: 'bar' }, handler);
+        await connector.subscribe('test:event', handler);
 
         await flushPromises();
         expect(handler).toHaveBeenCalledTimes(0);

@@ -1,5 +1,5 @@
 import { MockEventBus } from '.';
-import { EventIdentifier, Event } from '../event-bus';
+import { EventType, Event } from '../event-bus';
 
 interface TestEventPayload {
   x: number;
@@ -9,26 +9,23 @@ interface TestEventPayload {
 describe('mock message queue', () => {
   describe('you can publish and subscribe', () => {
     it('can do the full flow', async () => {
-      const testEventDef: EventIdentifier = {
-        kind: 'some-event',
-        namespace: 'testland',
-      };
+      const eventType: EventType = 'libero:mock:test';
 
       const handlerMock = jest.fn(async () => true);
 
       // Mock bus
-      const mockMq = await (new MockEventBus()).init([testEventDef, testEventDef], 'message-bus-test');
+      const mockMq = await (new MockEventBus()).init([eventType, eventType], 'message-bus-test');
 
-      mockMq.subscribe<TestEventPayload>(testEventDef, handlerMock);
+      mockMq.subscribe<TestEventPayload>(eventType, handlerMock);
 
       const event: Event<TestEventPayload> = {
+        eventType,
         id: 'some-testing-event-id',
         created: new Date(),
         payload: {
           x: 10,
           y: 20,
         },
-        ...testEventDef,
       };
 
       mockMq.publish(event);

@@ -1,14 +1,10 @@
 // Abstract message queue
 
-export type EventType = string;
+export type EventType = string; // e.g. "libero:audit:login"
 
-export interface EventIdentifier {
-  kind: EventType; // For event type
-  namespace: string; // For origin/domain?
-}
-
-export interface Event<T extends object> extends EventIdentifier {
+export interface Event<T extends object> {
   // This is event metadata
+  eventType: EventType;
   id: string; // Generated when the event is emitted
   created: Date;
 
@@ -17,15 +13,15 @@ export interface Event<T extends object> extends EventIdentifier {
 }
 
 export interface EventPublisher {
-  init(eventDefinitions: EventIdentifier[], serviceName: string): Promise<this>;
+  init(eventDefinitions: EventType[], serviceName: string): Promise<this>;
 
   publish<T extends object>(event: Event<T>): Promise<boolean>;
 }
 
 export interface EventSubscriber {
-  init(eventDefinitions: EventIdentifier[], serviceName: string): Promise<this>;
+  init(eventDefinitions: EventType[], serviceName: string): Promise<this>;
 
-  subscribe<P extends object>(eventDefinition: EventIdentifier, handler: (ev: Event<P>) => Promise<boolean>): void;
+  subscribe<P extends object>(eventDefinition: EventType, handler: (ev: Event<P>) => Promise<boolean>): void;
   // handler: returns weather or not we should ack the message
 }
 

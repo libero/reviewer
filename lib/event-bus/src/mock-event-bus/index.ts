@@ -1,10 +1,9 @@
 import {
   EventPublisher,
   EventSubscriber,
-  EventIdentifier,
+  EventType,
   Event,
 } from '../event-bus';
-import { InfraLogger as logger } from '../logger';
 import { Option, None, Some } from 'funfix';
 
 export class MockEventBus implements EventPublisher, EventSubscriber {
@@ -13,7 +12,7 @@ export class MockEventBus implements EventPublisher, EventSubscriber {
   > = None;
 
   public async init(
-    defs: EventIdentifier[],
+    defs: EventType[],
     serviceName: string,
   ): Promise<this> {
     this.queues = Some(new Map());
@@ -23,7 +22,7 @@ export class MockEventBus implements EventPublisher, EventSubscriber {
   public async publish<T extends object>(event: Event<T>): Promise<boolean> {
     return this.queues
       .flatMap(queues =>
-        Option.of(queues.get(`${event.namespace}-${event.kind}`)),
+        Option.of(queues.get(`${event.eventType}`)),
       )
       .map(fn => {
         return fn(event);
@@ -32,9 +31,9 @@ export class MockEventBus implements EventPublisher, EventSubscriber {
   }
 
   public async subscribe<P extends object>(
-    { kind, namespace }: EventIdentifier,
+    eventType: EventType,
     handler: (ev: Event<P>) => Promise<boolean>,
   ) {
-    this.queues.get().set(`${namespace}-${kind}`, handler);
+    this.queues.get().set(`${eventType}`, handler);
   }
 }

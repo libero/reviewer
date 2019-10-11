@@ -4,7 +4,7 @@ import { Connection } from 'amqplib';
 import * as amqplib from 'amqplib';
 import { debounce } from 'lodash';
 import { InfraLogger as logger } from '../logger';
-import { EventIdentifier, Event, EventBus } from '../event-bus';
+import { EventType, Event, EventBus } from '../event-bus';
 import { Subscription, StateChange } from './types';
 import { EventUtils } from './event-utils';
 import AMQPConnector from './amqp-connector';
@@ -20,7 +20,7 @@ export default class RabbitEventBus<M extends object> implements EventBus {
 
   private innerChannel: Channel<StateChange<M>> = channel<StateChange<M>>();
 
-  private eventDefinitions: EventIdentifier[];
+  private eventDefinitions: EventType[];
   private serviceName: string = 'unknown-service';
 
   private flowing: boolean = false;
@@ -39,7 +39,7 @@ export default class RabbitEventBus<M extends object> implements EventBus {
     this.url = connectionOpts.url;
   }
 
-  public async init(eventDefinitions: EventIdentifier[], serviceName: string) {
+  public async init(eventDefinitions: EventType[], serviceName: string) {
     // TODO: init takes events information
     this.eventDefinitions = eventDefinitions;
     this.serviceName = serviceName;
@@ -127,16 +127,16 @@ export default class RabbitEventBus<M extends object> implements EventBus {
   }
 
   public async subscribe<P extends object>(
-    eventIdentifier: EventIdentifier,
+    eventType: EventType,
     handler: (event: Event<P>) => Promise<boolean>,
   ) {
     this.connector.map(connector => {
-      connector.subscribe(eventIdentifier, handler);
+      connector.subscribe(eventType, handler);
     });
 
     // Add the subscription to the next connector's list of subscriptions
     return this.subscriptions.push({
-      eventIdentifier,
+      eventType,
       handler,
     });
   }
