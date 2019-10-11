@@ -30,7 +30,7 @@ describe('AMQP connector', () => {
         close: jest.fn(),
         ...options,
     });
-    const mockContentToString = (toString?: string) => toString ? () => toString : () => '{ "event": "foo" }';
+    const mockContentToString = (toString?: string) => () => toString ? toString : '{ "event": "foo" }';
 
     describe('constructor', () => {
         it('should create a channel and set connected state', async () => {
