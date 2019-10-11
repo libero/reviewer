@@ -1,11 +1,11 @@
-import { Event, EventIdentifier } from "@libero/event-bus";
+import { Event, EventType } from "@libero/event-bus";
 
 export type ServiceStartedPayload = {
   name: string;
   type: string;
 };
 
-export const serviceStartedIdentifier: EventIdentifier = {
+export const serviceStartedIdentifier: EventType = {
   kind: "ServiceStarted",
   namespace: "infra-global"
 };
@@ -17,7 +17,7 @@ export type UserLoggedInPayload = {
   timestamp: Date;
 };
 
-export const userLoggedInIdentifier: EventIdentifier = {
+export const userLoggedInIdentifier: EventType = {
   kind: "UserLoggedIn",
   namespace: "user-audit",
 };

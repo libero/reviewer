@@ -26,9 +26,8 @@ describe('AMQP Connection Manager', () => {
       );
       const manager = await new RabbitEventBus({ url: '' }).init([], '');
       await manager.publish({
-        kind: 'test',
-        namespace: 'test',
-        id: 'soemthing',
+        eventType: 'test',
+        id: 'something',
         created: new Date(),
         payload: {},
       });
@@ -57,13 +56,7 @@ describe('AMQP Connection Manager', () => {
 
       const manager = await new RabbitEventBus({ url: '' }).init([], '');
 
-      await manager.subscribe(
-        {
-          kind: 'test',
-          namespace: 'test',
-        },
-        jest.fn(),
-      );
+      await manager.subscribe('test', jest.fn());
 
       await readyWait();
       expect(subscribeMock).toBeCalled();
@@ -99,23 +92,20 @@ describe('AMQP Connection Manager', () => {
 
       const publishPromise = Promise.all([
         manager.publish({
-          kind: 'test',
-          namespace: 'test',
-          id: 'soemthing',
+          eventType: 'test',
+          id: 'something',
           created: new Date(),
           payload: {},
         }),
         manager.publish({
-          kind: 'test',
-          namespace: 'test',
-          id: 'soemthing',
+          eventType: 'test',
+          id: 'something',
           created: new Date(),
           payload: {},
         }),
         manager.publish({
-          kind: 'test',
-          namespace: 'test',
-          id: 'soemthing',
+          eventType: 'test',
+          id: 'something',
           created: new Date(),
           payload: {},
         }),
@@ -162,27 +152,9 @@ describe('AMQP Connection Manager', () => {
 
       const manager = await new RabbitEventBus({ url: '' }).init([], '');
 
-      await manager.subscribe(
-        {
-          kind: 'test',
-          namespace: 'test',
-        },
-        jest.fn(),
-      );
-      await manager.subscribe(
-        {
-          kind: 'test',
-          namespace: 'test',
-        },
-        jest.fn(),
-      );
-      await manager.subscribe(
-        {
-          kind: 'test',
-          namespace: 'test',
-        },
-        jest.fn(),
-      );
+      await manager.subscribe('test', jest.fn());
+      await manager.subscribe('test', jest.fn());
+      await manager.subscribe('test', jest.fn());
 
       // tslint:disable-next-line: no-any
       expect((manager as any).subscriptions.length).toEqual(3);
@@ -227,8 +199,7 @@ describe('AMQP Connection Manager', () => {
 
       manager
         .publish({
-          kind: 'test',
-          namespace: 'test',
+          eventType: 'test',
           id: 'something',
           created: new Date(),
           payload: {},
@@ -237,8 +208,7 @@ describe('AMQP Connection Manager', () => {
 
       manager
         .publish({
-          kind: 'test',
-          namespace: 'test',
+          eventType: 'test',
           id: 'something',
           created: new Date(),
           payload: {},
@@ -247,8 +217,7 @@ describe('AMQP Connection Manager', () => {
 
       manager
         .publish({
-          kind: 'test',
-          namespace: 'test',
+          eventType: 'test',
           id: 'something',
           created: new Date(),
           payload: {},
@@ -285,8 +254,7 @@ describe('AMQP Connection Manager', () => {
 
       manager
         .publish({
-          kind: 'test',
-          namespace: 'test',
+          eventType: 'test',
           id: 'something',
           created: new Date(),
           payload: {},
@@ -295,8 +263,7 @@ describe('AMQP Connection Manager', () => {
 
       manager
         .publish({
-          kind: 'test',
-          namespace: 'test',
+          eventType: 'test',
           id: 'something',
           created: new Date(),
           payload: {},
@@ -305,8 +272,7 @@ describe('AMQP Connection Manager', () => {
 
       manager
         .publish({
-          kind: 'test',
-          namespace: 'test',
+          eventType: 'test',
           id: 'something',
           created: new Date(),
           payload: {},
