@@ -17,8 +17,8 @@ const SelectedOption: React.FC<Props> = ({ text, onClose }: Props): JSX.Element 
         <div className={classes}>
             <div className="selected-option__text">{text}</div>
             {onClose ? (
-                <div className="selected-option__close">
-                    <Close fontSize="inherit" onClick={onClose} />
+                <div className="selected-option__close" onClick={onClose}>
+                    <Close fontSize="inherit" />
                 </div>
             ) : (
                 ''

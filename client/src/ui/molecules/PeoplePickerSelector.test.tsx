@@ -288,4 +288,40 @@ describe('PeoplePickerSelector', (): void => {
         act(() => jest.advanceTimersByTime(510));
         expect(searchMock).toBeCalledWith('someSearch');
     });
+
+    it('should add SelectedOption blocks for each selected person', async () : Promise<void> => {
+        const { baseElement } = render(
+            <PeoplePickerSelector
+                initialySelected={[]}
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+        );
+        expect(baseElement.querySelector('.selected-option')).not.toBeInTheDocument();
+        await fireEvent.click(baseElement.querySelectorAll('.pod__button')[0]);
+        expect(baseElement.querySelectorAll('.selected-option')).toHaveLength(1);
+    });
+
+    it('should remove a selected person when SelectOption block button clicked', async (): Promise<void> => {
+        const { baseElement, debug } = render(
+            <PeoplePickerSelector
+                initialySelected={['1']}
+                people={people}
+                onDone={jest.fn()}
+                onSearch={jest.fn()}
+                label=" "
+                toggle={jest.fn()}
+                isShowing={true}
+            />,
+        );
+        expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(1);
+        expect(baseElement.querySelectorAll('.selected-option')).toHaveLength(1);
+        await fireEvent.click(baseElement.querySelector('.selected-option__close'));
+        expect(baseElement.querySelectorAll('.selected-option')).toHaveLength(0);
+        expect(baseElement.querySelectorAll('.person-pod__selected_icon')).toHaveLength(0);
+    });
 });

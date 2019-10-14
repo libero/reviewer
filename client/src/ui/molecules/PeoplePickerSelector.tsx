@@ -73,7 +73,7 @@ const PeoplePickerSelector = ({
                     'ui:validation--peoplepicker_maximum-suffix',
                 )}`}</Banner>
             ) : null}
-            <div className="main-content--centered">
+            <div className="main-content--centered people-picker__selector_container">
                 <h2 className="typography__heading typography__heading--h2">{label}</h2>
                 <div className="people-picker__search_box">
                     <SearchField
@@ -82,7 +82,7 @@ const PeoplePickerSelector = ({
                             setSearchTerm(event.currentTarget.value);
                         }}
                     />
-                    <span className="typography__body typography__body--primary people-picker__guidance">
+                    <span className="typography__body--primary people-picker__guidance">
                         {min
                             ? `${t('ui:validation--peoplepicker_guidance-prefix')} ${min} ${t(
                                   'ui:validation--peoplepicker_guidance-suffix',
@@ -95,7 +95,7 @@ const PeoplePickerSelector = ({
                         locallySelected.map(selectedPersonId => {
                             const selectedPerson = people.find(person => person.id === selectedPersonId);
                             return (
-                                <div style={{ display: 'inline-flex', margin: '8px' }} key={selectedPersonId}>
+                                <div className="people-picker__selected-tab" key={selectedPersonId}>
                                     <SelectedOption
                                         text={selectedPerson.name}
                                         onClose={() => {
