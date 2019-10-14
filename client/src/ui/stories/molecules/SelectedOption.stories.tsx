@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf, forceReRender } from '@storybook/react';
 import { withKnobs, object } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered/react';
-import { SelectedOption } from '../../molecules/SelectedOption';
+import SelectedOption from '../../molecules/SelectedOption';
 import '../../../core/styles/index.scss';
 
 // we need to put those outside otherwise options don't get removed
