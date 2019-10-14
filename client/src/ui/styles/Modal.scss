@@ -31,7 +31,10 @@
   padding: 0;
   overflow-y: auto;
   position: fixed;
-  padding-bottom: 8.25rem;
+
+  .modal__content {
+    margin-bottom: 8.25rem;
+  }
 }
 
 .modal__separator {
