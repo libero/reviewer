@@ -1,7 +1,7 @@
 .people-picker__modal_list {
-  height: 65vh;
   margin-left: -0.75rem;
   margin-right: -0.75rem;
+  @include twoColumnGrid;
 }
 .people-picker__selector_container {
   padding-top: 2rem;
@@ -9,11 +9,9 @@
 }
 
 .people-picker__modal_list--item {
-  width: 50%;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   margin-bottom: 1.5rem;
-  display: inline-block;
 }
 
 .people-picker__search_box {

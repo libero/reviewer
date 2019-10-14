@@ -7,11 +7,18 @@
     @media (min-width: $tabletLandscape) { @content; }
   } @else if $size == desktopUp {
     @media (min-width: $desktop) { @content; }
-  } 
+  }
 }
 
 @mixin unstyledList {
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+@mixin twoColumnGrid {
+  display: grid;
+  @include forSize('tabletPortraitUp') {
+    grid-template-columns: 50% 50%;
+  }
 }
