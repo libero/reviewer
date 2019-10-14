@@ -1,10 +1,9 @@
 // Startup the audit service
 import { InfraLogger as logger } from './logger';
 import * as express from 'express';
-import { Express, Request, Response, RequestHandler } from 'express';
+import { Express, Request, Response } from 'express';
 import { HealthCheck } from './endpoints';
 import { Event, EventBus, RabbitEventBus } from '@libero/event-bus';
-
 import { ServiceStartedPayload, serviceStartedIdentifier } from './events';
 import { ServiceStartedHandler } from './handlers';
 import { AuditController } from './domain/audit';
@@ -24,7 +23,6 @@ const setupEventBus = async (freshEventBus: EventBus) => {
   );
 
   // setup subscribers
-
   eventBus.subscribe<ServiceStartedPayload>(
     serviceStartedIdentifier,
     ServiceStartedHandler(auditController),
@@ -32,7 +30,7 @@ const setupEventBus = async (freshEventBus: EventBus) => {
 
   // publish "ServiceStarted"
   const event: Event<ServiceStartedPayload> = {
-    id: 'some-wevent-id',
+    id: v4(),
     created: new Date(),
     payload: {
       type: 'support/audit',
