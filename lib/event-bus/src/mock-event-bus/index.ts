@@ -1,4 +1,4 @@
-import { EventBus, EventType, Event, EventHandler } from "../event-bus";
+import { EventBus, EventType, Event } from "../event-bus";
 import { Option, None, Some } from "funfix";
 
 export type AnyEvent = Event<object>;
@@ -22,8 +22,8 @@ export class MockEventBus implements EventBus {
   /**
    * Allows the MockEventBus to publish any event of type Event<T>
    *
-   * @template T
-   * @param {T} event
+   * @template T - The payload for the event
+   * @param {T} event - Of type Event<T>, where T is the payload
    * @returns {Promise<boolean>}
    * @memberof MockEventBus
    */
@@ -39,9 +39,9 @@ export class MockEventBus implements EventBus {
   /**
    * Allows the MockEventBus to subscribe any event of type Event<T>
    *
-   * @template T
+   * @template T - The payload for the event
    * @param {EventType} eventType
-   * @param {(event: T) => Promise<boolean>} handler
+   * @param {(event: T) => Promise<boolean>} handler  - Function of type (event: Event<T>) => Promise<boolean> where T is the payload
    * @memberof MockEventBus
    */
   public async subscribe<T extends object>(

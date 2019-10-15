@@ -34,7 +34,7 @@ describe("mock message queue", () => {
         payload: { x: 10, y: 20 }
       };
 
-      mockEventBus.publish(event);
+      mockEventBus.publish<TestEventPayload1>(event);
 
       expect(mockHandler).toBeCalled();
       expect(mockHandler.mock.calls).toEqual([[event]]);
