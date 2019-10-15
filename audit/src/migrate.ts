@@ -4,8 +4,6 @@ import Config from './config';
 
 const connection = Knex(Config.knex);
 
-console.log(`${__dirname}/migrations`);
-
 umzugCli({
     storage: 'knex-umzug',
     storageOptions: {
