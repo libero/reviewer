@@ -30,6 +30,10 @@ services:
       interval: 1m
       timeout: 10s
       retries: 3
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./audit/:/service/audit/:z
       - ./lib/:/service/lib/:z

@@ -4,10 +4,10 @@ const knexConfig: KnexConfig = {
   client: 'pg',
   // In production we should use postgres pools.
   connection: {
-    host: 'localhost',
-    user: 'postgres',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
     database: 'reviewer_audit',
-    password: 'postgres',
+    password: process.env.DB_PASSWORD,
   },
 };
 export const  serviceConfig = {
