@@ -16,7 +16,8 @@ const config = {
     // This secret is used by journal to sign outgoing tokens, and used here to verify those
     // tokens
     secret: process.env.CONTINUUM_LOGIN_JWT_SECRET as string
-  }
+  },
+  port: process.env.AUTHENTICATION_PORT || 3001
 };
 
 export default config;
