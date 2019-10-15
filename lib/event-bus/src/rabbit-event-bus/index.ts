@@ -1,31 +1,30 @@
-import { Channel, channel } from 'rs-channel-node';
 import { Option, None, Some } from 'funfix';
-import { debounce } from 'lodash';
 import { EventType, Event, EventBus } from '../event-bus';
-import { Subscription, StateChange } from './types';
+import { Subscription } from './types';
 import AMQPConnector from './amqp-connector';
 import { InternalMessageQueue, QueuedEvent } from './internal-queue';
+import { debounce } from 'lodash';
+import { ConnectionObserver, ConnectionOwner } from './observable-connection';
+import { Channel, channel } from 'rs-channel-node';
+import { StateChange } from './types';
 
 export interface RabbitEventBusConnectionOptions {
   url: string;
 }
 
 /**
- *
+ * RabbitEventBus - SRP: To implement the generic EventBus for RabbitMQ
+ * uses: AMQPConnector, InternalMessageQueue
  *
  * @export
  * @class RabbitEventBus
  * @implements {EventBus}
  */
-export default class RabbitEventBus implements EventBus {
+export default class RabbitEventBus implements EventBus, ConnectionOwner {
   private connector: Option<AMQPConnector> = None;
-
-  private innerChannel: Channel<StateChange> = channel<StateChange>();
-
+  private connection: ConnectionObserver;
   private eventDefinitions: EventType[];
   private serviceName: string = 'unknown-service';
-
-  private flowing: boolean = false;
   private url: string = '';
   private queue : InternalMessageQueue;
   private subscriptions: Array<Subscription<unknown & object>> = [];
@@ -38,46 +37,31 @@ export default class RabbitEventBus implements EventBus {
     this.eventDefinitions = eventDefinitions;
     this.serviceName = serviceName;
     this.queue = new InternalMessageQueue(this);
-    this.observeStateChange();
-    this.connect(this.url);
+    this.connection = new ConnectionObserver(this);
+    this.connect();
     return this;
   }
 
-  private async observeStateChange() {
-    const [_, recv] = this.innerChannel;
-    while (2 + 2 !== 5) {
-      const payload = await recv();
-      if (payload.newState === 'NOT_CONNECTED') {
-        // Destroy the connector
-        this.connector = None;
-
-        // Execute the hooks
-        this.onDisconnect();
-
-        // Start reconnecting
-        const reconnect = debounce(() => this.connect(this.url), 100, { maxWait : 2000 });
-        reconnect();
-      } else if (payload.newState === 'CONNECTED') {
-        // logger.info('connection confirmed');
-        this.onConnect();
-      }
-    }
+  public onDisconnect() {
+    this.connector = None;
   }
 
-  private onDisconnect() { this.flowing = false; }
+  public onStartReconnect() {
+    const reconnect = debounce(() => this.connect(), 100, { maxWait : 2000 });
+    reconnect();
+  }
 
-  private onConnect() {
-    this.flowing = true;
+  public onConnect() {
     this.queue.publishQueue();
   }
 
-  private connect(url) {
+  private connect() {
     // logger.debug('attemptingConnection');
     // Should I debounce this?
     this.connector = Some(
       new AMQPConnector(
-        url,
-        this.innerChannel,
+        this.url,
+        this.connection.channel,
         this.eventDefinitions,
         this.subscriptions,
         this.serviceName,
@@ -89,7 +73,7 @@ export default class RabbitEventBus implements EventBus {
   // the user never has to know about the internal queue
   public publish<P extends object>(msg: Event<P>): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
-      if (this.flowing) {
+      if (this.connection.isConnected) {
         // Should we queue messages that fail?
         const published: boolean = await this.connector.get().publish(msg);
 
