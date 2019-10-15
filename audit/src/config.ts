@@ -1,7 +1,7 @@
 import { Config as KnexConfig } from 'knex';
 
 const knexConfig: KnexConfig = {
-  dialect: 'pg',
+  client: 'pg',
   // In production we should use postgres pools.
   connection: {
     host: 'localhost',

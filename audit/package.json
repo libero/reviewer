@@ -25,11 +25,13 @@
     "funfix": "^7.0.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.19.4",
+    "knex-umzug": "^3.0.1",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.1",
     "pg": "^7.12.1",
     "pino": "^5.13.2",
     "typescript": "^3.5.3",
+    "umzug-cli": "^2.0.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
