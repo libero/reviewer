@@ -16,4 +16,4 @@ umzugCli({
         path: `${__dirname}/migrations`,
         pattern: /.*\.ts/,
     },
-}).cli(process.argv.slice(2));
+}).cli(process.argv.slice(2)).then(() => process.exit());
