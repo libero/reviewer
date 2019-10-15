@@ -31,6 +31,7 @@ export class ConnectionObserver {
       const payload = await recv();
       if (payload.newState === 'NOT_CONNECTED') {
         this.flowing = false;
+        this.owner.onDisconnect();
         this.owner.onStartReconnect();
       } else if (payload.newState === 'CONNECTED') {
         // logger.info('connection confirmed');

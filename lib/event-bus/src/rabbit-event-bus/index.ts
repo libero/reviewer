@@ -4,9 +4,7 @@ import { Subscription } from './types';
 import AMQPConnector from './amqp-connector';
 import { InternalMessageQueue, QueuedEvent } from './internal-queue';
 import { debounce } from 'lodash';
-import { ConnectionObserver, ConnectionOwner } from './observable-connection';
-import { Channel, channel } from 'rs-channel-node';
-import { StateChange } from './types';
+import { ConnectionObserver, ConnectionOwner } from './connection-observer';
 
 export interface RabbitEventBusConnectionOptions {
   url: string;

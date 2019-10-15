@@ -25,7 +25,6 @@ export default class AMQPConnector {
   ) {
     this.externalConnector = { send: sender };
     this.subscriptions = subscriptions;
-
     this.serviceName = serviceName;
 
     // Set up the connections to the AMQP server
@@ -49,7 +48,7 @@ export default class AMQPConnector {
           });
 
         // Create subscribers here
-        subscriptions.forEach(async subscription => {
+        this.subscriptions.forEach(async subscription => {
           // subscribe
           await this.subscribe(
             subscription.eventType,
