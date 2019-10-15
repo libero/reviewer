@@ -1,12 +1,11 @@
 // Startup the audit service
-import { InfraLogger as logger } from "./logger";
-import * as express from "express";
-import { Express, Request, Response, RequestHandler } from "express";
-import { HealthCheck } from "./endpoints";
-import { Event, EventBus, RabbitEventBus } from "@libero/event-bus";
-
-import { ServiceStartedPayload, serviceStartedIdentifier } from "./events";
-import { ServiceStartedHandler } from "./handlers";
+import { InfraLogger as logger } from './logger';
+import * as express from 'express';
+import { Express, Request, Response } from 'express';
+import { HealthCheck } from './endpoints';
+import { Event, EventBus, RabbitEventBus } from '@libero/event-bus';
+import { ServiceStartedPayload, serviceStartedIdentifier } from './events';
+import { ServiceStartedHandler } from './handlers';
 import { AuditController } from './domain/audit';
 import { KnexAuditRepository } from './repo/audit';
 import { v4 } from 'uuid';
@@ -20,46 +19,45 @@ const auditServiceName = v4();
 const setupEventBus = async (freshEventBus: EventBus) => {
   const eventBus = await freshEventBus.init(
     [serviceStartedIdentifier],
-    "audit"
+    'audit',
   );
 
   // setup subscribers
-
   eventBus.subscribe<ServiceStartedPayload>(
     serviceStartedIdentifier,
-    ServiceStartedHandler(auditController)
+    ServiceStartedHandler(auditController),
   );
 
   // publish "ServiceStarted"
   const event: Event<ServiceStartedPayload> = {
-    id: "some-wevent-id",
+    id: v4(),
     created: new Date(),
     payload: {
-      type: "support/audit",
+      type: 'support/audit',
       name: auditServiceName,
     },
-    eventType: serviceStartedIdentifier
+    eventType: serviceStartedIdentifier,
   };
 
   await eventBus.publish(event).then(() => {
-    logger.debug("emittedServiceStarted");
+    logger.debug('emittedServiceStarted');
   });
   return eventBus;
 };
 
 const setupWebServer = (server: Express) => {
-  server.use("/", (req: Request, res: Response, next: Function) => {
+  server.use('/', (req: Request, res: Response, next: () => void) => {
     logger.info(`${req.method} ${req.path}`, {});
     next();
   });
 
-  server.get("/health", HealthCheck());
+  server.get('/health', HealthCheck());
 
   return server;
 };
 
 const main = async () => {
-  logger.info("serviceInit");
+  logger.info('serviceInit');
 
   const eventBus = await setupEventBus(new RabbitEventBus({url: 'amqp://rabbitmq'}));
   // TODO: Eventually turn this into a factory method on the EventBus abstract class so that the instance of
@@ -73,6 +71,6 @@ const main = async () => {
 
 main().then(app =>
   app.listen(3004, () => {
-    logger.info("serviceStarted");
-  })
+    logger.info('serviceStarted');
+  }),
 );
