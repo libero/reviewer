@@ -1,8 +1,8 @@
 import { EventType, Event } from '../event-bus';
 
-export interface StateChange<M extends object> {
+export interface StateChange {
   newState: 'CONNECTED' | 'NOT_CONNECTED' | 'NEW_MESSAGE';
-  message?: M; // Make this some type
+  message?: string; // Make this some type
 }
 
 export interface MessageWrapper<T> {

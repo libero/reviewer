@@ -1,51 +1,44 @@
-import { Sender, Receiver, Channel, channel } from 'rs-channel-node';
+import { Channel, channel } from 'rs-channel-node';
 import { Option, None, Some } from 'funfix';
-import { Connection } from 'amqplib';
-import * as amqplib from 'amqplib';
 import { debounce } from 'lodash';
-import { InfraLogger as logger } from '../logger';
 import { EventType, Event, EventBus } from '../event-bus';
 import { Subscription, StateChange } from './types';
-import { EventUtils } from './event-utils';
 import AMQPConnector from './amqp-connector';
+import { InternalMessageQueue, QueuedEvent } from './internal-queue';
 
 export interface RabbitEventBusConnectionOptions {
   url: string;
 }
 
-// <M> doesn't refer to the event types, M refers to the internal statechange message type
-// It probably doesn't even make sense to paramatise it here
-export default class RabbitEventBus<M extends object> implements EventBus {
-  private connector: Option<AMQPConnector<M>> = None;
+/**
+ *
+ *
+ * @export
+ * @class RabbitEventBus
+ * @implements {EventBus}
+ */
+export default class RabbitEventBus implements EventBus {
+  private connector: Option<AMQPConnector> = None;
 
-  private innerChannel: Channel<StateChange<M>> = channel<StateChange<M>>();
+  private innerChannel: Channel<StateChange> = channel<StateChange>();
 
   private eventDefinitions: EventType[];
   private serviceName: string = 'unknown-service';
 
   private flowing: boolean = false;
   private url: string = '';
-
-  private queue: Array<{
-    ev: Event<unknown & object>;
-    resolve: (arg0: boolean) => void;
-    reject: (arg0: boolean) => void;
-  }> = [];
+  private queue : InternalMessageQueue;
   private subscriptions: Array<Subscription<unknown & object>> = [];
 
   public constructor(connectionOpts: RabbitEventBusConnectionOptions) {
-    // constructor
-    // TODO: Constructor takes connection information
     this.url = connectionOpts.url;
   }
 
   public async init(eventDefinitions: EventType[], serviceName: string) {
-    // TODO: init takes events information
     this.eventDefinitions = eventDefinitions;
     this.serviceName = serviceName;
-
+    this.queue = new InternalMessageQueue(this);
     this.observeStateChange();
-
     this.connect(this.url);
     return this;
   }
@@ -71,26 +64,11 @@ export default class RabbitEventBus<M extends object> implements EventBus {
     }
   }
 
-  private onDisconnect() {
-    // function is called when the child connector drops
-    this.flowing = false;
-  }
+  private onDisconnect() { this.flowing = false; }
 
   private onConnect() {
     this.flowing = true;
-
-    this.queue
-      // Create a new array so we don't mutate the queue as we iterate over it
-      // (which would lead to undefined behaviour)
-      .map(() => undefined)
-      .forEach(() => {
-        Option.of(this.queue.shift()).map(item => {
-          const { ev, resolve, reject } = item;
-          return this.publish(ev)
-            .then(res => resolve(res))
-            .catch(() => reject(false));
-        });
-      });
+    this.queue.publishQueue();
   }
 
   private connect(url) {
@@ -116,12 +94,14 @@ export default class RabbitEventBus<M extends object> implements EventBus {
         const published: boolean = await this.connector.get().publish(msg);
 
         if (!published) {
-          this.queue.push({ ev: msg, resolve, reject });
+        const qEvent : QueuedEvent = { event: msg, resolve, reject };
+        this.queue.push(qEvent);
         } else {
           resolve(published);
         }
       } else {
-        this.queue.push({ ev: msg, resolve, reject });
+        const qEvent : QueuedEvent = { event: msg, resolve, reject };
+        this.queue.push(qEvent);
       }
     });
   }

@@ -1,5 +1,5 @@
-import { Sender, Receiver, Channel, channel } from 'rs-channel-node';
-import { Option, None, Some } from 'funfix';
+import { Sender, Channel } from 'rs-channel-node';
+import { Option } from 'funfix';
 import { Connection, Message } from 'amqplib';
 import * as amqplib from 'amqplib';
 import { InfraLogger as logger } from '../logger';
@@ -7,9 +7,9 @@ import { EventType, Event } from '../event-bus';
 import { Subscription, StateChange, MessageWrapper } from './types';
 import { EventUtils } from './event-utils';
 
-export default class AMQPConnector<M extends object> {
+export default class AMQPConnector {
   private externalConnector: {
-    send: Sender<StateChange<M>>;
+    send: Sender<StateChange>;
   };
   private serviceName: string = 'unknown-service';
 
@@ -18,7 +18,7 @@ export default class AMQPConnector<M extends object> {
 
   public constructor(
     url: string,
-    [sender]: Channel<StateChange<M>>,
+    [sender]: Channel<StateChange>,
     eventDefs: EventType[],
     subscriptions: Array<Subscription<unknown & object>>,
     serviceName: string,
