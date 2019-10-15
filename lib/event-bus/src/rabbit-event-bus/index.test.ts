@@ -14,7 +14,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (__, [send, _]: Channel<StateChange<{}>>) => {
+        (__, [send, _]: Channel<StateChange>) => {
           send({
             newState: 'CONNECTED',
           });
@@ -41,7 +41,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (__, [send, _]: Channel<StateChange<{}>>) => {
+        (__, [send, _]: Channel<StateChange>) => {
           send({
             newState: 'CONNECTED',
           });
@@ -71,7 +71,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (___, [send, _]: Channel<StateChange<{}>>, __, subscriptions) => {
+        (___, [send, _]: Channel<StateChange>, __, subscriptions) => {
           send({
             newState: 'CONNECTED',
           });
@@ -132,7 +132,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
+        (_0, [send, _1]: Channel<StateChange>, _2, subscriptions) => {
           send({
             newState: 'CONNECTED',
           });
@@ -180,7 +180,7 @@ describe('AMQP Connection Manager', () => {
 
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
+        (_0, [send, _1]: Channel<StateChange>, _2, subscriptions) => {
           send({
             newState: 'NOT_CONNECTED',
           });
@@ -236,7 +236,7 @@ describe('AMQP Connection Manager', () => {
 
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
+        (_0, [send, _1]: Channel<StateChange>, _2, subscriptions) => {
           send({
             newState: 'CONNECTED',
           });
