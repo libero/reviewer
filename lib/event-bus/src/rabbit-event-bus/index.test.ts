@@ -2,7 +2,6 @@ import RabbitEventBus from '.';
 import { Channel, channel } from 'rs-channel-node';
 import { StateChange } from './types';
 import AMQPConnector from './amqp-connector';
-import * as logger from '../logger';
 jest.mock('../logger');
 jest.mock('./amqp-connector');
 
@@ -90,7 +89,7 @@ describe('AMQP Connection Manager', () => {
 
       const manager = await new RabbitEventBus({ url: '' }).init([], '');
 
-      const publishPromise = Promise.all([
+      Promise.all([
         manager.publish({
           eventType: 'test',
           id: 'something',
@@ -232,7 +231,6 @@ describe('AMQP Connection Manager', () => {
 
     it('publish promises are resolved after a successful connection', async done => {
       const subscribeMock = jest.fn();
-      const connectMock = jest.fn();
 
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
