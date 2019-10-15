@@ -66,6 +66,7 @@ describe("mock message queue", () => {
       const mockHandler1 = async (event: Event<TestEventPayload1>) => {
         handler1 += 1;
         receivedEvent1 = event;
+
         return Promise.resolve(true);
       };
 

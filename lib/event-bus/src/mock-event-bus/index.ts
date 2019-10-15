@@ -28,8 +28,6 @@ export class MockEventBus implements EventBus {
    * @memberof MockEventBus
    */
   public async publish<T extends object>(event: Event<T>): Promise<boolean> {
-    console.log(`Publish ${JSON.stringify(event)}`);
-
     return this.queues
       .flatMap(queues => Option.of(queues.get(`${event.eventType}`)))
       .map(fn => {
@@ -50,7 +48,6 @@ export class MockEventBus implements EventBus {
     eventType: EventType,
     handler: (event: Event<T>) => Promise<boolean>
   ) {
-    console.log(`Subscribe ${eventType}`);
     this.queues.get().set(`${eventType}`, handler);
   }
 }
