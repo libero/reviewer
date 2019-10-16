@@ -24,3 +24,17 @@ export const ServiceStartedHandler = (auditDomain: AuditController) => async (
   logger.info('serviceStartedReceived', ev.payload);
   return await auditDomain.recordAudit(auditItem);
 };
+
+export const UserLoggedInHandler = (auditDomain: AuditController) => async (
+  ev: Event<UserLoggedInPayload>,
+) => {
+  const auditItem: AuditLogItem = {
+    id: v4(),
+    subject: `${ev.payload.name}-${ev.payload.type}`,
+    verb: 'LOGGED_IN',
+    entity: ev.payload.userId,
+  };
+
+  logger.info('userLoggedInReceived', ev.payload);
+  return await auditDomain.recordAudit(auditItem);
+};
