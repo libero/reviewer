@@ -10,7 +10,7 @@ export class KnexAuditRepository implements AuditRepository {
 
     logger.debug('auditWritten', item.id);
 
-    await this.knex(this.TABLE_NAME).insert<AuditLogItem>(item);
+    await this.knex('audit').insert<AuditLogItem>(item);
 
     return true;
   }
