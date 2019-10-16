@@ -59,7 +59,7 @@ const setupWebServer = (server: Express) => {
 const main = async () => {
   logger.info('serviceInit');
 
-  const eventBus = await setupEventBus(new RabbitEventBus({url: 'amqp://rabbitmq'}));
+  const eventBus = await setupEventBus(new RabbitEventBus({url: `amqp://${ Config.eventBus.url }`}));
   // TODO: Eventually turn this into a factory method on the EventBus abstract class so that the instance of
   // the message bus can be created from config.
   // Create message bus instance
@@ -70,7 +70,7 @@ const main = async () => {
 };
 
 main().then(app =>
-  app.listen(3004, () => {
+  app.listen(Config.port, () => {
     logger.info('serviceStarted');
   }),
 );

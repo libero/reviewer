@@ -1,10 +1,9 @@
 import * as express from "express";
 import { Express, Request, Response } from "express";
 import { InfraLogger as logger } from "./logger";
-
 import { ProfilesService } from "./repo/profiles";
-
 import { HealthCheck, Login, Authenticate } from "./use-cases";
+import Config from './config';
 
 function init() {
   logger.info("Starting service");
@@ -34,4 +33,4 @@ function init() {
   return app;
 }
 
-init().listen(3001, () => logger.info("Service listening on port 3001"));
+init().listen(Config.port, () => logger.info(`Service listening on port ${Config.port}`));

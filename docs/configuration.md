@@ -2,6 +2,9 @@
 
 The dotenv library is used to load the .env file
 
+## RabbitMQ
+* `RABBITMQ_URL`: the rabbit message queue URL
+
 ## Server configuration
 
 ### Listening Port
@@ -60,3 +63,7 @@ These settings are used to configure the `mock-continuum-login` service
 
 ### JWT Secret
 * `CONTINUUM_LOGIN_JWT_SECRET`: secret used to sign jwt tokens
+
+
+## Audit Service configuration
+* `AUDIT_PORT`: port number for audit service
