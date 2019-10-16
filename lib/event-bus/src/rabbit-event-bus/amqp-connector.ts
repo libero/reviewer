@@ -1,5 +1,5 @@
-import { Sender, Receiver, Channel, channel } from 'rs-channel-node';
-import { Option, None, Some } from 'funfix';
+import { Sender, Channel } from 'rs-channel-node';
+import { Option } from 'funfix';
 import { Connection, Message } from 'amqplib';
 import * as amqplib from 'amqplib';
 import { InfraLogger as logger } from '../logger';
@@ -14,7 +14,6 @@ export default class AMQPConnector<M extends object> {
   private serviceName: string = 'unknown-service';
 
   private connection: Connection;
-  private subscriptions: Array<Subscription<object>>;
 
   public constructor(
     url: string,
@@ -24,7 +23,6 @@ export default class AMQPConnector<M extends object> {
     serviceName: string,
   ) {
     this.externalConnector = { send: sender };
-    this.subscriptions = subscriptions;
 
     this.serviceName = serviceName;
 

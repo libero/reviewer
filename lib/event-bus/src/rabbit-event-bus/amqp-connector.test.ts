@@ -40,7 +40,8 @@ describe('AMQP connector', () => {
             // tslint:disable-next-line: no-empty
             const sender = jest.fn().mockImplementation((___: StateChange<{}>) => {});
             const receiver = async (): Promise<StateChange<{}>> => ({} as StateChange<{}>);
-            const _ = new AMQPConnector<{}>(url, [sender, receiver], [], [], 'service');
+            // tslint:disable-next-line: no-unused-expression
+            new AMQPConnector<{}>(url, [sender, receiver], [], [], 'service');
 
             await flushPromises();
             expect(connect).toHaveBeenCalledTimes(1);
@@ -56,7 +57,8 @@ describe('AMQP connector', () => {
             // tslint:disable-next-line: no-empty
             const sender = jest.fn().mockImplementation((___: StateChange<{}>) => {});
             const receiver = async (): Promise<StateChange<{}>> => ({} as StateChange<{}>);
-            const _ = new AMQPConnector<{}>(url, [sender, receiver], [], [], 'service');
+            // tslint:disable-next-line: no-unused-expression
+            new AMQPConnector<{}>(url, [sender, receiver], [], [], 'service');
 
             await flushPromises();
             expect(sender).toHaveBeenCalledTimes(1);
@@ -69,7 +71,8 @@ describe('AMQP connector', () => {
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
-            const _ = new AMQPConnector<{}>(url, channel(), ['test:event'], [], 'service');
+            // tslint:disable-next-line: no-unused-expression
+            new AMQPConnector<{}>(url, channel(), ['test:event'], [], 'service');
 
             await flushPromises();
             expect(mockChannel.assertExchange).toHaveBeenCalledTimes(1);
@@ -83,7 +86,8 @@ describe('AMQP connector', () => {
 
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
-            const _ = new AMQPConnector<{}>(url, channel(), [], [{ eventType, handler: jest.fn()}], 'service');
+            // tslint:disable-next-line: no-unused-expression
+            new AMQPConnector<{}>(url, channel(), [], [{ eventType, handler: jest.fn()}], 'service');
 
             await flushPromises();
             expect(mockChannel.assertQueue).toHaveBeenCalledTimes(1);

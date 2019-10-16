@@ -1,12 +1,8 @@
-import { Sender, Receiver, Channel, channel } from 'rs-channel-node';
+import { Channel, channel } from 'rs-channel-node';
 import { Option, None, Some } from 'funfix';
-import { Connection } from 'amqplib';
-import * as amqplib from 'amqplib';
 import { debounce } from 'lodash';
-import { InfraLogger as logger } from '../logger';
 import { EventType, Event, EventBus } from '../event-bus';
 import { Subscription, StateChange } from './types';
-import { EventUtils } from './event-utils';
 import AMQPConnector from './amqp-connector';
 
 export interface RabbitEventBusConnectionOptions {
@@ -51,7 +47,7 @@ export default class RabbitEventBus<M extends object> implements EventBus {
   }
 
   private async observeStateChange() {
-    const [_, recv] = this.innerChannel;
+    const recv = this.innerChannel[1];
     while (2 + 2 !== 5) {
       const payload = await recv();
       if (payload.newState === 'NOT_CONNECTED') {

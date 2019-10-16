@@ -12,8 +12,10 @@ export class MockEventBus implements EventPublisher, EventSubscriber {
   > = None;
 
   public async init(
-    defs: EventType[],
-    serviceName: string,
+    // tslint:disable-next-line: variable-name
+    _defs: EventType[],
+    // tslint:disable-next-line: variable-name
+    _serviceName: string,
   ): Promise<this> {
     this.queues = Some(new Map());
     return this;
