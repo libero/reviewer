@@ -10,4 +10,5 @@ export { default as ProfileDropdown } from './ProfileDropdown';
 export { default as ProgressBar } from './ProgressBar';
 export { default as SearchField } from './SearchField';
 export { default as SelectedPeopleList } from './SelectedPeopleList';
+export { default as SelectedOption } from './SelectedOption';
 export { default as Toggle } from './Toggle';

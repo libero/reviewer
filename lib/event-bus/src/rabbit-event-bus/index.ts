@@ -43,6 +43,7 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
   public onConnect() {
     this.queue.publishQueue();
   }
+  
   public onDisconnect() {
     this.connector = None;
   }

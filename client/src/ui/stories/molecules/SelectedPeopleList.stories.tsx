@@ -2,12 +2,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { object, boolean, text, withKnobs } from '@storybook/addon-knobs';
-import centered from '@storybook/addon-centered/react';
 import { SelectedPeopleList } from '../../molecules';
 import '../../../core/styles/index.scss';
 
 storiesOf('ui | molecules/SelectedPeopleList', module)
-    .addDecorator(centered)
     .addDecorator(withKnobs)
     .add(
         'SelectedPeopleList',

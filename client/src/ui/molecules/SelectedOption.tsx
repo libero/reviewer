@@ -6,7 +6,7 @@ interface Props {
     onClose?: () => void;
 }
 
-export const SelectedOption: React.FC<Props> = ({ text, onClose }: Props): JSX.Element => {
+const SelectedOption: React.FC<Props> = ({ text, onClose }: Props): JSX.Element => {
     let classes = 'selected-option';
 
     if (onClose) {
@@ -17,8 +17,8 @@ export const SelectedOption: React.FC<Props> = ({ text, onClose }: Props): JSX.E
         <div className={classes}>
             <div className="selected-option__text">{text}</div>
             {onClose ? (
-                <div className="selected-option__close">
-                    <Close fontSize="inherit" onClick={onClose} />
+                <div className="selected-option__close" onClick={onClose}>
+                    <Close fontSize="inherit" />
                 </div>
             ) : (
                 ''
@@ -26,3 +26,5 @@ export const SelectedOption: React.FC<Props> = ({ text, onClose }: Props): JSX.E
         </div>
     );
 };
+
+export default SelectedOption;

@@ -14,7 +14,12 @@ export type AnyHandler = (ev: AnyEvent) => Promise<boolean>;
 export class MockEventBus implements EventBus {
   private queues: Option<Map<string, AnyHandler>> = None;
 
-  public async init(defs: EventType[], serviceName: string): Promise<this> {
+  public async init(
+    // tslint:disable-next-line: variable-name
+    _defs: EventType[],
+    // tslint:disable-next-line: variable-name
+    _serviceName: string,
+  ): Promise<this> {
     this.queues = Some(new Map());
     return this;
   }

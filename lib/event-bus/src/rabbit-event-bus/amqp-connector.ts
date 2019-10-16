@@ -14,7 +14,6 @@ export default class AMQPConnector {
   private serviceName: string = 'unknown-service';
 
   private connection: Connection;
-  private subscriptions: Array<Subscription<object>>;
 
   public constructor(
     url: string,
