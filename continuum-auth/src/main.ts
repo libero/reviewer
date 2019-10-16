@@ -33,4 +33,4 @@ function init() {
   return app;
 }
 
-init().listen(Config.port, () => logger.info("Service listening on port 3001"));
+init().listen(Config.port, () => logger.info(`Service listening on port ${Config.port}`));
