@@ -23,11 +23,11 @@ export class ConnectionObserver {
     this.observeStateChange();
   }
 
-  public get isConnected() {
+  public get isConnected(): boolean {
     return this.flowing;
   }
 
-  public get channel() {
+  public get channel(): Channel<StateChange> {
     return this.innerChannel;
   }
 
