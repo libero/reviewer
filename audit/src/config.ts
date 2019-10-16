@@ -1,13 +1,13 @@
-import {Config as KnexConfig } from 'knex';
+import { Config as KnexConfig } from 'knex';
 
 const knexConfig: KnexConfig = {
-  dialect: 'pg',
+  client: 'pg',
   // In production we should use postgres pools.
   connection: {
-    host: 'postgres',
-    user: 'postgres',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
     database: 'reviewer_audit',
-    password: 'postgres',
+    password: process.env.DB_PASSWORD,
   },
 };
 export const  serviceConfig = {

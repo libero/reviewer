@@ -32,6 +32,9 @@ services:
       retries: 3
     environment:
       RABBITMQ_URL: ${RABBITMQ_URL}
+      DB_HOST: ${DB_HOST}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./audit/:/service/audit/:z
       - ./lib/:/service/lib/:z
