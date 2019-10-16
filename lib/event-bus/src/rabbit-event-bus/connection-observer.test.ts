@@ -19,7 +19,8 @@ describe('ConnectionObserver', () => {
     const observer: ConnectionObserver = new ConnectionObserver(owner);
     expect(observer.isConnected).toBe(false);
 
-    const [tx, rx] = observer.channel;
+    // tslint:disable-next-line: no-unused-expression
+    const [tx ] = observer.channel;
     tx({ newState: 'CONNECTED' });
     await timeout(1);
     expect(observer.isConnected).toBe(true);
@@ -30,7 +31,8 @@ describe('ConnectionObserver', () => {
     const observer: ConnectionObserver = new ConnectionObserver(owner);
     expect(observer.isConnected).toBe(false);
 
-    const [tx, rx] = observer.channel;
+    // tslint:disable-next-line: no-unused-expression
+    const [tx ] = observer.channel;
     tx({ newState: 'CONNECTED' });
     await timeout(1);
     expect(observer.isConnected).toBe(true);

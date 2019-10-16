@@ -12,7 +12,7 @@ export default class AMQPConnector {
     send: Sender<StateChange>;
   };
   private serviceName: string = 'unknown-service';
-
+  private subscriptions: Array<Subscription<object>>;
   private connection: Connection;
 
   public constructor(

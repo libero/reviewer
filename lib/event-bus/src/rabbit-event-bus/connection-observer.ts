@@ -32,7 +32,8 @@ export class ConnectionObserver {
   }
 
   private async observeStateChange() {
-    const [_, recv] = this.channel;
+    // tslint:disable-next-line: no-unused-expression
+    const [, recv] = this.channel;
     while (true) {
       const payload = await recv();
       if (payload.newState === 'NOT_CONNECTED') {

@@ -41,7 +41,7 @@ describe('AMQP connector', () => {
             const sender = jest.fn().mockImplementation((___: StateChange) => {});
             const receiver = async (): Promise<StateChange> => ({} as StateChange);
             // tslint:disable-next-line: no-unused-expression
-            new AMQPConnector<{}>(url, [sender, receiver], [], [], 'service');
+            new AMQPConnector(url, [sender, receiver], [], [], 'service');
 
             await flushPromises();
             expect(connect).toHaveBeenCalledTimes(1);
@@ -59,7 +59,7 @@ describe('AMQP connector', () => {
             const receiver = async (): Promise<StateChange> => ({} as StateChange);
 
             // tslint:disable-next-line: no-unused-expression
-            new AMQPConnector<{}>(url, [sender, receiver], [], [], 'service');
+            new AMQPConnector(url, [sender, receiver], [], [], 'service');
 
             await flushPromises();
             expect(sender).toHaveBeenCalledTimes(1);
@@ -73,7 +73,7 @@ describe('AMQP connector', () => {
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
             // tslint:disable-next-line: no-unused-expression
-            new AMQPConnector<{}>(url, channel(), ['test:event'], [], 'service');
+            new AMQPConnector(url, channel(), ['test:event'], [], 'service');
 
             await flushPromises();
             expect(mockChannel.assertExchange).toHaveBeenCalledTimes(1);
@@ -88,7 +88,7 @@ describe('AMQP connector', () => {
             // tslint:disable-next-line: no-any
             (connect as any).mockImplementation(async (): Promise<Connection> => mockConnection);
             // tslint:disable-next-line: no-unused-expression
-            new AMQPConnector<{}>(url, channel(), [], [{ eventType, handler: jest.fn()}], 'service');
+            new AMQPConnector(url, channel(), [], [{ eventType, handler: jest.fn()}], 'service');
 
             await flushPromises();
             expect(mockChannel.assertQueue).toHaveBeenCalledTimes(1);
