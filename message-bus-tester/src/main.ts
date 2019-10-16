@@ -38,7 +38,7 @@ const initMq = async () => {
   }, 10000);
 
   // Rabbit bus
-  const rabbitmqMq = await (new RabbitEventBus({url: 'amqp://rabbitmq'})).init([testEventDef, testEventDef], 'message-bus-test');
+  const rabbitmqMq = await (new RabbitEventBus({url: `amqp://${ process.env.RABBITMQ_URL }`})).init([testEventDef, testEventDef], 'message-bus-test');
   logger.info('messageQueueStarted');
 
   rabbitmqMq.subscribe<TestEventPayload>(testEventDef, async (event: Event<TestEventPayload>) => {

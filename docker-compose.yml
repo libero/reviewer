@@ -22,7 +22,7 @@ services:
   audit:
     image: node:10
     ports:
-      - "3004:3004"
+      - "${AUDIT_PORT}:3004"
     working_dir: "/service/audit"
     command: ["bash", "-c", "yarn && yarn start:dev"]
     healthcheck:
@@ -30,6 +30,8 @@ services:
       interval: 1m
       timeout: 10s
       retries: 3
+    environment:
+      RABBITMQ_URL: ${RABBITMQ_URL}
     volumes:
       - ./audit/:/service/audit/:z
       - ./lib/:/service/lib/:z
@@ -41,7 +43,7 @@ services:
   continuum-auth:
     image: node:10
     ports:
-      - "${AUTHENTICATION_PORT}:${AUTHENTICATION_PORT}"
+      - "${AUTHENTICATION_PORT}:3001"
     working_dir: "/service/continuum-auth"
     healthcheck:
       test: "curl localhost:3001/health"
@@ -64,7 +66,7 @@ services:
   mock-continuum-login:
     image: node:10
     ports:
-      - "3003:3003"
+      - "${CONTINUUM_LOGIN_PORT}:3003"
     working_dir: "/mock-continuum-login"
     healthcheck:
       test: "curl localhost:3003/health"
@@ -86,7 +88,7 @@ services:
   server:
     image: node:10
     ports:
-      - "3000:${SERVER_PORT}"
+      - "${SERVER_PORT}:3000"
     environment:
       SERVER_PORT: ${SERVER_PORT}
       DB_TYPE: ${DB_TYPE}
@@ -112,7 +114,7 @@ services:
   client:
     image: node:10
     ports:
-      - "9000:${CLIENT_PORT}"
+      - "${CLIENT_PORT}:9000"
     working_dir: "/client"
     command: ["bash", "-c", "yarn && yarn run start --host 0.0.0.0"]
     volumes:
