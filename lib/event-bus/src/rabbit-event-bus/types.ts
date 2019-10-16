@@ -1,6 +1,6 @@
 import { EventType, Event } from '../event-bus';
 
-export type ConnectedState = 'CONNECTED' | 'NOT_CONNECTED' | 'NEW_MESSAGE';
+export type ConnectedState = 'CONNECTED' | 'NOT_CONNECTED';
 
 export interface StateChange {
   newState: ConnectedState;
