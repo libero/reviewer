@@ -1,6 +1,6 @@
-import { ConnectionObserver, ConnectionOwner } from "./connection-observer";
+import { ConnectionObserver, ConnectionOwner } from './connection-observer';
 
-describe("ConnectionObserver", () => {
+describe('ConnectionObserver', () => {
   const timeout = (ms: number) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   };
@@ -11,26 +11,26 @@ describe("ConnectionObserver", () => {
     owner = {
       onDisconnect: jest.fn(),
       onConnect: jest.fn(),
-      onStartReconnect: jest.fn()
+      onStartReconnect: jest.fn(),
     };
   });
 
-  it("triggers connect", async () => {
+  it('triggers connect', async () => {
     const observer: ConnectionObserver = new ConnectionObserver(owner);
     expect(observer.isConnected).toBe(false);
 
-    let [tx, rx] = observer.channel;
+    const [tx, rx] = observer.channel;
     tx({ newState: 'CONNECTED' });
     await timeout(1);
     expect(observer.isConnected).toBe(true);
     expect(owner.onConnect).toHaveBeenCalledTimes(1);
   });
 
-  it("triggers disconnect and reconnect", async () => {
+  it('triggers disconnect and reconnect', async () => {
     const observer: ConnectionObserver = new ConnectionObserver(owner);
     expect(observer.isConnected).toBe(false);
 
-    let [tx, rx] = observer.channel;
+    const [tx, rx] = observer.channel;
     tx({ newState: 'CONNECTED' });
     await timeout(1);
     expect(observer.isConnected).toBe(true);

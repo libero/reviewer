@@ -1,5 +1,5 @@
-import { MockEventBus } from ".";
-import { EventType, Event } from "../event-bus";
+import { MockEventBus } from '.';
+import { EventType, Event } from '../event-bus';
 
 interface TestEventPayload1 {
   x: number;
@@ -14,24 +14,24 @@ interface TestEventPayload2 {
 type MockEvent1 = Event<TestEventPayload1>;
 type MockEvent2 = Event<TestEventPayload2>;
 
-describe("mock message queue", () => {
-  describe("you can publish and subscribe", () => {
-    it("can do the full flow", async () => {
-      const eventType: EventType = "libero:mock:test";
+describe('mock message queue', () => {
+  describe('you can publish and subscribe', () => {
+    it('can do the full flow', async () => {
+      const eventType: EventType = 'libero:mock:test';
 
       const mockHandler = jest.fn(async () => true);
       const mockEventBus = await new MockEventBus().init(
         [eventType],
-        "message-bus-test"
+        'message-bus-test',
       );
 
       mockEventBus.subscribe<MockEvent1>(eventType, mockHandler);
 
       const event: Event<TestEventPayload1> = {
         eventType,
-        id: "some-testing-event-id",
+        id: 'some-testing-event-id',
         created: new Date(),
-        payload: { x: 10, y: 20 }
+        payload: { x: 10, y: 20 },
       };
 
       mockEventBus.publish<TestEventPayload1>(event);
@@ -40,22 +40,22 @@ describe("mock message queue", () => {
       expect(mockHandler.mock.calls).toEqual([[event]]);
     });
 
-    it("can discriminate based on event type", async () => {
-      const eventType1: EventType = "libero:mock:test1";
-      const eventType2: EventType = "libero:mock:test2";
+    it('can discriminate based on event type', async () => {
+      const eventType1: EventType = 'libero:mock:test1';
+      const eventType2: EventType = 'libero:mock:test2';
 
       const event1: MockEvent1 = {
         eventType: eventType1,
-        id: "some-testing-event1-id",
+        id: 'some-testing-event1-id',
         created: new Date(),
-        payload: { x: 10, y: 20 }
+        payload: { x: 10, y: 20 },
       };
 
       const event2: MockEvent2 = {
         eventType: eventType2,
-        id: "some-testing-event2-id",
+        id: 'some-testing-event2-id',
         created: new Date(),
-        payload: { a: 10, b: 20 }
+        payload: { a: 10, b: 20 },
       };
 
       let handler1 = 0;
@@ -78,7 +78,7 @@ describe("mock message queue", () => {
 
       const mockEventBus = await new MockEventBus().init(
         [eventType1, eventType2],
-        "message-bus-test"
+        'message-bus-test',
       );
 
       mockEventBus.subscribe<TestEventPayload1>(eventType1, mockHandler1);

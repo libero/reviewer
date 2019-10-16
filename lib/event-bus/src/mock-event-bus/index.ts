@@ -1,5 +1,5 @@
-import { EventBus, EventType, Event } from "../event-bus";
-import { Option, None, Some } from "funfix";
+import { EventBus, EventType, Event } from '../event-bus';
+import { Option, None, Some } from 'funfix';
 
 export type AnyEvent = Event<object>;
 export type AnyHandler = (ev: AnyEvent) => Promise<boolean>;
@@ -46,7 +46,7 @@ export class MockEventBus implements EventBus {
    */
   public async subscribe<T extends object>(
     eventType: EventType,
-    handler: (event: Event<T>) => Promise<boolean>
+    handler: (event: Event<T>) => Promise<boolean>,
   ) {
     this.queues.get().set(`${eventType}`, handler);
   }

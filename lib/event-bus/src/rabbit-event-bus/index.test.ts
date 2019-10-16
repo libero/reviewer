@@ -287,8 +287,8 @@ describe('AMQP Connection Manager', () => {
     it('publish promises are published after a failed connection', async done => {
       const subscribeMock = jest.fn();
       const connectMock = jest.fn();
-      let returnState : ConnectedState = 'NOT_CONNECTED';
-      let returnPublish :boolean = false;
+      let returnState: ConnectedState = 'NOT_CONNECTED';
+      let returnPublish: boolean = false;
 
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
@@ -336,7 +336,6 @@ describe('AMQP Connection Manager', () => {
         })
         .then(then);
 
-
       setTimeout(() => {
         expect(then).toHaveBeenCalledTimes(0);
 
@@ -344,7 +343,6 @@ describe('AMQP Connection Manager', () => {
         returnPublish = true;
         returnState = 'CONNECTED';
       }, 250);
-
 
       setTimeout(() => {
         expect(then).toHaveBeenCalledTimes(3);

@@ -2,9 +2,9 @@ import { Channel, channel } from 'rs-channel-node';
 import { StateChange } from './types';
 
 export interface ConnectionOwner {
-  onDisconnect() : void;
-  onConnect() : void;
-  onStartReconnect() : void;
+  onDisconnect(): void;
+  onConnect(): void;
+  onStartReconnect(): void;
 }
 
 /**
@@ -46,4 +46,4 @@ export class ConnectionObserver {
       }
     }
   }
-};
+}

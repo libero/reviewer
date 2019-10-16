@@ -1,16 +1,16 @@
 import { Event, EventPublisher } from '../event-bus';
 import { Option } from 'funfix';
 
-export type QueuedEvent = {
+export interface QueuedEvent {
   event: Event<unknown & object>;
   resolve: (arg0: boolean) => void;
   reject: (arg0: boolean) => void;
-};
+}
 
 export class InternalMessageQueue {
   private publisher: EventPublisher;
 
-  private queue: Array<QueuedEvent> = [];
+  private queue: QueuedEvent[] = [];
 
   constructor(publisher: EventPublisher) {
     this.publisher = publisher;
@@ -36,6 +36,6 @@ export class InternalMessageQueue {
   }
 
   public get length() {
-    return this.queue.length
+    return this.queue.length;
   }
-};
+}

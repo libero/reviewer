@@ -1,10 +1,10 @@
-import { Option, None, Some } from "funfix";
-import { EventType, Event, EventBus } from "../event-bus";
-import { Subscription } from "./types";
-import AMQPConnector from "./amqp-connector";
-import { InternalMessageQueue, QueuedEvent } from "./internal-queue";
-import { debounce } from "lodash";
-import { ConnectionObserver, ConnectionOwner } from "./connection-observer";
+import { Option, None, Some } from 'funfix';
+import { EventType, Event, EventBus } from '../event-bus';
+import { Subscription } from './types';
+import AMQPConnector from './amqp-connector';
+import { InternalMessageQueue, QueuedEvent } from './internal-queue';
+import { debounce } from 'lodash';
+import { ConnectionObserver, ConnectionOwner } from './connection-observer';
 
 export interface RabbitEventBusConnectionOptions {
   url: string;
@@ -22,8 +22,8 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
   private connector: Option<AMQPConnector> = None;
   private connection: ConnectionObserver;
   private eventDefinitions: EventType[];
-  private serviceName: string = "unknown-service";
-  private url: string = "";
+  private serviceName: string = 'unknown-service';
+  private url: string = '';
   private queue: InternalMessageQueue;
   private subscriptions: Array<Subscription<unknown & object>> = [];
 
@@ -61,8 +61,8 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
         this.connection.channel,
         this.eventDefinitions,
         this.subscriptions,
-        this.serviceName
-      )
+        this.serviceName,
+      ),
     );
   }
 
@@ -89,7 +89,7 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
 
   public async subscribe<P extends object>(
     eventType: EventType,
-    handler: (event: Event<P>) => Promise<boolean>
+    handler: (event: Event<P>) => Promise<boolean>,
   ) {
     this.connector.map(connector => {
       connector.subscribe(eventType, handler);
@@ -98,7 +98,7 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
     // Add the subscription to the next connector's list of subscriptions
     return this.subscriptions.push({
       eventType,
-      handler
+      handler,
     });
   }
 }
