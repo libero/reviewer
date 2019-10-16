@@ -1,4 +1,4 @@
-import { Event, EventBus } from '../event-bus';
+import { Event, EventPublisher } from '../event-bus';
 import { Option } from 'funfix';
 
 export type QueuedEvent = {
@@ -8,15 +8,15 @@ export type QueuedEvent = {
 };
 
 export class InternalMessageQueue {
-  private publisher: EventBus;
+  private publisher: EventPublisher;
 
   private queue: Array<QueuedEvent> = [];
 
-  constructor(publisher: EventBus) {
+  constructor(publisher: EventPublisher) {
     this.publisher = publisher;
   }
 
-  publishQueue() {
+  public publishQueue() {
     this.queue
       // Create a new array so we don't mutate the queue as we iterate over it
       // (which would lead to undefined behaviour)
@@ -31,7 +31,11 @@ export class InternalMessageQueue {
       });
   }
 
-  push(object: QueuedEvent) {
+  public push(object: QueuedEvent) {
     this.queue.push(object);
+  }
+
+  public get length() {
+    return this.queue.length
   }
 };
