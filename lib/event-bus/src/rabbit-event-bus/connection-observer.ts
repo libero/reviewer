@@ -7,6 +7,12 @@ export interface ConnectionOwner {
   onStartReconnect() : void;
 }
 
+/**
+ * ConnectionObserver handles the state changing to call back on the owner.
+ *
+ * @export
+ * @class ConnectionObserver
+ */
 export class ConnectionObserver {
   private owner: ConnectionOwner;
   private flowing: boolean = false;

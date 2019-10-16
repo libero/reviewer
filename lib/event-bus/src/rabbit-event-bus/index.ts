@@ -1,10 +1,10 @@
-import { Option, None, Some } from 'funfix';
-import { EventType, Event, EventBus } from '../event-bus';
-import { Subscription } from './types';
-import AMQPConnector from './amqp-connector';
-import { InternalMessageQueue, QueuedEvent } from './internal-queue';
-import { debounce } from 'lodash';
-import { ConnectionObserver, ConnectionOwner } from './connection-observer';
+import { Option, None, Some } from "funfix";
+import { EventType, Event, EventBus } from "../event-bus";
+import { Subscription } from "./types";
+import AMQPConnector from "./amqp-connector";
+import { InternalMessageQueue, QueuedEvent } from "./internal-queue";
+import { debounce } from "lodash";
+import { ConnectionObserver, ConnectionOwner } from "./connection-observer";
 
 export interface RabbitEventBusConnectionOptions {
   url: string;
@@ -12,7 +12,7 @@ export interface RabbitEventBusConnectionOptions {
 
 /**
  * RabbitEventBus - SRP: To implement the generic EventBus for RabbitMQ
- * uses: AMQPConnector, InternalMessageQueue
+ * uses: AMQPConnector, InternalMessageQueue, ConnectionObserver
  *
  * @export
  * @class RabbitEventBus
@@ -22,9 +22,9 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
   private connector: Option<AMQPConnector> = None;
   private connection: ConnectionObserver;
   private eventDefinitions: EventType[];
-  private serviceName: string = 'unknown-service';
-  private url: string = '';
-  private queue : InternalMessageQueue;
+  private serviceName: string = "unknown-service";
+  private url: string = "";
+  private queue: InternalMessageQueue;
   private subscriptions: Array<Subscription<unknown & object>> = [];
 
   public constructor(connectionOpts: RabbitEventBusConnectionOptions) {
@@ -40,17 +40,16 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
     return this;
   }
 
+  public onConnect() {
+    this.queue.publishQueue();
+  }
   public onDisconnect() {
     this.connector = None;
   }
 
   public onStartReconnect() {
-    const reconnect = debounce(() => this.connect(), 100, { maxWait : 2000 });
+    const reconnect = debounce(() => this.connect(), 100, { maxWait: 2000 });
     reconnect();
-  }
-
-  public onConnect() {
-    this.queue.publishQueue();
   }
 
   private connect() {
@@ -62,8 +61,8 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
         this.connection.channel,
         this.eventDefinitions,
         this.subscriptions,
-        this.serviceName,
-      ),
+        this.serviceName
+      )
     );
   }
 
@@ -76,13 +75,13 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
         const published: boolean = await this.connector.get().publish(msg);
 
         if (!published) {
-        const qEvent : QueuedEvent = { event: msg, resolve, reject };
-        this.queue.push(qEvent);
+          const qEvent: QueuedEvent = { event: msg, resolve, reject };
+          this.queue.push(qEvent);
         } else {
           resolve(published);
         }
       } else {
-        const qEvent : QueuedEvent = { event: msg, resolve, reject };
+        const qEvent: QueuedEvent = { event: msg, resolve, reject };
         this.queue.push(qEvent);
       }
     });
@@ -90,7 +89,7 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
 
   public async subscribe<P extends object>(
     eventType: EventType,
-    handler: (event: Event<P>) => Promise<boolean>,
+    handler: (event: Event<P>) => Promise<boolean>
   ) {
     this.connector.map(connector => {
       connector.subscribe(eventType, handler);
@@ -99,7 +98,7 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
     // Add the subscription to the next connector's list of subscriptions
     return this.subscriptions.push({
       eventType,
-      handler,
+      handler
     });
   }
 }

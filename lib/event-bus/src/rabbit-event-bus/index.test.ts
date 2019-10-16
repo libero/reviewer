@@ -1,8 +1,7 @@
 import RabbitEventBus from '.';
 import { Channel, channel } from 'rs-channel-node';
-import { StateChange } from './types';
+import { StateChange, ConnectedState } from './types';
 import AMQPConnector from './amqp-connector';
-import * as logger from '../logger';
 jest.mock('../logger');
 jest.mock('./amqp-connector');
 
@@ -227,7 +226,7 @@ describe('AMQP Connection Manager', () => {
       setTimeout(() => {
         expect(then).toHaveBeenCalledTimes(0);
         done();
-      }, 50);
+      }, 250);
     });
 
     it('publish promises are resolved after a successful connection', async done => {
@@ -283,6 +282,75 @@ describe('AMQP Connection Manager', () => {
         expect(then).toHaveBeenCalledTimes(3);
         done();
       }, 250);
+    });
+
+    it('publish promises are published after a failed connection', async done => {
+      const subscribeMock = jest.fn();
+      const connectMock = jest.fn();
+      let returnState : ConnectedState = 'NOT_CONNECTED';
+      let returnPublish :boolean = false;
+
+      // tslint:disable-next-line: no-any
+      (AMQPConnector as any).mockImplementation(
+        (_0, [send, _1]: Channel<StateChange>, _2, subscriptions) => {
+          send({
+            newState: returnState,
+          });
+
+          return {
+            subscriptions,
+            connect: connectMock,
+            publish: jest.fn(() => returnPublish),
+            subscribe: subscribeMock,
+          };
+        },
+      );
+
+      const manager = await new RabbitEventBus({ url: '' }).init([], '');
+      const then = jest.fn();
+
+      manager
+        .publish({
+          eventType: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
+
+      manager
+        .publish({
+          eventType: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
+
+      manager
+        .publish({
+          eventType: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
+
+
+      setTimeout(() => {
+        expect(then).toHaveBeenCalledTimes(0);
+
+        // 'reconnect' the connection
+        returnPublish = true;
+        returnState = 'CONNECTED';
+      }, 250);
+
+
+      setTimeout(() => {
+        expect(then).toHaveBeenCalledTimes(3);
+        done();
+      }, 500);
+
     });
   });
 
