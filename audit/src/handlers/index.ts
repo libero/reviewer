@@ -1,6 +1,6 @@
 // Event handlers - returns
 import { Event } from '@libero/event-bus';
-import { ServiceStartedPayload } from '../events';
+import { ServiceStartedPayload, UserLoggedInPayload } from '../events';
 import { InfraLogger as logger } from '../logger';
 import { AuditController } from '../domain/audit';
 import { AuditLogItem } from '../domain/types';
@@ -30,7 +30,7 @@ export const UserLoggedInHandler = (auditDomain: AuditController) => async (
 ) => {
   const auditItem: AuditLogItem = {
     id: v4(),
-    subject: `${ev.payload.name}-${ev.payload.type}`,
+    subject: `${ev.payload.name}-${ev.payload.email}`,
     verb: 'LOGGED_IN',
     entity: ev.payload.userId,
   };
