@@ -4,11 +4,11 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo not configured yet",
+    "test": "jest",
     "build": "tsc --build tsconfig.json",
     "lint": "echo not configured yet",
     "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts",
-    "udpate:internal": "yarn upgrade -P @libero"
+    "update:internal": "yarn upgrade -P @libero"
   },
   "repository": {
     "type": "git",
@@ -18,10 +18,11 @@
   "license": "ISC",
   "dependencies": {
     "@libero/auth-utils": "../lib/auth-utils",
+    "@libero/event-bus": "../lib/event-bus",
     "@types/express": "^4.17.1",
+    "@types/jest": "^24.0.18",
     "@types/jsonwebtoken": "^8.3.3",
     "@types/node-fetch": "^2.5.0",
-    "@types/jest": "^24.0.18",
     "@types/pino": "^5.8.10",
     "@types/uuid": "^3.4.5",
     "dotenv-cli": "^2.0.1",
@@ -35,7 +36,10 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "flush-promises": "^1.0.2",
+    "jest": "^24.9.0",
     "pino-pretty": "^3.2.1",
+    "ts-jest": "^24.1.0",
     "ts-node": "^8.3.0"
   }
 }

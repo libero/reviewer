@@ -12,6 +12,7 @@ COPY --from=auth_packages /app/node_modules/ ./node_modules/
 COPY  tsconfig.build.json \
       tsconfig.json \
       tslint.json \
+      jest.config.js \
       package.json \
       ./
 

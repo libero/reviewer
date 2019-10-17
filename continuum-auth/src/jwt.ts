@@ -14,7 +14,7 @@ export const encode = (payload: object): string => {
   return token;
 };
 
-interface JournalAuthToken {
+export interface JournalAuthToken {
   iss: string;
   iat: number;
   exp: number;
