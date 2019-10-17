@@ -79,9 +79,9 @@ export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) 
                 payload: {
                     name: profile.name.preferred,
                     userId: payload.identity.user_id,
-                    email: profile.emailAddresses.length > 0 ? profile.emailAddresses[0] : '',
+                    email: profile.emailAddresses.length > 0 ? profile.emailAddresses[0].value : '',
                     timestamp: new Date(),
-                }
+                },
             };
             eventBus.publish(auditEvent);
 

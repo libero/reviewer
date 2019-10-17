@@ -40,7 +40,7 @@ describe('Authenticate Handler', () => {
         profilesRepoMock.getProfileById.mockImplementation(() => Promise.resolve(Option.of({
             id: 'id',
             orcid: 'orcid',
-            emailAddresses: ['foo@example.com'],
+            emailAddresses: [{value: 'foo@example.com'}],
             name: { preferred: 'bar' }
         })));
     })

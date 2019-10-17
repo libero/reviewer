@@ -16,7 +16,9 @@ export interface UserProfile {
       preferred: string,
       index: string,
   };
-  emailAddresses: Array<string>;
+  emailAddresses: Array<{
+    value: string,
+  }>;
 }
 
 export class ProfilesService implements ProfilesRepo {
