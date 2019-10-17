@@ -1,6 +1,6 @@
 /**
  * NOTE: this is copied from audit service event definitions.
- * These should eb moved to a common package
+ * These should be moved to a common package
  */
 
 import { EventType } from '@libero/event-bus';
