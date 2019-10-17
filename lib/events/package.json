@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "lint": "tslint --project tsconfig.json"
+    "lint": "tslint --project tsconfig.json",
+    "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
