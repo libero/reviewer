@@ -5,7 +5,9 @@ import { encode, decodeJournalToken } from "../jwt";
 import { ProfilesRepo } from "../repo/profiles";
 import { v4 } from "uuid";
 import config from '../config';
-import {UserIdentity} from '@libero/auth-utils';
+import { UserIdentity } from '@libero/auth-utils';
+import { Event, EventBus } from '@libero/event-bus';
+import { UserLoggedInPayload, userLoggedInIdentifier } from './audit-events';
 
 // This is the endpoint that does the actual token exchange/user lookup and signing the output token
 // And yeah, I know the controller/usecase code shouldn't be mixed but idec, we can refactor it at some point
@@ -18,7 +20,7 @@ import {UserIdentity} from '@libero/auth-utils';
 //   "new-session": true
 // };
 
-export const Authenticate = (profilesService: ProfilesRepo) => (
+export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) => (
   req: Request,
   res: Response
 ) =>
@@ -68,6 +70,20 @@ export const Authenticate = (profilesService: ProfilesRepo) => (
             };
 
             const output_token = encode(payload);
+
+            // send audit logged in message
+            const auditEvent: Event<UserLoggedInPayload> = {
+                id: v4(),
+                created: new Date(),
+                eventType: userLoggedInIdentifier,
+                payload: {
+                    name: profile.name.preferred,
+                    userId: payload.identity.user_id,
+                    email: profile.emailAddresses.length > 0 ? profile.emailAddresses[0].value : '',
+                    timestamp: new Date(),
+                },
+            };
+            eventBus.publish(auditEvent);
 
             res.redirect(`${authorised_redirect_url}#${output_token}`);
           })
