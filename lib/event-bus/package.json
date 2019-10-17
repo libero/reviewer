@@ -28,7 +28,8 @@
     "lodash.debounce": "^4.0.8",
     "pino": "^5.13.2",
     "rs-channel-node": "^0.0.3",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "wait-for-expect": "^3.0.0"
   },
   "devDependencies": {
     "flush-promises": "^1.0.2",
@@ -36,7 +37,7 @@
     "nodemon": "^1.19.1",
     "pino-pretty": "^3.2.1",
     "ts-jest": "^24.0.2",
-    "ts-node": "^8.3.0",
+    "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "typescript": "^3.5.3"
   }

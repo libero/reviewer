@@ -1,7 +1,9 @@
 import RabbitEventBus from '.';
 import { Channel, channel } from 'rs-channel-node';
-import { StateChange } from './types';
+import { StateChange, ConnectedState } from './types';
 import AMQPConnector from './amqp-connector';
+import waitForExpect from 'wait-for-expect';
+
 jest.mock('../logger');
 jest.mock('./amqp-connector');
 
@@ -13,7 +15,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (__, [send, _]: Channel<StateChange<{}>>) => {
+        (__, [send, _]: Channel<StateChange>) => {
           send({
             newState: 'CONNECTED',
           });
@@ -40,7 +42,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (__, [send, _]: Channel<StateChange<{}>>) => {
+        (__, [send, _]: Channel<StateChange>) => {
           send({
             newState: 'CONNECTED',
           });
@@ -70,7 +72,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (___, [send, _]: Channel<StateChange<{}>>, __, subscriptions) => {
+        (___, [send, _]: Channel<StateChange>, __, subscriptions) => {
           send({
             newState: 'CONNECTED',
           });
@@ -131,7 +133,7 @@ describe('AMQP Connection Manager', () => {
       // (...as any) needed because jest is magic
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
+        (_0, [send, _1]: Channel<StateChange>, _2, subscriptions) => {
           send({
             newState: 'CONNECTED',
           });
@@ -164,9 +166,7 @@ describe('AMQP Connection Manager', () => {
         readyNotify({});
         // Expect the connector to be created with subscriptions
         // tslint:disable-next-line: no-any
-        expect((manager as any).connector.get().subscriptions.length).toEqual(
-          3,
-        );
+        expect((manager as any).connector.get().subscriptions.length).toEqual(3);
         done();
       }, 50);
     });
@@ -179,7 +179,7 @@ describe('AMQP Connection Manager', () => {
 
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
+        (_0, [send, _1]: Channel<StateChange>, _2, subscriptions) => {
           send({
             newState: 'NOT_CONNECTED',
           });
@@ -226,7 +226,7 @@ describe('AMQP Connection Manager', () => {
       setTimeout(() => {
         expect(then).toHaveBeenCalledTimes(0);
         done();
-      }, 50);
+      }, 250);
     });
 
     it('publish promises are resolved after a successful connection', async done => {
@@ -234,7 +234,7 @@ describe('AMQP Connection Manager', () => {
 
       // tslint:disable-next-line: no-any
       (AMQPConnector as any).mockImplementation(
-        (_0, [send, _1]: Channel<StateChange<{}>>, _2, subscriptions) => {
+        (_0, [send, _1]: Channel<StateChange>, _2, subscriptions) => {
           send({
             newState: 'CONNECTED',
           });
@@ -281,6 +281,81 @@ describe('AMQP Connection Manager', () => {
         expect(then).toHaveBeenCalledTimes(3);
         done();
       }, 250);
+    });
+
+    it('publish promises are published after a failed connection', async () => {
+      const subscribeMock = jest.fn();
+      const connectMock = jest.fn();
+      let returnState: ConnectedState = 'NOT_CONNECTED';
+      let returnPublish: boolean = false;
+
+      // tslint:disable-next-line: no-any
+      (AMQPConnector as any).mockImplementation(
+        (_0, [send, _1]: Channel<StateChange>, _2, subscriptions) => {
+          send({
+            newState: returnState,
+          });
+
+          return {
+            subscriptions,
+            connect: connectMock,
+            publish: jest.fn(() => returnPublish),
+            subscribe: subscribeMock,
+          };
+        },
+      );
+
+      const manager = await new RabbitEventBus({ url: '' }).init([], '');
+      const then = jest.fn();
+
+      manager
+        .publish({
+          eventType: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
+
+      manager
+        .publish({
+          eventType: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
+
+      manager
+        .publish({
+          eventType: 'test',
+          id: 'something',
+          created: new Date(),
+          payload: {},
+        })
+        .then(then);
+
+      const checkNothingPublished = () => {
+        return new Promise(resolve =>
+          setTimeout(() => {
+            expect(then).toHaveBeenCalledTimes(0);
+
+            // 'reconnect' the connection
+            returnPublish = true;
+            returnState = 'CONNECTED';
+            resolve();
+          }, 250),
+        );
+      };
+
+      // We need to wait for at least 250ms to ensure that nothing has been
+      // inadvertently published.
+      await checkNothingPublished();
+
+      // This check will succeeded as quickly as possible.
+      await waitForExpect(() => {
+        expect(then).toHaveBeenCalledTimes(3);
+      });
     });
   });
 

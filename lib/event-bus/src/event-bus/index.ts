@@ -1,31 +1,27 @@
-// Abstract message queue
+// Abstract Message Queue - types and interfaces
 
-export type EventType = string; // e.g. "libero:audit:login"
+export type EventType = string;   // e.g. "libero:user-action:login"
 
 export interface Event<T extends object> {
-  // This is event metadata
-  eventType: EventType;
-  id: string; // Generated when the event is emitted
+  eventType: EventType;   // see above
+  id: string;             // Generated when the event is emitted
   created: Date;
-
-  payload: T; // The actual data
-  context?: unknown; // context about the event itself, including the actor that triggered the transmission of the event;
+  payload: T;             // The actual data
+  version?: number;        // Version of the payload
+  context?: unknown;      // context about the event itself, including the actor
+                          // that triggered the transmission of the event;
 }
 
 export interface EventPublisher {
   init(eventDefinitions: EventType[], serviceName: string): Promise<this>;
-
   publish<T extends object>(event: Event<T>): Promise<boolean>;
 }
 
 export interface EventSubscriber {
   init(eventDefinitions: EventType[], serviceName: string): Promise<this>;
-
-  subscribe<P extends object>(eventDefinition: EventType, handler: (ev: Event<P>) => Promise<boolean>): void;
-  // handler: returns weather or not we should ack the message
+  // handler: returns whether or not we should ack the message
+  subscribe<T extends object>(eventType: EventType, handler: (event: Event<T>) => Promise<boolean>): void;
 }
 
+// Interface needed to be fulfilled in order to be used as an EventBus
 export interface EventBus extends EventPublisher, EventSubscriber {}
-
-// Event handler type - has the event-bus injected into it
-export type EventHandler<T extends object> = (arg0: EventBus) => (event: Event<T>) => Promise<boolean>;

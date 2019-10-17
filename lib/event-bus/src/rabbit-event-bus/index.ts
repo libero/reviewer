@@ -1,101 +1,65 @@
-import { Channel, channel } from 'rs-channel-node';
 import { Option, None, Some } from 'funfix';
-import { debounce } from 'lodash';
 import { EventType, Event, EventBus } from '../event-bus';
-import { Subscription, StateChange } from './types';
+import { Subscription } from './types';
 import AMQPConnector from './amqp-connector';
+import { InternalMessageQueue, QueuedEvent } from './internal-queue';
+import { debounce } from 'lodash';
+import { ConnectionObserver, ConnectionOwner } from './connection-observer';
 
 export interface RabbitEventBusConnectionOptions {
   url: string;
 }
 
-// <M> doesn't refer to the event types, M refers to the internal statechange message type
-// It probably doesn't even make sense to paramatise it here
-export default class RabbitEventBus<M extends object> implements EventBus {
-  private connector: Option<AMQPConnector<M>> = None;
-
-  private innerChannel: Channel<StateChange<M>> = channel<StateChange<M>>();
-
+/**
+ * RabbitEventBus - SRP: To implement the generic EventBus for RabbitMQ
+ * uses: AMQPConnector, InternalMessageQueue, ConnectionObserver
+ *
+ * @export
+ * @class RabbitEventBus
+ * @implements {EventBus}
+ */
+export default class RabbitEventBus implements EventBus, ConnectionOwner {
+  private connector: Option<AMQPConnector> = None;
+  private connection: ConnectionObserver;
   private eventDefinitions: EventType[];
   private serviceName: string = 'unknown-service';
-
-  private flowing: boolean = false;
   private url: string = '';
-
-  private queue: Array<{
-    ev: Event<unknown & object>;
-    resolve: (arg0: boolean) => void;
-    reject: (arg0: boolean) => void;
-  }> = [];
+  private queue: InternalMessageQueue;
   private subscriptions: Array<Subscription<unknown & object>> = [];
 
   public constructor(connectionOpts: RabbitEventBusConnectionOptions) {
-    // constructor
-    // TODO: Constructor takes connection information
     this.url = connectionOpts.url;
   }
 
   public async init(eventDefinitions: EventType[], serviceName: string) {
-    // TODO: init takes events information
     this.eventDefinitions = eventDefinitions;
     this.serviceName = serviceName;
-
-    this.observeStateChange();
-
-    this.connect(this.url);
+    this.queue = new InternalMessageQueue(this);
+    this.connection = new ConnectionObserver(this);
+    this.connect();
     return this;
   }
 
-  private async observeStateChange() {
-    const recv = this.innerChannel[1];
-    while (2 + 2 !== 5) {
-      const payload = await recv();
-      if (payload.newState === 'NOT_CONNECTED') {
-        // Destroy the connector
-        this.connector = None;
-
-        // Execute the hooks
-        this.onDisconnect();
-
-        // Start reconnecting
-        const reconnect = debounce(() => this.connect(this.url), 100, { maxWait : 2000 });
-        reconnect();
-      } else if (payload.newState === 'CONNECTED') {
-        // logger.info('connection confirmed');
-        this.onConnect();
-      }
-    }
+  public onConnect() {
+    this.queue.publishQueue();
   }
 
-  private onDisconnect() {
-    // function is called when the child connector drops
-    this.flowing = false;
+  public onDisconnect() {
+    this.connector = None;
   }
 
-  private onConnect() {
-    this.flowing = true;
-
-    this.queue
-      // Create a new array so we don't mutate the queue as we iterate over it
-      // (which would lead to undefined behaviour)
-      .map(() => undefined)
-      .forEach(() => {
-        Option.of(this.queue.shift()).map(item => {
-          const { ev, resolve, reject } = item;
-          return this.publish(ev)
-            .then(res => resolve(res))
-            .catch(() => reject(false));
-        });
-      });
+  public onStartReconnect() {
+    const reconnect = debounce(() => this.connect(), 100, { maxWait: 2000 });
+    reconnect();
   }
 
-  private connect(url) {
+  private connect() {
     // logger.debug('attemptingConnection');
     // Should I debounce this?
     this.connector = Some(
       new AMQPConnector(
-        url,
-        this.innerChannel,
+        this.url,
+        this.connection.channel,
         this.eventDefinitions,
         this.subscriptions,
         this.serviceName,
@@ -107,17 +71,19 @@ export default class RabbitEventBus<M extends object> implements EventBus {
   // the user never has to know about the internal queue
   public publish<P extends object>(msg: Event<P>): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
-      if (this.flowing) {
+      if (this.connection.isConnected) {
         // Should we queue messages that fail?
         const published: boolean = await this.connector.get().publish(msg);
 
         if (!published) {
-          this.queue.push({ ev: msg, resolve, reject });
+          const qEvent: QueuedEvent = { event: msg, resolve, reject };
+          this.queue.push(qEvent);
         } else {
           resolve(published);
         }
       } else {
-        this.queue.push({ ev: msg, resolve, reject });
+        const qEvent: QueuedEvent = { event: msg, resolve, reject };
+        this.queue.push(qEvent);
       }
     });
   }

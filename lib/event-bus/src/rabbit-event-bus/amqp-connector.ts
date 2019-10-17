@@ -7,23 +7,23 @@ import { EventType, Event } from '../event-bus';
 import { Subscription, StateChange, MessageWrapper } from './types';
 import { EventUtils } from './event-utils';
 
-export default class AMQPConnector<M extends object> {
+export default class AMQPConnector {
   private externalConnector: {
-    send: Sender<StateChange<M>>;
+    send: Sender<StateChange>;
   };
   private serviceName: string = 'unknown-service';
-
+  private subscriptions: Array<Subscription<object>>;
   private connection: Connection;
 
   public constructor(
     url: string,
-    [sender]: Channel<StateChange<M>>,
+    [sender]: Channel<StateChange>,
     eventDefs: EventType[],
     subscriptions: Array<Subscription<unknown & object>>,
     serviceName: string,
   ) {
     this.externalConnector = { send: sender };
-
+    this.subscriptions = subscriptions;
     this.serviceName = serviceName;
 
     // Set up the connections to the AMQP server
@@ -47,7 +47,7 @@ export default class AMQPConnector<M extends object> {
           });
 
         // Create subscribers here
-        subscriptions.forEach(async subscription => {
+        this.subscriptions.forEach(async subscription => {
           // subscribe
           await this.subscribe(
             subscription.eventType,
