@@ -12,6 +12,11 @@ export interface ProfilesRepo {
 export interface UserProfile {
   id: string;
   orcid: string;
+  name: {
+      preferred: string,
+      index: string,
+  };
+  emailAddresses: Array<string>;
 }
 
 export class ProfilesService implements ProfilesRepo {
