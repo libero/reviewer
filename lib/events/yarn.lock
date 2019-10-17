@@ -286,7 +286,7 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@libero/event-bus@../../lib/event-bus":
+"@libero/event-bus@file:../event-bus":
   version "1.0.0"
   dependencies:
     "@types/amqplib" "^0.5.13"

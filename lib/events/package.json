@@ -15,7 +15,7 @@
   "author": "Nathan Lisgo",
   "license": "ISC",
   "dependencies": {
-    "@libero/event-bus": "../lib/event-bus"
+    "@libero/event-bus": "file:../event-bus"
   },
   "devDependencies": {
     "jest": "^24.9.0",
