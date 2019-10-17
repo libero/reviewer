@@ -4,8 +4,8 @@ import * as express from 'express';
 import { Express, Request, Response } from 'express';
 import { HealthCheck } from './endpoints';
 import { Event, EventBus, RabbitEventBus } from '@libero/event-bus';
-import { ServiceStartedPayload, serviceStartedIdentifier } from './events';
-import { ServiceStartedHandler } from './handlers';
+import { ServiceStartedPayload, serviceStartedIdentifier, UserLoggedInPayload, userLoggedInIdentifier } from './events';
+import { ServiceStartedHandler, UserLoggedInHandler } from './handlers';
 import { AuditController } from './domain/audit';
 import { KnexAuditRepository } from './repo/audit';
 import { v4 } from 'uuid';
@@ -26,6 +26,11 @@ const setupEventBus = async (freshEventBus: EventBus) => {
   eventBus.subscribe<ServiceStartedPayload>(
     serviceStartedIdentifier,
     ServiceStartedHandler(auditController),
+  );
+
+  eventBus.subscribe<UserLoggedInPayload>(
+    userLoggedInIdentifier,
+    UserLoggedInHandler(auditController),
   );
 
   // publish "ServiceStarted"
