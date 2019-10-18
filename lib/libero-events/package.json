@@ -1,0 +1,29 @@
+{
+  "name": "libero-events",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "lint": "tslint --project tsconfig.json",
+    "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts",
+    "postinstall": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/libero/reviewer"
+  },
+  "author": "Nathan Lisgo",
+  "license": "ISC",
+  "dependencies": {
+    "@libero/event-bus": "file:../event-bus"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
+    "typescript": "^3.5.3"
+  }
+}

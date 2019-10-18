@@ -4,7 +4,7 @@ import * as flushPromises from 'flush-promises';
 import { Authenticate } from './authenticate';
 import * as jwt from "../jwt";
 import config from '../config';
-import { userLoggedInIdentifier } from './audit-events';
+import { userLoggedInIdentifier } from '@libero/libero-events';
 
 jest.mock('../logger');
 

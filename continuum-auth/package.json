@@ -19,6 +19,7 @@
   "dependencies": {
     "@libero/auth-utils": "../lib/auth-utils",
     "@libero/event-bus": "../lib/event-bus",
+    "@libero/libero-events": "../lib/libero-events",
     "@types/express": "^4.17.1",
     "@types/jest": "^24.0.18",
     "@types/jsonwebtoken": "^8.3.3",
