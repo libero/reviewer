@@ -5,6 +5,8 @@ import { ServiceStartedPayload, serviceStartedIdentifier, userLoggedInIdentifier
 
 jest.mock('../logger');
 
+beforeEach(() => jest.resetAllMocks());
+
 const recordAudit = jest.fn();
 const controller = {
     auditRepo: null,
