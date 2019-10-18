@@ -291,11 +291,6 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@libero/audit-events@../lib/audit-events":
-  version "1.0.0"
-  dependencies:
-    "@libero/event-bus" "file:../../../Library/Caches/Yarn/v5/npm-@libero-audit-events-1.0.0-6c299d2b-3866-4ab5-b064-230b7e3e3e90-1571387022602/node_modules/@libero/event-bus"
-
 "@libero/auth-utils@../lib/auth-utils":
   version "1.0.0"
   dependencies:
@@ -324,6 +319,11 @@
     rs-channel-node "^0.0.3"
     uuid "^3.3.3"
     wait-for-expect "^3.0.0"
+
+"@libero/libero-events@../lib/libero-events":
+  version "1.0.0"
+  dependencies:
+    "@libero/event-bus" "file:../../../Library/Caches/Yarn/v5/npm-@libero-libero-events-1.0.0-fc46d68d-1f54-4a54-9ee9-0a37e32b671f-1571390563435/node_modules/@libero/event-bus"
 
 "@types/amqplib@^0.5.13":
   version "0.5.13"
