@@ -318,6 +318,7 @@
     pino "^5.13.2"
     rs-channel-node "^0.0.3"
     uuid "^3.3.3"
+    wait-for-expect "^3.0.0"
 
 "@types/amqplib@^0.5.13":
   version "0.5.13"
@@ -5005,7 +5006,7 @@ umzug-cli@^2.0.0:
     umzug "^2.0.0"
     yargs-parser "^7.0.0"
 
-umzug@^2.0.0:
+umzug@^2.0.0, umzug@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/umzug/-/umzug-2.2.0.tgz#6160bdc1817e4a63a625946775063c638623e62e"
   integrity sha512-xZLW76ax70pND9bx3wqwb8zqkFGzZIK8dIHD9WdNy/CrNfjWcwQgQkGCuUqcuwEBvUm+g07z+qWvY+pxDmMEEw==
@@ -5171,6 +5172,11 @@ w3c-hr-time@^1.0.1:
   integrity sha1-gqwr/2PZUOqeMYmlimViX+3xkEU=
   dependencies:
     browser-process-hrtime "^0.1.2"
+
+wait-for-expect@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/wait-for-expect/-/wait-for-expect-3.0.0.tgz#d6fbf28959e3b8779dc172fb1ea56bf1e833bf7a"
+  integrity sha512-9LyJL+MugZdcQn5V9PBSEC4d2UPTy1xX2U9wTc6LvG/18qeeYqdE/CgmAQJxc/Vcjs+VzH+wiyIXxz05F3nrpQ==
 
 walker@^1.0.7, walker@~1.0.5:
   version "1.0.7"
