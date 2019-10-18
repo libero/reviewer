@@ -35,7 +35,7 @@ describe('ServiceStartedHandler', () => {
 });
 
 describe('UserLoggedInHandler', () => {
-    it.only('records audit item', () => {
+    it('records audit item', () => {
         const handler = UserLoggedInHandler(controller);
         const event: Event<UserLoggedInPayload> = {
             id: 'event-started-id',
