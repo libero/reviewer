@@ -5,21 +5,19 @@ import migrationTemplate from './migration-template';
 export class Commands {
     private umzug: umzug.Umzug;
 
-    public init(umzug: umzug.Umzug) {
-        this.umzug = umzug;
+    public init(eventEmitter: umzug.Umzug) {
+        this.umzug = eventEmitter;
     }
 
-    public makeMigrationFile (filePath: string) {
+    public makeMigrationFile(filePath: string) {
         writeFileSync(filePath, migrationTemplate);
     }
 
     public async runMigrations() {
-        const migrations = await this.umzug.up();
-
-        migrations.forEach(({ file }) => console.log(`migrated ${file}`));
+        await this.umzug.up();
     }
 
     public rollback = () => {
         // rollback one migration
     }
-};
+}

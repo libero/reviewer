@@ -7,14 +7,14 @@ import { join } from 'path';
 import { Commands } from './commands';
 
 interface MigrationCliOptions {
-    banner?: string,
-    name: string,
-    knexConfig: Knex.Config,
-    migrations: umzug.MigrationOptions,
-};
+    banner?: string;
+    name: string;
+    knexConfig: Knex.Config;
+    migrations: umzug.MigrationOptions;
+}
 
 export class Cli {
-    constructor (readonly options: MigrationCliOptions, readonly commands: Commands) {
+    constructor(readonly options: MigrationCliOptions, readonly commands: Commands) {
         const connection = Knex(this.options.knexConfig);
         const umzugOptions = {
             storage: 'knex-umzug',
@@ -23,7 +23,8 @@ export class Cli {
                 connection,
                 tableName: 'migrations',
             },
-            migrations: { ...this.options.migrations, params: [connection] }
+            migrations: { ...this.options.migrations, params: [connection] },
+        // tslint:disable-next-line: no-any
         } as any;
 
         this.commands.init(new umzug(umzugOptions));
@@ -32,6 +33,7 @@ export class Cli {
     public exec() {
         this.banner();
 
+        // tslint:disable-next-line: no-unused-expression
         yargs
             .version()
             .scriptName(this.options.name)
@@ -43,7 +45,7 @@ export class Cli {
                 'make [name]',
                 'Create a new migration file',
                 { name: { alias: 'n', demandOption: true } },
-                (argv: yargs.Arguments<yargs.InferredOptionTypes<{ name: { alias: string; demandOption: true; }; }>>) => this.commandMake(argv)
+                (argv: yargs.Arguments<yargs.InferredOptionTypes<{ name: { alias: string; demandOption: true; }; }>>) => this.commandMake(argv),
             )
             .command('rollback', 'Rollback one migration', () => this.commandRollback())
             .demandCommand()
@@ -58,25 +60,20 @@ export class Cli {
             padding: 1,
             margin: 1,
             borderStyle: boxen.BorderStyle.Round,
-            borderColor: "green",
-            backgroundColor: "#555555"
+            borderColor: 'green',
+            backgroundColor: '#555555',
         };
 
-        const bannerBox = boxen(banner, boxenOptions);
-
-        console.log(bannerBox);
+        boxen(banner, boxenOptions);
     }
 
     public async commandRun() {
         try {
             await this.commands.runMigrations();
-            console.log('migrations done');
         } catch (e) {
-            console.log(chalk.red(`Error running migrations`));
             throw e;
         }
 
-        console.log('exiting');
         process.exit(0);
     }
 
@@ -86,11 +83,8 @@ export class Cli {
         try {
             this.commands.makeMigrationFile(filePath);
         } catch (e) {
-            console.log(chalk.red(`Error creating migration file ${filePath}`));
             throw e;
         }
-
-        console.log(chalk.green(`Migration file ${filePath} created`));
 
         process.exit(0);
     }
