@@ -1,18 +1,22 @@
+import { writeFileSync } from 'fs';
 import * as umzug from 'umzug';
+import migrationTemplate from './migration-template';
 
 export class Commands {
     private umzug: umzug.Umzug;
 
-    public constructor(umzug: umzug.Umzug) {
+    public init(umzug: umzug.Umzug) {
         this.umzug = umzug;
     }
 
-    public makeMigrationFile () {
-        // create a new migration file here possibly with some
+    public makeMigrationFile (filePath: string) {
+        writeFileSync(filePath, migrationTemplate);
     }
 
-    public runMigrations() {
-        return this.umzug.up()
+    public async runMigrations() {
+        const migrations = await this.umzug.up();
+
+        migrations.forEach(({ file }) => console.log(`migrated ${file}`));
     }
 
     public rollback = () => {

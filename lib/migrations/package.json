@@ -5,7 +5,7 @@
   "repository": "https://github.com/libero/reviewer",
   "license": "ISC",
   "scripts": {
-    "example": "echo 'runs the example migrations, not implemented yet'",
+    "example": "ts-node example/index.ts",
     "test": "echo 'not implemented yet'"
   },
   "dependencies": {

@@ -3,6 +3,7 @@ import * as boxen from 'boxen';
 import * as yargs from 'yargs';
 import * as umzug from 'umzug';
 import * as Knex from 'knex';
+import { join } from 'path';
 import { Commands } from './commands';
 
 interface MigrationCliOptions {
@@ -13,9 +14,7 @@ interface MigrationCliOptions {
 };
 
 export class Cli {
-    private commands: Commands;
-
-    constructor (readonly options: MigrationCliOptions) {
+    constructor (readonly options: MigrationCliOptions, readonly commands: Commands) {
         const connection = Knex(this.options.knexConfig);
         const umzugOptions = {
             storage: 'knex-umzug',
@@ -24,10 +23,10 @@ export class Cli {
                 connection,
                 tableName: 'migrations',
             },
-            migrations: this.options.migrations
+            migrations: { ...this.options.migrations, params: [connection] }
         } as any;
 
-        this.commands = new Commands(new umzug(umzugOptions));
+        this.commands.init(new umzug(umzugOptions));
     }
 
     public exec() {
@@ -40,7 +39,12 @@ export class Cli {
             .command('run', 'Migrate all pending migrations', {}, () => {
                 this.commandRun();
             })
-            .command('make [name]', 'Create a new migration file', () => this.commandMake())
+            .command(
+                'make [name]',
+                'Create a new migration file',
+                { name: { alias: 'n', demandOption: true } },
+                (argv: yargs.Arguments<yargs.InferredOptionTypes<{ name: { alias: string; demandOption: true; }; }>>) => this.commandMake(argv)
+            )
             .command('rollback', 'Rollback one migration', () => this.commandRollback())
             .demandCommand()
             .help()
@@ -64,15 +68,36 @@ export class Cli {
     }
 
     public async commandRun() {
-        await this.commands.runMigrations()
+        try {
+            await this.commands.runMigrations();
+            console.log('migrations done');
+        } catch (e) {
+            console.log(chalk.red(`Error running migrations`));
+            throw e;
+        }
 
+        console.log('exiting');
+        process.exit(0);
     }
 
-    public commandMake() {
-        this.commands.makeMigrationFile();
+    public commandMake(argv: yargs.Arguments<yargs.InferredOptionTypes<{ name: { alias: string; demandOption: true; }; }>>) {
+        const filePath = join(`${this.options.migrations.path}`, `${Math.floor(new Date().getTime() / 1000)}-${argv.name}.ts`);
+
+        try {
+            this.commands.makeMigrationFile(filePath);
+        } catch (e) {
+            console.log(chalk.red(`Error creating migration file ${filePath}`));
+            throw e;
+        }
+
+        console.log(chalk.green(`Migration file ${filePath} created`));
+
+        process.exit(0);
     }
 
     public commandRollback() {
         this.commands.rollback();
+
+        process.exit(0);
     }
 }
