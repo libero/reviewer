@@ -1,8 +1,6 @@
 import { Cli } from '../src/index';
 import { Commands } from '../src/commands';
 
-console.log(`${__dirname}/migrations`);
-
 const cli = new Cli({
     banner: 'Example database migration tools',
     name: 'migrate',
@@ -13,10 +11,10 @@ const cli = new Cli({
         },
         useNullAsDefault: true,
     },
-    migrations:{
+    migrations: {
         path: `${__dirname}/migrations`,
         pattern: /.*\.ts/,
-    }
+    },
 }, new Commands());
 
 cli.exec();
