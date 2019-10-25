@@ -4,6 +4,7 @@ import * as yargs from 'yargs';
 import * as umzug from 'umzug';
 import * as Knex from 'knex';
 import { join } from 'path';
+import { EOL } from 'os';
 import { Commands } from './commands';
 
 interface MigrationCliOptions {
@@ -30,7 +31,7 @@ export class Cli {
         // tslint:disable-next-line: no-any
         } as any;
 
-        this.commands.init(new umzug(umzugOptions));
+        this.commands.init(new umzug(umzugOptions), msg => process.stdout.write(msg + EOL));
     }
 
     public exec() {
