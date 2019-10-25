@@ -97,7 +97,7 @@ export class Cli {
     }
 
     public commandMake(argv: makeCommandArguments) {
-        const filePath = join(`${this.options.migrations.path}`, `${Math.floor(new Date().getTime() / 1000)}-${argv.name}.ts`);
+        const filePath = this.filePath(argv.name as string);
 
         try {
             this.commands.makeMigrationFile(filePath);
@@ -106,6 +106,10 @@ export class Cli {
         }
 
         this.finish();
+    }
+
+    public filePath(name: string) {
+        return join(`${this.options.migrations.path}`, `${Math.floor(new Date().getTime() / 1000)}-${name}.ts`);
     }
 
     public async commandRollback() {

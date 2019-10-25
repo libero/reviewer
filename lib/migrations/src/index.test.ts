@@ -30,7 +30,6 @@ describe('cli', () => {
     });
 
     it('runs migrations', () => {
-        // tslint:disable-next-line: no-unused-expression
         const cli = new Cli(options, commands);
         cli.finish = jest.fn();
         cli.commandRun();
@@ -39,7 +38,6 @@ describe('cli', () => {
     });
 
     it('rollback migrations', () => {
-        // tslint:disable-next-line: no-unused-expression
         const cli = new Cli(options, commands);
         cli.finish = jest.fn();
         cli.commandRollback();
@@ -48,13 +46,12 @@ describe('cli', () => {
     });
 
     it('make migration fixture', () => {
-        // tslint:disable-next-line: no-unused-expression
         const cli = new Cli(options, commands);
         cli.finish = jest.fn();
-        const argv = { _: [ 'make' ], $0: 'migrate', name: 'test', n: 'test' };
-        cli.commandMake(argv);
+        cli.filePath = () => '/path/to/-test.ts';
+        cli.commandMake({ _: ['make'], $0: 'migrate', name: 'test', n: 'test' });
 
         expect(commands.makeMigrationFile).toHaveBeenCalledTimes(1);
-        expect(commands.makeMigrationFile).toHaveBeenCalledWith(`undefined/${Math.floor(new Date().getTime() / 1000)}-test.ts`);
+        expect(commands.makeMigrationFile).toHaveBeenCalledWith('/path/to/-test.ts');
     });
 });
