@@ -3,7 +3,7 @@ import { Commands } from '../src/commands';
 
 const cli = new Cli({
     banner: 'Example database migration tools',
-    name: 'migrate',
+    name: 'example-cli',
     knexConfig: {
         client: 'sqlite3',
         connection: {
