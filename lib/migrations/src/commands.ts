@@ -1,15 +1,15 @@
 import { writeFileSync } from 'fs';
-import * as umzug from 'umzug';
+import { Umzug } from 'umzug';
 import migrationTemplate from './migration-template';
 
 // tslint:disable-next-line: no-console
 const log = console.log;
 
 export class Commands {
-    private umzug: umzug.Umzug;
+    private umzug: Umzug;
 
-    public init(eventEmitter: umzug.Umzug) {
-        this.umzug = eventEmitter;
+    public init(umzug: Umzug) {
+        this.umzug = umzug;
     }
 
     public makeMigrationFile(filePath: string) {
