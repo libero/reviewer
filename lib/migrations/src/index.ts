@@ -74,7 +74,7 @@ export class Cli {
             throw e;
         }
 
-        process.exit(0);
+        this.finish();
     }
 
     public commandMake(argv: yargs.Arguments<yargs.InferredOptionTypes<{ name: { alias: string; demandOption: true; }; }>>) {
@@ -86,12 +86,16 @@ export class Cli {
             throw e;
         }
 
-        process.exit(0);
+        this.finish();
     }
 
     public commandRollback() {
         this.commands.rollback();
 
+        this.finish();
+    }
+
+    public finish() {
         process.exit(0);
     }
 }
