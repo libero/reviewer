@@ -14,7 +14,7 @@ interface MigrationCliOptions {
 }
 
 type makeCommandArguments = yargs.Arguments<yargs.InferredOptionTypes<{ name: { alias: string; demandOption: true; }; }>>;
-type statusCommandArguments = yargs.Arguments<yargs.InferredOptionTypes<{ pending: { alias: string } }>>;
+type statusCommandArguments = yargs.Arguments<yargs.InferredOptionTypes<{ pending: { alias: string }, executed: { alias: string } }>>;
 
 export class Cli {
     constructor(readonly options: MigrationCliOptions, readonly commands: Commands) {

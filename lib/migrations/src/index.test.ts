@@ -20,6 +20,7 @@ describe('cli', () => {
             runMigrations: jest.fn(),
             rollback: jest.fn(),
             makeMigrationFile: jest.fn(),
+            showStatus: jest.fn(),
         } as unknown as Commands;
     });
 
@@ -37,7 +38,7 @@ describe('cli', () => {
         expect(commands.runMigrations).toHaveBeenCalledTimes(1);
     });
 
-    it('rollback migrations', () => {
+    it('rollbacks migrations', () => {
         const cli = new Cli(options, commands);
         cli.finish = jest.fn();
         cli.commandRollback();
@@ -45,7 +46,7 @@ describe('cli', () => {
         expect(commands.rollback).toHaveBeenCalledTimes(1);
     });
 
-    it('make migration fixture', () => {
+    it('makes migration fixture', () => {
         const cli = new Cli(options, commands);
         cli.finish = jest.fn();
         cli.filePath = () => '/path/to/-test.ts';
@@ -53,5 +54,14 @@ describe('cli', () => {
 
         expect(commands.makeMigrationFile).toHaveBeenCalledTimes(1);
         expect(commands.makeMigrationFile).toHaveBeenCalledWith('/path/to/-test.ts');
+    });
+
+    it('disaplys status of migrations', () => {
+        const cli = new Cli(options, commands);
+        cli.finish = jest.fn();
+        cli.commandStatus({ _: [ 'status' ], $0: 'example-cli', pending: true, executed: false });
+
+        expect(commands.showStatus).toHaveBeenCalledTimes(1);
+        expect(commands.showStatus).toHaveBeenCalledWith({ pending: true, executed: false });
     });
 });
