@@ -115,7 +115,7 @@ export class Cli {
             throw e;
         }
 
-        process.exit(0);
+        this.finish();
     }
 
     public async commandStatus(argv: statusCommandArguments) {
