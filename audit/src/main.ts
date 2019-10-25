@@ -4,7 +4,7 @@ import * as express from 'express';
 import { Express, Request, Response } from 'express';
 import { HealthCheck } from './endpoints';
 import { Event, EventBus, RabbitEventBus } from '@libero/event-bus';
-import { ServiceStartedPayload, serviceStartedIdentifier, UserLoggedInPayload, userLoggedInIdentifier } from './events';
+import { ServiceStartedPayload, serviceStartedIdentifier, UserLoggedInPayload, userLoggedInIdentifier } from '@libero/libero-events';
 import { ServiceStartedHandler, UserLoggedInHandler } from './handlers';
 import { AuditController } from './domain/audit';
 import { KnexAuditRepository } from './repo/audit';

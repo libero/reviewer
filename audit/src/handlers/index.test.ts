@@ -1,9 +1,11 @@
 import { Event } from '@libero/event-bus';
 import { ServiceStartedHandler, UserLoggedInHandler } from './index';
 import { AuditController } from '../domain/audit';
-import { ServiceStartedPayload, serviceStartedIdentifier, userLoggedInIdentifier, UserLoggedInPayload } from '../events';
+import { ServiceStartedPayload, serviceStartedIdentifier, userLoggedInIdentifier, UserLoggedInPayload } from '@libero/libero-events';
 
 jest.mock('../logger');
+
+beforeEach(jest.resetAllMocks);
 
 const recordAudit = jest.fn();
 const controller = {

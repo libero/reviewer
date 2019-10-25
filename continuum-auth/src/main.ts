@@ -3,9 +3,10 @@ import { Express, Request, Response } from "express";
 import { InfraLogger as logger } from "./logger";
 import { ProfilesService } from "./repo/profiles";
 import { HealthCheck, Login, Authenticate } from "./use-cases";
+import { setupEventBus } from './event-bus';
 import Config from './config';
 
-function init() {
+const init = async () => {
   logger.info("Starting service");
   // Start the application
   const app: Express = express();
@@ -14,6 +15,10 @@ function init() {
   const profilesConnector = new ProfilesService(
     "https://api.elifesciences.org/profiles"
   );
+
+  // setup event bus
+  const eventBus = await setupEventBus();
+  logger.info('started event bus')
 
   // Setup routes
   app.use("/", (req: Request, res: Response, next) => {
@@ -28,9 +33,9 @@ function init() {
   app.post("/login", Login);
   app.get("/login", Login);
 
-  app.get("/authenticate/:token", Authenticate(profilesConnector));
+  app.get("/authenticate/:token", Authenticate(profilesConnector, eventBus));
 
-  return app;
+  app.listen(Config.port, () => logger.info(`Service listening on port ${Config.port}`));
 }
 
-init().listen(Config.port, () => logger.info(`Service listening on port ${Config.port}`));
+init();

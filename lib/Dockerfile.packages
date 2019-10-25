@@ -8,3 +8,4 @@ COPY . .
 RUN ["sh", "-c", "cd auth-utils && yarn && yarn build"]
 RUN ["sh", "-c", "cd event-bus && yarn && yarn build"]
 RUN ["sh", "-c", "cd migrations && yarn && yarn build"]
+RUN ["sh", "-c", "cd libero-events && yarn && yarn build"]
