@@ -19,6 +19,7 @@ describe('cli', () => {
             init: jest.fn(),
             runMigrations: jest.fn(),
             rollback: jest.fn(),
+            makeMigrationFile: jest.fn(),
         } as unknown as Commands;
     });
 
@@ -44,5 +45,16 @@ describe('cli', () => {
         cli.commandRollback();
 
         expect(commands.rollback).toHaveBeenCalledTimes(1);
+    });
+
+    it('make migration fixture', () => {
+        // tslint:disable-next-line: no-unused-expression
+        const cli = new Cli(options, commands);
+        cli.finish = jest.fn();
+        const argv = { _: [ 'make' ], $0: 'migrate', name: 'test', n: 'test' };
+        cli.commandMake(argv);
+
+        expect(commands.makeMigrationFile).toHaveBeenCalledTimes(1);
+        expect(commands.makeMigrationFile).toHaveBeenCalledWith(`undefined/${Math.floor(new Date().getTime() / 1000)}-test.ts`);
     });
 });
