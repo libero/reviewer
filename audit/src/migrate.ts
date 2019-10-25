@@ -1,19 +1,14 @@
-import * as umzugCli from 'umzug-cli';
-import * as Knex from 'knex';
+import { Cli, Commands } from '@libero/migrations';
 import Config from './config';
 
-const connection = Knex(Config.knex);
-
-umzugCli({
-    storage: 'knex-umzug',
-    storageOptions: {
-        context: 'default',
-        connection,
-        tableName: 'migrations',
-    },
+const cli = new Cli({
+    banner: 'Libero Reviewer Audit Service: Migration tool',
+    name: 'migrate',
+    knexConfig: Config.knex,
     migrations: {
-        params: [connection],
         path: `${__dirname}/migrations`,
         pattern: /.*\.ts/,
     },
-}).cli(process.argv.slice(2)).then(() => process.exit());
+}, new Commands());
+
+cli.exec();

@@ -1,5 +1,4 @@
-import { Cli } from '../src/index';
-import { Commands } from '../src/commands';
+import { Cli, Commands } from '../src/index';
 
 const cli = new Cli({
     banner: 'Example database migration tools',
