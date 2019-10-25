@@ -73,7 +73,7 @@ build_shared_package_container:
 	${DC_BUILD} build shared_packages
 
 lib_ci: start_network
-	make build_auth-utils build_event-bus
+	make build_auth-utils build_event-bus build_migrations
 
 build_auth-utils: build_shared_package_container
 	${DC_BUILD} run shared_packages sh -c "cd /lib/auth-utils && yarn lint"
@@ -82,6 +82,10 @@ build_auth-utils: build_shared_package_container
 build_event-bus: build_shared_package_container
 	${DC_BUILD} run shared_packages sh -c "cd /lib/event-bus && yarn lint"
 	${DC_BUILD} run shared_packages sh -c "cd /lib/event-bus && yarn test"
+
+build_migrations: build_shared_package_container
+	${DC_BUILD} run shared_packages sh -c "cd /lib/migrations && yarn lint"
+	${DC_BUILD} run shared_packages sh -c "cd /lib/migrations && yarn test"
 
 ###########################
 #
