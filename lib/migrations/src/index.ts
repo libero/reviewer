@@ -13,6 +13,9 @@ interface MigrationCliOptions {
     migrations: umzug.MigrationOptions;
 }
 
+type makeCommandArguments = yargs.Arguments<yargs.InferredOptionTypes<{ name: { alias: string; demandOption: true; }; }>>;
+type statusCommandArguments = yargs.Arguments<yargs.InferredOptionTypes<{ pending: { alias: string } }>>;
+
 export class Cli {
     constructor(readonly options: MigrationCliOptions, readonly commands: Commands) {
         const connection = Knex(this.options.knexConfig);
@@ -42,15 +45,31 @@ export class Cli {
                 this.commandRun();
             })
             .command(
-                'make [name]',
+                'make <name>',
                 'Create a new migration file',
                 { name: { alias: 'n', demandOption: true } },
-                (argv: yargs.Arguments<yargs.InferredOptionTypes<{ name: { alias: string; demandOption: true; }; }>>) => this.commandMake(argv),
+                (argv: makeCommandArguments) => this.commandMake(argv),
             )
             .command('rollback', 'Rollback one migration', () => this.commandRollback())
+            .command(
+                'status',
+                'Show status migrations',
+                (argv: yargs.Argv) => {
+                    return argv.option('pending', {
+                        alias: 'p',
+                        describe: 'Pending migrations',
+                        type: 'boolean',
+                    })
+                    .option('executed', {
+                        alias: 'e',
+                        describe: 'Executed migrations',
+                        type: 'boolean',
+                    });
+                },
+                (argv: statusCommandArguments) => this.commandStatus(argv))
             .demandCommand()
             .help()
-            .argv;
+            .parse();
     }
 
     public banner() {
@@ -77,7 +96,7 @@ export class Cli {
         this.finish();
     }
 
-    public commandMake(argv: yargs.Arguments<yargs.InferredOptionTypes<{ name: { alias: string; demandOption: true; }; }>>) {
+    public commandMake(argv: makeCommandArguments) {
         const filePath = join(`${this.options.migrations.path}`, `${Math.floor(new Date().getTime() / 1000)}-${argv.name}.ts`);
 
         try {
@@ -89,8 +108,21 @@ export class Cli {
         this.finish();
     }
 
-    public commandRollback() {
-        this.commands.rollback();
+    public async commandRollback() {
+        try {
+            await this.commands.rollback();
+        } catch (e) {
+            throw e;
+        }
+
+        process.exit(0);
+    }
+
+    public async commandStatus(argv: statusCommandArguments) {
+        await this.commands.showStatus({
+            pending: !!argv.pending,
+            executed: !!argv.executed,
+        });
 
         this.finish();
     }
