@@ -11,6 +11,8 @@ const controller = {
     recordAudit,
 } as unknown as AuditController;
 
+beforeEach(jest.resetAllMocks);
+
 describe('ServiceStartedHandler', () => {
     it('records audit item', () => {
         const handler = ServiceStartedHandler(controller);
@@ -35,7 +37,7 @@ describe('ServiceStartedHandler', () => {
 });
 
 describe('UserLoggedInHandler', () => {
-    it.only('records audit item', () => {
+    it('records audit item', () => {
         const handler = UserLoggedInHandler(controller);
         const event: Event<UserLoggedInPayload> = {
             id: 'event-started-id',
