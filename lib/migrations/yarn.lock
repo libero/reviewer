@@ -696,6 +696,11 @@ bluebird@^3.5.3, bluebird@^3.7.0:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.1.tgz#df70e302b471d7473489acf26a93d63b53f874de"
   integrity sha512-DdmyoGCleJnkbp3nkbxTLJ18rjDsE4yCggEwKNXkeV123sPNfOCYeDoeuOY+F2FrSjO1YXcTU+dsy96KMy+gcg==
 
+borderless-table@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/borderless-table/-/borderless-table-2.0.0.tgz#efbf961800a47476f055de9d5cbf51d9b752a248"
+  integrity sha1-77+WGACkdHbwVd6dXL9R2bdSokg=
+
 boxen@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/boxen/-/boxen-4.1.0.tgz#256f6b2eb09ba22ea558e5acc0a5ff637bf8ed03"

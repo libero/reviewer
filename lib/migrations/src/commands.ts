@@ -1,38 +1,34 @@
+import * as table from 'borderless-table';
 import { writeFileSync } from 'fs';
-import { Umzug, Migration } from 'umzug';
+import { EOL } from 'os';
+import { Migration, Umzug } from 'umzug';
 import migrationTemplate from './migration-template';
 
 export class Commands {
     private umzug: Umzug;
-    private output: (msg: string) => void;
+    private stdout: NodeJS.WriteStream;
 
-    public init(umzug: Umzug, output: (msg: string) => void) {
+    public init(umzug: Umzug, stdout: NodeJS.WriteStream) {
         this.umzug = umzug;
-        this.output = output;
+        this.stdout = stdout;
     }
 
     public makeMigrationFile(filePath: string) {
         writeFileSync(filePath, migrationTemplate);
+
+        this.printLn(`Successfuly created migration ${filePath}`);
     }
 
     public async runMigrations() {
         const migrations = await this.umzug.up();
 
-        if (migrations.length === 0) {
-            this.output('No pending migrations');
-        } else {
-            migrations.forEach(({ file }: Migration) => this.output(`Migrated ${file}`));
-        }
+        this.printMigrations(migrations, 'Successfuly migrated:');
     }
 
     public async rollback() {
         const migrations = await this.umzug.down();
 
-        if (migrations.length === 0) {
-            this.output('No migrations to roll back');
-        } else {
-            migrations.forEach(({ file }: Migration) => this.output(`Rolled back ${file}`));
-        }
+        this.printMigrations(migrations, 'Successfuly rolled back:');
     }
 
     public async showStatus({ pending, executed }) {
@@ -41,15 +37,22 @@ export class Commands {
         }
 
         if (pending) {
-            this.output('Pending migrations:');
             const pendingMigrations = await this.umzug.pending();
-            pendingMigrations.forEach(({ file }: Migration) => this.output(file));
+            this.printMigrations(pendingMigrations, 'Pending migrations');
         }
 
         if (executed) {
-            this.output('Executed migrations:');
             const executedMigrations = await this.umzug.executed();
-            executedMigrations.forEach(({ file }: Migration) => this.output(file));
+            this.printMigrations(executedMigrations, 'Executed migrations');
         }
+    }
+
+    private printLn(msg: string = '') {
+        this.stdout.write(msg + EOL);
+    }
+
+    private printMigrations(migrations: Migration[], header: string) {
+        table(migrations, ['file'], [header], this.stdout);
+        this.printLn();
     }
 }
