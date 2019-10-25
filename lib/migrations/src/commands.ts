@@ -1,15 +1,14 @@
 import { writeFileSync } from 'fs';
-import { Umzug } from 'umzug';
+import { Umzug, Migration } from 'umzug';
 import migrationTemplate from './migration-template';
-
-// tslint:disable-next-line: no-console
-const log = console.log;
 
 export class Commands {
     private umzug: Umzug;
+    private output: (msg: string) => void;
 
-    public init(umzug: Umzug) {
+    public init(umzug: Umzug, output: (msg: string) => void) {
         this.umzug = umzug;
+        this.output = output;
     }
 
     public makeMigrationFile(filePath: string) {
@@ -20,9 +19,9 @@ export class Commands {
         const migrations = await this.umzug.up();
 
         if (migrations.length === 0) {
-            log('No pending migrations');
+            this.output('No pending migrations');
         } else {
-            migrations.forEach(({ file }) => log(`Migrated ${file}`));
+            migrations.forEach(({ file }: Migration) => this.output(`Migrated ${file}`));
         }
     }
 
@@ -30,9 +29,9 @@ export class Commands {
         const migrations = await this.umzug.down();
 
         if (migrations.length === 0) {
-            log('No migrations to roll back');
+            this.output('No migrations to roll back');
         } else {
-            migrations.forEach(({ file }) => log(`Rolled back ${file}`));
+            migrations.forEach(({ file }: Migration) => this.output(`Rolled back ${file}`));
         }
     }
 
@@ -42,16 +41,15 @@ export class Commands {
         }
 
         if (pending) {
-            log('Pending migrations:');
+            this.output('Pending migrations:');
             const pendingMigrations = await this.umzug.pending();
-            pendingMigrations.forEach(({ file }) => log(file));
+            pendingMigrations.forEach(({ file }: Migration) => this.output(file));
         }
 
         if (executed) {
-            log('Executed migrations:');
+            this.output('Executed migrations:');
             const executedMigrations = await this.umzug.executed();
-            executedMigrations.forEach(({ file }) => log(file));
+            executedMigrations.forEach(({ file }: Migration) => this.output(file));
         }
     }
-
 }
