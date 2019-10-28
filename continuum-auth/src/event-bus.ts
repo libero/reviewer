@@ -1,7 +1,7 @@
-import { RabbitEventBus } from '@libero/event-bus';
+import { RabbitEventBus, EventBus } from '@libero/event-bus';
 import { userLoggedInIdentifier } from '@libero/libero-events';
 
-export const setupEventBus = async (): Promise<RabbitEventBus<{}>> => {
+export const setupEventBus = async (): Promise<EventBus> => {
     const eventBus = await new RabbitEventBus({ url: 'amqp://localhost' }).init(
         [userLoggedInIdentifier],
         'continuum-auth',
