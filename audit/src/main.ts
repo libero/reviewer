@@ -18,7 +18,7 @@ const auditServiceName = v4();
 
 const setupEventBus = async (freshEventBus: EventBus) => {
   const eventBus = await freshEventBus.init(
-    [serviceStartedIdentifier],
+    [serviceStartedIdentifier, userLoggedInIdentifier],
     'audit',
   );
 
