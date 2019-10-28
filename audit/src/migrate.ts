@@ -1,4 +1,4 @@
-import { Cli, Commands } from '@libero/migrations';
+import { Cli, Commands } from '@libero/migrator';
 import Config from './config';
 
 const cli = new Cli({

@@ -323,9 +323,9 @@
 "@libero/libero-events@../lib/libero-events":
   version "1.0.0"
   dependencies:
-    "@libero/event-bus" "file:../../../../.cache/yarn/v6/npm-@libero-libero-events-1.0.0-010ceaf4-fdca-420f-8beb-21dba91a4bf9-1572038513419/node_modules/@libero/event-bus"
+    "@libero/event-bus" "file:../../../../.cache/yarn/v6/npm-@libero-libero-events-1.0.0-ab638246-a2ea-432a-ab08-a288fd0920d2-1572264269720/node_modules/@libero/event-bus"
 
-"@libero/migrations@../lib/migrations":
+"@libero/migrator@../lib/migrator":
   version "1.0.0"
   dependencies:
     "@types/jest" "^24.0.19"

@@ -7,7 +7,7 @@ This package provides an opinionated set of commands that can be used by the rev
 Its recommended to create a cli script that imports the package.
 
 ```js
-import { Cli, Commands } from '@libero/migrations';
+import { Cli, Commands } from '@libero/migrator';
 import Config from './config';
 
 const cli = new Cli({
