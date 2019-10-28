@@ -2,19 +2,10 @@ import { Cli } from './index';
 import { Commands } from './commands';
 
 describe('cli', () => {
-    let options;
     let commands;
+    let cli;
 
     beforeEach(() => {
-        options = {
-            name: 'name',
-            knexConfig: {
-                client: 'sqlite3',
-                useNullAsDefault: true,
-            },
-            migrations: {},
-        };
-
         commands = {
             init: jest.fn(),
             runMigrations: jest.fn(),
@@ -22,16 +13,22 @@ describe('cli', () => {
             makeMigrationFile: jest.fn(),
             showStatus: jest.fn(),
         } as unknown as Commands;
+
+        cli = new Cli({
+            name: 'name',
+            knexConfig: {
+                client: 'sqlite3',
+                useNullAsDefault: true,
+            },
+            migrations: {},
+        }, commands);
     });
 
     it('command init is called in the cli constructor', () => {
-        // tslint:disable-next-line: no-unused-expression
-        new Cli(options, commands);
         expect(commands.init).toHaveBeenCalledTimes(1);
     });
 
     it('runs migrations', () => {
-        const cli = new Cli(options, commands);
         cli.finish = jest.fn();
         cli.commandRun();
 
@@ -39,7 +36,6 @@ describe('cli', () => {
     });
 
     it('rollbacks migrations', () => {
-        const cli = new Cli(options, commands);
         cli.finish = jest.fn();
         cli.commandRollback();
 
@@ -47,7 +43,6 @@ describe('cli', () => {
     });
 
     it('makes migration fixture', () => {
-        const cli = new Cli(options, commands);
         cli.finish = jest.fn();
         cli.filePath = () => '/path/to/-test.ts';
         cli.commandMake({ _: ['make'], $0: 'migrate', name: 'test', n: 'test' });
@@ -57,7 +52,6 @@ describe('cli', () => {
     });
 
     it('displays status of migrations', () => {
-        const cli = new Cli(options, commands);
         cli.finish = jest.fn();
         cli.commandStatus({ _: [ 'status' ], $0: 'example-cli', pending: true, executed: false });
 
