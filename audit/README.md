@@ -6,18 +6,16 @@ This service listens for audit events and persists them
 
 Create a database called 'reviewer_audit', then run the migrations:
 
-```
-yarn run migrate up
+```sh
+yarn migrate run
 ```
 
-You have access to other migration commands:
-
+To rollback one migration:
+```sh
+yarn migrate rollback
 ```
-  up                     migrates everything up
-  down                   migrates 1 migration down
-  up [file-to-migrate]   migrates a specific file up
-  down [file-to-migrate] migrates a specific file down
-  execute [direction] [files-to-migrate] migrates a specific file
-  pending                shows all pending migrations
-  history                shows the migration history
+
+Migration status
+```sh
+yarn migrate status
 ```

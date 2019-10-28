@@ -13,6 +13,8 @@ const controller = {
     recordAudit,
 } as unknown as AuditController;
 
+beforeEach(jest.resetAllMocks);
+
 describe('ServiceStartedHandler', () => {
     it('records audit item', () => {
         const handler = ServiceStartedHandler(controller);
