@@ -23,8 +23,8 @@ import { UserLoggedInPayload, userLoggedInIdentifier } from '@libero/libero-even
 export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) => (
     req: Request,
     res: Response,
-): Promise<void> | void =>
-    Option.of(req.params.token)
+): void | Promise<void> =>
+    Option.of(req.params['token'])
         .map(
             async (token: string): Promise<void> => {
                 // Decode the token that's passed to this endpoint from whatever OAuth provider we go with (I'm guessing ORCiD)
@@ -35,7 +35,7 @@ export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) 
                 // Controller: perform the requests to the various services and fetch the user data
 
                 const {
-                    auth: { authorisedRedirectUrl },
+                    auth: { authorised_redirect_url },
                 } = config;
                 const parsedToken = decodeJournalToken(token);
 
@@ -54,10 +54,10 @@ export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) 
                         // TODO: Calculate user-role
 
                         const payload: UserIdentity = {
-                            tokenId: v4(),
-                            tokenVersion: '0.1-alpha',
+                            token_id: v4(),
+                            token_version: '0.1-alpha',
                             identity: {
-                                userId: v4(), // TODO: this needs to be a useful value at some point
+                                user_id: v4(), // TODO: this needs to be a useful value at some point
                                 external: [
                                     {
                                         id: profile.id,
@@ -73,7 +73,7 @@ export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) 
                             meta: null,
                         };
 
-                        const outputToken = encode(payload);
+                        const output_token = encode(payload);
 
                         // send audit logged in message
                         const auditEvent: Event<UserLoggedInPayload> = {
@@ -82,14 +82,14 @@ export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) 
                             eventType: userLoggedInIdentifier,
                             payload: {
                                 name: profile.name.preferred,
-                                userId: payload.identity.userId,
+                                userId: payload.identity.user_id,
                                 email: profile.emailAddresses.length > 0 ? profile.emailAddresses[0].value : '',
                                 timestamp: new Date(),
                             },
                         };
                         eventBus.publish(auditEvent);
 
-                        res.redirect(`${authorisedRedirectUrl}#${outputToken}`);
+                        res.redirect(`${authorised_redirect_url}#${output_token}`);
                     })
                     .getOrElseL(() => {
                         logger.warn('unauthorized');

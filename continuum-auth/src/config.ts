@@ -3,16 +3,16 @@
 const config = {
     auth: {
         // Where the /login route sends you - a.k.a the identity server
-        loginRedirectUrl: `${process.env.CONTINUUM_LOGIN_URL}:${process.env.CONTINUUM_LOGIN_PORT}/submit`,
+        login_redirect_url: `${process.env.CONTINUUM_LOGIN_URL}:${process.env.CONTINUUM_LOGIN_PORT}/submit`,
         // App entry point i.e. the resource server that needs authentication
-        authorisedRedirectUrl: `http://localhost:${process.env.CLIENT_PORT}/login`,
+        authorised_redirect_url: `http://localhost:${process.env.CLIENT_PORT}/login`,
     },
-    internalJwt: {
+    internal_jwt: {
         // This token is global to libero services
         secret: process.env.AUTHENTICATION_JWT_SECRET as string,
         expiresIn: '30m',
     },
-    journalJwt: {
+    journal_jwt: {
         // This secret is used by journal to sign outgoing tokens, and used here to verify those
         // tokens
         secret: process.env.CONTINUUM_LOGIN_JWT_SECRET as string,

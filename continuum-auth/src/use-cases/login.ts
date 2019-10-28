@@ -5,11 +5,11 @@ import { DomainLogger as logger } from '../logger';
 import config from '../config';
 
 const {
-    auth: { loginRedirectUrl },
+    auth: { login_redirect_url },
 } = config;
 
 export const Login = (req: Request, res: Response): void => {
-    logger.info('loginRedirect', { loginRedirectUrl });
+    logger.info('loginRedirect', { login_redirect_url });
 
-    res.redirect(loginRedirectUrl);
+    res.redirect(login_redirect_url);
 };

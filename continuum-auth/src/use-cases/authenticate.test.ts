@@ -79,10 +79,7 @@ describe('Authenticate Handler', () => {
             expect(responseMock.status).toHaveBeenCalledTimes(1);
             expect(responseMock.status).toHaveBeenCalledWith(403);
             expect(responseMock.json).toHaveBeenCalledTimes(1);
-            expect(responseMock.json).toHaveBeenCalledWith({
-                ok: false,
-                msg: 'unauthorised',
-            });
+            expect(responseMock.json).toHaveBeenCalledWith({ ok: false, msg: 'unauthorised' });
         });
     });
 
@@ -94,7 +91,7 @@ describe('Authenticate Handler', () => {
         const redirectUrl = 'http://login_redirect_url';
 
         beforeEach(() => {
-            config.auth.authorisedRedirectUrl = redirectUrl;
+            config.auth.authorised_redirect_url = redirectUrl;
 
             decodeJournalTokenMock.mockImplementation(() => Option.of({ id: 'id' } as jwt.JournalAuthToken));
             encodeMock.mockImplementation(() => encodedToken);
@@ -111,10 +108,7 @@ describe('Authenticate Handler', () => {
             expect(responseMock.status).toHaveBeenCalledTimes(1);
             expect(responseMock.status).toHaveBeenCalledWith(403);
             expect(responseMock.json).toHaveBeenCalledTimes(1);
-            expect(responseMock.json).toHaveBeenCalledWith({
-                ok: false,
-                msg: 'unauthorised',
-            });
+            expect(responseMock.json).toHaveBeenCalledWith({ ok: false, msg: 'unauthorised' });
         });
 
         it('should redirect to correct url', async () => {

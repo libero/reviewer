@@ -5,7 +5,7 @@ import { InfraLogger as logger } from './logger';
 
 export const encode = (payload: object): string => {
     const {
-        internalJwt: { secret, expiresIn },
+        internal_jwt: { secret, expiresIn },
     } = config;
     logger.trace('jwtEncode');
 
@@ -24,7 +24,7 @@ export interface JournalAuthToken {
 
 export const decodeJournalToken = (token: string): Option<JournalAuthToken> => {
     const {
-        journalJwt: { secret },
+        journal_jwt: { secret },
     } = config;
     // This needs to know about the journal secret in order to verify it. The two systems should use different tokens & secrets
 
