@@ -26,7 +26,7 @@ const init = async (): Promise<void> => {
     });
 
     // This is how we do dependency injection at the moment
-    app.get('/health', HealthCheck(undefined));
+    app.get('/health', HealthCheck());
 
     app.post('/login', Login);
     app.get('/login', Login);
