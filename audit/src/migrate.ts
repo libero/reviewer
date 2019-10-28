@@ -1,4 +1,4 @@
-import { Cli, Commands } from '@libero/migrator';
+import { Cli } from '@libero/migrator';
 import Config from './config';
 
 const cli = new Cli({
@@ -9,6 +9,6 @@ const cli = new Cli({
         path: `${__dirname}/migrations`,
         pattern: /.*\.ts/,
     },
-}, new Commands());
+});
 
 cli.exec();

@@ -7,7 +7,7 @@ This package provides an opinionated set of commands that can be used by the rev
 Its recommended to create a cli script that imports the package.
 
 ```js
-import { Cli, Commands } from '@libero/migrator';
+import { Cli } from '@libero/migrator';
 import Config from './config';
 
 const cli = new Cli({
@@ -18,12 +18,12 @@ const cli = new Cli({
         path: `${__dirname}/migrations`,
         pattern: /.*\.ts/,
     },
-}, new Commands());
+});
 
 cli.exec();
 ```
 
-The first parameter is an object that specifies various options
+The parameter is an object that specifies various options
 * banner: Text displayed in the cli banner
 * name: Displayed in the usage text
 * knexConfig: Knex configuration settings for the database (see http://knexjs.org/#Installation-client)

@@ -17,7 +17,7 @@ type makeCommandArguments = yargs.Arguments<yargs.InferredOptionTypes<{ name: { 
 type statusCommandArguments = yargs.Arguments<yargs.InferredOptionTypes<{ pending: { alias: string }, executed: { alias: string } }>>;
 
 export class Cli {
-    constructor(readonly options: MigrationCliOptions, readonly commands: Commands) {
+    constructor(readonly options: MigrationCliOptions, readonly commands: Commands = new Commands) {
         const connection = Knex(this.options.knexConfig);
         const umzugOptions = {
             storage: 'knex-umzug',
