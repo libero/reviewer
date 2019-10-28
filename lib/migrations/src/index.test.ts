@@ -56,7 +56,7 @@ describe('cli', () => {
         expect(commands.makeMigrationFile).toHaveBeenCalledWith('/path/to/-test.ts');
     });
 
-    it('disaplys status of migrations', () => {
+    it('displays status of migrations', () => {
         const cli = new Cli(options, commands);
         cli.finish = jest.fn();
         cli.commandStatus({ _: [ 'status' ], $0: 'example-cli', pending: true, executed: false });
