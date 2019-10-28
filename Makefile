@@ -83,7 +83,7 @@ build_event-bus: build_shared_package_container
 	${DC_BUILD} run shared_packages sh -c "cd /lib/event-bus && yarn lint"
 	${DC_BUILD} run shared_packages sh -c "cd /lib/event-bus && yarn test"
 
-buildmigrator: build_shared_package_container
+build_migrator: build_shared_package_container
 	${DC_BUILD} run shared_packages sh -c "cd /lib/migrator && yarn lint"
 	${DC_BUILD} run shared_packages sh -c "cd /lib/migrator && yarn test"
 
