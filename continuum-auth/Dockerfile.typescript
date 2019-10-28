@@ -12,7 +12,7 @@ COPY --from=auth_packages /app/node_modules/ ./node_modules/
 COPY  tsconfig.build.json \
       tsconfig.json \
       .eslintignore \
-      .eslintrc.json \
+      .eslintrc.js \
       .prettierrc.js \
       jest.config.js \
       package.json \
