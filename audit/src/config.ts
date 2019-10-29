@@ -1,4 +1,5 @@
 import { Config as KnexConfig } from 'knex';
+import { EventConfig } from '@libero/event-bus';
 
 const knexConfig: KnexConfig = {
   client: 'pg',
@@ -11,12 +12,15 @@ const knexConfig: KnexConfig = {
     port: Number(process.env.DB_PORT),
   },
 };
+
+const eventConfig: EventConfig = {
+  url: process.env.RABBITMQ_URL || 'localhost',
+};
+
 export const  serviceConfig = {
-  eventBus: {
-    url: process.env.RABBITMQ_URL,
-  },
   port: process.env.AUDIT_PORT || 3004,
   knex: knexConfig,
+  event: eventConfig,
 };
 
 export default serviceConfig;

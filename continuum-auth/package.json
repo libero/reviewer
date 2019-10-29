@@ -15,7 +15,7 @@
     "url": "https://github.com/libero/reviewer"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@libero/auth-utils": "../lib/auth-utils",
     "@libero/event-bus": "../lib/event-bus",

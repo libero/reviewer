@@ -4,6 +4,7 @@ import { InfraLogger as logger } from "./logger";
 import { ProfilesService } from "./repo/profiles";
 import { HealthCheck, Login, Authenticate } from "./use-cases";
 import { setupEventBus } from './event-bus';
+import { EventConfig } from '@libero/event-bus';
 import Config from './config';
 
 const init = async () => {
@@ -17,7 +18,7 @@ const init = async () => {
   );
 
   // setup event bus
-  const eventBus = await setupEventBus();
+  const eventBus = await setupEventBus(Config.event);
   logger.info('started event bus')
 
   // Setup routes
@@ -39,3 +40,4 @@ const init = async () => {
 }
 
 init();
+

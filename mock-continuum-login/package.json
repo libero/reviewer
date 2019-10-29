@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "repository": "https://github.com/libero/reviewer",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "start:dev": "dotenv -e ../.env -- nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/main.ts",
     "test": "jest"

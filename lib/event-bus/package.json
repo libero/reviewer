@@ -15,7 +15,7 @@
     "url": "https://github.com/libero/reviewer"
   },
   "author": "Peter East",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@types/amqplib": "^0.5.13",
     "@types/jest": "^24.0.18",

@@ -3,8 +3,11 @@ import { InfraLogger as logger } from './logger';
 import * as express from 'express';
 import { Express, Request, Response } from 'express';
 import { HealthCheck } from './endpoints';
-import { Event, EventBus, RabbitEventBus } from '@libero/event-bus';
-import { ServiceStartedPayload, serviceStartedIdentifier, UserLoggedInPayload, userLoggedInIdentifier } from '@libero/libero-events';
+import { EventConfig, Event, EventBus, RabbitEventBus } from '@libero/event-bus';
+import {
+  ServiceStartedPayload,
+  UserLoggedInPayload,
+  LiberoEventType } from '@libero/libero-events';
 import { ServiceStartedHandler, UserLoggedInHandler } from './handlers';
 import { AuditController } from './domain/audit';
 import { KnexAuditRepository } from './repo/audit';
@@ -16,20 +19,23 @@ import * as Knex from 'knex';
 const auditController = new AuditController(new KnexAuditRepository(Knex(Config.knex)));
 const auditServiceName = v4();
 
-const setupEventBus = async (freshEventBus: EventBus) => {
+const setupAuditEventBus = async (freshEventBus: EventBus) => {
   const eventBus = await freshEventBus.init(
-    [serviceStartedIdentifier, userLoggedInIdentifier],
+    [
+      LiberoEventType.serviceStartedIdentifier,
+      LiberoEventType.userLoggedInIdentifier,
+    ],
     'audit',
   );
 
   // setup subscribers
   eventBus.subscribe<ServiceStartedPayload>(
-    serviceStartedIdentifier,
+    LiberoEventType.serviceStartedIdentifier,
     ServiceStartedHandler(auditController),
   );
 
   eventBus.subscribe<UserLoggedInPayload>(
-    userLoggedInIdentifier,
+    LiberoEventType.userLoggedInIdentifier,
     UserLoggedInHandler(auditController),
   );
 
@@ -41,7 +47,7 @@ const setupEventBus = async (freshEventBus: EventBus) => {
       type: 'support/audit',
       name: auditServiceName,
     },
-    eventType: serviceStartedIdentifier,
+    eventType: LiberoEventType.serviceStartedIdentifier,
   };
 
   await eventBus.publish(event).then(() => {
@@ -64,7 +70,7 @@ const setupWebServer = (server: Express) => {
 const main = async () => {
   logger.info('serviceInit');
 
-  const eventBus = await setupEventBus(new RabbitEventBus({url: `amqp://${ Config.eventBus.url }`}));
+  const eventBus = await setupAuditEventBus(new RabbitEventBus({url: `amqp://${ Config.event.url }`}));
   // TODO: Eventually turn this into a factory method on the EventBus abstract class so that the instance of
   // the message bus can be created from config.
   // Create message bus instance
