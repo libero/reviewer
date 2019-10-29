@@ -7,7 +7,7 @@ import { v4 } from "uuid";
 import config from '../config';
 import { UserIdentity } from '@libero/auth-utils';
 import { Event, EventBus } from '@libero/event-bus';
-import { UserLoggedInPayload, userLoggedInIdentifier } from '@libero/libero-events';
+import { UserLoggedInPayload, LiberoEventType } from '@libero/libero-events';
 
 // This is the endpoint that does the actual token exchange/user lookup and signing the output token
 // And yeah, I know the controller/usecase code shouldn't be mixed but idec, we can refactor it at some point
@@ -75,7 +75,7 @@ export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) 
             const auditEvent: Event<UserLoggedInPayload> = {
                 id: v4(),
                 created: new Date(),
-                eventType: userLoggedInIdentifier,
+                eventType: LiberoEventType.userLoggedInIdentifier,
                 payload: {
                     name: profile.name.preferred,
                     userId: payload.identity.user_id,

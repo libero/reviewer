@@ -4,7 +4,7 @@ import * as flushPromises from 'flush-promises';
 import { Authenticate } from './authenticate';
 import * as jwt from "../jwt";
 import config from '../config';
-import { userLoggedInIdentifier } from '@libero/libero-events';
+import { LiberoEventType } from '@libero/libero-events';
 
 jest.mock('../logger');
 
@@ -127,7 +127,7 @@ describe('Authenticate Handler', () => {
 
             const auditEvent = eventBusMock.publish.mock.calls[0][0];
             expect(eventBusMock.publish).toHaveBeenCalledTimes(1);
-            expect(auditEvent.eventType).toBe(userLoggedInIdentifier);
+            expect(auditEvent.eventType).toBe(LiberoEventType.userLoggedInIdentifier);
             expect(auditEvent.payload.name).toBe('bar');
             expect(auditEvent.payload.email).toBe('foo@example.com');
         });

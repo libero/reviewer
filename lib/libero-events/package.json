@@ -15,9 +15,8 @@
     "url": "https://github.com/libero/reviewer"
   },
   "author": "Nathan Lisgo",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "@libero/event-bus": "file:../event-bus"
   },
   "devDependencies": {
     "jest": "^24.9.0",

@@ -1,4 +1,4 @@
-import { EventType, Event } from '../event-bus';
+import { Event } from '../event-bus';
 
 export type ConnectedState = 'CONNECTED' | 'NOT_CONNECTED';
 
@@ -17,6 +17,6 @@ export interface MessageWrapper<T> {
 }
 
 export interface Subscription<P extends object> {
-  eventType: EventType;
+  eventType: string;
   handler: (ev: Event<P>) => Promise<boolean>;
 }

@@ -3,7 +3,7 @@ import { Option } from 'funfix';
 import { Connection, Message } from 'amqplib';
 import * as amqplib from 'amqplib';
 import { InfraLogger as logger } from '../logger';
-import { EventType, Event } from '../event-bus';
+import { Event } from '../event-bus';
 import { Subscription, StateChange, MessageWrapper } from './types';
 import { EventUtils } from './event-utils';
 
@@ -18,7 +18,7 @@ export default class AMQPConnector {
   public constructor(
     url: string,
     [sender]: Channel<StateChange>,
-    eventDefs: EventType[],
+    eventDefs: string[],
     subscriptions: Array<Subscription<unknown & object>>,
     serviceName: string,
   ) {
@@ -34,7 +34,7 @@ export default class AMQPConnector {
 
         const rabbitChannel = await this.connection.createChannel();
         await Promise.all(
-          eventDefs.map(async (eventType: EventType) =>
+          eventDefs.map(async (eventType: string) =>
             rabbitChannel.assertExchange(
               EventUtils.eventTypeToExchange(eventType),
               'fanout',
@@ -76,7 +76,7 @@ export default class AMQPConnector {
   }
 
   public async subscribe<P extends object>(
-    eventType: EventType,
+    eventType: string,
     handler: (ev: Event<P>) => Promise<boolean>,
   ): Promise<void> {
     // For the event identifier:
