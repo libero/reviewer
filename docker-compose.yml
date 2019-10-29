@@ -1,24 +1,5 @@
 version: '3'
 services:
-  # NOTE: This will eventually be removed when other services start using the message bus
-  message-bus-tester:
-    image: node:10
-    ports:
-      - "3002:3002"
-    working_dir: "/service/message-bus-tester"
-    command: ["bash", "-c", "yarn && yarn start:dev"]
-    healthcheck:
-      test: "curl localhost:3002/health"
-      interval: 1m
-      timeout: 10s
-      retries: 3
-    volumes:
-      - ./message-bus-tester/:/service/message-bus-tester/:z
-      - ./lib/:/service/lib/:z
-    networks:
-      - infra_api
-      - infra_rabbit
-
   audit:
     image: node:10
     ports:
