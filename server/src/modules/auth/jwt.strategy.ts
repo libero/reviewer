@@ -5,7 +5,6 @@ import { jwtSecret } from './constants';
 import { AuthService } from './auth.service';
 import { UserIdentity } from '@libero/auth-utils';
 
-
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(private readonly authService: AuthService) {
