@@ -11,12 +11,11 @@ The dotenv library is used to load the .env file
 * `SERVER_PORT`: sets the port number that the server listens to.
 
 ### Database
-* `DB_TYPE`: is the type of database used.
-* `DB_HOST`: hostname where the database can be reached.
-* `DB_PORT`: port number to access database.
-* `DB_USERNAME`: database username.
-* `DB_PASSWORD`: database password.
-* `DB_DATABASE` define connection details.
+* `SERVER_DB_HOST`: hostname where the database can be reached.
+* `SERVER_DB_PORT`: port number to access database.
+* `SERVER_DB_USERNAME`: database username.
+* `SERVER_DB_PASSWORD`: database password.
+* `SERVER_DB_NAME` define database name.
 
 ### New Relic
 
@@ -66,4 +65,13 @@ These settings are used to configure the `mock-continuum-login` service
 
 
 ## Audit Service configuration
+
+### Listening port
 * `AUDIT_PORT`: port number for audit service
+
+### Database
+* `AUDIT_DB_HOST`: hostname where the database can be reached.
+* `AUDIT_DB_PORT`: port number to access database.
+* `AUDIT_DB_USERNAME`: database username.
+* `AUDIT_DB_PASSWORD`: database password.
+* `SERVER_DB_NAME` define database name.
