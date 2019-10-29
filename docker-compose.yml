@@ -1,24 +1,5 @@
 version: '3'
 services:
-  # NOTE: This will eventually be removed when other services start using the message bus
-  message-bus-tester:
-    image: node:10
-    ports:
-      - "3002:3002"
-    working_dir: "/service/message-bus-tester"
-    command: ["bash", "-c", "yarn && yarn start:dev"]
-    healthcheck:
-      test: "curl localhost:3002/health"
-      interval: 1m
-      timeout: 10s
-      retries: 3
-    volumes:
-      - ./message-bus-tester/:/service/message-bus-tester/:z
-      - ./lib/:/service/lib/:z
-    networks:
-      - infra_api
-      - infra_rabbit
-
   audit:
     image: node:10
     ports:
@@ -32,9 +13,11 @@ services:
       retries: 3
     environment:
       RABBITMQ_URL: ${RABBITMQ_URL}
-      DB_HOST: ${DB_HOST}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${AUDIT_DB_HOST}
+      DB_USERNAME: ${AUDIT_DB_USERNAME}
+      DB_PASSWORD: ${AUDIT_DB_PASSWORD}
+      DB_PORT: ${AUDIT_DB_PORT}
+      DB_NAME: ${AUDIT_DB_NAME}
     volumes:
       - ./audit/:/service/audit/:z
       - ./lib/:/service/lib/:z
@@ -94,12 +77,11 @@ services:
       - "${SERVER_PORT}:3000"
     environment:
       SERVER_PORT: ${SERVER_PORT}
-      DB_TYPE: ${DB_TYPE}
-      DB_HOST: "postgres"
-      DB_PORT: ${DB_PORT}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: ${DB_DATABASE}
+      DB_HOST: ${SERVER_DB_HOST}
+      DB_PORT: ${SERVER_DB_PORT}
+      DB_USERNAME: ${SERVER_DB_USERNAME}
+      DB_PASSWORD: ${SERVER_DB_PASSWORD}
+      DB_NAME: ${SERVER_DB_NAME}
     working_dir: "/service/server"
     healthcheck:
       test: "curl localhost:3000/health"
