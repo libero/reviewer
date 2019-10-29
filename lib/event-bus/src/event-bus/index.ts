@@ -1,7 +1,7 @@
 // Abstract Message Queue - types and interfaces
 
 export interface Event<T extends object> {
-  eventType: string;  
+  eventType: string;
   id: string;             // Generated when the event is emitted
   created: Date;
   payload: T;             // The actual data
@@ -26,4 +26,4 @@ export interface EventBus extends EventPublisher, EventSubscriber {
 
 export interface EventConfig {
   url: string;
-};
+}

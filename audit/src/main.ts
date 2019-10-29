@@ -4,9 +4,9 @@ import * as express from 'express';
 import { Express, Request, Response } from 'express';
 import { HealthCheck } from './endpoints';
 import { EventConfig, Event, EventBus, RabbitEventBus } from '@libero/event-bus';
-import { 
-  ServiceStartedPayload, 
-  UserLoggedInPayload, 
+import {
+  ServiceStartedPayload,
+  UserLoggedInPayload,
   LiberoEventType } from '@libero/libero-events';
 import { ServiceStartedHandler, UserLoggedInHandler } from './handlers';
 import { AuditController } from './domain/audit';
@@ -22,8 +22,8 @@ const auditServiceName = v4();
 const setupAuditEventBus = async (freshEventBus: EventBus) => {
   const eventBus = await freshEventBus.init(
     [
-      LiberoEventType.serviceStartedIdentifier, 
-      LiberoEventType.userLoggedInIdentifier
+      LiberoEventType.serviceStartedIdentifier,
+      LiberoEventType.userLoggedInIdentifier,
     ],
     'audit',
   );

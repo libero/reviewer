@@ -13,8 +13,8 @@ const knexConfig: KnexConfig = {
   },
 };
 
-const eventConfig : EventConfig = {
-    url: process.env.RABBITMQ_URL || 'localhost',
+const eventConfig: EventConfig = {
+  url: process.env.RABBITMQ_URL || 'localhost',
 };
 
 export const  serviceConfig = {
