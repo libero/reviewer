@@ -5,6 +5,9 @@ The dotenv library is used to load the .env file
 ## RabbitMQ
 * `RABBITMQ_URL`: the rabbit message queue URL
 
+## Postgres
+* `POSTGRES_PORT`: Postgres listening port
+
 ## Server configuration
 
 ### Listening Port

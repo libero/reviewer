@@ -3,11 +3,7 @@ services:
   postgres:
     image: postgres:11
     ports:
-      - "5432:${DB_PORT}"
-    environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      - "5432:${POSTGRES_PORT}"
     networks:
       - infra_postgres
     volumes:
