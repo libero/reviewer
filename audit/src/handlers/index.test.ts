@@ -1,7 +1,7 @@
 import { Event } from '@libero/event-bus';
-import { ServiceStartedHandler, UserLoggedInHandler } from './index';
+import { UserLoggedInHandler } from './index';
 import { AuditController } from '../domain/audit';
-import { ServiceStartedPayload, serviceStartedIdentifier, userLoggedInIdentifier, UserLoggedInPayload } from '@libero/libero-events';
+import { userLoggedInIdentifier, UserLoggedInPayload } from '@libero/libero-events';
 
 jest.mock('../logger');
 
@@ -14,29 +14,6 @@ const controller = {
 } as unknown as AuditController;
 
 beforeEach(jest.resetAllMocks);
-
-describe('ServiceStartedHandler', () => {
-    it('records audit item', () => {
-        const handler = ServiceStartedHandler(controller);
-        const event: Event<ServiceStartedPayload> = {
-            id: 'event-started-id',
-            created: new Date(),
-            payload: {
-              type: 'support/audit',
-              name: 'servicename',
-            },
-            eventType: serviceStartedIdentifier,
-        };
-
-        handler(event);
-
-        const auditItem = recordAudit.mock.calls[0][0];
-        expect(recordAudit).toHaveBeenCalledTimes(1);
-        expect(auditItem.entity).toBe('NONE');
-        expect(auditItem.verb).toBe('STARTED');
-        expect(auditItem.subject).toBe('servicename-support/audit');
-    });
-});
 
 describe('UserLoggedInHandler', () => {
     it('records audit item', () => {
@@ -58,8 +35,8 @@ describe('UserLoggedInHandler', () => {
         const auditItem = recordAudit.mock.calls[0][0];
 
         expect(recordAudit).toHaveBeenCalledTimes(1);
-        expect(auditItem.entity).toBe('userId');
-        expect(auditItem.verb).toBe('LOGGED_IN');
-        expect(auditItem.subject).toBe('name-email');
+        expect(auditItem.entity).toBe('user:userId');
+        expect(auditItem.action).toBe('LOGGED_IN');
+        expect(auditItem.object).toBe('application');
     });
 });
