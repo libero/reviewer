@@ -3,7 +3,7 @@ services:
   postgres:
     image: postgres:11
     ports:
-      - "5432:${POSTGRES_PORT}"
+      - "${POSTGRES_PORT}:5432"
     networks:
       - infra_postgres
     volumes:
