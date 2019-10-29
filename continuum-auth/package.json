@@ -15,7 +15,7 @@
     "url": "https://github.com/libero/reviewer"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@libero/auth-utils": "../lib/auth-utils",
     "@libero/event-bus": "../lib/event-bus",
@@ -26,13 +26,10 @@
     "@types/node-fetch": "^2.5.0",
     "@types/pino": "^5.8.10",
     "@types/uuid": "^3.4.5",
-    "auth-utils": "../lib/auth-utils",
     "dotenv-cli": "^2.0.1",
-    "event-bus": "../lib/event-bus",
     "express": "^4.17.1",
     "funfix": "^7.0.1",
     "jsonwebtoken": "^8.5.1",
-    "libero-events": "../lib/libero-events",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.1",
     "pino": "^5.13.2",

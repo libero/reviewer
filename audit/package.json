@@ -16,13 +16,12 @@
     "url": "https://github.com/libero/reviewer"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@libero/auth-utils": "../lib/auth-utils",
     "@libero/event-bus": "../lib/event-bus",
     "@libero/libero-events": "../lib/libero-events",
     "@libero/migrator": "../lib/migrator",
-    "auth-utils": "../lib/auth-utils",
     "dotenv-cli": "^2.0.1",
     "event-bus": "../lib/event-bus",
     "express": "^4.17.1",
