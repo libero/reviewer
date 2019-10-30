@@ -1,8 +1,7 @@
 export interface AuditLogItem {
-  id: string;
-  subject: string;
-  verb: string;
   entity: string;
+  action: string;
+  object: string;
 }
 
 export interface AuditRepository {

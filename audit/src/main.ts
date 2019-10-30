@@ -2,57 +2,38 @@
 import { InfraLogger as logger } from './logger';
 import * as express from 'express';
 import { Express, Request, Response } from 'express';
+import { v4 } from 'uuid';
+import { EventBus, RabbitEventBus } from '@libero/event-bus';
+import { UserLoggedInHandler } from './handlers';
 import { HealthCheck } from './endpoints';
-import { EventConfig, Event, EventBus, RabbitEventBus } from '@libero/event-bus';
 import {
-  ServiceStartedPayload,
   UserLoggedInPayload,
   LiberoEventType } from '@libero/libero-events';
-import { ServiceStartedHandler, UserLoggedInHandler } from './handlers';
 import { AuditController } from './domain/audit';
 import { KnexAuditRepository } from './repo/audit';
-import { v4 } from 'uuid';
 import Config from './config';
+import { InfraLogger as Logger } from './logger';
 
 import * as Knex from 'knex';
 
 const auditController = new AuditController(new KnexAuditRepository(Knex(Config.knex)));
-const auditServiceName = v4();
 
 const setupAuditEventBus = async (freshEventBus: EventBus) => {
   const eventBus = await freshEventBus.init(
     [
-      LiberoEventType.serviceStartedIdentifier,
       LiberoEventType.userLoggedInIdentifier,
     ],
     'audit',
   );
 
   // setup subscribers
-  eventBus.subscribe<ServiceStartedPayload>(
-    LiberoEventType.serviceStartedIdentifier,
-    ServiceStartedHandler(auditController),
-  );
-
   eventBus.subscribe<UserLoggedInPayload>(
     LiberoEventType.userLoggedInIdentifier,
     UserLoggedInHandler(auditController),
   );
 
-  // publish "ServiceStarted"
-  const event: Event<ServiceStartedPayload> = {
-    id: v4(),
-    created: new Date(),
-    payload: {
-      type: 'support/audit',
-      name: auditServiceName,
-    },
-    eventType: LiberoEventType.serviceStartedIdentifier,
-  };
+  Logger.info('Audit service started');
 
-  await eventBus.publish(event).then(() => {
-    logger.debug('emittedServiceStarted');
-  });
   return eventBus;
 };
 
@@ -82,6 +63,6 @@ const main = async () => {
 
 main().then(app =>
   app.listen(Config.port, () => {
-    logger.info('serviceStarted');
+    logger.info(`Audit service listening on port ${Config.port}`);
   }),
 );

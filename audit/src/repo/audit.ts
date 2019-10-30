@@ -8,7 +8,7 @@ export class KnexAuditRepository implements AuditRepository {
 
   public async putLog( item: AuditLogItem ): Promise<boolean> {
 
-    logger.debug('auditWritten', item.id);
+    logger.debug('auditWritten', item);
 
     await this.knex('audit').insert<AuditLogItem>(item);
 
