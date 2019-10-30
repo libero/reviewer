@@ -7,8 +7,8 @@ jest.mock('../config', () => ({
     default: {
         auth: {
             login_redirect_url: 'http://login_redirect_url',
-        }
-    }
+        },
+    },
 }));
 
 describe('login', () => {
@@ -24,6 +24,6 @@ describe('login', () => {
         expect(response.redirect).toHaveBeenCalledTimes(1);
         expect(response.redirect).toHaveBeenCalledWith('http://login_redirect_url');
         expect(logger.info).toHaveBeenCalledTimes(1);
-        expect(logger.info).toHaveBeenCalledWith('loginRedirect', { 'login_redirect_url': 'http://login_redirect_url' });
+        expect(logger.info).toHaveBeenCalledWith('loginRedirect', { login_redirect_url: 'http://login_redirect_url' });
     });
 });
