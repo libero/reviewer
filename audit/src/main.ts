@@ -4,7 +4,6 @@ import * as express from 'express';
 import { Express, Request, Response } from 'express';
 import { v4 } from 'uuid';
 import { EventBus, RabbitEventBus } from '@libero/event-bus';
-import { UserLoggedInPayload, userLoggedInIdentifier } from '@libero/libero-events';
 import { UserLoggedInHandler } from './handlers';
 import { HealthCheck } from './endpoints';
 import {
