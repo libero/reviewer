@@ -1,11 +1,8 @@
-import { EventType } from '@libero/event-bus';
 
 export interface ServiceStartedPayload {
   name: string;
   type: string;
 }
-
-export const serviceStartedIdentifier: EventType = 'libero:infra:audit:ServiceStarted';
 
 export interface UserLoggedInPayload {
   name: string;
@@ -14,4 +11,8 @@ export interface UserLoggedInPayload {
   timestamp: Date;
 }
 
-export const userLoggedInIdentifier: EventType = 'libero:audit:user:LoggedIn';
+export enum LiberoEventType { 
+  serviceStartedIdentifier = 'libero:infra:audit:ServiceStarted',
+  userLoggedInIdentifier = 'libero:audit:user:LoggedIn',
+};
+

@@ -1,5 +1,5 @@
 import { Option, None, Some } from 'funfix';
-import { EventType, Event, EventBus } from '../event-bus';
+import { Event, EventBus } from '../event-bus';
 import { Subscription } from './types';
 import AMQPConnector from './amqp-connector';
 import { InternalMessageQueue, QueuedEvent } from './internal-queue';
@@ -21,7 +21,7 @@ export interface RabbitEventBusConnectionOptions {
 export default class RabbitEventBus implements EventBus, ConnectionOwner {
   private connector: Option<AMQPConnector> = None;
   private connection: ConnectionObserver;
-  private eventDefinitions: EventType[];
+  private eventDefinitions: string[];
   private serviceName: string = 'unknown-service';
   private url: string = '';
   private queue: InternalMessageQueue;
@@ -31,7 +31,7 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
     this.url = connectionOpts.url;
   }
 
-  public async init(eventDefinitions: EventType[], serviceName: string) {
+  public async init(eventDefinitions: string[], serviceName: string) {
     this.eventDefinitions = eventDefinitions;
     this.serviceName = serviceName;
     this.queue = new InternalMessageQueue(this);
@@ -89,7 +89,7 @@ export default class RabbitEventBus implements EventBus, ConnectionOwner {
   }
 
   public async subscribe<P extends object>(
-    eventType: EventType,
+    eventType: string,
     handler: (event: Event<P>) => Promise<boolean>,
   ) {
     this.connector.map(connector => {

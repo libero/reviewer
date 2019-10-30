@@ -1,7 +1,7 @@
 import { Event } from '@libero/event-bus';
 import { UserLoggedInHandler } from './index';
 import { AuditController } from '../domain/audit';
-import { userLoggedInIdentifier, UserLoggedInPayload } from '@libero/libero-events';
+import { UserLoggedInPayload, LiberoEventType } from '@libero/libero-events';
 
 jest.mock('../logger');
 
@@ -27,7 +27,7 @@ describe('UserLoggedInHandler', () => {
               email: 'email',
               timestamp: new Date(),
             },
-            eventType: userLoggedInIdentifier,
+            eventType: LiberoEventType.userLoggedInIdentifier,
         };
 
         handler(event);

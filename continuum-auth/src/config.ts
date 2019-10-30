@@ -1,5 +1,10 @@
-// This file will be responsible for loading the config from wherever it'll come from
+import { EventConfig } from '@libero/event-bus';
 
+const eventConfig : EventConfig = {
+  url: process.env.EVENTBUS_URL as string,
+};
+
+// This file will be responsible for loading the config from wherever it'll come from
 const config = {
   auth: {
     // Where the /login route sends you - a.k.a the identity server
@@ -17,7 +22,8 @@ const config = {
     // tokens
     secret: process.env.CONTINUUM_LOGIN_JWT_SECRET as string
   },
-  port: process.env.AUTHENTICATION_PORT || 3001
+  port: process.env.AUTHENTICATION_PORT || 3001,
+  event: eventConfig,
 };
 
 export default config;

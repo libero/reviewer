@@ -303,7 +303,7 @@
     pino "^5.13.2"
     uuid "^3.3.3"
 
-"@libero/event-bus@../lib/event-bus", "@libero/event-bus@file:../lib/event-bus":
+"@libero/event-bus@../lib/event-bus":
   version "1.0.0"
   dependencies:
     "@types/amqplib" "^0.5.13"
@@ -322,8 +322,6 @@
 
 "@libero/libero-events@../lib/libero-events":
   version "1.0.0"
-  dependencies:
-    "@libero/event-bus" "file:../../../Library/Caches/Yarn/v5/npm-@libero-libero-events-1.0.0-14eff9e4-f268-46b9-876c-c04a903040d9-1571390660783/node_modules/@libero/event-bus"
 
 "@types/amqplib@^0.5.13":
   version "0.5.13"
