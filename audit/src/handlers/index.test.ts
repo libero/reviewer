@@ -1,7 +1,7 @@
 import { Event } from '@libero/event-bus';
 import { ServiceStartedHandler, UserLoggedInHandler } from './index';
 import { AuditController } from '../domain/audit';
-import { ServiceStartedPayload, serviceStartedIdentifier, userLoggedInIdentifier, UserLoggedInPayload } from '@libero/libero-events';
+import { ServiceStartedPayload, UserLoggedInPayload, LiberoEventType } from '@libero/libero-events';
 
 jest.mock('../logger');
 
@@ -25,7 +25,7 @@ describe('ServiceStartedHandler', () => {
               type: 'support/audit',
               name: 'servicename',
             },
-            eventType: serviceStartedIdentifier,
+            eventType: LiberoEventType.serviceStartedIdentifier,
         };
 
         handler(event);
@@ -50,7 +50,7 @@ describe('UserLoggedInHandler', () => {
               email: 'email',
               timestamp: new Date(),
             },
-            eventType: userLoggedInIdentifier,
+            eventType: LiberoEventType.userLoggedInIdentifier,
         };
 
         handler(event);

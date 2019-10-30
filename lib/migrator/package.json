@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "repository": "https://github.com/libero/reviewer",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "example-cli": "ts-node example/index.ts",
     "build": "tsc --build tsconfig.json",

@@ -1,14 +1,14 @@
-import { Event, EventType } from '../event-bus';
+import { Event } from '../event-bus';
 import { MessageWrapper } from './types';
 import { Option } from 'funfix';
 
 export class EventUtils {
   // Maybe merge this class with AMQPConnector
-  public static eventTypeToExchange(eventType: EventType) {
+  public static eventTypeToExchange(eventType: string) {
     return `event__${eventType}`;
   }
 
-  public static eventTypeToQueue(eventType: EventType, serviceName: string) {
+  public static eventTypeToQueue(eventType: string, serviceName: string) {
     return `consumer__${eventType}__${serviceName}`;
   }
 

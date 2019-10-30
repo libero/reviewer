@@ -1,4 +1,4 @@
-import { EventBus, EventType, Event } from '../event-bus';
+import { EventBus, Event } from '../event-bus';
 import { Option, None, Some } from 'funfix';
 
 export type AnyEvent = Event<object>;
@@ -16,7 +16,7 @@ export class MockEventBus implements EventBus {
 
   public async init(
     // tslint:disable-next-line: variable-name
-    _defs: EventType[],
+    _defs: string[],
     // tslint:disable-next-line: variable-name
     _serviceName: string,
   ): Promise<this> {
@@ -45,12 +45,12 @@ export class MockEventBus implements EventBus {
    * Allows the MockEventBus to subscribe any event of type Event<T>
    *
    * @template T - The payload for the event
-   * @param {EventType} eventType
+   * @param {string} eventType
    * @param {(event: T) => Promise<boolean>} handler  - Function of type (event: Event<T>) => Promise<boolean> where T is the payload
    * @memberof MockEventBus
    */
   public async subscribe<T extends object>(
-    eventType: EventType,
+    eventType: string,
     handler: (event: Event<T>) => Promise<boolean>,
   ) {
     this.queues.get().set(`${eventType}`, handler);

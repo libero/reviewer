@@ -303,7 +303,7 @@
     pino "^5.13.2"
     uuid "^3.3.3"
 
-"@libero/event-bus@../lib/event-bus", "@libero/event-bus@file:../lib/event-bus":
+"@libero/event-bus@../lib/event-bus":
   version "1.0.0"
   dependencies:
     "@types/amqplib" "^0.5.13"
@@ -322,8 +322,6 @@
 
 "@libero/libero-events@../lib/libero-events":
   version "1.0.0"
-  dependencies:
-    "@libero/event-bus" "file:../../../../.cache/yarn/v6/npm-@libero-libero-events-1.0.0-39b427e0-97ff-49d5-827f-f160da47e7f4-1572264696832/node_modules/@libero/event-bus"
 
 "@libero/migrator@../lib/migrator":
   version "1.0.0"
@@ -758,6 +756,18 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
+
+auth-utils@../lib/auth-utils:
+  version "1.0.0"
+  dependencies:
+    "@types/jsonwebtoken" "^8.3.3"
+    "@types/pino" "^5.8.10"
+    "@types/uuid" "^3.4.5"
+    dotenv-cli "^2.0.1"
+    funfix "^7.0.1"
+    jsonwebtoken "^8.5.1"
+    pino "^5.13.2"
+    uuid "^3.3.3"
 
 aws-sign2@~0.7.0:
   version "0.7.0"
@@ -1581,6 +1591,23 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
+
+event-bus@../lib/event-bus:
+  version "1.0.0"
+  dependencies:
+    "@types/amqplib" "^0.5.13"
+    "@types/jest" "^24.0.18"
+    "@types/pino" "^5.8.10"
+    "@types/uuid" "^3.4.5"
+    amqplib "^0.5.5"
+    dotenv-cli "^2.0.1"
+    funfix "^7.0.1"
+    jsonwebtoken "^8.5.1"
+    lodash.debounce "^4.0.8"
+    pino "^5.13.2"
+    rs-channel-node "^0.0.3"
+    uuid "^3.3.3"
+    wait-for-expect "^3.0.0"
 
 exec-sh@^0.3.2:
   version "0.3.2"
@@ -3152,6 +3179,9 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+libero-events@../lib/libero-events:
+  version "1.0.0"
+
 liftoff@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/liftoff/-/liftoff-3.1.0.tgz#c9ba6081f908670607ee79062d700df062c52ed3"
@@ -3343,6 +3373,19 @@ micromatch@^3.0.4, micromatch@^3.1.10, micromatch@^3.1.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
+
+migrations@../lib/migrator:
+  version "1.0.0"
+  dependencies:
+    "@types/jest" "^24.0.19"
+    "@types/node" "^12.11.1"
+    borderless-table "^2.0.0"
+    boxen "^4.1.0"
+    chalk "^2.4.2"
+    knex "^0.19.5"
+    knex-umzug "^3.0.1"
+    umzug "^2.2.0"
+    yargs "^14.2.0"
 
 mime-db@1.40.0:
   version "1.40.0"
