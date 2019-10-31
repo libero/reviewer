@@ -757,6 +757,18 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
+auth-utils@../lib/auth-utils:
+  version "1.0.0"
+  dependencies:
+    "@types/jsonwebtoken" "^8.3.3"
+    "@types/pino" "^5.8.10"
+    "@types/uuid" "^3.4.5"
+    dotenv-cli "^2.0.1"
+    funfix "^7.0.1"
+    jsonwebtoken "^8.5.1"
+    pino "^5.13.2"
+    uuid "^3.3.3"
+
 aws-sign2@~0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"
