@@ -49,6 +49,7 @@ services:
       - ./lib/:/service/lib/:z
     networks:
       - infra_api
+      - infra_rabbit
 
   mock-continuum-login:
     image: node:10
