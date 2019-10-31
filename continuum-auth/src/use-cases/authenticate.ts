@@ -80,10 +80,14 @@ export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) 
                             id: v4(),
                             created: new Date(),
                             eventType: LiberoEventType.userLoggedInIdentifier,
+                            context: {
+                                source: 'continuum-auth',
+                            },
                             payload: {
                                 name: profile.name.preferred,
                                 userId: payload.identity.user_id,
                                 email: profile.emailAddresses.length > 0 ? profile.emailAddresses[0].value : '',
+                                result: 'authorized',
                                 timestamp: new Date(),
                             },
                         };

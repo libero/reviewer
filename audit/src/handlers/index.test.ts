@@ -26,6 +26,10 @@ describe('UserLoggedInHandler', () => {
               userId: 'userId',
               email: 'email',
               timestamp: new Date(),
+              result: 'authorized',
+            },
+            context: {
+              source: 'source',
             },
             eventType: LiberoEventType.userLoggedInIdentifier,
         };
@@ -37,6 +41,7 @@ describe('UserLoggedInHandler', () => {
         expect(recordAudit).toHaveBeenCalledTimes(1);
         expect(auditItem.entity).toBe('user:userId');
         expect(auditItem.action).toBe('LOGGED_IN');
-        expect(auditItem.object).toBe('application');
+        expect(auditItem.object).toBe('source');
+        expect(auditItem.result).toBe('authorized');
     });
 });
