@@ -116,8 +116,6 @@ services:
       args:
         image_tag: "${IMAGE_TAG}"
     image: libero/reviewer_audit:${IMAGE_TAG}
-    environment:
-      EVENTBUS_URL: ${EVENTBUS_URL}
     depends_on:
       - audit_npm
       - audit_typescript
