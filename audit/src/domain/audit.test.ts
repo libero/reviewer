@@ -7,19 +7,17 @@ describe('Audit controller', () => {
         };
         const controller = new AuditController(repo);
         const item = {
-            id: 'id',
-            subject: 'subject',
-            verb: 'verb',
-            entity: 'entity',
+            entity: 'foo',
+            action: 'bar',
+            object: 'baz',
         };
 
         controller.recordAudit(item);
         expect(repo.putLog).toHaveBeenCalledTimes(1);
         expect(repo.putLog).toHaveBeenCalledWith({
-            id: 'id',
-            subject: 'subject',
-            verb: 'verb',
-            entity: 'entity',
+            entity: 'foo',
+            action: 'bar',
+            object: 'baz',
         });
     });
 });
