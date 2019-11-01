@@ -96,26 +96,6 @@ services:
       - infra_postgres
       - infra_api
 
-  client:
-    image: node:10
-    ports:
-      - "${CLIENT_PORT}:9000"
-    working_dir: "/client"
-    command: ["bash", "-c", "yarn && yarn run start --host 0.0.0.0"]
-    volumes:
-      - ./client/:/client/:z
-    environment:
-      CLIENT_PORT: ${CLIENT_PORT}
-      CLIENT_API_URL: ${CLIENT_API_URL}
-      CLIENT_API_PROXY_URL: "http://server"
-      CLIENT_API_PROXY_ENDPOINT: ${CLIENT_API_PROXY_ENDPOINT}
-      SERVER_PORT: ${SERVER_PORT}
-      CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
-      CONTINUUM_LOGIN_PORT: ${CONTINUUM_LOGIN_PORT}
-    networks:
-      - infra_api
-    depends_on: ["server"]
-
 networks:
   infra_postgres:
     external:
