@@ -1,7 +1,7 @@
 import { EventConfig } from '@libero/event-bus';
 
 const eventConfig: EventConfig = {
-    url: process.env.EVENTBUS_URL as string,
+    url: process.env.RABBITMQ_URL as string,
 };
 
 // This file will be responsible for loading the config from wherever it'll come from
