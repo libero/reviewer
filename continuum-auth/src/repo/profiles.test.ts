@@ -1,9 +1,14 @@
 import { ProfilesService } from './profiles';
+import fetch from 'node-fetch';
+
+jest.mock('node-fetch');
+jest.mock('../logger');
 
 describe('profiles', () => {
-    it.skip('fetchs a profile by id', () => {
+    it('fetchs a profile by id', () => {
         const profilesService = new ProfilesService('http://profiles_service_url');
-        const profile = profilesService.getProfileById('profile-id');
-        // todo - need to mock fecth with jest-fetch-mock.
+        profilesService.getProfileById('profile-id');
+        expect(fetch).toHaveBeenCalledTimes(1);
+        expect(fetch).toHaveBeenCalledWith('http://profiles_service_url/profile-id');
     });
 });
