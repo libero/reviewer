@@ -1,12 +1,2 @@
 ## override file for mac
-
 version: '3'
-services:
-  client:
-    command: ["bash", "-c", "yarn --network-timeout 1000000000 && yarn run start --host 0.0.0.0"]
-    volumes:
-      - ./client/:/client/:delegated
-      - client_node_modules:/client/node_modules
-
-volumes:
-  client_node_modules:

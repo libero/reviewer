@@ -115,28 +115,6 @@ build_application_server_container: test_server lint_server
 push_server_container: build_application_server_container
 	${PUSH_COMMAND} reviewer_server
 
-# client
-client_ci: start_network
-	make build_client_container push_client_container
-
-install_client_packages: prepare_shared_container
-	${DC_BUILD} build client_npm
-
-build_client_source: install_client_packages
-	${DC_BUILD} build client_webpack
-
-lint_client: build_client_source
-	${DC_BUILD} run client_webpack yarn lint
-
-test_client: build_client_source
-	${DC_BUILD} run client_webpack yarn test
-
-build_client_container: test_client build_client_source
-	${DC_BUILD} build reviewer_client
-
-push_client_container: build_client_container
-	${PUSH_COMMAND} reviewer_client
-
 # continuum-auth
 continuum-auth_ci: start_network
 	make lint_continuum-auth test_continuum-auth push_continuum-auth_container
@@ -183,7 +161,7 @@ push_audit_container: build_application_continuum-auth_container
 
 local_ci:
 	make -j 4 lib_ci
-	make -j 4 lint_server test_server continuum-auth_ci client_ci audit_ci
+	make -j 4 lint_server test_server continuum-auth_ci audit_ci
 
 ###########################
 #
@@ -202,11 +180,8 @@ start_config_service:
 	docker-compose up etcd1
 
 start_containers:
-	# Has a soft dependency on build_server_container and build_client_containe
+	# Has a soft dependency on build_server_container
 	@echo "Starts running the newly built & pushed containers in testing mode"
-
-run_browser_tests: start_containers
-	@echo "Run the browser tests"
 
 run_api_tests: start_containers
 	@echo "Run the api tests"
