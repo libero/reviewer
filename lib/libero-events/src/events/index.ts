@@ -9,6 +9,7 @@ export interface UserLoggedInPayload {
   userId: string;
   email: string;
   timestamp: Date;
+  result: string;
 }
 
 export enum LiberoEventType { 
