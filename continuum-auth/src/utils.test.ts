@@ -18,6 +18,7 @@ describe('utils', () => {
             expect(() => {
                 checkStatus(response);
             }).toThrow(new Error('not ok'));
+            // todo - check log written to if exception thrown.
         });
     });
 });
