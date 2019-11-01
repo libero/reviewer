@@ -4,20 +4,13 @@ import { checkStatus } from './utils';
 describe('utils', () => {
     describe('check status', () => {
         it('asserts on ok status', () => {
-            const response = ({
-                ok: true,
-            } as unknown) as Response;
-            const status = checkStatus(response);
-            expect(status.ok).toEqual(true);
+            const status = checkStatus(new Response('', { status: 200 }));
+            expect(status).toBeInstanceOf(Response);
         });
         it('throws exception when ok status not found', () => {
-            const response = ({
-                ok: false,
-                statusText: 'not ok',
-            } as unknown) as Response;
             expect(() => {
-                checkStatus(response);
-            }).toThrow(new Error('not ok'));
+                checkStatus(new Response('', { status: 400 }));
+            }).toThrow(new Error('Bad Request'));
             // todo - check log written to if exception thrown.
         });
     });
