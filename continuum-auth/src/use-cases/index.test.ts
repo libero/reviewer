@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { HealthCheck } from './index';
 
+jest.mock('../logger');
+
 describe('healthcheck', () => {
     it.only('is OK', () => {
         const request = ({
