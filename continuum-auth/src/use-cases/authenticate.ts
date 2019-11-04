@@ -52,28 +52,40 @@ export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) 
                     .map(profile => {
                         logger.info('getProfile', profile);
                         // TODO: Calculate user-role
+                        const emailAddress = profile.emailAddresses.length > 0 ? profile.emailAddresses[0].value : null;
+
+                        const identity = {
+                            user_id: v4(), // TODO: this needs to be a useful value at some point
+                            external: [
+                                {
+                                    id: profile.id,
+                                    domain: 'elife-profiles',
+                                },
+                            ],
+                        };
+
+                        if (profile.orcid) {
+                            identity.external.push({
+                                id: profile.orcid,
+                                domain: 'orcid',
+                            });
+                        }
 
                         const payload: UserIdentity = {
                             token_id: v4(),
                             token_version: '0.1-alpha',
-                            identity: {
-                                user_id: v4(), // TODO: this needs to be a useful value at some point
-                                external: [
-                                    {
-                                        id: profile.id,
-                                        domain: 'elife-profiles',
-                                    },
-                                    {
-                                        id: profile.orcid,
-                                        domain: 'orcid',
-                                    },
-                                ],
-                            },
+                            identity,
                             roles: [{ journal: 'elife', kind: 'author' }],
                             meta: null,
                         };
 
-                        const output_token = encode(payload);
+                        if (emailAddress) {
+                            payload.meta = {
+                                email: emailAddress,
+                            };
+                        }
+
+                        const outputToken = encode(payload);
 
                         // send audit logged in message
                         const auditEvent: Event<UserLoggedInPayload> = {
@@ -93,7 +105,7 @@ export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) 
                         };
                         eventBus.publish(auditEvent);
 
-                        res.redirect(`${authorised_redirect_url}#${output_token}`);
+                        res.redirect(`${authorised_redirect_url}#${outputToken}`);
                     })
                     .getOrElseL(() => {
                         logger.warn('unauthorized');
