@@ -43,51 +43,6 @@ services:
     networks:
         - 'reviewer_build'
 
-  # Client
-  client_npm:
-    build:
-      context: 'client/'
-      dockerfile: 'Dockerfile.packages'
-      args:
-        image_tag: ${IMAGE_TAG}
-    image: libero/reviewer_client_packages:${IMAGE_TAG}
-    networks:
-        - 'reviewer_build'
-
-  client_webpack:
-    build:
-      context: 'client/'
-      dockerfile: 'Dockerfile.webpack'
-      args:
-        image_tag: ${IMAGE_TAG}
-    image: libero/reviewer_client_webpack:${IMAGE_TAG}
-    depends_on:
-      - client_npm
-    networks:
-        - 'reviewer_build'
-
-  reviewer_client:
-    build:
-      context: 'client/'
-      dockerfile: "Dockerfile.application"
-      args:
-        image_tag: "${IMAGE_TAG}"
-    image: libero/reviewer_client:${IMAGE_TAG}
-    command: >
-      /bin/sh -c
-      "envsubst '
-      $${CLIENT_PORT}
-      $${SERVER_PORT}
-      $${CLIENT_API_PROXY_URL}
-      '< /etc/nginx/nginx.conf.template
-      > /etc/nginx/nginx.conf
-      && nginx -g 'daemon off;'"
-    depends_on:
-      - client_npm
-      - client_webpack
-    networks:
-        - 'reviewer_build'
-
   # audit
   audit_npm:
     build:

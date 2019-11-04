@@ -4,7 +4,6 @@ env:
     - IMAGE_TAG=$TRAVIS_COMMIT
   matrix:
     - TEST_SUITE=server_ci
-    - TEST_SUITE=client_ci
     - TEST_SUITE=continuum-auth_ci
     - TEST_SUITE=audit_ci
 
@@ -20,7 +19,6 @@ stages:
   - name: Lib Tests
   - name: Test
   - name: Integration Tests
-  - name: Deploy Storybook
 
 jobs:
   include:
@@ -30,21 +28,6 @@ jobs:
     - stage: Integration Tests
       name: "API Tests"
       script: make run_api_tests
-    - stage: Integration Tests
-      name: "Browser Tests"
-      script: make run_browser_tests
-    - stage: Build Storybook
-      name: "Build Storybook"
-      if: type = pull_request
-      script:
-        - make build_client_source
-        - mkdir storybook-static
-        - docker run --name client_storybook__$IMAGE_TAG libero/reviewer_client_webpack:$IMAGE_TAG
-        - docker cp client_storybook__$IMAGE_TAG:/app/storybook-static/. storybook-static/
-        - docker rm client_storybook__$IMAGE_TAG
-        - docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -v $(pwd)/storybook-static:/aws mikesir87/aws-cli aws s3 sync /aws s3://unstable-reviewer-storybook/$TRAVIS_PULL_REQUEST_BRANCH
-        - target_url="https://unstable-reviewer-storybook.s3.amazonaws.com/$TRAVIS_PULL_REQUEST_BRANCH/index.html" repository="libero/reviewer" description='Deployed storybook' context='storybook' commit=$(git rev-parse HEAD^2) ./notify-github.sh
-
 if: |
     branch = master OR \
     tag IS present OR \
