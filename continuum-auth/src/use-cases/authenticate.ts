@@ -56,7 +56,7 @@ export const Authenticate = (profilesService: ProfilesRepo, eventBus: EventBus) 
 
                         const identity = {
                             user_id: v4(), // TODO: this needs to be a useful value at some point
-                            external : [
+                            external: [
                                 {
                                     id: profile.id,
                                     domain: 'elife-profiles',
