@@ -1,7 +1,6 @@
 import { verify } from 'jsonwebtoken';
 import { decodeJournalToken } from './jwt';
 import { None } from 'funfix';
-import { InfraLogger as logger } from './logger';
 
 jest.mock('jsonwebtoken');
 jest.mock('./logger');
@@ -15,8 +14,6 @@ jest.mock('./config', () => ({
 
 describe('jwt', () => {
     describe('decodeJournalToken', () => {
-        beforeEach(() => jest.resetAllMocks());
-
         it('returns JournalAuthToken if token verified', () => {
             (verify as jest.Mock).mockReturnValueOnce({
                 iss: 'iss',
@@ -42,8 +39,6 @@ describe('jwt', () => {
             });
             expect(decodeJournalToken('token')).toBe(None);
             expect(verify).toHaveBeenCalledWith('token', 'secret');
-            expect(logger.warn).toHaveBeenCalledTimes(1);
-            expect(logger.warn).toHaveBeenCalledWith('invalidJournalJwt');
         });
     });
 });

@@ -4,7 +4,7 @@ import { HealthCheck } from './index';
 jest.mock('../logger');
 
 describe('healthcheck', () => {
-    it.only('is OK', () => {
+    it('is OK', () => {
         const request = ({
             params: { token: 'token' },
         } as unknown) as Request;
