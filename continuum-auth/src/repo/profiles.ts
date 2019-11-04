@@ -40,6 +40,8 @@ export class ProfilesService implements ProfilesRepo {
             await fetch(this.makeProfileUrl(profileId))
                 .then(checkStatus)
                 .then(queryResponse => {
+                    // As long as response body is json this will work!
+                    // How can we be sure that the UserProfile interface is implemented?
                     logger.trace('lookupProfileOk', { profileId });
                     return queryResponse.json();
                 })
