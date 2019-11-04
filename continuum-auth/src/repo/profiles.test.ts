@@ -17,7 +17,11 @@ describe('profiles', () => {
             Promise.resolve(new Response('{"id": "profile-id1"}', { status: 200 })),
         );
 
-        const profile = await new ProfilesService('http://profiles_service_url').getProfileById('profile-id1').then(data => { return data.value; });
+        const profile = await new ProfilesService('http://profiles_service_url')
+            .getProfileById('profile-id1')
+            .then(data => {
+                return data.value;
+            });
         expect(fetch).toHaveBeenCalledTimes(1);
         expect(fetch).toHaveBeenCalledWith('http://profiles_service_url/profile-id1');
         expect(logger.trace).toHaveBeenCalledTimes(2);
