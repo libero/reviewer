@@ -16,17 +16,13 @@ describe('profiles', () => {
             Promise.resolve(new Response('{"id": "profile-id1"}', { status: 200 })),
         );
 
-        const profile = await new ProfilesService('http://profiles_service_url')
-            .getProfileById('profile-id1')
-            .then(data => {
-                return data.value;
-            });
+        const profile = await new ProfilesService('http://profiles_service_url').getProfileById('profile-id1');
         expect(fetch).toHaveBeenCalledTimes(1);
         expect(fetch).toHaveBeenCalledWith('http://profiles_service_url/profile-id1');
         expect(logger.trace).toHaveBeenCalledTimes(2);
         expect(logger.trace).toHaveBeenNthCalledWith(1, 'lookupProfile', { profileId: 'profile-id1' });
         expect(logger.trace).toHaveBeenNthCalledWith(2, 'lookupProfileOk', { profileId: 'profile-id1' });
-        expect(profile).toEqual(JSON.parse('{"id": "profile-id1"}'));
+        expect(profile.get().id).toEqual('profile-id1');
     });
 
     it('returns none value in case of bad response', async () => {
