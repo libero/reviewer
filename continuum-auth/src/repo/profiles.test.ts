@@ -1,8 +1,7 @@
-import fetch, { Body } from 'node-fetch';
-import { None, Some } from 'funfix';
+import fetch from 'node-fetch';
+import { None } from 'funfix';
 import { ProfilesService } from './profiles';
 import { InfraLogger as logger } from '../logger';
-import { reject } from 'bluebird';
 
 const { FetchError, Response } = jest.requireActual('node-fetch');
 
