@@ -6,9 +6,7 @@ import { v4 } from 'uuid';
 import { EventBus, RabbitEventBus } from '@libero/event-bus';
 import { UserLoggedInHandler } from './handlers';
 import { HealthCheck } from './endpoints';
-import {
-  UserLoggedInPayload,
-  LiberoEventType } from '@libero/libero-events';
+import { UserLoggedInPayload, LiberoEventType } from '@libero/event-types';
 import { AuditController } from './domain/audit';
 import { KnexAuditRepository } from './repo/audit';
 import Config from './config';
@@ -16,13 +14,13 @@ import { InfraLogger as Logger } from './logger';
 
 import * as Knex from 'knex';
 
-const auditController = new AuditController(new KnexAuditRepository(Knex(Config.knex)));
+const auditController = new AuditController(
+  new KnexAuditRepository(Knex(Config.knex)),
+);
 
 const setupAuditEventBus = async (freshEventBus: EventBus) => {
   const eventBus = await freshEventBus.init(
-    [
-      LiberoEventType.userLoggedInIdentifier,
-    ],
+    [LiberoEventType.userLoggedInIdentifier],
     'audit',
   );
 
@@ -51,7 +49,9 @@ const setupWebServer = (server: Express) => {
 const main = async () => {
   logger.info('serviceInit');
 
-  const eventBus = await setupAuditEventBus(new RabbitEventBus({url: `amqp://${ Config.event.url }`}));
+  const eventBus = await setupAuditEventBus(
+    new RabbitEventBus({ url: `amqp://${Config.event.url}` }),
+  );
   // TODO: Eventually turn this into a factory method on the EventBus abstract class so that the instance of
   // the message bus can be created from config.
   // Create message bus instance

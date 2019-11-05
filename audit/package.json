@@ -20,7 +20,7 @@
   "dependencies": {
     "@libero/auth-utils": "../lib/auth-utils",
     "@libero/event-bus": "../lib/event-bus",
-    "@libero/libero-events": "../lib/libero-events",
+    "@libero/event-types": "^0.1.0",
     "@libero/migrator": "../lib/migrator",
     "auth-utils": "../lib/auth-utils",
     "dotenv-cli": "^2.0.1",
@@ -29,7 +29,6 @@
     "funfix": "^7.0.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.19.4",
-    "libero-events": "../lib/libero-events",
     "migrations": "../lib/migrator",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.1",

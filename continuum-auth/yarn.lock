@@ -320,8 +320,10 @@
     uuid "^3.3.3"
     wait-for-expect "^3.0.0"
 
-"@libero/libero-events@../lib/libero-events":
-  version "1.0.0"
+"@libero/event-types@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@libero/event-types/-/event-types-0.1.0.tgz#6fd565a86e77b1fbadf0b01e84d37fa3ac5dd28d"
+  integrity sha512-4tgEolE3vZIeReSfL8GlSe1ug9SPUtad34boe2bjqEzW2dtGgQGf7XJtcPmk1PgKePxhmcHD71C47ImhRrluog==
 
 "@types/amqplib@^0.5.13":
   version "0.5.13"

@@ -1,6 +1,6 @@
 // Event handlers - returns
 import { Event } from '@libero/event-bus';
-import { UserLoggedInPayload } from '@libero/libero-events';
+import { UserLoggedInPayload } from '@libero/event-types';
 import { InfraLogger as logger } from '../logger';
 import { AuditController } from '../domain/audit';
 import { AuditLogItem } from '../domain/types';
