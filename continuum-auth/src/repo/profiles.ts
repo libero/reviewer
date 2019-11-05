@@ -29,25 +29,24 @@ export class ProfilesService implements ProfilesRepo {
         logger.info('profilesConnectorInit');
     }
 
-    private makeProfileUrl(profile_id: string): string {
-        return `${this.url}/${profile_id}`;
+    private makeProfileUrl(profileId: string): string {
+        return `${this.url}/${profileId}`;
     }
 
-    public async getProfileById(profile_id: string): Promise<Option<UserProfile>> {
-        logger.trace('lookupProfile', { profile_id });
+    public async getProfileById(profileId: string): Promise<Option<UserProfile>> {
+        logger.trace('lookupProfile', { profileId });
 
-        const profile = Option.of(
-            await fetch(this.makeProfileUrl(profile_id))
+        return Option.of(
+            await fetch(this.makeProfileUrl(profileId))
                 .then(checkStatus)
-                .then(query_response => {
-                    logger.trace('lookupProfileOk', { profile_id });
-                    return query_response.json();
+                .then(queryResponse => {
+                    logger.trace('lookupProfileOk', { profileId });
+                    return queryResponse.json();
                 })
                 .catch(e => {
-                    logger.debug('lookupProfileError', { profile_id, e });
+                    logger.debug('lookupProfileError', { profileId, e });
                     return undefined;
                 }),
         );
-        return profile;
     }
 }
