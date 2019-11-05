@@ -20,7 +20,7 @@
   "dependencies": {
     "@libero/auth-utils": "../lib/auth-utils",
     "@libero/event-bus": "../lib/event-bus",
-    "@libero/libero-events": "../lib/libero-events",
+    "@libero/event-types": "^0.1.0",
     "@libero/migrator": "../lib/migrator",
     "auth-utils": "../lib/auth-utils",
     "dotenv-cli": "^2.0.1",
