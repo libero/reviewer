@@ -325,8 +325,10 @@
   resolved "https://registry.yarnpkg.com/@libero/event-types/-/event-types-0.1.0.tgz#6fd565a86e77b1fbadf0b01e84d37fa3ac5dd28d"
   integrity sha512-4tgEolE3vZIeReSfL8GlSe1ug9SPUtad34boe2bjqEzW2dtGgQGf7XJtcPmk1PgKePxhmcHD71C47ImhRrluog==
 
-"@libero/migrator@../lib/migrator":
-  version "1.0.0"
+"@libero/migrator@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@libero/migrator/-/migrator-0.1.0.tgz#27e44b1f6283ef9dff4030785217154db35dfaad"
+  integrity sha512-ozUtYvXu3IlBHibSq39/Sx0YiY7JRFW7aXtsIBOVSFehi5TRBsLZnue4XIpax97PTm9+tWPy+fRk1OoTQskjHA==
   dependencies:
     "@types/jest" "^24.0.19"
     "@types/node" "^12.11.1"
@@ -441,10 +443,17 @@
   resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
   integrity sha512-yALhelO3i0hqZwhjtcr6dYyaLoCHbAMshwtj6cGxTvHZAKXHsYGdff6E8EPw3xLKY0ELUTQ69Q1rQiJENnccMA==
 
-"@types/jest@^24.0.18", "@types/jest@^24.0.19":
+"@types/jest@^24.0.18":
   version "24.0.20"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.20.tgz#729d5fe8684e7fb06368d3bd557ac6d91289d861"
   integrity sha512-M8ebEkOpykGdLoRrmew7UowTZ1DANeeP0HiSIChl/4DGgmnSC1ntitNtkyNSXjMTsZvXuaxJrxjImEnRWNPsPw==
+  dependencies:
+    "@types/jest-diff" "*"
+
+"@types/jest@^24.0.19":
+  version "24.0.22"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.22.tgz#08a50be08e78aba850a1185626e71d31e2336145"
+  integrity sha512-t2OvhNZnrNjlzi2i0/cxbLVM59WN15I2r1Qtb7wDv28PnV9IzrPtagFRey/S9ezdLD0zyh1XGMQIEQND2YEfrw==
   dependencies:
     "@types/jest-diff" "*"
 
@@ -467,10 +476,15 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^12.11.1":
+"@types/node@*":
   version "12.11.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.11.7.tgz#57682a9771a3f7b09c2497f28129a0462966524a"
   integrity sha512-JNbGaHFCLwgHn/iCckiGSOZ1XYHsKFwREtzPwSGCVld1SGhOlmZw2D4ZI94HQCrBHbADzW9m4LER/8olJTRGHA==
+
+"@types/node@^12.11.1":
+  version "12.12.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.6.tgz#a47240c10d86a9a57bb0c633f0b2e0aea9ce9253"
+  integrity sha512-FjsYUPzEJdGXjwKqSpE0/9QEh6kzhTAeObA54rn6j3rR4C/mzpI9L0KNfoeASSPMMdxIsoJuCLDWcM/rVjIsSA==
 
 "@types/pino-std-serializers@*":
   version "2.4.0"
@@ -3355,19 +3369,6 @@ micromatch@^3.0.4, micromatch@^3.1.10, micromatch@^3.1.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
-
-migrations@../lib/migrator:
-  version "1.0.0"
-  dependencies:
-    "@types/jest" "^24.0.19"
-    "@types/node" "^12.11.1"
-    borderless-table "^2.0.0"
-    boxen "^4.1.0"
-    chalk "^2.4.2"
-    knex "^0.19.5"
-    knex-umzug "^3.0.1"
-    umzug "^2.2.0"
-    yargs "^14.2.0"
 
 mime-db@1.40.0:
   version "1.40.0"
