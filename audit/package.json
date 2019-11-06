@@ -19,12 +19,11 @@
   "license": "MIT",
   "dependencies": {
     "@libero/auth-utils": "../lib/auth-utils",
-    "@libero/event-bus": "../lib/event-bus",
+    "@libero/event-bus": "^0.1.2",
     "@libero/event-types": "^0.1.0",
     "@libero/migrator": "../lib/migrator",
     "auth-utils": "../lib/auth-utils",
     "dotenv-cli": "^2.0.1",
-    "event-bus": "../lib/event-bus",
     "express": "^4.17.1",
     "funfix": "^7.0.1",
     "jsonwebtoken": "^8.5.1",
