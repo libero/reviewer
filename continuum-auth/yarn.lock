@@ -291,8 +291,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@libero/auth-utils@../lib/auth-utils":
-  version "1.0.0"
+"@libero/auth-utils@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@libero/auth-utils/-/auth-utils-0.1.0.tgz#e8f0c40f39333ab3e1b2f9d90ca2d7db38d7e2c4"
+  integrity sha512-31RnGzTLdB5SwBDP8darx7wOkblYVtc2+GoX8NhGlHxdvdDkebb/iEp3CNkxtkGdghMoEtEsfQYXFDk/788Q6g==
   dependencies:
     "@types/jsonwebtoken" "^8.3.3"
     "@types/pino" "^5.8.10"

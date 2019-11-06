@@ -59,26 +59,6 @@ stop_services:
 start_network:
 	-docker network create ${DOCKER_NETWORK_NAME}
 
-
-###########################
-#
-# Build Shared Lib Container
-#
-###########################
-
-prepare_shared_container: build_shared_package_container
-	@echo "built shared components"
-
-build_shared_package_container:
-	${DC_BUILD} build shared_packages
-
-lib_ci: start_network
-	make build_auth-utils 
-
-build_auth-utils: build_shared_package_container
-	${DC_BUILD} run shared_packages sh -c "cd /lib/auth-utils && yarn lint"
-	${DC_BUILD} run shared_packages sh -c "cd /lib/auth-utils && yarn test"
-
 ###########################
 #
 # CI Build and Test Services
@@ -89,7 +69,7 @@ build_auth-utils: build_shared_package_container
 server_ci: start_network
 	make lint_server test_server push_server_container
 
-install_server_packages: prepare_shared_container
+install_server_packages:
 	${DC_BUILD} build server_npm
 
 build_server_source: install_server_packages
@@ -111,7 +91,7 @@ push_server_container: build_application_server_container
 continuum-auth_ci: start_network
 	make lint_continuum-auth test_continuum-auth push_continuum-auth_container
 
-install_continuum-auth_packages: prepare_shared_container
+install_continuum-auth_packages:
 	${DC_BUILD} build continuum-auth_npm
 
 build_continuum-auth_source: install_continuum-auth_packages
@@ -133,7 +113,7 @@ push_continuum-auth_container: build_application_continuum-auth_container
 audit_ci: start_network
 	make lint_audit test_audit push_audit_container
 
-install_audit_packages: prepare_shared_container
+install_audit_packages:
 	${DC_BUILD} build audit_npm
 
 build_audit_source: install_audit_packages
@@ -152,8 +132,8 @@ push_audit_container: build_application_continuum-auth_container
 	@echo "Push the container to a docker registry"
 
 local_ci:
-	make -j 4 lib_ci
-	make -j 4 lint_server test_server continuum-auth_ci audit_ci
+	make -j 4 start_network
+	make -j 4 server_ci continuum-auth_ci audit_ci
 
 ###########################
 #

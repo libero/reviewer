@@ -20,7 +20,6 @@ services:
       DB_NAME: ${AUDIT_DB_NAME}
     volumes:
       - ./audit/:/service/audit/:z
-      - ./lib/:/service/lib/:z
     networks:
       - infra_api
       - infra_rabbit
@@ -46,7 +45,6 @@ services:
       CLIENT_PORT: ${CLIENT_PORT}
     volumes:
       - ./continuum-auth/:/service/continuum-auth/:z
-      - ./lib/:/service/lib/:z
     networks:
       - infra_api
       - infra_rabbit
@@ -93,7 +91,6 @@ services:
     command: ["bash", "-c", "yarn && yarn run start:dev"]
     volumes:
       - ./server/:/service/server/:z
-      - ./lib/:/service/lib/:z
     networks:
       - infra_postgres
       - infra_api

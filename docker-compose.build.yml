@@ -1,14 +1,5 @@
 version: '3'
 services:
-  # Shared packages container
-  shared_packages:
-    build:
-      context: "lib/"
-      dockerfile: "Dockerfile.packages"
-      args:
-        image_tag: ${IMAGE_TAG}
-    image: libero/reviewer_shared_packages:${IMAGE_TAG}
-
   # Server
   server_npm:
     build:
@@ -86,7 +77,7 @@ services:
         image_tag: "${IMAGE_TAG}"
     image: libero/reviewer_continuum-auth_packages:${IMAGE_TAG}
     networks:
-        - 'reviewer_build'
+        - reviewer_build
   continuum-auth_typescript:
     build:
       context: 'continuum-auth/'
@@ -110,6 +101,7 @@ services:
       - continuum-auth_typescript
     networks:
         - 'reviewer_build'
+        
 networks:
   reviewer_build:
     external:
