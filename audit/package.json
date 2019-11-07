@@ -18,11 +18,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@libero/auth-utils": "../lib/auth-utils",
+    "@libero/auth-utils": "^0.1.0",
     "@libero/event-bus": "^0.1.3",
     "@libero/event-types": "^0.1.0",
     "@libero/migrator": "^0.1.0",
-    "auth-utils": "../lib/auth-utils",
     "dotenv-cli": "^2.0.1",
     "express": "^4.17.1",
     "funfix": "^7.0.1",

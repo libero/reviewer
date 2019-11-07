@@ -1,8 +1,0 @@
-FROM node:10-alpine
-
-WORKDIR /lib
-
-COPY . .
-
-# Yeah I know this isn't perfect but this build stage is pretty much throwaway - we just take the lib folder and use that
-RUN ["sh", "-c", "cd auth-utils && yarn && yarn build"]

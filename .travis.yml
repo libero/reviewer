@@ -22,9 +22,6 @@ stages:
 
 jobs:
   include:
-    - stage: Lib Tests
-      name: "Library Tests"
-      script: make lib_ci
     - stage: Integration Tests
       name: "API Tests"
       script: make run_api_tests
