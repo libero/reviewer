@@ -25,30 +25,6 @@ services:
       - infra_rabbit
       - infra_postgres
 
-  continuum-auth:
-    image: node:10
-    ports:
-      - "${AUTHENTICATION_PORT}:3001"
-    working_dir: "/service/continuum-auth"
-    healthcheck:
-      test: "curl localhost:3001/health"
-      interval: 1m
-      timeout: 10s
-      retries: 3
-    command: ["bash", "-c", "yarn && yarn start:dev"]
-    environment:
-      RABBITMQ_URL: ${RABBITMQ_URL}
-      AUTHENTICATION_JWT_SECRET: ${AUTHENTICATION_JWT_SECRET}
-      CONTINUUM_LOGIN_JWT_SECRET: ${CONTINUUM_LOGIN_JWT_SECRET}
-      CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
-      CONTINUUM_LOGIN_PORT: ${CONTINUUM_LOGIN_PORT}
-      CLIENT_PORT: ${CLIENT_PORT}
-    volumes:
-      - ./continuum-auth/:/service/continuum-auth/:z
-    networks:
-      - infra_api
-      - infra_rabbit
-
   mock-continuum-login:
     image: node:10
     ports:

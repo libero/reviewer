@@ -44,10 +44,6 @@ For more info, see the [New Relic](https://docs.newrelic.com/docs/agents/nodejs-
 * `NEW_RELIC_CLIENT_LICENSE_KEY`: License key for browser agent.
 * `NEW_RELIC_CLIENT_APP_ID`: App ID for browser agent.
 
-## Authentication Service configuration
-
-These settings are used to configure the `continuum-auth` service
-
 ### Listening Port and Url
 * `AUTHENTICATION_PORT`: port number where configuration service will listen to
 * `AUTHENTICATION_URL`: public url for the authentication

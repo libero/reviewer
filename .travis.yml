@@ -4,7 +4,6 @@ env:
     - IMAGE_TAG=$TRAVIS_COMMIT
   matrix:
     - TEST_SUITE=server_ci
-    - TEST_SUITE=continuum-auth_ci
     - TEST_SUITE=audit_ci
 
 services:

@@ -87,28 +87,6 @@ build_application_server_container: test_server lint_server
 push_server_container: build_application_server_container
 	${PUSH_COMMAND} reviewer_server
 
-# continuum-auth
-continuum-auth_ci: start_network
-	make lint_continuum-auth test_continuum-auth push_continuum-auth_container
-
-install_continuum-auth_packages:
-	${DC_BUILD} build continuum-auth_npm
-
-build_continuum-auth_source: install_continuum-auth_packages
-	${DC_BUILD} build continuum-auth_typescript
-
-lint_continuum-auth: build_continuum-auth_source
-	${DC_BUILD} run continuum-auth_typescript yarn lint
-
-test_continuum-auth: build_continuum-auth_source
-	${DC_BUILD} run continuum-auth_typescript yarn test
-
-build_application_continuum-auth_container: test_continuum-auth lint_continuum-auth
-	${DC_BUILD} build reviewer_continuum-auth
-
-push_continuum-auth_container: build_application_continuum-auth_container
-	@echo "Push the container to a docker registry"
-
 # audit
 audit_ci: start_network
 	make lint_audit test_audit push_audit_container
@@ -128,12 +106,12 @@ test_audit: build_audit_source
 build_application_audit_container: test_audit lint_audit
 	${DC_BUILD} build reviewer_audit
 
-push_audit_container: build_application_continuum-auth_container
+push_audit_container: build_application_audit_container
 	@echo "Push the container to a docker registry"
 
 local_ci:
 	make -j 4 start_network
-	make -j 4 server_ci continuum-auth_ci audit_ci
+	make -j 4 server_ci audit_ci
 
 ###########################
 #
