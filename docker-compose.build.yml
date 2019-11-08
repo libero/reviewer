@@ -34,40 +34,6 @@ services:
     networks:
         - 'reviewer_build'
 
-  # audit
-  audit_npm:
-    build:
-      context: 'audit/'
-      dockerfile: 'Dockerfile.packages'
-      args:
-        image_tag: "${IMAGE_TAG}"
-    image: libero/reviewer_audit_packages:${IMAGE_TAG}
-    networks:
-        - 'reviewer_build'
-  audit_typescript:
-    build:
-      context: 'audit/'
-      dockerfile: "Dockerfile.typescript"
-      args:
-        image_tag: "${IMAGE_TAG}"
-    image: libero/reviewer_audit_typescript:${IMAGE_TAG}
-    depends_on:
-      - audit_npm
-    networks:
-        - 'reviewer_build'
-  reviewer_audit:
-    build:
-      context: 'audit/'
-      dockerfile: "Dockerfile.application"
-      args:
-        image_tag: "${IMAGE_TAG}"
-    image: libero/reviewer_audit:${IMAGE_TAG}
-    depends_on:
-      - audit_npm
-      - audit_typescript
-    networks:
-        - 'reviewer_build'
-
 networks:
   reviewer_build:
     external:

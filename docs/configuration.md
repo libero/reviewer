@@ -61,16 +61,3 @@ These settings are used to configure the `mock-continuum-login` service
 
 ### JWT Secret
 * `CONTINUUM_LOGIN_JWT_SECRET`: secret used to sign jwt tokens
-
-
-## Audit Service configuration
-
-### Listening port
-* `AUDIT_PORT`: port number for audit service
-
-### Database
-* `AUDIT_DB_HOST`: hostname where the database can be reached.
-* `AUDIT_DB_PORT`: port number to access database.
-* `AUDIT_DB_USERNAME`: database username.
-* `AUDIT_DB_PASSWORD`: database password.
-* `SERVER_DB_NAME` define database name.
