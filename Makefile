@@ -87,31 +87,9 @@ build_application_server_container: test_server lint_server
 push_server_container: build_application_server_container
 	${PUSH_COMMAND} reviewer_server
 
-# audit
-audit_ci: start_network
-	make lint_audit test_audit push_audit_container
-
-install_audit_packages:
-	${DC_BUILD} build audit_npm
-
-build_audit_source: install_audit_packages
-	${DC_BUILD} build audit_typescript
-
-lint_audit: build_audit_source
-	${DC_BUILD} run audit_typescript yarn lint
-
-test_audit: build_audit_source
-	${DC_BUILD} run audit_typescript yarn test
-
-build_application_audit_container: test_audit lint_audit
-	${DC_BUILD} build reviewer_audit
-
-push_audit_container: build_application_audit_container
-	@echo "Push the container to a docker registry"
-
 local_ci:
 	make -j 4 start_network
-	make -j 4 server_ci audit_ci
+	make -j 4 server_ci
 
 ###########################
 #

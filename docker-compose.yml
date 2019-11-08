@@ -1,30 +1,5 @@
 version: '3'
 services:
-  audit:
-    image: node:10
-    ports:
-      - "${AUDIT_PORT}:3004"
-    working_dir: "/service/audit"
-    command: ["bash", "-c", "yarn && yarn start:dev"]
-    healthcheck:
-      test: "curl localhost:3004/health"
-      interval: 1m
-      timeout: 10s
-      retries: 3
-    environment:
-      RABBITMQ_URL: ${RABBITMQ_URL}
-      DB_HOST: ${AUDIT_DB_HOST}
-      DB_USERNAME: ${AUDIT_DB_USERNAME}
-      DB_PASSWORD: ${AUDIT_DB_PASSWORD}
-      DB_PORT: ${AUDIT_DB_PORT}
-      DB_NAME: ${AUDIT_DB_NAME}
-    volumes:
-      - ./audit/:/service/audit/:z
-    networks:
-      - infra_api
-      - infra_rabbit
-      - infra_postgres
-
   mock-continuum-login:
     image: node:10
     ports:
