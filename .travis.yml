@@ -2,8 +2,6 @@ language: minimal
 env:
   global:
     - IMAGE_TAG=$TRAVIS_COMMIT
-  matrix:
-    - TEST_SUITE=server_ci
 
 services:
   - docker
@@ -11,18 +9,17 @@ services:
 cache: yarn
 
 script:
-  - make -j 4 $TEST_SUITE
+  - echo "Do something like: make -j 4 $TEST_SUITE"
 
 stages:
-  - name: Lib Tests
-  - name: Test
   - name: Integration Tests
 
 jobs:
   include:
     - stage: Integration Tests
       name: "API Tests"
-      script: make run_api_tests
+      script: echo "Do something here"
+
 if: |
     branch = master OR \
     tag IS present OR \
