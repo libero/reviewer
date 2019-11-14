@@ -1,50 +1,33 @@
 # Developing
 
-## Basic Configuration
+## Setup
 
-Copy the example .env file
+Setup the configuration by running
 
-```
-cp .env.example .env
+```sh
+make setup
 ```
 
 This should get you started with a [default configuration](../.env.example) that works out of the box. Refer to the
 [Configuration documentation](./configuration.md) for a more detailed description.
 
 
-### Server
+## Run reviewer
 
-Start the database service
-```
-docker-compose up -d postgres
-```
+To start the containers:
 
-To start the server, run
-```
-cd server/
-yarn
-yarn run start:dev
+```sh
+make start
 ```
 
-## Running in containers
+Stop the containers
 
-### Mac OS X
-Docker performance can be slow on mac and result in Yarn install throwing errors. A docker compose override file attempts to mitigate that. Copy the
-example file:
-```
-cp docker-compose.override-macos.yml docker-compose.override.yml
+```sh
+make stop
 ```
 
-before starting the containers.
+Show the logs:
 
-
-Bring up all the containers using docker compose:
-
-```
-docker-compose up -d
-```
-
-To shutdown, run
-```
-docker-compose down
+```sh
+make follow_logs
 ```
