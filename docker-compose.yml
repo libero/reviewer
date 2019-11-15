@@ -85,11 +85,9 @@ services:
     environment:
       CLIENT_PORT: ${CLIENT_PORT}
       CLIENT_API_URL: ${CLIENT_API_URL}
-      CLIENT_API_PROXY_URL: "http://server"
-      CLIENT_API_PROXY_ENDPOINT: ${CLIENT_API_PROXY_ENDPOINT}
+      CLIENT_API_PROXY_URL: "http://server:3000"
       SERVER_PORT: ${SERVER_PORT}
       CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
-      CONTINUUM_LOGIN_PORT: ${CONTINUUM_LOGIN_PORT}
     networks:
       - infra_api
     depends_on: ["server"]
