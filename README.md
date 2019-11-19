@@ -34,7 +34,7 @@ git submodule update
 make local_ci
 ```
 
-NOTE: Ensure that the `.scripts` folder is now updated with the git submoule commands.
+NOTE: Ensure that the `.scripts` folder is now updated with the git submodule commands.
 
 ## Documentation
 
