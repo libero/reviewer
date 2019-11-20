@@ -33,10 +33,10 @@ services:
       retries: 3
     environment:
       RABBITMQ_URL: ${RABBITMQ_URL}
+      AUTHENTICATED_REDIRECT_URL: ${AUTHENTICATED_REDIRECT_URL}
       AUTHENTICATION_JWT_SECRET: ${AUTHENTICATION_JWT_SECRET}
       CONTINUUM_LOGIN_JWT_SECRET: ${CONTINUUM_LOGIN_JWT_SECRET}
       CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
-      CLIENT_PORT: ${CLIENT_PORT}
     networks:
       - infra_api
       - infra_rabbit
@@ -54,7 +54,6 @@ services:
       CONTINUUM_LOGIN_PORT: ${CONTINUUM_LOGIN_PORT}
       CONTINUUM_LOGIN_JWT_SECRET: ${CONTINUUM_LOGIN_JWT_SECRET}
       AUTHENTICATION_URL: ${AUTHENTICATION_URL}
-      AUTHENTICATION_PORT: ${AUTHENTICATION_PORT}
     networks:
       - infra_api
 
@@ -79,14 +78,15 @@ services:
       - infra_api
 
   client:
-    image: liberoadmin/reviewer-client:latest
+    # image: liberoadmin/reviewer-client:latest
+    image: libero/reviewer-client:local
     ports:
       - "${CLIENT_PORT}:9000"
     environment:
       CLIENT_PORT: ${CLIENT_PORT}
       CLIENT_API_URL: ${CLIENT_API_URL}
-      CLIENT_API_PROXY_URL: "http://server:3000"
-      SERVER_PORT: ${SERVER_PORT}
+      CLIENT_API_PROXY_URL: "${CLIENT_API_PROXY_URL}"
+      CLIENT_AUTH_PROXY_URL: "${CLIENT_AUTH_PROXY_URL}"
       CONTINUUM_LOGIN_URL: ${CONTINUUM_LOGIN_URL}
     networks:
       - infra_api
