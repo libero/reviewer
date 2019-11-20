@@ -78,8 +78,7 @@ services:
       - infra_api
 
   client:
-    # image: liberoadmin/reviewer-client:latest
-    image: libero/reviewer-client:local
+    image: liberoadmin/reviewer-client:latest
     ports:
       - "${CLIENT_PORT}:9000"
     environment:
