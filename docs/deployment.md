@@ -37,11 +37,20 @@ Consult the documentation on each service for more information on how they can b
 
 TODO: move this somewhere else
 
-For staging and production environments, a journal configuration setting needs to be modified for the redirect after authentication.
+For journal authentication, a configuration setting needs to be set to ensure the redirect returns the user to the correct url after authentication. The following
+describe how to change this setting in each environment.
 
-For staging:
+#### Staging (journal environment: continuumtest):
 1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-continuumtest-public.sls#L58
 1. : Run https://alfred.elifesciences.org/job/test-journal/
+
+#### XPub staging (journal environment: continuumtestpreview)
+1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-continuumtestpreview-public.sls#L24
+1. : Run https://alfred.elifesciences.org/job/test-journal/
+
+#### Prod (journal environment: prod)
+1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-prod-public.sls#L75
+1. : Run https://alfred.elifesciences.org/job/prod-journal/
 
 ## Docker Compose
 
