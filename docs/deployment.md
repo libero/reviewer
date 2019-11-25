@@ -38,7 +38,7 @@ Consult the documentation on each service for more information on how they can b
 TODO: move this somewhere else
 
 For journal authentication, a configuration setting needs to be set to ensure the redirect returns the user to the correct url after authentication. The following
-describe how to change this setting in each environment.
+describe how to change this setting in each environment. Note that builder-configuration changes requires admin approval (@diversimix)
 
 #### Staging (journal environment: continuumtest):
 URL: https://continuumtest--cdn-journal.elifesciences.org/
@@ -48,7 +48,7 @@ URL: https://continuumtest--cdn-journal.elifesciences.org/
 
 #### XPub staging (journal environment: continuumtestpreview)
 URL: https://continuumtestpreview--journal.elifesciences.org/
-(this needs credentials, ask erez)
+(this needs credentials, ask @erezmus)
 
 1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-continuumtestpreview-public.sls#L24
 1. : Change https://github.com/elifesciences/elife-xpub/blob/develop/config/staging.js#L14-L19
