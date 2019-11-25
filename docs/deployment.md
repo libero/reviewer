@@ -33,6 +33,16 @@ Consult the documentation on each service for more information on how they can b
 
 * Audit (@libero/audit)
 
+### Journal login
+
+TODO: move this somewhere else
+
+For staging and production environments, a journal configuration setting needs to be modified for the redirect after authentication.
+
+For staging:
+1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-continuumtest-public.sls#L58
+1. : Run https://alfred.elifesciences.org/job/test-journal/
+
 ## Docker Compose
 
 The repository comes with several docker compose files and make commands to start up the services. We recommend that it be used for non production use.
