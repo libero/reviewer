@@ -41,14 +41,22 @@ For journal authentication, a configuration setting needs to be set to ensure th
 describe how to change this setting in each environment.
 
 #### Staging (journal environment: continuumtest):
+URL: https://continuumtest--cdn-journal.elifesciences.org/
+
 1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-continuumtest-public.sls#L58
 1. : Run https://alfred.elifesciences.org/job/test-journal/
 
 #### XPub staging (journal environment: continuumtestpreview)
+URL: https://continuumtestpreview--journal.elifesciences.org/
+(this needs credentials, ask erez)
+
 1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-continuumtestpreview-public.sls#L24
+1. : Change https://github.com/elifesciences/elife-xpub/blob/develop/config/staging.js#L14-L19
 1. : Run https://alfred.elifesciences.org/job/test-journal/
 
 #### Prod (journal environment: prod)
+URL: https://elifesciences.org
+
 1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-prod-public.sls#L75
 1. : Run https://alfred.elifesciences.org/job/prod-journal/
 
