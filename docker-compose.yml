@@ -58,7 +58,7 @@ services:
       - infra_api
 
   server:
-    image: libero/reviewer-submission:local
+    image: liberoadmin/reviewer-submission:latest
     ports:
       - "${SERVER_PORT}:3000"
     environment:
