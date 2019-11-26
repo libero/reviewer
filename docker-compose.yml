@@ -40,9 +40,9 @@ services:
     networks:
       - infra_api
       - infra_rabbit
-
+  # we use reviewer-mock for itsa mock journal /submit
   mock-continuum-login:
-    image: liberoadmin/mock-continuum-login
+    image: liberoadmin/reviewer-mocks
     ports:
       - "${CONTINUUM_LOGIN_PORT}:3003"
     healthcheck:
@@ -51,9 +51,9 @@ services:
       timeout: 10s
       retries: 3
     environment:
-      CONTINUUM_LOGIN_PORT: ${CONTINUUM_LOGIN_PORT}
-      CONTINUUM_LOGIN_JWT_SECRET: ${CONTINUUM_LOGIN_JWT_SECRET}
-      AUTHENTICATION_URL: ${AUTHENTICATION_URL}
+      PORT: "3003"
+      CONTINUUM_LOGIN_JWT_SECRET: "some_secret_from_journal"
+      CONTINUUM_LOGIN_REDIRECT_URL: "http://localhost:3001/authenticate"
     networks:
       - infra_api
 
