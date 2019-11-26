@@ -10,15 +10,13 @@ The dotenv library is used to load the .env file
 
 ## Server configuration
 
-### Listening Port
-* `SERVER_PORT`: sets the port number that the server listens to.
+Copy the example config files for the server
+```sh
+cp config/server/config.example.json config/server/config.json
+cp config/server/newrelic.example.js config/server/newrelic.js
+```
 
-### Database
-* `SERVER_DB_HOST`: hostname where the database can be reached.
-* `SERVER_DB_PORT`: port number to access database.
-* `SERVER_DB_USERNAME`: database username.
-* `SERVER_DB_PASSWORD`: database password.
-* `SERVER_DB_NAME` define database name.
+and amend the files as needed. For more details see the [Reviewer Submission documentation](https://github.com/libero/reviewer-submission/blob/master/docs/configuration.md)
 
 ### New Relic
 

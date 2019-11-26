@@ -62,17 +62,14 @@ services:
     ports:
       - "${SERVER_PORT}:3000"
     environment:
-      SERVER_PORT: ${SERVER_PORT}
-      DB_HOST: ${SERVER_DB_HOST}
-      DB_PORT: ${SERVER_DB_PORT}
-      DB_USERNAME: ${SERVER_DB_USERNAME}
-      DB_PASSWORD: ${SERVER_DB_PASSWORD}
-      DB_NAME: ${SERVER_DB_NAME}
+      NEW_RELIC_HOME: ${NEW_RELIC_HOME:-/etc/reviewer}
     healthcheck:
       test: "curl localhost:3000/health"
       interval: 1m
       timeout: 10s
       retries: 3
+    volumes:
+      - ./config/server:/etc/reviewer:z
     networks:
       - infra_postgres
       - infra_api
