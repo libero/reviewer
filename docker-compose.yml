@@ -62,14 +62,14 @@ services:
     ports:
       - "${SERVER_PORT}:3000"
     environment:
-      NEW_RELIC_HOME: ${NEW_RELIC_HOME:-/config}
+      NEW_RELIC_HOME: ${NEW_RELIC_HOME:-/etc/reviewer}
     healthcheck:
       test: "curl localhost:3000/health"
       interval: 1m
       timeout: 10s
       retries: 3
     volumes:
-      - ./config/server:/config/:z
+      - ./config/server:/etc/reviewer:z
     networks:
       - infra_postgres
       - infra_api
