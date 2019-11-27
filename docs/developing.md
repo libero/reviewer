@@ -8,7 +8,7 @@ Setup the configuration by running
 make setup
 ```
 
-This should get you started with a [default configuration](../.env.example) that works out of the box. Refer to the
+This should get you started with a [default env configuration](../.env.example), [config json file](../config/server/config.example.json) and [newrelic config file](../config/server/newrelic.example.js) that works out of the box. Refer to the
 [Configuration documentation](./configuration.md) for a more detailed description.
 
 
