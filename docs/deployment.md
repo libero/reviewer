@@ -33,6 +33,34 @@ Consult the documentation on each service for more information on how they can b
 
 * Audit (@libero/audit)
 
+### Journal login
+
+TODO: move this somewhere else
+
+For journal authentication, a configuration setting needs to be set to ensure the redirect returns the user to the correct url after authentication. The following
+describe how to change this setting in each environment. Note that builder-configuration changes requires admin approval (@diversemix)
+
+#### Staging (journal environment: continuumtest):
+URL: https://continuumtest--cdn-journal.elifesciences.org/
+
+1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-continuumtest-public.sls#L58
+1. : Run https://alfred.elifesciences.org/job/test-journal/
+
+#### XPub staging (journal environment: continuumtestpreview)
+URL: https://continuumtestpreview--journal.elifesciences.org/
+(this needs credentials, ask @erezmus)
+
+1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-continuumtestpreview-public.sls#L24
+1. : Change https://github.com/elifesciences/elife-xpub/blob/develop/config/staging.js#L14-L19
+1. : Wait for https://alfred.elifesciences.org/job/test-elife-xpub-source-repository and https://alfred.elifesciences.org/job/test-elife-xpub
+1. : Run https://alfred.elifesciences.org/job/test-journal/
+
+#### Prod (journal environment: prod)
+URL: https://elifesciences.org
+
+1. : Change https://github.com/elifesciences/builder-configuration/blob/master/pillar/environment-prod-public.sls#L75
+1. : Run https://alfred.elifesciences.org/job/prod-journal/
+
 ## Docker Compose
 
 The repository comes with several docker compose files and make commands to start up the services. We recommend that it be used for non production use.
