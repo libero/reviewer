@@ -52,7 +52,7 @@ services:
       retries: 3
     environment:
       PORT: "3003"
-      CONTINUUM_LOGIN_JWT_SECRET: "${AUTHENTICATION_JWT_SECRET}"
+      CONTINUUM_LOGIN_JWT_SECRET: "${CONTINUUM_LOGIN_JWT_SECRET}"
       CONTINUUM_LOGIN_REDIRECT_URL: "${AUTHENTICATION_URL}"
     networks:
       - infra_api
