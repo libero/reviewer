@@ -14,6 +14,7 @@ start:
 
 setup:
 	if [ ! -e .env ] ; then ln -s .env.example .env ; fi
+	if [ ! -e ./config/audit/config.json ] ; then cp config/audit/config.example.json config/audit/config.json ; fi
 	if [ ! -e ./config/server/config.json ] ; then cp config/server/config.example.json config/server/config.json ; fi
 	if [ ! -e ./config/server/newrelic.js ] ; then cp config/server/newrelic.example.js config/server/newrelic.js ; fi
 	git submodule init

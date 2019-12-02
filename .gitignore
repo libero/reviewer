@@ -84,5 +84,5 @@ dist/
 # config
 config/**/*.json
 config/**/*.js
-!config/server/config.example.json
+!config/**/config.*.json
 !config/server/newrelic.example.js
