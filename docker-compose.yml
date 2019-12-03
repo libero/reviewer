@@ -10,13 +10,8 @@ services:
       interval: 1m
       timeout: 10s
       retries: 3
-    environment:
-      RABBITMQ_URL: ${RABBITMQ_URL}
-      DB_HOST: ${AUDIT_DB_HOST}
-      DB_USERNAME: ${AUDIT_DB_USERNAME}
-      DB_PASSWORD: ${AUDIT_DB_PASSWORD}
-      DB_PORT: ${AUDIT_DB_PORT}
-      DB_NAME: ${AUDIT_DB_NAME}
+    volumes:
+      - ./config/audit:/etc/audit:z
     networks:
       - infra_api
       - infra_rabbit
