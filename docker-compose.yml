@@ -36,8 +36,8 @@ services:
     networks:
       - infra_api
       - infra_rabbit
-  # we use reviewer-mock for itsa mock journal /submit
-  mock-continuum-login:
+
+  reviewer-mocks:
     image: liberoadmin/reviewer-mocks
     ports:
       - "${CONTINUUM_LOGIN_PORT}:3003"
