@@ -1,0 +1,7 @@
+{
+    "port": 9000,
+    "client_api_proxy_url": "http://reviewer-mocks:3003/graphql",
+    "client_token_exchange_proxy_url": "http://reviewer-mocks:3003/authenticate/",
+    "new_relic_client_license_key": "",
+    "new_relic_client_app_id": ""
+}

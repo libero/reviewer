@@ -1,0 +1,5 @@
+{
+    "client_login_url": "http://localhost:3003/submit",
+    "client_api_url": "http://localhost:9000"
+    
+}
