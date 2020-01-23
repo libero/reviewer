@@ -19,8 +19,8 @@ services:
       - infra_rabbit
       - infra_postgres
 
-  continuum-auth:
-    image: liberoadmin/continuum-auth:latest
+  continuum-adaptor:
+    image: liberoadmin/continuum-adaptor:latest
     ports:
       - "${AUTHENTICATION_PORT}:3001"
     healthcheck:
@@ -29,7 +29,7 @@ services:
       timeout: 10s
       retries: 3
     volumes:
-      - ./config/continuum-auth:/etc/reviewer:z
+      - ./config/continuum-adaptor:/etc/reviewer:z
     networks:
       - infra_api
       - infra_rabbit
