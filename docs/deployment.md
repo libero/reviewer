@@ -19,7 +19,7 @@ The following services are required to have a basic working system. Each service
 Note: this will probably change once we add config service
 
 * Client ([@libero/reviewer-client](https://github.com/libero/reviewer-client))
-* Authentication ([@libero/continuum-auth](https://github.com/libero/continuum-auth))
+* Authentication ([@libero/continuum-adaptor](https://github.com/libero/continuum-adaptor))
 * Submission ([@libero/reviewer-submission](https://github.com/libero/reviewer-submission))
 
 The `reviewer-client` service may need to proxy api requests to the `review-submission` service so this needs to be configured in your infrastructure
