@@ -3,10 +3,9 @@
     "rabbitmq_url": "rabbitmq",
     "database": {
         "type": "pg",
-        "name": "reviewer_audit",
         "host": "postgres",
         "username": "postgres",
-        "database": "postgres",
+        "database": "reviewer_audit",
         "port": 5432
     }
 }
