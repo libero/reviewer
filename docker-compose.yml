@@ -33,6 +33,7 @@ services:
     networks:
       - infra_api
       - infra_rabbit
+      - infra_postgres
 
   reviewer-mocks:
     image: liberoadmin/reviewer-mocks:latest

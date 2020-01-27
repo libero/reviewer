@@ -5,5 +5,15 @@
     "login_return_url": "http://localhost:9000/login",
     "authentication_jwt_secret": "super_secret_jam",
     "continuum_jwt_secret": "some_secret_from_journal",
-    "continuum_api_url": "http://reviewer-mocks:3003"
+    "continuum_api_url": "http://reviewer-mocks:3003",
+    "knex": {
+        "client": "pg",
+        "connection": {
+            "host": "postgres",
+            "database": "reviewer_continuum_adaptor",
+            "user": "postgres",
+            "password": "postgres",
+            "port": 5432
+        }
+    }
 }
