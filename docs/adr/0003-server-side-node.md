@@ -16,7 +16,9 @@ ECMA script to target.
 
 From [here](https://kangax.github.io/compat-table/es2016plus/#node12_11)
 
-The suggestion is to use node v12.15.0 and target "ES2019" in your `tsconfig.json`.
+The suggestion is to use node v12 and target "ES2019" in your `tsconfig.json`.
+
+The minor node version will be updated to match the minor version of the Alpine docker image (currently 12.15)
 
 ### Discussion
 
