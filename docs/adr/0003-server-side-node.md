@@ -16,7 +16,7 @@ ECMA script to target.
 
 From [here](https://kangax.github.io/compat-table/es2016plus/#node12_11)
 
-The suggestion is to use node v12.15.0 and target "ES2019" in your `tsconfig.json` for server components and "ES5" for client components,
+The suggestion is to use node v12.15.0 and target "ES2019" in your `tsconfig.json`.
 
 ### Discussion
 
