@@ -1,10 +1,10 @@
-# 0003. Servcer Side Node Standards
+# 0003. Server Side Node Standards
 
 Date: 2020-01-21
 
 ## Status
 
-Suggested
+Accepted
 
 ## Context
 
