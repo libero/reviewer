@@ -1,17 +1,14 @@
 version: '3'
 services:
-
   audit:
     image: liberoadmin/audit:latest
     ports:
-      - "${AUDIT_PORT}:3004"
+      - "3004:3004"
     healthcheck:
       test: "curl localhost:3004/health"
       interval: 1m
       timeout: 10s
       retries: 3
-    environment: 
-      CONFIG_PATH: /etc/reviewer/config.json
     volumes:
       - ./config/audit:/etc/reviewer:z
     networks:
@@ -22,7 +19,7 @@ services:
   continuum-adaptor:
     image: liberoadmin/continuum-adaptor:latest
     ports:
-      - "${AUTHENTICATION_PORT}:3001"
+      - "3001:3001"
     healthcheck:
       test: "curl localhost:3001/health"
       interval: 1m
@@ -38,7 +35,7 @@ services:
   reviewer-mocks:
     image: liberoadmin/reviewer-mocks:latest
     ports:
-      - "${CONTINUUM_LOGIN_PORT}:3003"
+      - "3003:3003"
     healthcheck:
       test: "curl localhost:3003/health"
       interval: 1m
@@ -49,10 +46,10 @@ services:
     networks:
       - infra_api
 
-  server:
+  submission:
     image: liberoadmin/reviewer-submission:latest
     ports:
-      - "${SERVER_PORT}:3000"
+      - "3000:3000"
     environment:
       NEW_RELIC_HOME: ${NEW_RELIC_HOME:-/etc/reviewer}
     healthcheck:
@@ -61,7 +58,7 @@ services:
       timeout: 10s
       retries: 3
     volumes:
-      - ./config/server:/etc/reviewer:z
+      - ./config/submission:/etc/reviewer:z
     networks:
       - infra_postgres
       - infra_api
@@ -69,12 +66,11 @@ services:
   client:
     image: liberoadmin/reviewer-client:latest
     ports:
-      - "${CLIENT_PORT}:9000"
+      - "9000:9000"
     volumes:
       - ./config/client:/etc/reviewer:z
     networks:
       - infra_api
-    depends_on: ["server"]
 
 networks:
   infra_postgres:

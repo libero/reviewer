@@ -1,13 +1,18 @@
 version: '3'
 services:
   postgres:
-    image: postgres:11
+    image: liberoadmin/reviewer-xpub-postgres:latest
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5432:5432"
     networks:
       - infra_postgres
     volumes:
       - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 30s
+      retries: 10
 
   rabbitmq:
     image: rabbitmq:3-management

@@ -5,7 +5,7 @@
         "type": "pg",
         "host": "postgres",
         "username": "postgres",
-        "database": "reviewer_audit",
+        "database": "postgres",
         "port": 5432
     }
 }

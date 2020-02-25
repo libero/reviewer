@@ -10,7 +10,7 @@
         "client": "pg",
         "connection": {
             "host": "postgres",
-            "database": "reviewer_continuum_adaptor",
+            "database": "postgres",
             "user": "postgres",
             "password": "postgres",
             "port": 5432
