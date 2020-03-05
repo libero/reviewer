@@ -78,7 +78,7 @@ docker-compose.override.yml
 
 # generated code
 *.tmp.ts
-data/
+.data/
 dist/
 
 # config
