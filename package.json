@@ -7,8 +7,8 @@
   "author": "diversemix <diversemix@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test:e2e": "tsc -p tests/tsconfig.json && yarn nightwatch",
-    "test:e2e-headless": "tsc -p tests/tsconfig.json && yarn nightwatch --headless"
+    "test:integration": "tsc -p tests/tsconfig.json && yarn nightwatch",
+    "test:integration-headless": "tsc -p tests/tsconfig.json && yarn nightwatch --headless"
   },
   "dependencies": {
     "chromedriver": "^80.0.1",

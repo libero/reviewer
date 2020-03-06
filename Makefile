@@ -51,7 +51,7 @@ clean_databases:
 follow_logs:
 	-docker-compose -f docker-compose.yml logs -f
 
-test_e2e: stop setup
+test_integration: stop setup
 	$(MAKE) create_networks
 	-${DOCKER_COMPOSE_INFRA} up -d
 	./.scripts/docker/wait-healthy.sh reviewer_postgres_1 20
@@ -60,4 +60,4 @@ test_e2e: stop setup
 	./.scripts/docker/wait-healthy.sh reviewer_reviewer-mocks_1 30
 	./.scripts/docker/wait-healthy.sh reviewer_submission_1 20
 	./.scripts/docker/wait-healthy.sh reviewer_client_1 20
-	yarn test:e2e
+	yarn test:integration
