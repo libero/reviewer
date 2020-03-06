@@ -51,7 +51,7 @@ clean_databases:
 follow_logs:
 	-docker-compose -f docker-compose.yml logs -f
 
-test_integration: stop setup
+test_integration: setup
 	$(MAKE) create_networks
 	-${DOCKER_COMPOSE_INFRA} up -d
 	./.scripts/docker/wait-healthy.sh reviewer_postgres_1 20
