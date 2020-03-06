@@ -1,7 +1,7 @@
 DOCKER_COMPOSE = docker-compose
 DOCKER_COMPOSE_INFRA = docker-compose -f docker-compose.infra.yml
 
-stop: 
+stop:
 	docker-compose down
 	docker-compose -f docker-compose.infra.yml down
 	docker network rm infra_postgres
@@ -51,3 +51,13 @@ clean_databases:
 follow_logs:
 	-docker-compose -f docker-compose.yml logs -f
 
+test_e2e: stop setup
+	$(MAKE) create_networks
+	-${DOCKER_COMPOSE_INFRA} up -d
+	./.scripts/docker/wait-healthy.sh reviewer_postgres_1 20
+	./.scripts/docker/wait-healthy.sh reviewer_s3_1 30
+	${DOCKER_COMPOSE} up -d
+	./.scripts/docker/wait-healthy.sh reviewer_reviewer-mocks_1 30
+	./.scripts/docker/wait-healthy.sh reviewer_submission_1 20
+	./.scripts/docker/wait-healthy.sh reviewer_client_1 20
+	yarn test:e2e

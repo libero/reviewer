@@ -5,8 +5,8 @@ services:
     ports:
       - "3004:3004"
     healthcheck:
-      test: "curl localhost:3004/health"
-      interval: 1m
+      test: 'echo -e "GET /health\n\n" | nc localhost:3004'
+      interval: 2s
       timeout: 10s
       retries: 3
     volumes:
@@ -21,8 +21,8 @@ services:
     ports:
       - "3001:3001"
     healthcheck:
-      test: "curl localhost:3001/health"
-      interval: 1m
+      test: 'echo -e "GET /health\n\n" | nc localhost:3001'
+      interval: 2s
       timeout: 10s
       retries: 3
     volumes:
@@ -37,8 +37,8 @@ services:
     ports:
       - "3003:3003"
     healthcheck:
-      test: "curl localhost:3003/health"
-      interval: 1m
+      test: 'echo -e "GET /health\n\n" | nc localhost:3003'
+      interval: 2s
       timeout: 10s
       retries: 3
     volumes:
@@ -53,8 +53,8 @@ services:
     environment:
       NEW_RELIC_HOME: ${NEW_RELIC_HOME:-/etc/reviewer}
     healthcheck:
-      test: "curl localhost:3000/health"
-      interval: 1m
+      test: 'echo -e "GET /health\n\n" | nc localhost:3000'
+      interval: 2s
       timeout: 10s
       retries: 3
     volumes:
@@ -65,6 +65,8 @@ services:
 
   client:
     image: liberoadmin/reviewer-client:latest
+    healthcheck:
+      interval: 2s
     ports:
       - "9000:9000"
     volumes:

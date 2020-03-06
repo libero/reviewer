@@ -87,3 +87,7 @@ config/**/*.js
 !config/**/config.example.json
 !config/client/config.*.example.json
 !config/server/newrelic.example.js
+
+# Browser test compiled js files and output
+tests/**/*.js
+tests/output

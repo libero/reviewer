@@ -6,8 +6,10 @@ services:
       - "5432:5432"
     networks:
       - infra_postgres
-    volumes:
-      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 2s
@@ -80,7 +82,7 @@ services:
       /usr/bin/mc policy set public submission/test;
       exit 0;
       "
-      
+
 networks:
   infra_postgres:
     external:
