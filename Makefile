@@ -21,6 +21,7 @@ create_networks:
 setup:
 	$(MAKE) setup_gitmodules
 	$(MAKE) setup_config
+	$(MAKE) setup_yarn
 
 setup_config:
 	if [ ! -e ./config/audit/config.json ] ; then cp config/audit/config.example.json config/audit/config.json ; fi
@@ -42,6 +43,9 @@ clean_config:
 
 setup_gitmodules:
 	git submodule update --init --recursive
+
+setup_yarn:
+	yarn install
 
 clean_databases:
 	$(MAKE) create_networks

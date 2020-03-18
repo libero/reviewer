@@ -25,7 +25,7 @@ The development environment uses a number of `docker-compose` files to bootstrap
 make setup
 ```
 
-This will setup the .scripts submodule as well as create configuration files for each service.
+This will setup the .scripts submodule as well as create configuration files for each service and run `yarn install`.
 
 Then run start task:
 ```sh
@@ -49,6 +49,11 @@ make clean_config
 The clean_databases task will clear all the database volumes
 ```sh
 make clean_databases
+```
+
+Run the integration tests using headless chrome.
+```sh
+make test_integration
 ```
 
 
