@@ -30,6 +30,7 @@ setup_config:
 	if [ ! -e ./config/continuum-adaptor/config.json ] ; then cp config/continuum-adaptor/config.example.json config/continuum-adaptor/config.json ; fi
 	if [ ! -e ./config/reviewer-mocks/config.json ] ; then cp config/reviewer-mocks/config.example.json config/reviewer-mocks/config.json ; fi
 	if [ ! -e ./config/submission/config.json ] ; then cp config/submission/config.example.json config/submission/config.json ; fi
+	if [ ! -e ./config/submission/config.client.json ] ; then cp config/submission/config.client.example.json config/submission/config.client.json ; fi
 	if [ ! -e ./config/submission/newrelic.js ] ; then cp config/submission/newrelic.example.js config/submission/newrelic.js ; fi
 
 clean_config:

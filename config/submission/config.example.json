@@ -17,6 +17,7 @@
         "fileBucket": "test",
         "awsEndPoint": "http://s3:9000"
     },
+    "max_file_size_in_bytes": 100000000,
     "authentication_jwt_secret": "super_secret_jam",
     "user_adapter_url": "http://continuum-adaptor:3001/current-user",
     "max_ql_complexity": 100,
