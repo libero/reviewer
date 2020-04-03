@@ -13,5 +13,9 @@ jobs:
       - uses: actions/checkout@v1
         with:
           submodules: true
-      - name: Start services & Run Integration tests
+      - name: Integration Tests on stable
         run: make test_integration
+      - name: Integration Tests on master-images
+        run: |
+          make stop
+          make test_integration_master
