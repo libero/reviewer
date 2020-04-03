@@ -1,7 +1,7 @@
 version: '3'
 services:
   audit:
-    image: liberoadmin/audit:latest
+    image: liberoadmin/audit:master-2df882b7b12aee57c6ebbe75190f3ccb7e453eb5
     ports:
       - "3004:3004"
     healthcheck:
@@ -17,7 +17,7 @@ services:
       - infra_postgres
 
   continuum-adaptor:
-    image: liberoadmin/continuum-adaptor:latest
+    image: liberoadmin/continuum-adaptor:master-2f1452195844bad43e9123ff519144abc544d3fc
     ports:
       - "3001:3001"
     healthcheck:
@@ -33,7 +33,7 @@ services:
       - infra_postgres
 
   reviewer-mocks:
-    image: liberoadmin/reviewer-mocks:latest
+    image: liberoadmin/reviewer-mocks:master-c0e27261cb41d0c4d33c5859957573dd6a33a860
     ports:
       - "3003:3003"
     healthcheck:
@@ -47,7 +47,7 @@ services:
       - infra_api
 
   submission:
-    image: liberoadmin/reviewer-submission:latest
+    image: liberoadmin/reviewer-submission:master-32603a293b3f301f609b485b42c51bf3c8ef66af
     ports:
       - "3000:3000"
     environment:
@@ -64,7 +64,7 @@ services:
       - infra_api
 
   client:
-    image: liberoadmin/reviewer-client:latest
+    image: liberoadmin/reviewer-client:master-96e022755877bdae69b2e48a88277280bca500e1
     healthcheck:
       interval: 2s
     ports:
