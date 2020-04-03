@@ -5,14 +5,14 @@
   ],
   "packageRules": [
     {
-      "managers": ["dockerfile", "docker-compose"],
+      "paths": ["docker-compose.master.yml"],
       "packagePatterns": ["^libero"],
-      "versioning": "regex:^master-(?<patch>\\w+)$"
+      "versioning": "regex:^(?<compatibility>\\w+)-(?<hash>\\w+)$"
     },
     {
-      "managers": ["dockerfile", "docker-compose"],
+      "paths": ["docker-compose.infra.yml"],
       "packagePatterns": ["^minio"],
-      "versioning": "regex:^RELEASE\\.(?<patch>\\.+)$"
+      "versioning": "regex:^(?<compatibility>\\w+)"
     }
   ]
 }
