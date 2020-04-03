@@ -2,5 +2,15 @@
   "extends": [
     "config:base",
     ":automergeAll"
+  ],
+  "packageRules": [
+    {
+      "packageNames": ["^libero"],
+      "versioning": "regex:^master-(?<patch>\\w+)$"
+    },
+    {
+      "packageNames": ["^minio"],
+      "versioning": "regex:^RELEASE\\.(?<patch>\\.+)$"
+    }
   ]
 }
