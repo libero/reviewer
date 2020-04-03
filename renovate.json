@@ -5,14 +5,8 @@
   ],
   "packageRules": [
     {
-      "paths": ["docker-compose.master.yml"],
-      "packagePatterns": ["^libero"],
-      "versioning": "regex:^(?<compatibility>\\w+)-(?<hash>\\w+)$"
-    },
-    {
-      "paths": ["docker-compose.infra.yml"],
-      "packagePatterns": ["^minio"],
-      "versioning": "regex:^(?<compatibility>\\w+)"
+      "packagePatterns": ["^libero", "^minio"],
+      "versioning": "loose"
     }
   ]
 }
