@@ -5,8 +5,13 @@
   ],
   "packageRules": [
     {
-      "packagePatterns": ["^libero", "^minio"],
+      "packagePatterns": ["^minio"],
       "versioning": "loose"
+    },
+    {
+      "paths": ["docker-compose.master.yml"],
+      "packagePatterns": ["^libero"],
+      "versioning": "git"
     }
   ]
 }
