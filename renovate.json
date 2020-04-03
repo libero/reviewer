@@ -5,11 +5,13 @@
   ],
   "packageRules": [
     {
-      "packageNames": ["^libero"],
+      "managers": ["dockerfile", "docker-compose"],
+      "packagePatterns": ["^libero"],
       "versioning": "regex:^master-(?<patch>\\w+)$"
     },
     {
-      "packageNames": ["^minio"],
+      "managers": ["dockerfile", "docker-compose"],
+      "packagePatterns": ["^minio"],
       "versioning": "regex:^RELEASE\\.(?<patch>\\.+)$"
     }
   ]
