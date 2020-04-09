@@ -9,9 +9,9 @@
       "versioning": "regex:^RELEASE\\.(?<major>\\d{4})-(?<minor>\\d{2})-(?<patch>\\d{2})"
     },
     {
-      "paths": ["docker-compose.master.yml"],
+      "paths": ["docker-compose.yml"],
       "packagePatterns": ["^libero"],
-      "versioning": "git"
+      "versioning": "regex:^(?<compatibility>\\w+)-(?<hash>\\w{40})-(?<minor>\\d{8})\\.(?<patch>\\d{4})$"
     }
   ]
 }
