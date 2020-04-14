@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v1
         with:
           submodules: true
-      - name: Integration Tests on stable
+      - name: Integration Tests on latest semver
         run: make test_integration
       - name: Integration Tests on master-images
         run: |
