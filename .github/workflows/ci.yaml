@@ -15,6 +15,15 @@ jobs:
           submodules: true
       - name: Integration Tests on latest semver
         run: make test_integration
+      - name: Notify slack
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: libero-reviewer-tech
+          status: FAILED
+          color: danger
 
   ci-master:
     runs-on: ubuntu-latest
@@ -25,3 +34,12 @@ jobs:
       - name: Integration Tests on master-images
         run: |
           make test_integration_master
+      - name: Notify slack
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: libero-reviewer-tech
+          status: FAILED
+          color: warning
