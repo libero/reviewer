@@ -50,7 +50,7 @@ services:
       - ./.data/etcd:/etcd-data
 
   s3:
-    image: minio/minio:RELEASE.2020-03-25T07-03-04Z@sha256:5e96d539583afd9a7da14e0d9bf2360d316e4e8219659d82b8ef106a9d75b16c
+    image: minio/minio:RELEASE.2020-03-25T07-03-04Z
     ports:
       - "9004:9000"
     volumes:
@@ -68,7 +68,7 @@ services:
       retries: 10
 
   s3_create-bucket:
-    image: minio/mc:RELEASE.2020-03-14T01-23-37Z@sha256:571feb12447644c6fc91aa0364a639e308f4e3d6f827558a41254f0b7a648097
+    image: minio/mc:RELEASE.2020-03-14T01-23-37Z
     depends_on:
       - s3
     networks:
