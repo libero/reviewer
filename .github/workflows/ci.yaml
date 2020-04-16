@@ -32,8 +32,7 @@ jobs:
         with:
           submodules: true
       - name: Integration Tests on master-images
-        run: |
-          make test_integration_master
+        run: make test_integration_master
       - name: Notify slack
         if: failure()
         env:
