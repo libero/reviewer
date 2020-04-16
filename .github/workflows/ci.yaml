@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  integration-tests:
+  ci-semver:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -15,7 +15,13 @@ jobs:
           submodules: true
       - name: Integration Tests on latest semver
         run: make test_integration
+
+  ci-master:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
       - name: Integration Tests on master-images
         run: |
-          make stop
           make test_integration_master
