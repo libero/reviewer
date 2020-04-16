@@ -13,7 +13,7 @@
     {
       "paths": ["docker-compose.yml"],
       "packagePatterns": ["^libero"],
-      "versioning": "semver"
+      "versioning": "docker"
     },
     {
       "paths": ["docker-compose.master.yml"],
