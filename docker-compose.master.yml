@@ -17,7 +17,7 @@ services:
       - infra_postgres
 
   continuum-adaptor:
-    image: liberoadmin/continuum-adaptor:master-2ffc7599-20200414.1004
+    image: liberoadmin/continuum-adaptor:master-02247467-20200416.1439
     ports:
       - "3001:3001"
     healthcheck:
