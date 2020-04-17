@@ -12,7 +12,7 @@
     },
     {
       "paths": ["docker-compose.yml"],
-      "versioning": "docker"
+      "enabled": false
     },
     {
       "paths": ["docker-compose.master.yml"],
