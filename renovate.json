@@ -12,12 +12,10 @@
     },
     {
       "paths": ["docker-compose.yml"],
-      "packagePatterns": ["^libero"],
       "versioning": "docker"
     },
     {
       "paths": ["docker-compose.master.yml"],
-      "packagePatterns": ["^libero"],
       "versioning": "regex:^(?<compatibility>\\w+)-(?<hash>\\w{8})-(?<minor>\\d{8})\\.(?<patch>\\d{4})$"
     }
   ],
