@@ -13,7 +13,7 @@
     },
     {
       "paths": ["docker-compose.yml"],
-      "enabled": false
+      "versioning": "semver"
     },
     {
       "paths": ["docker-compose.master.yml"],
