@@ -1,6 +1,5 @@
 DOCKER_COMPOSE = docker-compose
 DOCKER_COMPOSE_INFRA = docker-compose -f docker-compose.infra.yml
-NUM_CONTAINERS = 8
 
 stop:
 	docker-compose down
@@ -57,22 +56,31 @@ clean_databases:
 follow_logs:
 	-docker-compose -f docker-compose.yml logs -f
 
-wait_healthy:
+wait_healthy_infra:
 	./.scripts/docker/wait-healthy.sh reviewer_postgres_1 20
 	./.scripts/docker/wait-healthy.sh reviewer_s3_1 30
+	./.scripts/docker/wait-healthy.sh reviewer_etcd1_1 120
+	# no health -> ./.scripts/docker/wait-healthy.sh reviewer_rabbitmq_1 30
+
+wait_healthy_apps:
 	./.scripts/docker/wait-healthy.sh reviewer_reviewer-mocks_1 30
 	./.scripts/docker/wait-healthy.sh reviewer_submission_1 20
 	./.scripts/docker/wait-healthy.sh reviewer_client_1 20
+	./.scripts/docker/wait-healthy.sh reviewer_audit_1 20
+	./.scripts/docker/wait-healthy.sh reviewer_continuum-adaptor_1 20
 
 test_integration: setup
 	$(MAKE) create_networks
 	-${DOCKER_COMPOSE_INFRA} up -d
+	make wait_healthy_infra
 	${DOCKER_COMPOSE} up -d
-	while [ `docker ps | grep healthy | wc -l` != $(NUM_CONTAINERS) ] ; do sleep 1 ; echo -n .;done
+	make wait_healthy_apps
 	yarn test:integration
 
 test_integration_master: setup
 	$(MAKE) create_networks
 	-${DOCKER_COMPOSE_INFRA} up -d
+	make wait_healthy_infra
 	${DOCKER_COMPOSE} -f docker-compose.master.yml up -d
+	make wait_healthy_apps
 	yarn test:integration
