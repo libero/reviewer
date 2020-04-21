@@ -17,7 +17,7 @@ services:
       retries: 10
 
   rabbitmq:
-    image: rabbitmq:3-management@sha256:b8c1931de32fbeb3f2a90d357b00d2294ede2dfe4cc3a113068f76097ad76136
+    image: rabbitmq:3-management@sha256:fa77db097ae1440cfc9b47ba70764f6699505cb4dc8816ae9af9ef54fd2540dd
     ports:
       - "15672:15672"
       - "5672:5672"
