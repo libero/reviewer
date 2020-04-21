@@ -1,5 +1,6 @@
 DOCKER_COMPOSE = docker-compose
 DOCKER_COMPOSE_INFRA = docker-compose -f docker-compose.infra.yml
+NUM_CONTAINERS = 8
 
 stop:
 	docker-compose down
@@ -67,6 +68,7 @@ test_integration: setup
 	$(MAKE) create_networks
 	-${DOCKER_COMPOSE_INFRA} up -d
 	${DOCKER_COMPOSE} up -d
+	while [ `docker ps | grep healthy | wc -l` != $(NUM_CONTAINERS) ] ; do sleep 1 ; echo -n .;done
 	yarn test:integration
 
 test_integration_master: setup
