@@ -33,7 +33,7 @@ services:
       - infra_postgres
 
   reviewer-mocks:
-    image: liberoadmin/reviewer-mocks:master-35e264f4-20200420.1511
+    image: liberoadmin/reviewer-mocks:master-f42fd268-20200429.1020
     ports:
       - "3003:3003"
     healthcheck:
