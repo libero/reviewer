@@ -47,7 +47,7 @@ services:
       - infra_api
 
   submission:
-    image: liberoadmin/reviewer-submission:master-d215cfc6-20200504.0840
+    image: liberoadmin/reviewer-submission:master-dfafec51-20200505.0850
     ports:
       - "3000:3000"
     environment:
