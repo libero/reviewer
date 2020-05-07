@@ -1,7 +1,0 @@
-{
-    "port": 9000,
-    "client_api_proxy_url": "http://submission:3000/graphql",
-    "client_token_exchange_proxy_url": "http://continuum-adaptor:3001/authenticate/",
-    "new_relic_client_license_key": "",
-    "new_relic_client_app_id": ""
-}

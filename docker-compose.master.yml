@@ -57,8 +57,6 @@ services:
       interval: 2s
       timeout: 10s
       retries: 3
-    volumes:
-      - ./config/submission:/etc/reviewer:z
     networks:
       - infra_postgres
       - infra_api
@@ -69,8 +67,6 @@ services:
       interval: 2s
     ports:
       - "9000:9000"
-    volumes:
-      - ./config/client:/etc/reviewer:z
     networks:
       - infra_api
 

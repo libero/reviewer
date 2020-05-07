@@ -25,22 +25,13 @@ setup:
 
 setup_config:
 	if [ ! -e ./config/audit/config.json ] ; then cp config/audit/config.example.json config/audit/config.json ; fi
-	if [ ! -e ./config/client/config.public.json ] ; then cp config/client/config.public.example.json config/client/config.public.json ; fi
-	if [ ! -e ./config/client/config.infra.json ] ; then cp config/client/config.infra.example.json config/client/config.infra.json ; fi
 	if [ ! -e ./config/continuum-adaptor/config.json ] ; then cp config/continuum-adaptor/config.example.json config/continuum-adaptor/config.json ; fi
 	if [ ! -e ./config/reviewer-mocks/config.json ] ; then cp config/reviewer-mocks/config.example.json config/reviewer-mocks/config.json ; fi
-	if [ ! -e ./config/submission/config.json ] ; then cp config/submission/config.example.json config/submission/config.json ; fi
-	if [ ! -e ./config/submission/config.client.json ] ; then cp config/submission/config.client.example.json config/submission/config.client.json ; fi
-	if [ ! -e ./config/submission/newrelic.js ] ; then cp config/submission/newrelic.example.js config/submission/newrelic.js ; fi
 
 clean_config:
 	rm config/audit/config.json
-	rm config/client/config.public.json
-	rm config/client/config.infra.json
 	rm config/continuum-adaptor/config.json
 	rm config/reviewer-mocks/config.json
-	rm config/submission/config.json
-	rm config/submission/newrelic.js
 
 setup_gitmodules:
 	git submodule update --init --recursive
