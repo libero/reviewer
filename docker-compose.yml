@@ -1,23 +1,7 @@
 version: '3'
 services:
-  audit:
-    image: liberoadmin/audit:0.0.2
-    ports:
-      - "3004:3004"
-    healthcheck:
-      test: 'echo -e "GET /health\n\n" | nc localhost:3004'
-      interval: 2s
-      timeout: 10s
-      retries: 3
-    volumes:
-      - ./config/audit:/etc/reviewer:z
-    networks:
-      - infra_api
-      - infra_rabbit
-      - infra_postgres
-
   continuum-adaptor:
-    image: liberoadmin/continuum-adaptor:0.0.3
+    image: liberoadmin/continuum-adaptor:0.0.4
     ports:
       - "3001:3001"
     healthcheck:
@@ -25,15 +9,25 @@ services:
       interval: 2s
       timeout: 10s
       retries: 3
-    volumes:
-      - ./config/continuum-adaptor:/etc/reviewer:z
+    environment: 
+      PORT: 3001
+      LOGIN_URL: http://localhost:9000/submit
+      LOGIN_RETURN_URL: http://localhost:9000/login
+      AUTHENTICATION_JWT_SECRET: super_secret_jam
+      CONTINUUM_JWT_SECRET: some_secret_from_journal
+      CONTINUUM_API_URL: http://reviewer-mocks:3003
+      DATABASE_NAME: postgres
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      ELIFE_API_GATEWAY_SECRET: ${ELIFE_API_GATEWAY_SECRET}
     networks:
       - infra_api
-      - infra_rabbit
       - infra_postgres
 
   reviewer-mocks:
-    image: liberoadmin/reviewer-mocks:0.0.4
+    image: liberoadmin/reviewer-mocks:0.0.5
     ports:
       - "3003:3003"
     healthcheck:
@@ -47,32 +41,61 @@ services:
       - infra_api
 
   submission:
-    image: liberoadmin/reviewer-submission:0.0.2
+    image: liberoadmin/reviewer-submission:0.0.3
     ports:
       - "3000:3000"
     environment:
-      NEW_RELIC_HOME: ${NEW_RELIC_HOME:-/etc/reviewer}
+      NEW_RELIC_HOME: /etc/reviewer
+      DATABASE_NAME: postgres
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      S3_AWS_ENDPOINT: http://s3:9000
+      S3_ACCESS_KEY_ID: minio
+      S3_SECRET_ACCESS_KEY: minio123
+      S3_FORCE_PATH_STYLE: 'true'
+      S3_FILE_BUCKET: test
+      MAX_QL_COMPLEXITY: 100
+      MAX_QL_DEPTH: 5
+      MAX_FILE_SIZE_IN_BYTES: 100000000
+      AUTHENTICATION_JWT_SECRET: super_secret_jam
+      USER_ADAPTER_URL: http://reviewer-mocks:3003/current-user
+      SCIENCE_BEAM_URL: http://reviewer-mocks:3003/science-beam/convert
+      SCIENCE_BEAM_TIMEOUT: 20000
     healthcheck:
       test: 'echo -e "GET /health\n\n" | nc localhost:3000'
       interval: 2s
       timeout: 10s
       retries: 3
-    volumes:
-      - ./config/submission:/etc/reviewer:z
     networks:
       - infra_postgres
       - infra_api
 
   client:
-    image: liberoadmin/reviewer-client:0.0.3
+    image: liberoadmin/reviewer-client:0.0.4
     healthcheck:
       interval: 2s
-    ports:
-      - "9000:9000"
-    volumes:
-      - ./config/client:/etc/reviewer:z
     networks:
       - infra_api
+
+  nginx:
+    image: nginx:stable-alpine@sha256:0dfc8450deb8c7f06fbaac27e453ac3262df7d3a93639c4e2f48ee39434ec017
+    networks:
+      - "infra_api"
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./config/proxy/nginx.conf:/etc/nginx/nginx.conf
+    healthcheck:
+      test: 'echo -e "GET /login\n\n" | nc localhost:9000'
+      interval: 2s
+    depends_on:
+      - client
+      - submission
+      - reviewer-mocks
+      - continuum-adaptor
+
 
 networks:
   infra_postgres:
@@ -81,6 +104,3 @@ networks:
   infra_api:
     external:
       name: "infra_api"
-  infra_rabbit:
-    external:
-      name: "infra_rabbit"
