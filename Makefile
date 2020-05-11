@@ -2,7 +2,7 @@ DOCKER_COMPOSE = docker-compose
 DOCKER_COMPOSE_INFRA = docker-compose -f docker-compose.infra.yml
 
 stop:
-	docker-compose down
+	docker-compose -f docker-compose.master.yml down
 	docker-compose -f docker-compose.infra.yml down
 	docker network rm infra_postgres
 	docker network rm infra_api
