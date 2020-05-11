@@ -1,21 +1,5 @@
 version: '3'
 services:
-  audit:
-    image: liberoadmin/audit:0.0.2
-    ports:
-      - "3004:3004"
-    healthcheck:
-      test: 'echo -e "GET /health\n\n" | nc localhost:3004'
-      interval: 2s
-      timeout: 10s
-      retries: 3
-    volumes:
-      - ./config/audit:/etc/reviewer:z
-    networks:
-      - infra_api
-      - infra_rabbit
-      - infra_postgres
-
   continuum-adaptor:
     image: liberoadmin/continuum-adaptor:0.0.4
     ports:
@@ -27,7 +11,6 @@ services:
       retries: 3
     environment: 
       PORT: 3001
-      RABBITMQ_URL: rabbitmq
       LOGIN_URL: http://localhost:9000/submit
       LOGIN_RETURN_URL: http://localhost:9000/login
       AUTHENTICATION_JWT_SECRET: super_secret_jam
@@ -41,7 +24,6 @@ services:
       ELIFE_API_GATEWAY_SECRET: ${ELIFE_API_GATEWAY_SECRET}
     networks:
       - infra_api
-      - infra_rabbit
       - infra_postgres
 
   reviewer-mocks:
@@ -122,6 +104,3 @@ networks:
   infra_api:
     external:
       name: "infra_api"
-  infra_rabbit:
-    external:
-      name: "infra_rabbit"
