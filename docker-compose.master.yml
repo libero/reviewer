@@ -61,7 +61,7 @@ services:
   submission:
     image: liberoadmin/reviewer-submission:master-2ce5e1a4-20200507.1158
     environment:
-      NEW_RELIC_HOME: ${NEW_RELIC_HOME:-/etc/reviewer}
+      NEW_RELIC_HOME: /etc/reviewer
       DATABASE_NAME: postgres
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
