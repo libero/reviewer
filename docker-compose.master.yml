@@ -60,8 +60,6 @@ services:
 
   submission:
     image: liberoadmin/reviewer-submission:master-2ce5e1a4-20200507.1158
-    ports:
-      - "3000:3000"
     environment:
       NEW_RELIC_HOME: ${NEW_RELIC_HOME:-/etc/reviewer}
     healthcheck:
@@ -74,13 +72,29 @@ services:
       - infra_api
 
   client:
-    image: liberoadmin/reviewer-client:master-564ea211-20200507.1202
+    image: liberoadmin/reviewer-client:master-a6bcb283-20200507.1456
     healthcheck:
       interval: 2s
-    ports:
-      - "9000:9000"
     networks:
       - infra_api
+
+  nginx:
+    image: nginx:stable-alpine@sha256:0dfc8450deb8c7f06fbaac27e453ac3262df7d3a93639c4e2f48ee39434ec017
+    networks:
+      - "infra_api"
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./config/proxy/nginx.conf:/etc/nginx/nginx.conf
+    healthcheck:
+      test: 'echo -e "GET /login\n\n" | nc localhost:9000'
+      interval: 2s
+    depends_on:
+      - client
+      - submission
+      - reviewer-mocks
+      - continuum-adaptor
+
 
 networks:
   infra_postgres:

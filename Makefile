@@ -56,6 +56,7 @@ wait_healthy_apps:
 	./.scripts/docker/wait-healthy.sh reviewer_client_1 60
 	./.scripts/docker/wait-healthy.sh reviewer_audit_1 20
 	./.scripts/docker/wait-healthy.sh reviewer_continuum-adaptor_1 20
+	./.scripts/docker/wait-healthy.sh reviewer_nginx_1 20
 
 test_integration: setup
 	$(MAKE) create_networks
