@@ -25,12 +25,10 @@ setup:
 
 setup_config:
 	if [ ! -e ./config/audit/config.json ] ; then cp config/audit/config.example.json config/audit/config.json ; fi
-	if [ ! -e ./config/continuum-adaptor/config.json ] ; then cp config/continuum-adaptor/config.example.json config/continuum-adaptor/config.json ; fi
 	if [ ! -e ./config/reviewer-mocks/config.json ] ; then cp config/reviewer-mocks/config.example.json config/reviewer-mocks/config.json ; fi
 
 clean_config:
 	rm config/audit/config.json
-	rm config/continuum-adaptor/config.json
 	rm config/reviewer-mocks/config.json
 
 setup_gitmodules:
