@@ -71,7 +71,7 @@ services:
       - infra_api
 
   client:
-    image: liberoadmin/reviewer-client:master-a6bcb283-20200507.1456
+    image: liberoadmin/reviewer-client:master-61d9da38-20200511.1102
     healthcheck:
       interval: 2s
     networks:
