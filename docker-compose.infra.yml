@@ -1,7 +1,7 @@
 version: '3'
 services:
   postgres:
-    image: liberoadmin/reviewer-xpub-postgres:0.0.3
+    image: liberoadmin/reviewer-xpub-postgres:0.0.4
     ports:
       - "5432:5432"
     networks:
