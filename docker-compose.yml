@@ -9,7 +9,7 @@ services:
       interval: 2s
       timeout: 10s
       retries: 3
-    environment: 
+    environment:
       PORT: 3001
       LOGIN_URL: http://localhost:9000/submit
       LOGIN_RETURN_URL: http://localhost:9000/login
@@ -60,7 +60,7 @@ services:
       MAX_QL_DEPTH: 5
       MAX_FILE_SIZE_IN_BYTES: 100000000
       AUTHENTICATION_JWT_SECRET: super_secret_jam
-      USER_ADAPTER_URL: http://reviewer-mocks:3003/current-user
+      USER_API_URL: http://reviewer-mocks:3003
       SCIENCE_BEAM_URL: http://reviewer-mocks:3003/science-beam/convert
       SCIENCE_BEAM_TIMEOUT: 20000
     healthcheck:
