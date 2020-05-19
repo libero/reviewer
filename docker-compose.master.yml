@@ -41,7 +41,7 @@ services:
       - infra_api
 
   submission:
-    image: liberoadmin/reviewer-submission:master-d871d35f-20200518.1003
+    image: liberoadmin/reviewer-submission:master-9bb6a12e-20200519.1505
     environment:
       NEW_RELIC_HOME: /etc/reviewer
       DATABASE_NAME: postgres
