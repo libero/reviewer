@@ -1,7 +1,7 @@
 version: '3'
 services:
   continuum-adaptor:
-    image: liberoadmin/continuum-adaptor:0.0.4
+    image: liberoadmin/continuum-adaptor:0.0.5
     ports:
       - "3001:3001"
     healthcheck:
