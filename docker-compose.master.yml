@@ -58,7 +58,7 @@ services:
       MAX_QL_DEPTH: 5
       MAX_FILE_SIZE_IN_BYTES: 100000000
       AUTHENTICATION_JWT_SECRET: super_secret_jam
-      USER_API_URL: http://reviewer-mocks:3003
+      USER_API_URL: http://continuum-adaptor:3001
       SCIENCE_BEAM_URL: http://reviewer-mocks:3003/science-beam/convert
       SCIENCE_BEAM_TIMEOUT: 20000
     healthcheck:
