@@ -26,9 +26,6 @@ setup:
 setup_gitmodules:
 	git submodule update --init --recursive
 
-setup_yarn:
-	yarn install
-
 clean_databases:
 	$(MAKE) create_networks
 	-${DOCKER_COMPOSE_INFRA} up -d postgres
