@@ -15,6 +15,8 @@ jobs:
           submodules: true
       - name: Integration Tests on latest semver
         run: make test_integration
+      - name: Dump logs on failure
+        run: docker-compose -f docker-compose.yml logs
       - name: Notify slack
         if: failure()
         env:
@@ -33,6 +35,8 @@ jobs:
           submodules: true
       - name: Integration Tests on master-images
         run: make test_integration_master
+      - name: Dump logs on failure
+        run: docker-compose -f docker-compose.master.yml logs
       - name: Notify slack
         if: failure()
         env:
