@@ -1,6 +1,9 @@
 DOCKER_COMPOSE = docker-compose
 DOCKER_COMPOSE_INFRA = docker-compose -f docker-compose.infra.yml
 
+BROWSERTEST_SEMVER = `./browsertest-image-version.sh docker-compose.yml`
+BROWSERTEST_MASTER = `./browsertest-image-version.sh docker-compose.master.yml`
+
 stop:
 	docker-compose -f docker-compose.yml down
 	docker-compose -f docker-compose.infra.yml down
@@ -21,7 +24,6 @@ create_networks:
 
 setup:
 	$(MAKE) setup_gitmodules
-	$(MAKE) setup_yarn
 
 setup_gitmodules:
 	git submodule update --init --recursive
@@ -48,9 +50,9 @@ wait_healthy_apps:
 test_integration: setup start
 	make wait_healthy_infra
 	make wait_healthy_apps
-	yarn test:integration
+	docker run --network infra_api -e BASE_URL="reviewer_nginx_1:9000" $(BROWSERTEST_SEMVER)
 
 test_integration_master: setup start_master
 	make wait_healthy_infra
 	make wait_healthy_apps
-	yarn test:integration
+	docker run --network infra_api -e BASE_URL="reviewer_nginx_1:9000" $(BROWSERTEST_MASTER)
