@@ -1,7 +1,7 @@
 version: '3'
 services:
   continuum-adaptor:
-    image: liberoadmin/continuum-adaptor:0.0.5
+    image: liberoadmin/continuum-adaptor:0.0.6
     ports:
       - "3001:3001"
     healthcheck:
@@ -41,7 +41,7 @@ services:
       - infra_api
 
   submission:
-    image: liberoadmin/reviewer-submission:0.0.5
+    image: liberoadmin/reviewer-submission:0.0.6
     ports:
       - "3000:3000"
     environment:
