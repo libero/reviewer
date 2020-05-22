@@ -10,12 +10,16 @@ stop:
 	docker network rm infra_postgres
 	docker network rm infra_api
 
-start: create_networks
-	-${DOCKER_COMPOSE_INFRA} up -d
+start_infra:
+	-${DOCKER_COMPOSE_INFRA} up -d s3 postgres
+	./.scripts/docker/wait-healthy.sh reviewer_postgres_1 20
+	./.scripts/docker/wait-healthy.sh reviewer_s3_1 30
+	${DOCKER_COMPOSE_INFRA} up -d s3_create-bucket
+
+start: create_networks start_infra
 	-${DOCKER_COMPOSE} up -d
 
-start_master: create_networks
-	-${DOCKER_COMPOSE_INFRA} up -d
+start_master: create_networks start_infra
 	-${DOCKER_COMPOSE} -f docker-compose.master.yml up -d
 
 create_networks:
@@ -36,10 +40,6 @@ clean_databases:
 follow_logs:
 	-docker-compose -f docker-compose.yml logs -f
 
-wait_healthy_infra:
-	./.scripts/docker/wait-healthy.sh reviewer_postgres_1 20
-	./.scripts/docker/wait-healthy.sh reviewer_s3_1 30
-
 wait_healthy_apps:
 	./.scripts/docker/wait-healthy.sh reviewer_reviewer-mocks_1 30
 	./.scripts/docker/wait-healthy.sh reviewer_submission_1 20
@@ -48,11 +48,9 @@ wait_healthy_apps:
 	./.scripts/docker/wait-healthy.sh reviewer_nginx_1 20
 
 test_integration: setup start
-	make wait_healthy_infra
 	make wait_healthy_apps
 	docker run --network infra_api -e BASE_URL="reviewer_nginx_1:9000" $(BROWSERTEST_SEMVER)
 
 test_integration_master: setup start_master
-	make wait_healthy_infra
 	make wait_healthy_apps
 	docker run --network infra_api -e BASE_URL="reviewer_nginx_1:9000" $(BROWSERTEST_MASTER)
