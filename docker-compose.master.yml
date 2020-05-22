@@ -1,7 +1,7 @@
 version: '3'
 services:
   continuum-adaptor:
-    image: liberoadmin/continuum-adaptor:master-e036f03f-20200518.1618
+    image: liberoadmin/continuum-adaptor:master-880f07bd-20200521.1524
     ports:
       - "3001:3001"
     healthcheck:
@@ -71,7 +71,7 @@ services:
       - infra_api
 
   client:
-    image: liberoadmin/reviewer-client:master-778246bf-20200521.0929
+    image: liberoadmin/reviewer-client:master-08456434-20200521.1531
     healthcheck:
       interval: 2s
     networks:
