@@ -39,6 +39,7 @@ follow_logs:
 wait_healthy_infra:
 	./.scripts/docker/wait-healthy.sh reviewer_postgres_1 20
 	./.scripts/docker/wait-healthy.sh reviewer_s3_1 30
+	./wait-stopped.sh reviewer_s3_create-bucket_1 30
 
 wait_healthy_apps:
 	./.scripts/docker/wait-healthy.sh reviewer_reviewer-mocks_1 30
