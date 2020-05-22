@@ -17,7 +17,9 @@ jobs:
         run: make test_integration
       - name: Dump logs on failure
         if: failure()
-        run: docker-compose -f docker-compose.yml logs
+        run: |
+          docker-compose -f docker-compose.infra.yml logs
+          docker-compose -f docker-compose.yml logs
       - name: Notify slack
         if: failure()
         env:
@@ -38,7 +40,9 @@ jobs:
         run: make test_integration_master
       - name: Dump logs on failure
         if: failure()
-        run: docker-compose -f docker-compose.master.yml logs
+        run: |
+          docker-compose -f docker-compose.infra.yml logs
+          docker-compose -f docker-compose.master.yml logs
       - name: Notify slack
         if: failure()
         env:
