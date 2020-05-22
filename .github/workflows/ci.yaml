@@ -13,8 +13,13 @@ jobs:
       - uses: actions/checkout@v1
         with:
           submodules: true
-      - name: Integration Tests on latest semver
+      - name: Run browsertest container against latest semver images
         run: make test_integration
+      - name: Dump logs on failure
+        if: failure()
+        run: |
+          docker-compose -f docker-compose.infra.yml logs
+          docker-compose -f docker-compose.yml logs
       - name: Notify slack
         if: failure()
         env:
@@ -31,8 +36,13 @@ jobs:
       - uses: actions/checkout@v1
         with:
           submodules: true
-      - name: Integration Tests on master-images
+      - name: Run browsertest container against latest master images
         run: make test_integration_master
+      - name: Dump logs on failure
+        if: failure()
+        run: |
+          docker-compose -f docker-compose.infra.yml logs
+          docker-compose -f docker-compose.master.yml logs
       - name: Notify slack
         if: failure()
         env:
