@@ -1,7 +1,7 @@
 version: '3'
 services:
   continuum-adaptor:
-    image: liberoadmin/continuum-adaptor:master-5e423b90-20200526.1522
+    image: liberoadmin/continuum-adaptor:master-c32cf929-20200527.1606
     ports:
       - "3001:3001"
     healthcheck:
