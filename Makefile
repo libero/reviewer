@@ -1,4 +1,4 @@
-DOCKER_COMPOSE = docker-compose
+DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 DOCKER_COMPOSE_INFRA = docker-compose -f docker-compose.infra.yml
 
 BROWSERTEST_SEMVER = `./browsertest-image-version.sh docker-compose.yml`
