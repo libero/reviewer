@@ -23,32 +23,35 @@ All documents relevant to this project can be found in the [`Libero Reviewer Git
 
 ## Environments
 
-The `docker-compose` files encode two environment:
+Combine the various compose files to spin up different environments:
 
 - __docker-compose.yml:__ semver releases of reviewer components
-- __docker-compose.master.yaml:__ head of master of reviewer components
+- __docker-compose.infra.yml:__ minio (to emulate s3) and postgresql with reviewer schema
+- __docker-compose.master.yaml:__ overlay tracking head of master of reviewer components
+- __docker-compose.localhost.yaml:__ overlay that lets you interacts with the env via [localhost:9000](http://localhost:9000)
 
 Renovatebot keeps these up to date as new images get pushed to hub.docker.com.
+
+NOTE: Without the localhost overlay the app won't work if you visit `localhost:9000`. Instead it is supposed to be accessible at `nginx:9000` from inside a container. This is needed so that we can test using the containerized browsertests.
 
 ## Quick Start
 
 ```sh
 make setup
-make start
-yarn test:integration
+make start_master_localhost
 ```
 
 This will:
 
 - pull git submodules
-- install yarn deps for browsertests
 - launch reviewer at [localhost:9000](http://localhost:9000)
 
 The _client_, _submission_ and _continuum-adaptor_ containers are brought up behind a _nginx_ proxy that routes the various URLs to them.
 _reviewer-mocks_ is only used to mock the external login service.
 
+You can now e.g. run checkout the reviewer-client repo and run `make test_browser`.
+
 Other make targets:
 
 - `stop`: tear everything down
-- `start_master`: use latest master builds instead of semver images
-- `test_integration` and `test_integration_master`: bring stuff up and run the tests
+- `test_integration` and `test_integration_master`: bring stuff up and run the matching browsertest container
