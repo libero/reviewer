@@ -22,6 +22,10 @@ start: create_networks start_infra
 start_master: create_networks start_infra
 	-${DOCKER_COMPOSE} -f docker-compose.master.yml up -d
 
+start_master_localhost: create_networks start_infra
+	-${DOCKER_COMPOSE} -f docker-compose.localhost.yml -f docker-compose.master.yml up -d
+	make wait_healthy_apps
+
 create_networks:
 	-docker network create infra_postgres
 	-docker network create infra_api

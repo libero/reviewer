@@ -1,0 +1,15 @@
+version: '3'
+services:
+
+  continuum-adaptor:
+    environment:
+      LOGIN_URL: http://localhost:9000/submit
+      LOGIN_RETURN_URL: http://localhost:9000/login
+
+  reviewer-mocks:
+    volumes:
+      - ./config/reviewer-mocks/config.localhost.json:/etc/reviewer/config.json:z
+
+  nginx:
+    volumes:
+      - ./config/proxy/nginx.localhost.conf:/etc/nginx/nginx.conf
