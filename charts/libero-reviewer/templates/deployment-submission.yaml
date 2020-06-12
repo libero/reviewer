@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "libero-reviewer.fullname" . }}-submission
+  labels:
+    app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
+    helm.sh/chart: {{ include "libero-reviewer.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: submission
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: submission
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: submission
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-submission
+          image: "{{ .Values.submission.image.repository }}:{{ .Values.submission.image.tag }}"
+          imagePullPolicy: {{ .Values.submission.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+
+          env:
+            - name: AUTHENTICATION_JWT_SECRET
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.authenticationJwtSecret | quote }}
+                    key: reviewer-auth-secret
+            - name: USER_API_URL 
+              value: "http://{{ include "libero-reviewer.fullname" . }}-continuum-adaptor:{{ .Values.continuumAdaptor.port }}"
+            - name: NEW_RELIC_HOME
+              value: "{{ .Values.submission.newRelicHome }}"
+            - name: MAX_FILE_SIZE_IN_BYTES
+              value: "{{ .Values.submission.maxFileSizeInBytes }}"
+
+            - name: DATABASE_NAME
+              value: "{{ .Values.postgresql.postgresqlDatabase }}"
+            - name: DATABASE_USER
+              value: "{{ .Values.postgresql.postgresqlUsername }}"
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.postgresql.existingSecret | quote }}
+                    key: postgresql-password
+            - name: DATABASE_HOST
+              value: "{{ include "libero-reviewer.fullname" . }}-postgresql"
+            - name: DATABASE_PORT
+              value: "5432"
+
+            - name: S3_AWS_ENDPOINT
+              value: "{{ .Values.submission.s3.endpoint}}"
+            - name: S3_ACCESS_KEY_ID
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.submission.s3.secret | quote }}
+                    key: id
+            - name: S3_SECRET_ACCESS_KEY
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.submission.s3.secret | quote }}
+                    key: access-key
+            - name: S3_FORCE_PATH_STYLE
+              value: "{{ .Values.submission.s3.forcePathStyle}}"
+            - name: S3_FILE_BUCKET
+              value: "{{ .Values.submission.s3.bucket}}"
+
+            - name: MAX_QL_COMPLEXITY
+              value: "{{ .Values.submission.graphQL.maxComplexity}}"
+            - name: MAX_QL_DEPTH
+              value: "{{ .Values.submission.graphQL.maxDepth}}"
+
+            - name: SCIENCE_BEAM_URL
+              value: "{{ .Values.submission.sciencebeam.convertUrl}}"
+            - name: SCIENCE_BEAM_TIMEOUT
+              value: "{{ .Values.submission.sciencebeam.timeout}}"
+
+      initContainers:
+        - name: {{ .Chart.Name }}-load-db-schema
+          image: "{{ .Values.submissionDbSchema.image.repository }}:{{ .Values.submissionDbSchema.image.tag }}"
+          command: ["sh", "-c", "(psql -q -t -c \"select count(*) from information_schema.tables where table_schema='public';\" | xargs ) && psql -f  /docker-entrypoint-initdb.d/xpub-schema.sql"]
+          env:
+            - name: PGHOST
+              value: "{{ include "libero-reviewer.fullname" . }}-postgresql"
+            - name: PGPORT
+              value: "5432"
+            - name: PGUSER
+              value: "{{ .Values.postgresql.postgresqlUsername }}"
+            - name: PGPASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.postgresql.existingSecret | quote }}
+                    key: postgresql-password
+            - name: PGDATABASE
+              value: "{{ .Values.postgresql.postgresqlDatabase }}"
