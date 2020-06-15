@@ -1,0 +1,93 @@
+# Default values for libero-reviewer.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+database:
+  secret: libero-reviewer--postgresql
+
+submission:
+  image:
+    repository: liberoadmin/reviewer-submission
+    tag: latest
+    pullPolicy: Always
+  port: 3000
+
+  newRelicHome: /etc/reviewer
+  # Sets both an submission internal value as well as ingree max_request
+  maxFileSizeInBytes: 100000000
+
+  authenticationJwtSecret: libero-reviewer--auth-jwt
+
+  s3:
+    # name of a secret with 'id' and 'access-key' entries
+    secret: ""
+    bucket: ""
+    # Overide the default aws s3 endpoint, set to "" when using aws s3
+    endpoint: ""
+    forcePathStyle: true
+
+  sciencebeam:
+    convertUrl: "sciencebeam--prod--test-cluster.elifesciences.org/api/convert"
+    timeout: 20000
+  
+  graphQL:
+    maxComplexity: 100
+    maxDepth: 5
+
+submissionDbSchema:
+  image:
+    repository: liberoadmin/reviewer-xpub-postgres
+    tag: latest
+
+client:
+  image:
+    repository: liberoadmin/reviewer-client
+    tag: latest
+    pullPolicy: Always
+
+continuumAdaptor:
+  image:
+    repository: liberoadmin/continuum-adaptor
+    tag: latest
+    pullPolicy: Always
+  port: 3001
+  loginUrl: "http://continuum.gateway.url/submit"
+  continuumApiUrl: "http://continuumtest--gateway.elife.internal"
+  # Name of an existing secret with a 'continuumJwtSecret' entry
+  continuumJwtSecret: "libero-reviewer--continuum-journal-jwt"
+  # Name of an existing secret with a 'token' entry
+  elifeApiSecret: "libero-reviewer--elife-api"
+
+postgresql:
+  enabled: true
+  image:
+    tag: "11.4.0"
+  persistence:
+    enabled: false
+  postgresqlDatabase: "postgres"
+  postgresqlUsername: "postgres"
+  # a secret also used by the reviewer components
+  existingSecret: "libero-reviewer--postgresql"
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      memory: 256Mi
+      cpu: 250m
+
+ingress:
+  enabled: false
+  # applied to _all_ reviewer ingress records
+  host: libero-reviewer--staging.domain.tld
+  annotations:
+  # per ingress annotations
+  main:
+    annotations:
+  login:
+    annotations:
+  graphql:
+    annotations:
+  auth:
+    annotations:
