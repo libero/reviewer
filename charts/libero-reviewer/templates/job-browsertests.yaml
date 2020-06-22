@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{.Release.Name}}"
+  name: "{{.Release.Name}}-browsertests"
   labels:
     app.kubernetes.io/managed-by: {{.Release.Service | quote }}
     app.kubernetes.io/instance: {{.Release.Name | quote }}
@@ -33,4 +33,9 @@ spec:
           value: {{ .Values.browsertests.baseurl | default .Values.ingress.host | quote}}
         - name: TEST_FIXTURE
           value: {{ .Values.browsertests.testFixture }}
+        resources:
+          limits:
+            memory: 500Mi
+          requests:
+            memory: 350Mi
         
