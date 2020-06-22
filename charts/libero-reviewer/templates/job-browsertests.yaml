@@ -1,0 +1,37 @@
+{{- $tag := .Values.client.image.tag -}} 
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{.Release.Name}}"
+  labels:
+    app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+    app.kubernetes.io/instance: {{.Release.Name | quote }}
+    helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    {{ if .Values.browsertests.runPostInstall }}
+    "helm.sh/hook": test-success,post-install
+    {{ else }}
+    "helm.sh/hook": test-success
+    {{ end }}
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "{{.Release.Name}}"
+      labels:
+        app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+        app.kubernetes.io/instance: {{.Release.Name | quote }}
+        helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: reviewer-browsertests
+        #Use same image tag as client; if the tag ends in a timestamp we strip it
+        image: '{{ .Values.browsertests.image.repository }}:{{ regexReplaceAll "-\\d{8}\\.\\d{4}$" $tag "" }}'
+        env:
+        - name: BASE_URL
+          value: {{ .Values.browsertests.baseurl | default .Values.ingress.host | quote}}
+        - name: TEST_FIXTURE
+          value: {{ .Values.browsertests.testFixture }}
+        
