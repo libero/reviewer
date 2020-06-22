@@ -15,6 +15,7 @@ metadata:
     {{ end }}
     "helm.sh/hook-weight": "-5"
 spec:
+  backoffLimit: 1
   template:
     metadata:
       name: "{{.Release.Name}}"
@@ -24,7 +25,6 @@ spec:
         helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
     spec:
       restartPolicy: Never
-      backoffLimit: 1
       containers:
       - name: reviewer-browsertests
         #Use same image tag as client; if the tag ends in a timestamp we strip it
@@ -38,5 +38,6 @@ spec:
           limits:
             memory: 500Mi
           requests:
+            cpu: 200m
             memory: 350Mi
         
