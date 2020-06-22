@@ -8,8 +8,8 @@ metadata:
     app.kubernetes.io/instance: {{.Release.Name | quote }}
     helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
   annotations:
-    {{ if .Values.browsertests.runPostInstall }}
-    "helm.sh/hook": test-success,post-install
+    {{ if .Values.browsertests.runPostRelease }}
+    "helm.sh/hook": test-success,post-install,post-upgrade
     {{ else }}
     "helm.sh/hook": test-success
     {{ end }}

@@ -96,7 +96,7 @@ browsertests:
   image:
     # for the tag we use client.image.tag but strip timestamps
     repository: liberoadmin/reviewer-browsertests
-  runPostInstall: false
+  runPostRelease: false
   testFixture: all
   # baseurl defaults to .Values.ingress.host
   #baseurl: libero-reviewer--staging.domain.tld
