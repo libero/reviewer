@@ -24,6 +24,7 @@ spec:
         helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
     spec:
       restartPolicy: Never
+      backoffLimit: 1
       containers:
       - name: reviewer-browsertests
         #Use same image tag as client; if the tag ends in a timestamp we strip it
