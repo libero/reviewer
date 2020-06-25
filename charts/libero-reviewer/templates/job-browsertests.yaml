@@ -1,4 +1,4 @@
-{{- $tag := .Values.client.image.tag -}} 
+{{- $tag := .Values.client.image.tag -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -41,4 +41,3 @@ spec:
           requests:
             cpu: 200m
             memory: 350Mi
-        
