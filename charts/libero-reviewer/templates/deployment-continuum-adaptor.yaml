@@ -44,7 +44,7 @@ spec:
             - name: LOGIN_URL
               value: {{ .Values.continuumAdaptor.loginUrl | quote }}
             - name: LOGIN_RETURN_URL
-              value: "https://{{ .Values.ingress.host }}/login"
+              value: "https://{{ .Values.ingress.host }}/authenticate"
             - name: AUTHENTICATION_JWT_SECRET
               valueFrom:
                   secretKeyRef:
