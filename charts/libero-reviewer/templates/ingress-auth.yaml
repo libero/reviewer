@@ -22,7 +22,7 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /authenticate?token=(.*)
+          - path: '/authenticate?token=(.*)'
             backend:
               serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
               servicePort: {{ .Values.continuumAdaptor.port}}
