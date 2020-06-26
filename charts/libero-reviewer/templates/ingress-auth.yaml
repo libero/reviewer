@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /authenticate/$1
+    nginx.ingress.kubernetes.io/rewrite-target: /authenticate/$3
     nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
 {{- with .Values.ingress.annotations }}
 {{ toYaml . | indent 4 }}
@@ -22,7 +22,7 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: '/authenticate\?token=(.*)'
+          - path: '/authenticate(.*)(=)(.*)'
             backend:
               serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
               servicePort: {{ .Values.continuumAdaptor.port}}
