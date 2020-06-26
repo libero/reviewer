@@ -11,6 +11,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /authenticate/$1
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
 {{- with .Values.ingress.annotations }}
 {{ toYaml . | indent 4 }}
 {{- end }}
