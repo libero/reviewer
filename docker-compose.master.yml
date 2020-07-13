@@ -7,10 +7,10 @@ services:
     image: liberoadmin/reviewer-mocks:master-3773c70c-20200707.1424
 
   submission:
-    image: liberoadmin/reviewer-submission:master-74de2d99-20200625.1629
+    image: liberoadmin/reviewer-submission:master-1a55f48b-20200709.1312
 
   client:
     image: liberoadmin/reviewer-client:master-b498eb4f-20200707.1605
 
   nginx:
-    image: nginx:stable-alpine@sha256:676b8117782d9e8c20af8e1b19356f64acc76c981f3a65c66e33a9874877892a
+    image: nginx:stable-alpine@sha256:8853c7e938c2aa5d9d7439e698f0e700f058df8414a83134a09fcbb68bb0707a
