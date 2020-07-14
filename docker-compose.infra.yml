@@ -5,7 +5,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - infra_postgres
+      - reviewer
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
@@ -23,7 +23,7 @@ services:
     volumes:
       - ./.data/minio:/data
     networks:
-      - infra_api
+      - reviewer
     environment:
       MINIO_ACCESS_KEY: minio
       MINIO_SECRET_KEY: minio123
@@ -39,7 +39,7 @@ services:
     depends_on:
       - s3
     networks:
-      - infra_api
+      - reviewer
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc config host add submission http://s3:9000 minio minio123;
@@ -50,12 +50,16 @@ services:
       exit 0;
       "
 
+  sftp:
+    image: atmoz/sftp:alpine@sha256:d83279fca3d1432f87a147fe52f194fb951b7fd740c7d836ac526063ce80c5ca
+    networks:
+      - reviewer
+    volumes:
+      - ./.data/ftp:/home
+    command: test:test:::upload
+
 networks:
-  infra_postgres:
-    external:
-      name: "infra_postgres"
-  infra_api:
-    external:
-      name: "infra_api"
+  reviewer:
+    external: true
 volumes:
   pg-data:

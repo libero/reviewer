@@ -23,8 +23,7 @@ services:
       DATABASE_PORT: 5432
       ELIFE_API_GATEWAY_SECRET: ${ELIFE_API_GATEWAY_SECRET}
     networks:
-      - infra_api
-      - infra_postgres
+      - reviewer
 
   reviewer-mocks:
     image: liberoadmin/reviewer-mocks:0.0.5
@@ -38,7 +37,7 @@ services:
     volumes:
       - ./config/reviewer-mocks/config.json:/etc/reviewer/config.json:z
     networks:
-      - infra_api
+      - reviewer
 
   submission:
     image: liberoadmin/reviewer-submission:0.0.6
@@ -75,20 +74,19 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - infra_postgres
-      - infra_api
+      - reviewer
 
   client:
     image: liberoadmin/reviewer-client:0.0.5
     healthcheck:
       interval: 2s
     networks:
-      - infra_api
+      - reviewer
 
   nginx:
     image: nginx:stable-alpine@sha256:8853c7e938c2aa5d9d7439e698f0e700f058df8414a83134a09fcbb68bb0707a
     networks:
-      - "infra_api"
+      - reviewer
     ports:
       - '9000:9000'
     volumes:
@@ -102,11 +100,6 @@ services:
       - reviewer-mocks
       - continuum-adaptor
 
-
 networks:
-  infra_postgres:
-    external:
-      name: "infra_postgres"
-  infra_api:
-    external:
-      name: "infra_api"
+  reviewer:
+    external: true

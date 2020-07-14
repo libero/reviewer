@@ -7,11 +7,10 @@ BROWSERTEST_MASTER = `./browsertest-image-version.sh docker-compose.master.yml`
 stop:
 	docker-compose -f docker-compose.yml down
 	docker-compose -f docker-compose.infra.yml down
-	docker network rm infra_postgres
-	docker network rm infra_api
+	docker network rm reviewer
 
 start_infra:
-	-${DOCKER_COMPOSE_INFRA} up -d s3 postgres
+	-${DOCKER_COMPOSE_INFRA} up -d s3 postgres sftp
 	./.scripts/docker/wait-healthy.sh reviewer_postgres_1 20
 	./.scripts/docker/wait-healthy.sh reviewer_s3_1 30
 	${DOCKER_COMPOSE_INFRA} up -d s3_create-bucket
@@ -27,8 +26,7 @@ start_master_localhost: create_networks start_infra
 	make wait_healthy_apps
 
 create_networks:
-	-docker network create infra_postgres
-	-docker network create infra_api
+	-docker network create reviewer
 
 setup:
 	$(MAKE) setup_gitmodules
@@ -53,8 +51,8 @@ wait_healthy_apps:
 
 test_integration: setup start
 	make wait_healthy_apps
-	docker run --network infra_api -e BASE_URL="reviewer_nginx_1:9000" $(BROWSERTEST_SEMVER)
+	docker run --network reviewer -e BASE_URL="reviewer_nginx_1:9000" $(BROWSERTEST_SEMVER)
 
 test_integration_master: setup start_master
 	make wait_healthy_apps
-	docker run --network infra_api -e BASE_URL="reviewer_nginx_1:9000" $(BROWSERTEST_MASTER)
+	docker run --network reviewer -e BASE_URL="reviewer_nginx_1:9000" $(BROWSERTEST_MASTER)
