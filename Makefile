@@ -7,8 +7,7 @@ BROWSERTEST_MASTER = `./browsertest-image-version.sh docker-compose.master.yml`
 stop:
 	docker-compose -f docker-compose.yml down
 	docker-compose -f docker-compose.infra.yml down
-	docker network rm infra_postgres
-	docker network rm infra_api
+	docker network rm reviewer
 
 start_infra:
 	-${DOCKER_COMPOSE_INFRA} up -d s3 postgres
