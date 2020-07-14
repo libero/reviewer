@@ -31,7 +31,7 @@ submission:
   sciencebeam:
     convertUrl: "sciencebeam--prod--test-cluster.elifesciences.org/api/convert"
     timeout: 20000
-  
+
   graphQL:
     maxComplexity: 100
     maxDepth: 5
@@ -97,6 +97,6 @@ browsertests:
     # for the tag we use client.image.tag but strip timestamps
     repository: liberoadmin/reviewer-browsertests
   runPostRelease: false
-  testFixture: all
+  testFixture: Minimal
   # baseurl defaults to .Values.ingress.host
   #baseurl: libero-reviewer--staging.domain.tld
