@@ -7,5 +7,5 @@ version: 0.14.7
 dependencies:
   - name: "postgresql"
     version: "~6.2"
-    repository: "https://kubernetes-charts.storage.googleapis.com/"
+    repository: "https://charts.bitnami.com/bitnami"
     condition: postgresql.enabled
