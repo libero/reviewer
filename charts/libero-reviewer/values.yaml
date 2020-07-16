@@ -70,6 +70,8 @@ postgresql:
   enabled: true
   image:
     tag: "11.4.0"
+  statefulset:
+    apiVersion: v1
   persistence:
     enabled: false
   postgresqlDatabase: "postgres"
@@ -105,4 +107,4 @@ browsertests:
   runPostRelease: false
   testFixture: Minimal
   # baseurl defaults to .Values.ingress.host
-  #baseurl: libero-reviewer--staging.domain.tld
+  # baseurl: libero-reviewer--staging.domain.tld
