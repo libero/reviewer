@@ -92,8 +92,6 @@ spec:
               value: "{{ .Values.submission.sciencebeam.convertUrl}}"
             - name: SCIENCE_BEAM_TIMEOUT
               value: "{{ .Values.submission.sciencebeam.timeout}}"
-            - name: DUMMY
-              value: "{{ .Values.submission.sciencebeam.timeout}}"
 
       initContainers:
         - name: {{ .Chart.Name }}-load-db-schema
