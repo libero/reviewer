@@ -45,8 +45,8 @@ spec:
                   secretKeyRef:
                     name: {{ .Values.authenticationJwtSecret | quote }}
                     key: reviewer-auth-secret
-            - name: USER_API_URL 
-              value: "http://{{ include "libero-reviewer.fullname" . }}-continuum-adaptor:{{ .Values.continuumAdaptor.port }}"
+            - name: USER_API_URL
+              value: 'http://{{ include "libero-reviewer.fullname" . }}-continuum-adaptor:{{ .Values.continuumAdaptor.port }}'
             - name: NEW_RELIC_HOME
               value: "{{ .Values.submission.newRelicHome }}"
             - name: MAX_FILE_SIZE_IN_BYTES
@@ -62,7 +62,7 @@ spec:
                     name: {{ .Values.postgresql.existingSecret | quote }}
                     key: postgresql-password
             - name: DATABASE_HOST
-              value: "{{ include "libero-reviewer.fullname" . }}-postgresql"
+              value: '{{ include "libero-reviewer.fullname" . }}-postgresql'
             - name: DATABASE_PORT
               value: "5432"
 
@@ -99,7 +99,7 @@ spec:
           command: ["sh", "-c", "(psql -q -t -c \"select count(*) from information_schema.tables where table_schema='public';\" | xargs ) && psql -f  /docker-entrypoint-initdb.d/xpub-schema.sql"]
           env:
             - name: PGHOST
-              value: "{{ include "libero-reviewer.fullname" . }}-postgresql"
+              value: '{{ include "libero-reviewer.fullname" . }}-postgresql'
             - name: PGPORT
               value: "5432"
             - name: PGUSER
