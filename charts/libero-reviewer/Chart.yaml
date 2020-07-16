@@ -3,9 +3,12 @@ appVersion: "latest"
 description: elife specific deployment of Libero Reviewer
 name: libero-reviewer
 version: 0.15.16
+home: "https://github.com/libero/reviewer"
+maintainers:
+  - name: erkannt
 
 dependencies:
   - name: "postgresql"
     version: "~6.2"
-    repository: "https://kubernetes-charts.storage.googleapis.com/"
+    repository: "https://charts.bitnami.com/bitnami"
     condition: postgresql.enabled
