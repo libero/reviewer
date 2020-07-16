@@ -73,3 +73,4 @@ jobs:
         uses: helm/chart-testing-action@v1.0.0-rc.1
         with:
           command: install
+          config: ct.yaml
