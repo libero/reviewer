@@ -36,6 +36,12 @@ submission:
     maxComplexity: 100
     maxDepth: 5
 
+  meca:
+    s3Path: "meca-archive"
+    sftpPath: "/upload"
+    sftpPort: 22
+    sftpSecret: libero-reviewer--sftp
+
 submissionDbSchema:
   image:
     repository: liberoadmin/reviewer-xpub-postgres
