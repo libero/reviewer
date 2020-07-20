@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "libero-reviewer.fullname" . }}-submission
+  name: {{ include "libero-reviewer.fullname" . }}--submission
   labels:
-    app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
+    app.kubernetes.io/name: {{ include "libero-reviewer.fullname" . }}--submission
     helm.sh/chart: {{ include "libero-reviewer.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
@@ -16,6 +16,6 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
+    app.kubernetes.io/name: {{ include "libero-reviewer.fullname" . }}--submission
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/component: submission
