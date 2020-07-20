@@ -17,7 +17,7 @@ services:
       retries: 10
 
   s3:
-    image: minio/minio:RELEASE.2020-07-14T19-14-30Z
+    image: minio/minio:RELEASE.2020-07-20T02-25-16Z
     ports:
       - "9004:9000"
     volumes:
@@ -35,7 +35,7 @@ services:
       retries: 10
 
   s3_create-bucket:
-    image: minio/mc:RELEASE.2020-07-11T04-53-20Z
+    image: minio/mc:RELEASE.2020-07-17T02-52-20Z
     depends_on:
       - s3
     networks:
