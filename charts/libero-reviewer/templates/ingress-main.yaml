@@ -23,14 +23,14 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("client") }}
+              serviceName: {{ printf "%s--%s" (include "libero-reviewer.fullname" . ) ("client") }}
               servicePort: 80
           - path: /meca-result
             backend:
-              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("submission") }}
+              serviceName: {{ printf "%s--%s" (include "libero-reviewer.fullname" . ) ("submission") }}
               servicePort: {{ .Values.submission.port}}
           - path: /authenticate
             backend:
-              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
+              serviceName: {{ printf "%s--%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
               servicePort: {{ .Values.continuumAdaptor.port}}
 {{- end -}}
