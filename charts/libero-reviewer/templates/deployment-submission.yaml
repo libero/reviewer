@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "libero-reviewer.fullname" . }}-submission
   labels:
-    app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
+    app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}--submission
     helm.sh/chart: {{ include "libero-reviewer.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
@@ -12,13 +12,13 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
+      app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}--submission
       app.kubernetes.io/instance: {{ .Release.Name }}
       app.kubernetes.io/component: submission
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
+        app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}--submission
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: submission
     spec:
