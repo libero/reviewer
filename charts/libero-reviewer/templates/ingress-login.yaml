@@ -23,6 +23,6 @@ spec:
         paths:
           - path: /continuum-login
             backend:
-              serviceName: {{ printf "%s--%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
+              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
               servicePort: {{ .Values.continuumAdaptor.port}}
 {{- end -}}
