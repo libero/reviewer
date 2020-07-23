@@ -2,13 +2,13 @@ apiVersion: v2
 appVersion: "latest"
 description: elife specific deployment of Libero Reviewer
 name: libero-reviewer
-version: 0.16.6
+version: 0.17.0
 home: "https://github.com/libero/reviewer"
 maintainers:
   - name: erkannt
 
 dependencies:
   - name: "postgresql"
-    version: "~6.2"
+    version: "~7.0"
     repository: "https://charts.bitnami.com/bitnami"
     condition: postgresql.enabled
