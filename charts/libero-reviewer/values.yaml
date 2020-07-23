@@ -70,8 +70,6 @@ postgresql:
   enabled: true
   image:
     tag: "11.4.0"
-  statefulset:
-    apiVersion: v1
   persistence:
     enabled: false
   postgresqlDatabase: "postgres"
