@@ -28,6 +28,14 @@ submission:
     endpoint: ""
     forcePathStyle: true
 
+  mail:
+    #
+    sesSecret: ""
+    sesAccessKey: ""
+    sendMail: false
+    sesRegion: ""
+    sender: "noreply@elifesciences.org"
+
   sciencebeam:
     convertUrl: "sciencebeam--prod--test-cluster.elifesciences.org/api/convert"
     timeout: 20000
