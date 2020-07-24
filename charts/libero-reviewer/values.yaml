@@ -29,11 +29,10 @@ submission:
     forcePathStyle: true
 
   mail:
-    #
+    # name of a secret with 'id' and 'access-key' entries
     sesSecret: ""
-    sesAccessKey: ""
-    sendMail: false
     sesRegion: ""
+    sendMail: false
     sender: "noreply@elifesciences.org"
 
   sciencebeam:
