@@ -83,6 +83,28 @@ spec:
             - name: S3_FILE_BUCKET
               value: "{{ .Values.submission.s3.bucket}}"
 
+
+            - name: SES_ACCESS_KEY_ID
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.submission.mail.sesSecret | quote }}
+                    key: id
+
+            - name: SES_SECRET_ACCESS_KEY
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.submission.mail.sesSecret | quote }}
+                    key: access-key
+
+            - name: SES_REGION
+              value: "{{ .Values.submission.mail.sesRegion}}"
+
+            - name: SEND_MAIL
+              value: "{{ .Values.submission.mail.sendMail}}"
+
+            - name: MAIL_SENDER
+              value: "{{ .Values.submission.mail.sender}}"
+
             - name: MAX_QL_COMPLEXITY
               value: "{{ .Values.submission.graphQL.maxComplexity}}"
             - name: MAX_QL_DEPTH
