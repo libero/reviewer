@@ -48,7 +48,9 @@ submission:
     sftpPath: "/upload"
     sftpPort: 22
     sftpSecret: libero-reviewer--sftp
-
+    emailPrefix: ""
+    emailRecipient: "libero-reviewer@mailinator.com"
+    apiKey: libero-reviewer--meca-api-key
 submissionDbSchema:
   image:
     repository: liberoadmin/reviewer-xpub-postgres
