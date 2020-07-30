@@ -48,7 +48,11 @@ submission:
     sftpPath: "/upload"
     sftpPort: 22
     sftpSecret: libero-reviewer--sftp
-
+    # Prefix for email subject when MECa import fails, usually "(${environment})"
+    emailPrefix: "(staging)"
+    emailRecipient: "libero-reviewer@mailinator.com"
+    # Name of an existing secret with a 'key' entry
+    apiSecret: "libero-reviewer--meca-api"
 submissionDbSchema:
   image:
     repository: liberoadmin/reviewer-xpub-postgres

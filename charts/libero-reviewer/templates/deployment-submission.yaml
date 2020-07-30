@@ -136,6 +136,15 @@ spec:
                   secretKeyRef:
                     name: {{ .Values.submission.meca.sftpSecret | quote }}
                     key: password
+            - name: MECA_EMAIL_PREFIX
+              value: {{ .Values.submission.meca.emailPrefix | quote }}
+            - name: MECA_EMAIL_RECIPIENT
+              value: {{ .Values.submission.meca.emailRecipient | quote }}
+            - name: MECA_API_KEY
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.submission.meca.apiSecret | quote }}
+                    key: key
 
       initContainers:
         - name: {{ .Chart.Name }}-load-db-schema
