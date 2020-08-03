@@ -35,7 +35,7 @@ services:
       retries: 10
 
   s3_create-bucket:
-    image: minio/mc:RELEASE.2020-07-17T02-52-20Z
+    image: minio/mc:RELEASE.2020-07-31T23-34-13Z
     depends_on:
       - s3
     networks:
@@ -51,7 +51,7 @@ services:
       "
 
   sftp:
-    image: atmoz/sftp:alpine@sha256:409d9903a52965f9f431ed26e8d01170496861b9afd15e7f72ad1b2856363a88
+    image: atmoz/sftp:alpine@sha256:4fe50aefaaf76dd10cfb396d9dcd054c8277d4d47ed2ac18f74e170327942288
     networks:
       - reviewer
     volumes:
