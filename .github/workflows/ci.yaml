@@ -65,15 +65,8 @@ jobs:
         uses: helm/chart-testing-action@v1.0.0-rc.1
         with:
           command: lint
-      - name: Configure Git for Chart Release
-        if: github.ref != 'refs/heads/master'
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Release Chart using GH-Pages
-        uses: helm/chart-releaser-action@v1.0.0-rc.1
+      - name: Publish Chart using GH-Pages
+        uses: stefanprodan/helm-gh-pages@master
         if: github.ref != 'refs/heads/master'
         with:
-          charts_repo_url: https://libero.github.io/reviewer
-        env:
-          CR_TOKEN: "${{ secrets.CHART_RELEASE_TOKEN }}"
+          token: "${{ secrets.CHART_RELEASE_TOKEN }}"
