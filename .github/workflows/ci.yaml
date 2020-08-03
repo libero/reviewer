@@ -53,15 +53,21 @@ jobs:
           status: FAILED
           color: warning
 
-  lint-chart:
+  chart:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Fetch history
         run: git fetch --prune --unshallow
-      - name: Run chart-testing (lint)
+      - name: Lint Chart
         id: lint
         uses: helm/chart-testing-action@v1.0.0-rc.1
         with:
           command: lint
+      - name: Publish Chart using GH-Pages
+        uses: stefanprodan/helm-gh-pages@master
+        if: github.ref == 'refs/heads/master'
+        with:
+          token: "${{ secrets.CHART_RELEASE_TOKEN }}"
+          charts_url: https://libero.github.io/reviewer
