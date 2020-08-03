@@ -67,7 +67,7 @@ jobs:
           command: lint
       - name: Publish Chart using GH-Pages
         uses: stefanprodan/helm-gh-pages@master
-        if: github.ref != 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         with:
           token: "${{ secrets.CHART_RELEASE_TOKEN }}"
           charts_url: https://libero.github.io/reviewer
