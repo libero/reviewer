@@ -73,5 +73,7 @@ jobs:
       - name: Release Chart using GH-Pages
         uses: helm/chart-releaser-action@v1.0.0-rc.1
         if: github.ref != 'refs/heads/master'
+        with:
+          chart_repo_url: https://libero.github.io/reviewer
         env:
           CR_TOKEN: "${{ secrets.CHART_RELEASE_TOKEN }}"
