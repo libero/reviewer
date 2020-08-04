@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     app.kubernetes.io/component: client
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.client.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "libero-reviewer.fullname" . }}-client
