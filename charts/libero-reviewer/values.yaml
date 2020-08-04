@@ -70,7 +70,7 @@ continuumAdaptor:
     tag: latest
     pullPolicy: Always
   port: 3001
-  loginUrl: "http://continuum.gateway.url/submit"
+  continuumLoginUrl: "http://continuum.gateway.url/submit"
   continuumApiUrl: "http://continuumtest--gateway.elife.internal"
   # Name of an existing secret with a 'continuumJwtSecret' entry
   continuumJwtSecret: "libero-reviewer--continuum-journal-jwt"
