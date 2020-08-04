@@ -1,0 +1,61 @@
+# Client
+{{- if .Values.client.podDisruptionBudget.enabled }}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "libero-reviewer.fullname" . }}-client
+spec:
+  {{- if .Values.client.podDisruptionBudget.minAvailable }}
+  minAvailable: {{ .Values.client.podDisruptionBudget.minAvailable }}
+  {{- end  }}
+  {{- if .Values.client.podDisruptionBudget.maxUnavailable }}
+  maxUnavailable: {{ .Values.client.podDisruptionBudget.maxUnavailable }}
+  {{- end  }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "libero-reviewer.fullname" . }}-client
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: client
+{{- end }}
+
+# Submission
+{{- if .Values.submission.podDisruptionBudget.enabled }}
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "libero-reviewer.fullname" . }}-submission
+spec:
+  {{- if .Values.submission.podDisruptionBudget.minAvailable }}
+  minAvailable: {{ .Values.submission.podDisruptionBudget.minAvailable }}
+  {{- end  }}
+  {{- if .Values.submission.podDisruptionBudget.maxUnavailable }}
+  maxUnavailable: {{ .Values.submission.podDisruptionBudget.maxUnavailable }}
+  {{- end  }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "libero-reviewer.fullname" . }}-submission
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: submission
+{{- end }}
+
+# Contiuum-Adaptor
+{{- if .Values.continuumAdaptor.podDisruptionBudget.enabled }}
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "libero-reviewer.fullname" . }}-continuum-adaptor
+spec:
+  {{- if .Values.continuumAdaptor.podDisruptionBudget.minAvailable }}
+  minAvailable: {{ .Values.submission.podDisruptionBudget.minAvailable }}
+  {{- end  }}
+  {{- if .Values.submission.podDisruptionBudget.maxUnavailable }}
+  maxUnavailable: {{ .Values.continuumAdaptor.podDisruptionBudget.maxUnavailable }}
+  {{- end  }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "libero-reviewer.fullname" . }}-continuum-adaptor
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: client
+{{- end }}

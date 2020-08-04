@@ -2,7 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
 
 database:
   secret: libero-reviewer--postgresql
@@ -13,6 +12,11 @@ submission:
     tag: latest
     pullPolicy: Always
   port: 3000
+  replicaCount: 1
+  podDisruptionBudget:
+    enabled: false
+    minAvailable: 1
+    maxUnavailable: ""
 
   newRelicHome: /etc/reviewer
   # Sets both an submission internal value as well as ingree max_request
@@ -63,6 +67,11 @@ client:
     repository: liberoadmin/reviewer-client
     tag: latest
     pullPolicy: Always
+  replicaCount: 1
+  podDisruptionBudget:
+    enabled: false
+    minAvailable: 1
+    maxUnavailable: ""
 
 continuumAdaptor:
   image:
@@ -70,6 +79,11 @@ continuumAdaptor:
     tag: latest
     pullPolicy: Always
   port: 3001
+  replicaCount: 1
+  podDisruptionBudget:
+    enabled: false
+    minAvailable: 1
+    maxUnavailable: ""
   continuumLoginUrl: "http://continuum.gateway.url/submit"
   continuumApiUrl: "http://continuumtest--gateway.elife.internal"
   # Name of an existing secret with a 'continuumJwtSecret' entry

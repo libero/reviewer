@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     app.kubernetes.io/component: submission
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.submission.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "libero-reviewer.fullname" . }}-submission
