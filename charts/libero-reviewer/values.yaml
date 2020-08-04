@@ -84,7 +84,7 @@ continuumAdaptor:
     enabled: false
     minAvailable: 1
     maxUnavailable: ""
-  loginUrl: "http://continuum.gateway.url/submit"
+  continuumLoginUrl: "http://continuum.gateway.url/submit"
   continuumApiUrl: "http://continuumtest--gateway.elife.internal"
   # Name of an existing secret with a 'continuumJwtSecret' entry
   continuumJwtSecret: "libero-reviewer--continuum-journal-jwt"

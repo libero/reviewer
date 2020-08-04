@@ -9,7 +9,6 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   annotations:
-    nginx.ingress.kubernetes.io/permanent-redirect: "{{ .Values.continuumAdaptor.loginUrl }}?return_url=https%3A%2F%2F{{ .Values.ingress.host }}%2Fauthenticate&token_in_query=true"
 {{- with .Values.ingress.annotations }}
 {{ toYaml . | indent 4 }}
 {{- end }}
@@ -21,7 +20,7 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /continuum-login
+          - path: /auth-login
             backend:
               serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
               servicePort: {{ .Values.continuumAdaptor.port}}
