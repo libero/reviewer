@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ include "libero-reviewer.fullname" . }}-login
+  name: {{ include "libero-reviewer.fullname" . }}-continuum-adaptor
   labels:
     app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
     helm.sh/chart: {{ include "libero-reviewer.chart" . }}
@@ -21,6 +21,10 @@ spec:
       http:
         paths:
           - path: /auth-login
+            backend:
+              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
+              servicePort: {{ .Values.continuumAdaptor.port}}
+          - path: /authenticate
             backend:
               serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
               servicePort: {{ .Values.continuumAdaptor.port}}
