@@ -3,17 +3,18 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ include "libero-reviewer.fullname" . }}
+  name: {{ include "libero-reviewer.fullname" . }}-graphql
   labels:
     app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
     helm.sh/chart: {{ include "libero-reviewer.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "{{ div .Values.submission.maxFileSizeInBytes 1000000 }}m"
 {{- with .Values.ingress.annotations }}
 {{ toYaml . | indent 4 }}
 {{- end }}
-{{- with .Values.ingress.main.annotations }}
+{{- with .Values.ingress.graphql.annotations }}
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
@@ -21,16 +22,12 @@ spec:
     - host: {{ .Values.ingress.host | quote }}
       http:
         paths:
-          - path: /
+          - path: /graphql
             backend:
-              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("client") }}
-              servicePort: 80
+              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("submission") }}
+              servicePort: {{ .Values.submission.port}}
           - path: /meca-result
             backend:
               serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("submission") }}
               servicePort: {{ .Values.submission.port}}
-          - path: /authenticate
-            backend:
-              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
-              servicePort: {{ .Values.continuumAdaptor.port}}
 {{- end -}}

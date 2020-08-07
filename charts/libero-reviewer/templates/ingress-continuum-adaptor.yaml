@@ -24,4 +24,8 @@ spec:
             backend:
               serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
               servicePort: {{ .Values.continuumAdaptor.port}}
+          - path: /authenticate
+            backend:
+              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("continuum-adaptor") }}
+              servicePort: {{ .Values.continuumAdaptor.port}}
 {{- end -}}
