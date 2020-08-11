@@ -70,7 +70,7 @@ jobs:
         with:
           token: "${{ secrets.CHART_RELEASE_TOKEN }}"
           charts_url: https://libero.github.io/reviewer
+          target_dir: charts
       - name: debug
         run: |
           ls -R
-          ls -R /tmp
