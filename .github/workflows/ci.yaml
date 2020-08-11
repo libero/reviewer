@@ -66,11 +66,8 @@ jobs:
         with:
           command: lint
       - name: Publish Chart using GH-Pages
-        uses: stefanprodan/helm-gh-pages@master
+        uses: erkannt/helm-gh-pages@master
         with:
           token: "${{ secrets.CHART_RELEASE_TOKEN }}"
           charts_url: https://libero.github.io/reviewer
           target_dir: charts
-      - name: debug
-        run: |
-          ls -R
