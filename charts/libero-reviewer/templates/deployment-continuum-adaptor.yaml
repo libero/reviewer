@@ -64,16 +64,30 @@ spec:
                     name: {{ .Values.continuumAdaptor.elifeApiSecret | quote }}
                     key: token
 
+            {{- if .Values.postgresql.enabled }}
             - name: DATABASE_NAME
               value: {{ .Values.postgresql.postgresqlDatabase | quote }}
             - name: DATABASE_USER
               value: {{ .Values.postgresql.postgresqlUsername | quote }}
+            - name: DATABASE_HOST
+              value: "{{ include "libero-reviewer.fullname" . }}-postgresql"
             - name: DATABASE_PASSWORD
               valueFrom:
                   secretKeyRef:
                     name: {{ .Values.postgresql.existingSecret | quote }}
                     key: postgresql-password
+            {{- else }}
+            - name: DATABASE_NAME
+              value: {{ .Values.database.dbName | quote }}
+            - name: DATABASE_USER
+              value: {{ .Values.database.dbUser.postgresqlUsername | quote }}
             - name: DATABASE_HOST
-              value: "{{ include "libero-reviewer.fullname" . }}-postgresql"
+              value: {{ .Values.database.dbHost.postgresqlUsername | quote }}
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.database.dbPasswordSecret | quote }}
+                    key: {{ .Values.database.dbPasswordKey | quote }}
+            {{- end }}
             - name: DATABASE_PORT
               value: "5432"
