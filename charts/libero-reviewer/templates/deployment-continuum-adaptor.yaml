@@ -80,9 +80,9 @@ spec:
             - name: DATABASE_NAME
               value: {{ .Values.database.dbName | quote }}
             - name: DATABASE_USER
-              value: {{ .Values.database.dbUser.postgresqlUsername | quote }}
+              value: {{ .Values.database.dbUser | quote }}
             - name: DATABASE_HOST
-              value: {{ .Values.database.dbHost.postgresqlUsername | quote }}
+              value: {{ .Values.database.dbHost | quote }}
             - name: DATABASE_PASSWORD
               valueFrom:
                   secretKeyRef:
