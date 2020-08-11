@@ -182,7 +182,7 @@ spec:
               value: {{ .Values.database.dbName | quote }}
             - name: PGUSER
               value: {{ .Values.database.dbUser | quote }}
-            - name: PGLHOST
+            - name: PGHOST
               value: {{ .Values.database.dbHost | quote }}
             - name: PGPASSWORD
               valueFrom:
