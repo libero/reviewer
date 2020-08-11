@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     app.kubernetes.io/component: continuum-adaptor
 spec:
-  replicas: 1
+  replicas: {{ .Values.continuumAdaptor.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "libero-reviewer.fullname" . }}-continuum-adaptor
@@ -42,7 +42,7 @@ spec:
             - name: PORT
               value: {{ .Values.continuumAdaptor.port | quote }}
             - name: LOGIN_URL
-              value: {{ .Values.continuumAdaptor.loginUrl | quote }}
+              value: "{{ .Values.continuumAdaptor.continuumLoginUrl }}?return_url=https%3A%2F%2F{{ .Values.ingress.host }}%2Fauthenticate&token_in_query=true"
             - name: LOGIN_RETURN_URL
               value: "https://{{ .Values.ingress.host }}/login"
             - name: AUTHENTICATION_JWT_SECRET

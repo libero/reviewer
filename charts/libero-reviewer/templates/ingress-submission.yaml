@@ -3,7 +3,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ include "libero-reviewer.fullname" . }}-graphql
+  name: {{ include "libero-reviewer.fullname" . }}-submission
   labels:
     app.kubernetes.io/name: {{ include "libero-reviewer.name" . }}
     helm.sh/chart: {{ include "libero-reviewer.chart" . }}
@@ -23,6 +23,10 @@ spec:
       http:
         paths:
           - path: /graphql
+            backend:
+              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("submission") }}
+              servicePort: {{ .Values.submission.port}}
+          - path: /meca-result
             backend:
               serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("submission") }}
               servicePort: {{ .Values.submission.port}}

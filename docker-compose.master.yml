@@ -1,13 +1,13 @@
 version: '3'
 services:
   continuum-adaptor:
-    image: liberoadmin/continuum-adaptor:master-b1ffbcb2-20200720.0816
+    image: liberoadmin/continuum-adaptor:master-ab04d32e-20200804.0951
 
   reviewer-mocks:
     image: liberoadmin/reviewer-mocks:master-39e7d6dc-20200722.0848
 
   submission:
-    image: liberoadmin/reviewer-submission:master-c53ff219-20200730.1520
+    image: liberoadmin/reviewer-submission:master-2f4636d5-20200811.1107
 
   client:
     image: liberoadmin/reviewer-client:master-250f901b-20200723.1330
