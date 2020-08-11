@@ -3,7 +3,24 @@ entries:
   libero-reviewer:
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-11T14:58:37.233789199Z"
+    created: "2020-08-11T15:02:41.209518774Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~7.0
+    description: elife specific deployment of Libero Reviewer
+    digest: 30276d589ff23f7e8435c32d65c9da474e93320b0b9fe3f4c9f0b91035c9e618
+    home: https://github.com/libero/reviewer
+    maintainers:
+    - name: erkannt
+    name: libero-reviewer
+    urls:
+    - https://libero.github.io/reviewer/libero-reviewer-0.23.4.tgz
+    version: 0.23.4
+  - apiVersion: v2
+    appVersion: latest
+    created: "2020-08-11T15:02:41.206525972Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -20,7 +37,7 @@ entries:
     version: 0.23.3
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-11T14:58:37.230440107Z"
+    created: "2020-08-11T15:02:41.203300671Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -37,7 +54,7 @@ entries:
     version: 0.23.2
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-11T14:58:37.225353018Z"
+    created: "2020-08-11T15:02:41.200048169Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -54,7 +71,7 @@ entries:
     version: 0.23.1
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-11T14:58:37.222168225Z"
+    created: "2020-08-11T15:02:41.194100966Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -71,7 +88,7 @@ entries:
     version: 0.23.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-11T14:58:37.218825533Z"
+    created: "2020-08-11T15:02:41.189323164Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -86,4 +103,4 @@ entries:
     urls:
     - https://libero.github.io/reviewer/libero-reviewer-0.22.0.tgz
     version: 0.22.0
-generated: "2020-08-11T14:58:37.215222341Z"
+generated: "2020-08-11T15:02:41.184439362Z"
