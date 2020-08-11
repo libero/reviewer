@@ -165,6 +165,7 @@ spec:
           image: "{{ .Values.submissionDbSchema.image.repository }}:{{ .Values.submissionDbSchema.image.tag }}"
           command: ["sh", "-c", "(psql -q -t -c \"select count(*) from information_schema.tables where table_schema='public';\" | xargs ) && psql -f  /docker-entrypoint-initdb.d/xpub-schema.sql"]
           env:
+            {{- if .Values.postgresql.enabled }}
             - name: PGHOST
               value: '{{ include "libero-reviewer.fullname" . }}-postgresql'
             - name: PGPORT
@@ -178,3 +179,16 @@ spec:
                     key: postgresql-password
             - name: PGDATABASE
               value: "{{ .Values.postgresql.postgresqlDatabase }}"
+            {{- else }}
+            - name: PGDATABASE
+              value: {{ .Values.database.dbName | quote }}
+            - name: PGUSER
+              value: {{ .Values.database.dbUser | quote }}
+            - name: PGLHOST
+              value: {{ .Values.database.dbHost | quote }}
+            - name: PGPASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.database.dbPasswordSecret | quote }}
+                    key: {{ .Values.database.dbPasswordKey | quote }}
+            {{- end }}

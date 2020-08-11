@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "latest"
 description: elife specific deployment of Libero Reviewer
 name: libero-reviewer
-version: 0.23.1
+version: 0.23.2
 home: "https://github.com/libero/reviewer"
 maintainers:
   - name: erkannt
