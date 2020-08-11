@@ -168,8 +168,6 @@ spec:
             {{- if .Values.postgresql.enabled }}
             - name: PGHOST
               value: '{{ include "libero-reviewer.fullname" . }}-postgresql'
-            - name: PGPORT
-              value: "5432"
             - name: PGUSER
               value: "{{ .Values.postgresql.postgresqlUsername }}"
             - name: PGPASSWORD
@@ -192,3 +190,5 @@ spec:
                     name: {{ .Values.database.dbPasswordSecret | quote }}
                     key: {{ .Values.database.dbPasswordKey | quote }}
             {{- end }}
+            - name: PGPORT
+              value: "5432"
