@@ -72,4 +72,4 @@ jobs:
           charts_url: https://libero.github.io/reviewer
       - name: debug
         run: |
-          ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+          ls -R
