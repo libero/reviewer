@@ -132,4 +132,4 @@ browsertests:
   runPostRelease: false
   testFixture: Minimal
   # browsertests.baseurl -- defaults to .Values.ingress.host
-  # baseurl: libero-reviewer--staging.domain.tld
+  baseurl: ""

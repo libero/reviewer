@@ -1,0 +1,34 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+## Notes
+
+- master branch is tracked by eLife's [staging deployment](https://libero-reviewer--staging.elifesciences.org/login)
+- eLife's production deployment has the chart version [set manually](https://github.com/elifesciences/elife-flux-cluster/blob/master/deployments/reviewer/libero-reviewer--prod.yaml).
+- use separate Ingress objects per Deployment to allow for meaningful [canaries](https://github.com/elifesciences/elife-flux-cluster/blob/master/deployments/reviewer/libero-reviewer--prod--canaries.yaml)
+- submission's long lived connections (file uploads) can be accomodated with timeouts
+- submission's method of reporting file upload progress requires sticky connections
+
+## Lint helm chart locally
+
+Locally linting can sometimes produce more intelligble error messages:
+
+```sh
+docker run \
+    -v $(pwd):/src \
+    quay.io/helmpack/chart-testing:latest \
+    sh -c 'cd /src ; helm repo add k8s  https://charts.bitnami.com/bitnami ; ct lint'
+```
+
+## Update Readme
+
+- modify `README.md.gotmpl`
+- run [helm-docs](https://github.com/norwoodj/helm-docs)
+
+{{ template "chart.valuesSection" . }}
