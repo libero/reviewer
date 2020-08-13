@@ -55,14 +55,3 @@ Other make targets:
 
 - `stop`: tear everything down
 - `test_integration` and `test_integration_master`: bring stuff up and run the matching browsertest container
-
-## Lint helm chart locally
-
-Locally linting can sometimes produce more intelligble error messages:
-
-```sh
-docker run \
-    -v $(pwd):/src \
-    quay.io/helmpack/chart-testing:latest \
-    sh -c 'cd /src ; helm repo add k8s  https://charts.bitnami.com/bitnami ; ct lint'
-```
