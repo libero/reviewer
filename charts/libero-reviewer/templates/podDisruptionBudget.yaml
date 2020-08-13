@@ -1,4 +1,3 @@
-# Client
 {{- if .Values.client.podDisruptionBudget.enabled }}
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
@@ -18,7 +17,6 @@ spec:
       app.kubernetes.io/component: client
 {{- end }}
 
-# Submission
 {{- if .Values.submission.podDisruptionBudget.enabled }}
 ---
 apiVersion: policy/v1beta1
@@ -39,7 +37,6 @@ spec:
       app.kubernetes.io/component: submission
 {{- end }}
 
-# Contiuum-Adaptor
 {{- if .Values.continuumAdaptor.podDisruptionBudget.enabled }}
 ---
 apiVersion: policy/v1beta1

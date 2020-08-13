@@ -14,6 +14,13 @@ submission:
     enabled: false
     minAvailable: 1
     maxUnavailable: ""
+  # Timeout to give long requests a chance to complete before terminating the pod
+  # terminationGracePeriodSeconds is the total time allowed for:
+  #   preStop _and_ SIGTERM
+  terminationGracePeriodSeconds: 150
+  # Keep existing connections alive during ingress-controller reloads and during pod termination
+  nginxWorkerTimeoutSeconds: 120
+  enableStickyConnections: true
 
   newRelicHome: /etc/reviewer
   # submission.maxFileSizeInBytes -- sets both an submission internal value as well as ingree max_request
