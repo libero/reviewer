@@ -22,6 +22,7 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: submission
     spec:
+      terminationGracePeriodSeconds: {{ .Values.submission.terminationGracePeriodSeconds }}
       containers:
         - name: {{ .Chart.Name }}-submission
           image: "{{ .Values.submission.image.repository }}:{{ .Values.submission.image.tag }}"
