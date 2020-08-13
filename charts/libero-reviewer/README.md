@@ -18,7 +18,10 @@ elife specific deployment of Libero Reviewer
 
 ## Lint helm chart locally
 
-Locally linting can sometimes produce more intelligble error messages:
+You have to bump the chart version if you change the chart.
+Pipeline will otherwise fail.
+
+Locally linting can sometimes produce more intelligble error messages.
 
 ```sh
 docker run \
