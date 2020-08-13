@@ -13,7 +13,7 @@ metadata:
 {{- with .Values.ingress.annotations }}
 {{ toYaml . | indent 4 }}
 {{- end }}
-{{- with .Values.ingress.main.annotations }}
+{{- with .Values.client.additionalIngressAnnotations }}
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
