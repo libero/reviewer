@@ -1,0 +1,46 @@
+{{- if .Values.reporter.enabled }}
+{{- $fullname := include "libero-reviewer.fullname" . }}
+{{- range $id, $element := .Values.reporter.schedules }}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ $fullname }}-reporter-{{ $element.name }}
+spec:
+  schedule: {{ $element.schedule | quote }}
+  concurrencyPolicy: forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: reporter-{{ $element.name }}
+            image: "{{ $.Values.reporter.image.repository }}:{{ $.Values.reporter.image.tag }}"
+            volumeMounts:
+            - name: mailheader
+              mountPath: "/mail-config"
+              readOnly: true
+            - name: ssmtp
+              mountPath: /etc/ssmtp
+              readOnly: true
+          volumes:
+          - name: mailheader
+            configMap:
+              name: {{ $fullname }}-reporter-mailheader
+          - name: ssmtp
+            secret:
+              secretName: {{ $.Values.reporter.ssmtpConfSecret }}
+          restartPolicy: OnFailure
+---
+{{- end }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "libero-reviewer.fullname" . }}-reporter-mailheader
+data:
+  mailheader: |-
+    From: {{ .Values.reporter.fromAddress }}
+    Subject: {{ .Values.reporter.subjectline }}
+    MIME-Version: 1.0
+    Content-Type: text/html; charset=utf-8
+---
+{{- end }}

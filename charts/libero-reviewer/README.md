@@ -73,6 +73,14 @@ docker run \
 | postgresql.resources.limits.memory | string | `"256Mi"` |  |
 | postgresql.resources.requests.cpu | string | `"250m"` |  |
 | postgresql.resources.requests.memory | string | `"256Mi"` |  |
+| reporter.enabled | bool | `false` |  |
+| reporter.fromAddress | string | `"no-reply@elifesciences.org"` |  |
+| reporter.image.repository | string | `"liberoadmin/reviewer-reporter"` |  |
+| reporter.image.tag | string | `"latest"` |  |
+| reporter.recipient | string | `""` |  |
+| reporter.schedules | list | `[{"name":"8am","schedule":"0  8 * * *"},{"name":"1pm","schedule":"0 13 * * *"}]` | list of 'name', 'schedule'(cron syntax) pairs |
+| reporter.ssmtpConfSecret | string | `""` | ssmtp.conf file stored as secret, see also libero/reviewer-reporter |
+| reporter.subjectline | string | `"Reviewer Status Report"` |  |
 | submission.authenticationJwtSecret | string | `"libero-reviewer--auth-jwt"` |  |
 | submission.enableStickyConnections | bool | `true` |  |
 | submission.graphQL.maxComplexity | int | `100` |  |
