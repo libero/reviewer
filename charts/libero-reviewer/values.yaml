@@ -23,21 +23,21 @@ submission:
   enableStickyConnections: true
 
   newRelicHome: /etc/reviewer
-  # Sets both an submission internal value as well as ingree max_request
+  # submission.maxFileSizeInBytes -- sets both an submission internal value as well as ingree max_request
   maxFileSizeInBytes: 100000000
 
   authenticationJwtSecret: libero-reviewer--auth-jwt
 
   s3:
-    # name of a secret with 'id' and 'access-key' entries
+    # submission.s3.secret -- name of a secret with 'id' and 'access-key' entries
     secret: ""
     bucket: ""
-    # Overide the default aws s3 endpoint, set to "" when using aws s3
+    # submission.s3.endpoint -- overide the default aws s3 endpoint, set to "" when using aws s3
     endpoint: ""
     forcePathStyle: true
 
   mail:
-    # name of a secret with 'id' and 'access-key' entries
+    # submission.mail.sesSecret -- name of a secret with 'id' and 'access-key' entries
     sesSecret: ""
     sesRegion: ""
     sendMail: false
@@ -56,10 +56,10 @@ submission:
     sftpPath: "/upload"
     sftpPort: 22
     sftpSecret: libero-reviewer--sftp
-    # Prefix for email subject when MECa import fails, usually "(${environment})"
+    # submission.meca.emailPrefix -- for email subject when MECA import fails, usually "(${environment})"
     emailPrefix: "(staging)"
     emailRecipient: "libero-reviewer@mailinator.com"
-    # Name of an existing secret with a 'key' entry
+    # submission.meca.apiSecret -- name of an existing secret with a 'key' entry
     apiSecret: "libero-reviewer--meca-api"
 submissionDbSchema:
   image:
@@ -90,12 +90,12 @@ continuumAdaptor:
     maxUnavailable: ""
   continuumLoginUrl: "http://continuum.gateway.url/submit"
   continuumApiUrl: "http://continuumtest--gateway.elife.internal"
-  # Name of an existing secret with a 'continuumJwtSecret' entry
+  # continuumAdptor.continuumJwtSecret -- Name of an existing secret with a 'continuumJwtSecret' entry
   continuumJwtSecret: "libero-reviewer--continuum-journal-jwt"
-  # Name of an existing secret with a 'token' entry
+  # continuumAdptor.continuumApiSecret -- Name of an existing secret with a 'token' entry
   elifeApiSecret: "libero-reviewer--elife-api"
 
-# Used if database not managed by this chart i.e. 'postgresql.enabled: false'
+# database -- Used if database not managed by this chart i.e. 'postgresql.enabled: false'
 database:
   dbHost: ""
   dbUser: ""
@@ -122,24 +122,14 @@ postgresql:
 
 ingress:
   enabled: false
-  # applied to _all_ reviewer ingress records
+  # ingress -- applied to _all_ reviewer ingress records
   host: libero-reviewer--staging.domain.tld
-  annotations:
-  # per ingress annotations
-  main:
-    annotations:
-  login:
-    annotations:
-  graphql:
-    annotations:
-  auth:
-    annotations:
 
 browsertests:
   image:
-    # for the tag we use client.image.tag but strip timestamps
+    # browsertests.image.repository -- for the tag we use client.image.tag but strip timestamps
     repository: liberoadmin/reviewer-browsertests
   runPostRelease: false
   testFixture: Minimal
-  # baseurl defaults to .Values.ingress.host
-  # baseurl: libero-reviewer--staging.domain.tld
+  # browsertests.baseurl -- defaults to .Values.ingress.host
+  baseurl: ""
