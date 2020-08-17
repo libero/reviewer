@@ -24,7 +24,7 @@ spec:
               readOnly: true
             env:
               - name: RECIPIENT
-                value: "{{ $.Values.reporter.recipient }"
+                value: "{{ $.Values.reporter.recipient }}"
               {{- if $.Values.postgresql.enabled }}
               - name: PGHOST
                 value: '{{ include "libero-reviewer.fullname" . }}-postgresql'
