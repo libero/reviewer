@@ -15,6 +15,8 @@ submission:
     minAvailable: 1
     maxUnavailable: ""
   additionalIngressAnnotations: {}
+  resources: {}
+
   # Timeout to give long requests a chance to complete before terminating the pod
   # terminationGracePeriodSeconds is the total time allowed for:
   #   preStop _and_ SIGTERM
@@ -79,6 +81,7 @@ client:
     minAvailable: 1
     maxUnavailable: ""
   additionalIngressAnnotations: {}
+  resources: {}
 
 continuumAdaptor:
   image:
@@ -92,6 +95,8 @@ continuumAdaptor:
     minAvailable: 1
     maxUnavailable: ""
   additionalIngressAnnotations: {}
+  resources: {}
+
   continuumLoginUrl: "http://continuum.gateway.url/submit"
   continuumApiUrl: "http://continuumtest--gateway.elife.internal"
   # continuumAdptor.continuumJwtSecret -- Name of an existing secret with a 'continuumJwtSecret' entry

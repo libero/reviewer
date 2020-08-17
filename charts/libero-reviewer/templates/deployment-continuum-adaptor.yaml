@@ -38,6 +38,8 @@ spec:
             httpGet:
               path: /health
               port: http
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
           env:
             - name: PORT
               value: {{ .Values.continuumAdaptor.port | quote }}
