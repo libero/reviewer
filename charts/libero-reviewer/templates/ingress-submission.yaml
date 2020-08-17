@@ -11,7 +11,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "{{ div .Values.submission.maxFileSizeInBytes 1000000 }}m"
-    nginx.ingress.kubernetes.io/worker-shutdown-timeout: {{ .Values.submission.nginxWorkerTimeoutSeconds }}
+    nginx.ingress.kubernetes.io/worker-shutdown-timeout: {{ .Values.submission.nginxWorkerTimeoutSeconds | quote }}
     {{- if .Values.submission.enableStickyConnections }}
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-expires: "3600"
