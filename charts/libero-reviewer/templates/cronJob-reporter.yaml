@@ -23,30 +23,30 @@ spec:
               mountPath: /etc/ssmtp
               readOnly: true
             env:
-              {{- if .Values.postgresql.enabled }}
+              {{- if $.Values.postgresql.enabled }}
               - name: PGHOST
                 value: '{{ include "libero-reviewer.fullname" . }}-postgresql'
               - name: PGUSER
-                value: "{{ .Values.postgresql.postgresqlUsername }}"
+                value: "{{ $.Values.postgresql.postgresqlUsername }}"
               - name: PGPASSWORD
                 valueFrom:
                     secretKeyRef:
-                      name: {{ .Values.postgresql.existingSecret | quote }}
+                      name: {{ $.Values.postgresql.existingSecret | quote }}
                       key: postgresql-password
               - name: PGDATABASE
-                value: "{{ .Values.postgresql.postgresqlDatabase }}"
+                value: "{{ $.Values.postgresql.postgresqlDatabase }}"
               {{- else }}
               - name: PGDATABASE
-                value: {{ .Values.database.dbName | quote }}
+                value: {{ $.Values.database.dbName | quote }}
               - name: PGUSER
-                value: {{ .Values.database.dbUser | quote }}
+                value: {{ $.Values.database.dbUser | quote }}
               - name: PGHOST
-                value: {{ .Values.database.dbHost | quote }}
+                value: {{ $.Values.database.dbHost | quote }}
               - name: PGPASSWORD
                 valueFrom:
                     secretKeyRef:
-                      name: {{ .Values.database.dbPasswordSecret | quote }}
-                      key: {{ .Values.database.dbPasswordKey | quote }}
+                      name: {{ $.Values.database.dbPasswordSecret | quote }}
+                      key: {{ $.Values.database.dbPasswordKey | quote }}
               {{- end }}
               - name: PGPORT
                 value: "5432"
