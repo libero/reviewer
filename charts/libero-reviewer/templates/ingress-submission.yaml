@@ -22,7 +22,7 @@ metadata:
 {{- with .Values.ingress.annotations }}
 {{ toYaml . | indent 4 }}
 {{- end }}
-{{- with .Values.continuumAdaptor.additionalIngressAnnotations }}
+{{- with .Values.submission.additionalIngressAnnotations }}
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
