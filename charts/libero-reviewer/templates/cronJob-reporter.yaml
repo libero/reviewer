@@ -1,0 +1,74 @@
+{{- if .Values.reporter.enabled }}
+{{- $fullname := include "libero-reviewer.fullname" . }}
+{{- range $id, $element := .Values.reporter.schedules }}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ $fullname }}-reporter-{{ $element.name }}
+spec:
+  schedule: {{ $element.schedule | quote }}
+  concurrencyPolicy: forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: reporter-{{ $element.name }}
+            image: "{{ $.Values.reporter.image.repository }}:{{ $.Values.reporter.image.tag }}"
+            volumeMounts:
+            - name: mailheader
+              mountPath: "/mail-config"
+              readOnly: true
+            - name: ssmtp
+              mountPath: /etc/ssmtp
+              readOnly: true
+            env:
+              {{- if .Values.postgresql.enabled }}
+              - name: PGHOST
+                value: '{{ include "libero-reviewer.fullname" . }}-postgresql'
+              - name: PGUSER
+                value: "{{ .Values.postgresql.postgresqlUsername }}"
+              - name: PGPASSWORD
+                valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.postgresql.existingSecret | quote }}
+                      key: postgresql-password
+              - name: PGDATABASE
+                value: "{{ .Values.postgresql.postgresqlDatabase }}"
+              {{- else }}
+              - name: PGDATABASE
+                value: {{ .Values.database.dbName | quote }}
+              - name: PGUSER
+                value: {{ .Values.database.dbUser | quote }}
+              - name: PGHOST
+                value: {{ .Values.database.dbHost | quote }}
+              - name: PGPASSWORD
+                valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.database.dbPasswordSecret | quote }}
+                      key: {{ .Values.database.dbPasswordKey | quote }}
+              {{- end }}
+              - name: PGPORT
+                value: "5432"
+          volumes:
+          - name: mailheader
+            configMap:
+              name: {{ $fullname }}-reporter-mailheader
+          - name: ssmtp
+            secret:
+              secretName: {{ $.Values.reporter.ssmtpConfSecret }}
+          restartPolicy: OnFailure
+---
+{{- end }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "libero-reviewer.fullname" . }}-reporter-mailheader
+data:
+  mailheader: |-
+    From: {{ .Values.reporter.fromAddress }}
+    Subject: {{ .Values.reporter.subjectline }}
+    MIME-Version: 1.0
+    Content-Type: text/html; charset=utf-8
+---
+{{- end }}

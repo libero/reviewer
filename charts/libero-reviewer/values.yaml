@@ -133,3 +133,20 @@ browsertests:
   testFixture: Minimal
   # browsertests.baseurl -- defaults to .Values.ingress.host
   baseurl: ""
+
+reporter:
+  enabled: false
+  fromAddress: no-reply@elifesciences.org
+  subjectline: Reviewer Status Report
+  recipient: ""
+  # reporter.ssmtpConfSecret -- ssmtp.conf file stored as secret, see also libero/reviewer-reporter
+  ssmtpConfSecret: ""
+  # reporter.schedules -- list of 'name', 'schedule'(cron syntax) pairs
+  schedules:
+    - name: 8am
+      schedule: "0  8 * * *"
+    - name: 1pm
+      schedule: "0 13 * * *"
+  image:
+    repository: liberoadmin/reviewer-reporter
+    tag: latest
