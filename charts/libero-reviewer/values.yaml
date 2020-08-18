@@ -23,7 +23,6 @@ submission:
   nginxWorkerTimeoutSeconds: 120
   enableStickyConnections: true
 
-  newRelicHome: /etc/reviewer
   # submission.maxFileSizeInBytes -- sets both an submission internal value as well as ingree max_request
   maxFileSizeInBytes: 100000000
 

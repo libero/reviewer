@@ -50,8 +50,6 @@ spec:
                     key: reviewer-auth-secret
             - name: USER_API_URL
               value: 'http://{{ include "libero-reviewer.fullname" . }}-continuum-adaptor:{{ .Values.continuumAdaptor.port }}'
-            - name: NEW_RELIC_HOME
-              value: "{{ .Values.submission.newRelicHome }}"
             - name: MAX_FILE_SIZE_IN_BYTES
               value: "{{ .Values.submission.maxFileSizeInBytes }}"
 
