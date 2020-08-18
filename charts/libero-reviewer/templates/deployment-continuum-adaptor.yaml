@@ -93,3 +93,19 @@ spec:
             {{- end }}
             - name: DATABASE_PORT
               value: "5432"
+
+            {{- if .Values.newRelic.enabled }}
+            - name: INCLUDE_NEW_RELIC
+              value: "true"
+            - name: NEW_RELIC_APP_NAME
+              value: {{ .Values.newRelic.appName | quote }}
+            - name: NEW_RELIC_LICENSE_KEY
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.newRelic.licenseKeyName | quote }}
+                    key: key
+            {{- range $name, $value := .Values.newRelic.additionalEnvironmentVariables }}
+            - name: {{ $name }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- end }}
