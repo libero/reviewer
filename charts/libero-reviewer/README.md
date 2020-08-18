@@ -68,6 +68,12 @@ docker run \
 | continuumAdaptor.resources | object | `{}` |  |
 | database | object | `{"dbHost":"","dbName":"","dbPasswordKey":"password","dbPasswordSecret":"","dbUser":""}` | Used if database not managed by this chart i.e. 'postgresql.enabled: false' |
 | ingress | object | `{"enabled":false,"host":"libero-reviewer--staging.domain.tld"}` | applied to _all_ reviewer ingress records |
+| newRelic.additionalEnvironmentVariables.NEW_RELIC_ATTRIBUTES_EXCLUDE | string | `"'request.headers.cookie', 'request.headers.authorization', 'request.headers.proxyAuthorization', 'request.headers.setCookie*', 'request.headers.x*', 'response.headers.cookie', 'response.headers.authorization', 'response.headers.proxyAuthorization', 'response.headers.setCookie*', 'response.headers.x*'\n"` |  |
+| newRelic.additionalEnvironmentVariables.NEW_RELIC_DISTRIBUTED_TRACING_ENABLED | string | `"true"` |  |
+| newRelic.appName | string | `"libero-reviewer"` |  |
+| newRelic.browserScriptConfigmap | string | `""` | Name of configmap with 'newrelic.script' file with script-tag snippet |
+| newRelic.enabled | bool | `false` |  |
+| newRelic.licenseKeySecret | string | `""` | Name of an existing secret with a 'key' entry |
 | postgresql.enabled | bool | `true` |  |
 | postgresql.existingSecret | string | `"libero-reviewer--postgresql"` |  |
 | postgresql.image.tag | string | `"11.4.0"` |  |
@@ -105,7 +111,6 @@ docker run \
 | submission.meca.sftpPath | string | `"/upload"` |  |
 | submission.meca.sftpPort | int | `22` |  |
 | submission.meca.sftpSecret | string | `"libero-reviewer--sftp"` |  |
-| submission.newRelicHome | string | `"/etc/reviewer"` |  |
 | submission.nginxWorkerTimeoutSeconds | int | `120` | Keep existing connections alive during ingress-controller reloads and during pod termination |
 | submission.podDisruptionBudget.enabled | bool | `false` |  |
 | submission.podDisruptionBudget.maxUnavailable | string | `""` |  |
