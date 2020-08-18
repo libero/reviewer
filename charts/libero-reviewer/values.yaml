@@ -156,3 +156,22 @@ reporter:
   image:
     repository: liberoadmin/reviewer-reporter
     tag: latest
+
+newRelic:
+  enabled: false
+  appName: libero-reviewer
+  # newRelic.licenseKeySecret -- Name of an existing secret with a 'key' entry
+  licenseKeySecret: ""
+  additionalEnvironmentVariables:
+    NEW_RELIC_DISTRIBUTED_TRACING_ENABLED: "true"
+    NEW_RELIC_ATTRIBUTES_EXCLUDE: >
+      'request.headers.cookie',
+      'request.headers.authorization',
+      'request.headers.proxyAuthorization',
+      'request.headers.setCookie*',
+      'request.headers.x*',
+      'response.headers.cookie',
+      'response.headers.authorization',
+      'response.headers.proxyAuthorization',
+      'response.headers.setCookie*',
+      'response.headers.x*'
