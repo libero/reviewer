@@ -40,3 +40,23 @@ spec:
               port: http
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+{{- if .Values.newRelic.browserScriptConfigmap}}
+          postStart:
+            exec:
+              command: >
+                [
+                  "/bin/sh", "-c",
+                  "sed 's/<\/head>/\n<\/head>/' /dist/index.html
+                   | sed '/>$/ r newrelic-script
+                   | tr -d '\n' > tmp
+                   && mv tmp /dist/index.html"
+                ]
+          volumeMounts:
+            - name: newrelic-script
+              mountPath: "/"
+              readOnly: true
+        volumes:
+          - name: newrelic-script
+            configMap:
+              name: {{ .Values.newRelic.browserScriptConfigmap }}
+{{- end }}
