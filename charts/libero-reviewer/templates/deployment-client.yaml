@@ -55,9 +55,9 @@ spec:
                    && mv tmp /dist/index.html"
                 ]
           volumeMounts:
-            - name: newrelic-script
-              mountPath: "/"
-              readOnly: true
+          - name: newrelic-script
+            mountPath: "/"
+            readOnly: true
         volumes:
           - name: newrelic-script
             configMap:
