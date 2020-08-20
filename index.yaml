@@ -3,7 +3,24 @@ entries:
   libero-reviewer:
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.11272907Z"
+    created: "2020-08-20T13:40:45.112230348Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~7.0
+    description: elife specific deployment of Libero Reviewer
+    digest: daae768e90c4d8f4b0cebc22f651ad309e71ed63f9cb7e5b10de5ed4311b3c8e
+    home: https://github.com/libero/reviewer
+    maintainers:
+    - name: erkannt
+    name: libero-reviewer
+    urls:
+    - https://libero.github.io/reviewer/libero-reviewer-0.28.11.tgz
+    version: 0.28.11
+  - apiVersion: v2
+    appVersion: latest
+    created: "2020-08-20T13:40:45.109414829Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -20,7 +37,7 @@ entries:
     version: 0.28.10
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.138938869Z"
+    created: "2020-08-20T13:40:45.137165323Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -37,7 +54,7 @@ entries:
     version: 0.28.9
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.134568269Z"
+    created: "2020-08-20T13:40:45.134412704Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -54,7 +71,7 @@ entries:
     version: 0.28.8
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.131666369Z"
+    created: "2020-08-20T13:40:45.131396583Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -71,7 +88,7 @@ entries:
     version: 0.28.7
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.128872469Z"
+    created: "2020-08-20T13:40:45.128512462Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -88,7 +105,7 @@ entries:
     version: 0.28.6
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.126071369Z"
+    created: "2020-08-20T13:40:45.124656135Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -105,7 +122,7 @@ entries:
     version: 0.28.5
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.121745869Z"
+    created: "2020-08-20T13:40:45.121764515Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -122,7 +139,7 @@ entries:
     version: 0.28.4
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.11880187Z"
+    created: "2020-08-20T13:40:45.119029796Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -139,7 +156,7 @@ entries:
     version: 0.28.3
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.11577177Z"
+    created: "2020-08-20T13:40:45.116000875Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -156,7 +173,7 @@ entries:
     version: 0.28.2
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.10842797Z"
+    created: "2020-08-20T13:40:45.106632009Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -173,7 +190,7 @@ entries:
     version: 0.28.1
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.10532637Z"
+    created: "2020-08-20T13:40:45.10385869Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -190,7 +207,7 @@ entries:
     version: 0.28.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.10239077Z"
+    created: "2020-08-20T13:40:45.099989863Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -207,7 +224,7 @@ entries:
     version: 0.27.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.099436971Z"
+    created: "2020-08-20T13:40:45.097177243Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -224,7 +241,7 @@ entries:
     version: 0.26.9
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.095303571Z"
+    created: "2020-08-20T13:40:45.094475224Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -241,7 +258,7 @@ entries:
     version: 0.26.7
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.092353671Z"
+    created: "2020-08-20T13:40:45.091680105Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -258,7 +275,7 @@ entries:
     version: 0.26.6
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.089598471Z"
+    created: "2020-08-20T13:40:45.08809048Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -275,7 +292,7 @@ entries:
     version: 0.26.4
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.086866471Z"
+    created: "2020-08-20T13:40:45.084483254Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -292,7 +309,7 @@ entries:
     version: 0.26.3
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.082755471Z"
+    created: "2020-08-20T13:40:45.081727435Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -309,7 +326,7 @@ entries:
     version: 0.26.2
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.080008572Z"
+    created: "2020-08-20T13:40:45.078927016Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -326,7 +343,7 @@ entries:
     version: 0.25.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.077082472Z"
+    created: "2020-08-20T13:40:45.074592785Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -343,7 +360,7 @@ entries:
     version: 0.24.1
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.074358672Z"
+    created: "2020-08-20T13:40:45.071998467Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -360,7 +377,7 @@ entries:
     version: 0.23.4
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.070573572Z"
+    created: "2020-08-20T13:40:45.069316748Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -377,7 +394,7 @@ entries:
     version: 0.23.3
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.067959372Z"
+    created: "2020-08-20T13:40:45.06673703Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -394,7 +411,7 @@ entries:
     version: 0.23.2
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.064731272Z"
+    created: "2020-08-20T13:40:45.062675402Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -411,7 +428,7 @@ entries:
     version: 0.23.1
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.061742472Z"
+    created: "2020-08-20T13:40:45.060143484Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -428,7 +445,7 @@ entries:
     version: 0.23.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-08-20T13:29:56.058634073Z"
+    created: "2020-08-20T13:40:45.056925962Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -443,4 +460,4 @@ entries:
     urls:
     - https://libero.github.io/reviewer/libero-reviewer-0.22.0.tgz
     version: 0.22.0
-generated: "2020-08-20T13:29:56.054585473Z"
+generated: "2020-08-20T13:40:45.054178843Z"
