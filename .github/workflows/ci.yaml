@@ -68,6 +68,7 @@ jobs:
       - name: Validate Chart's Output
         run: |
           curl -sSLo /tmp/kubeval.tar.gz https://github.com/instrumenta/kubeval/releases/download/0.15.0/version/kubeval-linux-amd64.tar.gz
+          ls /tmp
           tar -xzf /tmp/kubeval.tar.gz kubeval
           make validate_chart
       - name: Publish Chart using GH-Pages
