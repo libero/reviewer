@@ -43,17 +43,18 @@ spec:
 {{- if .Values.newRelic.browserScriptConfigmap}}
 # inject the script tag for newrelic into index.html
 # done this way to have per deployment newrelic, but use same container image
-          postStart:
-            exec:
-              command: >
-                [
-                  "/bin/sh", "-c",
-                  "sed 's/<\/head>/\n<\/head>/' /dist/index.html
-                   | sed '/>$/ r newrelic.script'
-                   | tr -d '\n'
-                   > tmp
-                   && mv tmp /dist/index.html"
-                ]
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/sh"
+                  - "-c"
+                  - >
+                    "sed 's/<\/head>/\n<\/head>/' /dist/index.html
+                    | sed '/>$/ r newrelic.script'
+                    | tr -d '\n'
+                    > tmp
+                    && mv tmp /dist/index.html"
           volumeMounts:
           - name: newrelic-script
             mountPath: /
