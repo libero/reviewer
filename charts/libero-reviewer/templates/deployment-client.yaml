@@ -50,10 +50,10 @@ spec:
           volumeMounts:
           - name: newrelic-script
             mountPath: /tmp
+            mode: 484 #744 in dec
             readOnly: true
       volumes:
       - name: newrelic-script
-        defaultMode: 0744
         configMap:
           name: {{ .Values.newRelic.browserScriptConfigmap }}
 {{- end }}
