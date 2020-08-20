@@ -48,3 +48,4 @@ reporter:
 
 newRelic:
   enabled: true
+  browserScriptConfigmap: libero-reviewer--newrelic-script
