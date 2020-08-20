@@ -53,7 +53,7 @@ spec:
             readOnly: true
       volumes:
       - name: newrelic-script
-        mode: 484 #744 in dec
         configMap:
           name: {{ .Values.newRelic.browserScriptConfigmap }}
+          defaultMode: 484 #744 in dec
 {{- end }}
