@@ -59,8 +59,8 @@ spec:
           - name: newrelic-script
             mountPath: /
             readOnly: true
-          volumes:
-          - name: newrelic-script
-            configMap:
-              name: {{ .Values.newRelic.browserScriptConfigmap }}
+      volumes:
+      - name: newrelic-script
+        configMap:
+          name: {{ .Values.newRelic.browserScriptConfigmap }}
 {{- end }}
