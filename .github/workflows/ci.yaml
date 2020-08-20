@@ -67,7 +67,7 @@ jobs:
           command: lint
       - name: Validate Chart's Output
         run: |
-          wget https://github.com/instrumenta/kubeval/releases/download/0.15.0/kubeval-linux-amd64.tar.gz
+          wget -q https://github.com/instrumenta/kubeval/releases/download/0.15.0/kubeval-linux-amd64.tar.gz
           tar -xzf kubeval-linux-amd64.tar.gz
           make validate_chart
       - name: Publish Chart using GH-Pages
