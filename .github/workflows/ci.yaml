@@ -67,7 +67,7 @@ jobs:
           command: lint
       - name: Validate Chart's Output
         run: |
-          curl -sSLo /tmp/kubeval.tar.gz https://github.com/instrumenta/kubeval/releases/download/$version/kubeval-linux-amd64.tar.gz
+          curl -sSLo /tmp/kubeval.tar.gz https://github.com/instrumenta/kubeval/releases/download/0.15.0/version/kubeval-linux-amd64.tar.gz
           tar -xzf /tmp/kubeval.tar.gz kubeval
           make validate_chart
       - name: Publish Chart using GH-Pages
