@@ -36,7 +36,7 @@ setup_gitmodules:
 
 setup_chart:
 	helm repo add bitnami https://charts.bitnami.com/bitnami
-	helm dep build ./charts/libero-reviewer
+	helm dep update ./charts/libero-reviewer
 
 clean_databases:
 	$(MAKE) create_networks
@@ -61,7 +61,7 @@ test_integration_master: setup start_master
 	make wait_healthy_apps
 	docker run --network reviewer -e BASE_URL="reviewer_nginx_1:9000" $(BROWSERTEST_MASTER)
 
-validate_chart: setup_chart
+validate_chart:
 	helm template ./charts/libero-reviewer --debug > /tmp/libero-reviewer.yaml
 	kubeval /tmp/libero-reviewer.yaml
 	helm template ./charts/libero-reviewer --debug -f ./charts/libero-reviewer/values.test.all_enabled.yaml > /tmp/libero-reviewer.yaml

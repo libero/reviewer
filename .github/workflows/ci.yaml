@@ -69,6 +69,7 @@ jobs:
         run: |
           wget -q https://github.com/instrumenta/kubeval/releases/download/0.15.0/kubeval-linux-amd64.tar.gz
           tar -xzf kubeval-linux-amd64.tar.gz
+          make setup_chart
           make validate_chart
       - name: Publish Chart using GH-Pages
         uses: stefanprodan/helm-gh-pages@master
