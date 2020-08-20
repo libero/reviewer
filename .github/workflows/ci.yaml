@@ -65,6 +65,11 @@ jobs:
         uses: helm/chart-testing-action@v1.0.0-rc.1
         with:
           command: lint
+      - name: Validate Chart's Output
+        run: |
+          curl -sSLo /tmp/kubeval.tar.gz https://github.com/instrumenta/kubeval/releases/download/$version/kubeval-linux-amd64.tar.gz
+          tar -xzf /tmp/kubeval.tar.gz kubeval
+          make validate_chart
       - name: Publish Chart using GH-Pages
         uses: stefanprodan/helm-gh-pages@master
         if: github.ref == 'refs/heads/master'
