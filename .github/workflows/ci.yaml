@@ -65,7 +65,7 @@ jobs:
           wget -q https://github.com/instrumenta/kubeval/releases/download/0.15.0/kubeval-linux-amd64.tar.gz
           tar -xzf kubeval-linux-amd64.tar.gz
           make setup_chart
-          make validate_chart
+          KUBEVAL=./kubeval make validate_chart
       - name: Lint Chart
         id: lint
         uses: helm/chart-testing-action@v1.0.0-rc.1
