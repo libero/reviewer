@@ -1,0 +1,50 @@
+# Default values for libero-reviewer.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+submission:
+  podDisruptionBudget:
+    enabled: true
+  additionalIngressAnnotations: {}
+  resources: {}
+
+client:
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+    maxUnavailable: ""
+  additionalIngressAnnotations: {}
+  resources: {}
+
+continuumAdaptor:
+  podDisruptionBudget:
+    enabled: false
+  additionalIngressAnnotations: {}
+  resources: {}
+
+# database -- Used if database not managed by this chart i.e. 'postgresql.enabled: false'
+database:
+  dbHost: ""
+  dbUser: ""
+  dbName: ""
+  # Name of an existing secret
+  dbPasswordSecret: ""
+  dbPasswordKey: "password"
+
+postgresql:
+  enabled: false
+
+ingress:
+  enabled: true
+  # ingress -- applied to _all_ reviewer ingress records
+  host: libero-reviewer--staging.domain.tld
+
+browsertests:
+  runPostRelease: true
+
+reporter:
+  enabled: true
+
+newRelic:
+  enabled: true

@@ -1,5 +1,7 @@
 DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 DOCKER_COMPOSE_INFRA = docker-compose -f docker-compose.infra.yml
+KUBEVAL ?= "kubeval"
+HELM ?= "helm"
 
 BROWSERTEST_SEMVER = `./browsertest-image-version.sh docker-compose.yml`
 BROWSERTEST_MASTER = `./browsertest-image-version.sh docker-compose.master.yml`
@@ -34,6 +36,10 @@ setup:
 setup_gitmodules:
 	git submodule update --init --recursive
 
+setup_chart:
+	helm repo add bitnami https://charts.bitnami.com/bitnami
+	helm dep update ./charts/libero-reviewer
+
 clean_databases:
 	$(MAKE) create_networks
 	-${DOCKER_COMPOSE_INFRA} up -d postgres
@@ -56,3 +62,9 @@ test_integration: setup start
 test_integration_master: setup start_master
 	make wait_healthy_apps
 	docker run --network reviewer -e BASE_URL="reviewer_nginx_1:9000" $(BROWSERTEST_MASTER)
+
+validate_chart:
+	${HELM} template ./charts/libero-reviewer --debug > /tmp/libero-reviewer.yaml
+	${KUBEVAL} /tmp/libero-reviewer.yaml
+	${HELM} template ./charts/libero-reviewer --debug -f ./charts/libero-reviewer/values.test.all_enabled.yaml > /tmp/libero-reviewer.yaml
+	${KUBEVAL} /tmp/libero-reviewer.yaml

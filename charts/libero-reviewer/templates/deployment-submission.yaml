@@ -173,7 +173,7 @@ spec:
                     key: key
             {{- range $name, $value := .Values.newRelic.additionalEnvironmentVariables }}
             - name: {{ $name }}
-              value: {{ $value }}
+              value: {{ $value | quote }}
             {{- end }}
             {{- end }}
 
