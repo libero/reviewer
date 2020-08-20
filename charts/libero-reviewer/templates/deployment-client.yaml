@@ -46,21 +46,14 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command:
-                  - "/bin/sh"
-                  - "-c"
-                  - >
-                    "sed 's/<\/head>/\n<\/head>/' /dist/index.html
-                    | sed '/>$/ r /tmp/newrelic.script'
-                    | tr -d '\n'
-                    > /dist/index.html.new
-                    && mv /dist/index.html.new /dist/index.html"
+                command: [ "/bin/sh", "-c", "/tmp/postStart.sh" ]
           volumeMounts:
           - name: newrelic-script
             mountPath: /tmp
             readOnly: true
       volumes:
       - name: newrelic-script
+        defaultMode: 0744
         configMap:
           name: {{ .Values.newRelic.browserScriptConfigmap }}
 {{- end }}
