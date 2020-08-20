@@ -169,7 +169,7 @@ spec:
             - name: NEW_RELIC_LICENSE_KEY
               valueFrom:
                   secretKeyRef:
-                    name: {{ .Values.newRelic.licenseKeyName | quote }}
+                    name: {{ .Values.newRelic.licenseKeySecret | quote }}
                     key: key
             {{- range $name, $value := .Values.newRelic.additionalEnvironmentVariables }}
             - name: {{ $name }}
