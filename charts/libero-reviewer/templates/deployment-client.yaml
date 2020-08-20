@@ -51,13 +51,13 @@ spec:
                   - "-c"
                   - >
                     "sed 's/<\/head>/\n<\/head>/' /dist/index.html
-                    | sed '/>$/ r newrelic.script'
+                    | sed '/>$/ r /tmp/newrelic.script'
                     | tr -d '\n'
                     > tmp
                     && mv tmp /dist/index.html"
           volumeMounts:
           - name: newrelic-script
-            mountPath: /
+            mountPath: /tmp
             readOnly: true
       volumes:
       - name: newrelic-script
