@@ -162,7 +162,7 @@ newRelic:
   appName: libero-reviewer
   # newRelic.licenseKeySecret -- Name of an existing secret with a 'key' entry
   licenseKeySecret: ""
-  # newRelic.browserScriptConfigmap -- Name of configmap with 'newrelic.script' file with script-tag snippet
+  # newRelic.browserScriptConfigmap -- Name of configmap with 'newrelic.script' file with script-tag snippet and 'postStart.sh' script to inject it into `index.html`
   browserScriptConfigmap: ""
   additionalEnvironmentVariables:
     NEW_RELIC_DISTRIBUTED_TRACING_ENABLED: "true"

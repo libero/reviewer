@@ -164,6 +164,8 @@ spec:
             {{- if .Values.newRelic.enabled }}
             - name: INCLUDE_NEW_RELIC
               value: "true"
+            - name: NEW_RELIC_NO_CONFIG_FILE
+              value: "true"
             - name: NEW_RELIC_APP_NAME
               value: {{ .Values.newRelic.appName | quote }}
             - name: NEW_RELIC_LICENSE_KEY

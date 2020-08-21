@@ -71,7 +71,7 @@ docker run \
 | newRelic.additionalEnvironmentVariables.NEW_RELIC_ATTRIBUTES_EXCLUDE | string | `"'request.headers.cookie', 'request.headers.authorization', 'request.headers.proxyAuthorization', 'request.headers.setCookie*', 'request.headers.x*', 'response.headers.cookie', 'response.headers.authorization', 'response.headers.proxyAuthorization', 'response.headers.setCookie*', 'response.headers.x*'\n"` |  |
 | newRelic.additionalEnvironmentVariables.NEW_RELIC_DISTRIBUTED_TRACING_ENABLED | string | `"true"` |  |
 | newRelic.appName | string | `"libero-reviewer"` |  |
-| newRelic.browserScriptConfigmap | string | `""` | Name of configmap with 'newrelic.script' file with script-tag snippet |
+| newRelic.browserScriptConfigmap | string | `""` | Name of configmap with 'newrelic.script' file with script-tag snippet and 'postStart.sh' script to inject it into `index.html` |
 | newRelic.enabled | bool | `false` |  |
 | newRelic.licenseKeySecret | string | `""` | Name of an existing secret with a 'key' entry |
 | postgresql.enabled | bool | `true` |  |
