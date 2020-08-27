@@ -7,29 +7,6 @@ on:
       - master
 
 jobs:
-  ci-semver:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-        with:
-          submodules: true
-      - name: Run browsertest container against latest semver images
-        run: make test_integration
-      - name: Dump logs on failure
-        if: failure()
-        run: |
-          docker-compose -f docker-compose.infra.yml logs
-          docker-compose -f docker-compose.yml logs
-      - name: Notify slack
-        if: failure()
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        uses: voxmedia/github-action-slack-notify-build@v1
-        with:
-          channel: libero-reviewer-tech
-          status: FAILED
-          color: danger
-
   ci-master:
     runs-on: ubuntu-latest
     steps:
