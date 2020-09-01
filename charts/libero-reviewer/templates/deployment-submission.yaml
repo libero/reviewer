@@ -182,7 +182,7 @@ spec:
       initContainers:
         - name: {{ .Chart.Name }}-load-db-schema
           image: "{{ .Values.submissionDbSchema.image.repository }}:{{ .Values.submissionDbSchema.image.tag }}"
-          command: ["sh", "-c", "(psql -q -t -c \"select count(*) from information_schema.tables where table_schema='public';\" | xargs ) && psql -f  /docker-entrypoint-initdb.d/xpub-schema.sql"]
+          command: ["sh", "-c", "psql -q -t -c \"select count(*) from information_schema.tables where table_schema='public';\" | xargs | grep ^0$ && psql -f  /docker-entrypoint-initdb.d/xpub-schema.sql"]
           env:
             {{- if .Values.postgresql.enabled }}
             - name: PGHOST
