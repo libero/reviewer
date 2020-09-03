@@ -96,6 +96,7 @@ continuumAdaptor:
 
   continuumLoginUrl: "http://continuum.gateway.url/submit"
   continuumApiUrl: "http://continuumtest--gateway.elife.internal"
+  continuumLogoutUrl: "http://continuum.gateway.url/log-out"
   # continuumAdptor.continuumJwtSecret -- Name of an existing secret with a 'continuumJwtSecret' entry
   continuumJwtSecret: "libero-reviewer--continuum-journal-jwt"
   # continuumAdptor.continuumApiSecret -- Name of an existing secret with a 'token' entry

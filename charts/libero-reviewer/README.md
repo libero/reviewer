@@ -56,6 +56,7 @@ docker run \
 | continuumAdaptor.continuumApiUrl | string | `"http://continuumtest--gateway.elife.internal"` |  |
 | continuumAdaptor.continuumJwtSecret | string | `"libero-reviewer--continuum-journal-jwt"` |  |
 | continuumAdaptor.continuumLoginUrl | string | `"http://continuum.gateway.url/submit"` |  |
+| continuumAdaptor.continuumLogoutUrl | string | `"http://continuum.gateway.url/log-out"` |  |
 | continuumAdaptor.elifeApiSecret | string | `"libero-reviewer--elife-api"` |  |
 | continuumAdaptor.image.pullPolicy | string | `"Always"` |  |
 | continuumAdaptor.image.repository | string | `"liberoadmin/continuum-adaptor"` |  |
