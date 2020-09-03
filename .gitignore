@@ -16,3 +16,5 @@ docker-compose.override.yml
 
 # docker volume location for ci/testing
 .data/
+
+node_modules
