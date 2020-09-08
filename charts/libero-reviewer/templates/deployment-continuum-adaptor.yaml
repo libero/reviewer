@@ -47,7 +47,7 @@ spec:
               value: "{{ .Values.continuumAdaptor.continuumLoginUrl }}?return_url=https%3A%2F%2F{{ .Values.ingress.host }}%2Fauthenticate&token_in_query=true"
             - name: LOGIN_RETURN_URL
               value: "https://{{ .Values.ingress.host }}/login"
-            - name: LOGIN_URL
+            - name: LOGOUT_URL
               value: "{{ .Values.continuumAdaptor.continuumLogoutUrl }}"
             - name: AUTHENTICATION_JWT_SECRET
               valueFrom:
