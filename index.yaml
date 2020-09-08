@@ -3,14 +3,14 @@ entries:
   libero-reviewer:
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T13:04:40.214718Z"
+    created: "2020-09-08T15:00:27.622477741Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: https://charts.bitnami.com/bitnami
       version: ~7.0
     description: elife specific deployment of Libero Reviewer
-    digest: d807dab07fdbe0dc00d21b4ddb1050ab4113b3659d1059a3d116520207ec6247
+    digest: c1e7fe2c66e8a320ebaf5546fc9323f0aa5d71353959780c1f74cc41bdb934d5
     home: https://github.com/libero/reviewer
     maintainers:
     - name: erkannt
@@ -20,7 +20,7 @@ entries:
     version: 0.30.1
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T13:04:40.211339292Z"
+    created: "2020-09-08T15:00:27.618933593Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -37,7 +37,7 @@ entries:
     version: 0.30.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T13:04:40.207973383Z"
+    created: "2020-09-08T15:00:27.615308945Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -54,7 +54,7 @@ entries:
     version: 0.29.2
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T13:04:40.204610175Z"
+    created: "2020-09-08T15:00:27.610308878Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -71,7 +71,7 @@ entries:
     version: 0.29.1
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T13:04:40.199593863Z"
+    created: "2020-09-08T15:00:27.606058922Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -88,7 +88,7 @@ entries:
     version: 0.29.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T13:04:40.196189755Z"
+    created: "2020-09-08T15:00:27.602379672Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -103,4 +103,4 @@ entries:
     urls:
     - https://libero.github.io/reviewer/libero-reviewer-0.28.13.tgz
     version: 0.28.13
-generated: "2020-09-08T13:04:40.192558246Z"
+generated: "2020-09-08T15:00:27.598068515Z"
