@@ -3,7 +3,24 @@ entries:
   libero-reviewer:
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T12:42:58.076731056Z"
+    created: "2020-09-08T13:04:40.214718Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~7.0
+    description: elife specific deployment of Libero Reviewer
+    digest: d807dab07fdbe0dc00d21b4ddb1050ab4113b3659d1059a3d116520207ec6247
+    home: https://github.com/libero/reviewer
+    maintainers:
+    - name: erkannt
+    name: libero-reviewer
+    urls:
+    - https://libero.github.io/reviewer/libero-reviewer-0.30.1.tgz
+    version: 0.30.1
+  - apiVersion: v2
+    appVersion: latest
+    created: "2020-09-08T13:04:40.211339292Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -20,7 +37,7 @@ entries:
     version: 0.30.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T12:42:58.073828204Z"
+    created: "2020-09-08T13:04:40.207973383Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -37,7 +54,7 @@ entries:
     version: 0.29.2
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T12:42:58.070117437Z"
+    created: "2020-09-08T13:04:40.204610175Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -54,7 +71,7 @@ entries:
     version: 0.29.1
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T12:42:58.066605674Z"
+    created: "2020-09-08T13:04:40.199593863Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -71,7 +88,7 @@ entries:
     version: 0.29.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-09-08T12:42:58.063661121Z"
+    created: "2020-09-08T13:04:40.196189755Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -86,4 +103,4 @@ entries:
     urls:
     - https://libero.github.io/reviewer/libero-reviewer-0.28.13.tgz
     version: 0.28.13
-generated: "2020-09-08T12:42:58.059866853Z"
+generated: "2020-09-08T13:04:40.192558246Z"
