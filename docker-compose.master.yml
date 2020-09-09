@@ -4,13 +4,13 @@ services:
     image: liberoadmin/continuum-adaptor:master-52c48ff0-20200908.1322
 
   reviewer-mocks:
-    image: liberoadmin/reviewer-mocks:master-b34c5fbc-20200827.1249
+    image: liberoadmin/reviewer-mocks:master-3812a1f7-20200909.1221
 
   submission:
     image: liberoadmin/reviewer-submission:master-a56aac81-20200907.1147
 
   client:
-    image: liberoadmin/reviewer-client:master-23aa60ca-20200902.1452
+    image: liberoadmin/reviewer-client:master-e7df7251-20200909.0929
 
   nginx:
     image: nginx:stable-alpine@sha256:8853c7e938c2aa5d9d7439e698f0e700f058df8414a83134a09fcbb68bb0707a
