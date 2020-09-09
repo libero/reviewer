@@ -41,8 +41,10 @@ docker run \
 |-----|------|---------|-------------|
 | browsertests.baseurl | string | `""` | defaults to .Values.ingress.host |
 | browsertests.image.repository | string | `"liberoadmin/reviewer-browsertests"` | for the tag we use client.image.tag but strip timestamps |
+| browsertests.orcidLoginRequired | bool | `false` |  |
+| browsertests.orcidSecret | string | `""` | name of existing secret with 'username' and 'password' |
 | browsertests.runPostRelease | bool | `false` |  |
-| browsertests.testFixture | string | `"Minimal"` |  |
+| browsertests.testFixture | string | `"umbrella"` |  |
 | client.additionalIngressAnnotations | object | `{}` |  |
 | client.image.pullPolicy | string | `"Always"` |  |
 | client.image.repository | string | `"liberoadmin/reviewer-client"` |  |

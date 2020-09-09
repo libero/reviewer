@@ -33,8 +33,22 @@ spec:
         env:
         - name: BASE_URL
           value: {{ .Values.browsertests.baseurl | default .Values.ingress.host | quote}}
-        - name: TEST_FIXTURE
-          value: {{ .Values.browsertests.testFixture }}
+        - name: TEST_ARGS
+          value: {{ .Values.browsertests.testArgs }}
+        {{ if .Values.browsertests.orcidLoginRequired }}
+        - name: ORCID_LOGIN_REQUIRED
+          value: {{ .Values.browsertests.orcidLoginRequired | default .Values.ingress.host | quote}}
+        - name: ORCID_LOGIN_NAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.browsertests.orcidSecret | quote }}
+              key: username
+        - name: ORCID_LOGIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.browsertests.orcidSecret | quote }}
+              key: password
+        {{ end }}
         resources:
           limits:
             memory: 500Mi
