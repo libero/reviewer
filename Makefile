@@ -61,7 +61,7 @@ test_integration: setup start
 
 test_integration_master: setup start_master
 	make wait_healthy_apps
-	docker run --network reviewer -e BASE_URL="reviewer_nginx_1:9000" -e TEST_FIXTURE="--fixture-meta fixtureID=umbrella" $(BROWSERTEST_MASTER)
+	docker run --network reviewer -e BASE_URL="reviewer_nginx_1:9000" -e TEST_FIXTURE="--fixture-meta umbrella=true" $(BROWSERTEST_MASTER)
 
 validate_chart:
 	${HELM} template ./charts/libero-reviewer --debug > /tmp/libero-reviewer.yaml
