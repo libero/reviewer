@@ -137,7 +137,7 @@ browsertests:
     # browsertests.image.repository -- for the tag we use client.image.tag but strip timestamps
     repository: liberoadmin/reviewer-browsertests
   runPostRelease: false
-  testFixture: umbrella
+  testArgs: "--fixture-meta fixtureId=staging"
   # browsertests.baseurl -- defaults to .Values.ingress.host
   baseurl: ""
   orcidLoginRequired: false
