@@ -44,7 +44,7 @@ docker run \
 | browsertests.orcidLoginRequired | bool | `false` |  |
 | browsertests.orcidSecret | string | `""` | name of existing secret with 'username' and 'password' |
 | browsertests.runPostRelease | bool | `false` |  |
-| browsertests.testFixture | string | `"umbrella"` |  |
+| browsertests.testArgs | string | `"--fixture-meta fixtureId=staging"` |  |
 | client.additionalIngressAnnotations | object | `{}` |  |
 | client.image.pullPolicy | string | `"Always"` |  |
 | client.image.repository | string | `"liberoadmin/reviewer-client"` |  |
