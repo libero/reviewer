@@ -10,7 +10,7 @@ jobs:
   ci-master:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: true
       - name: Run browsertest container against latest master images
