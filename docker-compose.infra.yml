@@ -51,7 +51,7 @@ services:
       "
 
   sftp:
-    image: atmoz/sftp:alpine@sha256:da7f548a4c1aaddc94a323119ff0bbfb7836fd993e648f0e710ec1d9863ede60
+    image: atmoz/sftp:alpine@sha256:1f08f1119481e29ca9e5e0660a2a9fdecb439bb345ebb5617afd7039d95a8ad3
     networks:
       - reviewer
     volumes:
