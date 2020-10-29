@@ -3,14 +3,14 @@ entries:
   libero-reviewer:
   - apiVersion: v2
     appVersion: latest
-    created: "2020-10-28T14:32:47.413374528Z"
+    created: "2020-10-29T13:41:52.083573424Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: https://charts.bitnami.com/bitnami
       version: ~7.0
     description: elife specific deployment of Libero Reviewer
-    digest: 571caf47c85be3dce448e1a9a74863eaba1f1ee0cd386b22f5749359d33e433a
+    digest: c01ab3df0aafc361900dfe8a3831be16399bce0255a0e767731d210bdf79a165
     home: https://github.com/libero/reviewer
     maintainers:
     - name: erkannt
@@ -20,7 +20,7 @@ entries:
     version: 0.31.1
   - apiVersion: v2
     appVersion: latest
-    created: "2020-10-28T14:32:47.406980006Z"
+    created: "2020-10-29T13:41:52.080140819Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -37,7 +37,7 @@ entries:
     version: 0.31.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-10-28T14:32:47.403588794Z"
+    created: "2020-10-29T13:41:52.076634815Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -54,7 +54,7 @@ entries:
     version: 0.30.1
   - apiVersion: v2
     appVersion: latest
-    created: "2020-10-28T14:32:47.400154282Z"
+    created: "2020-10-29T13:41:52.071638008Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -71,7 +71,7 @@ entries:
     version: 0.30.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-10-28T14:32:47.39678767Z"
+    created: "2020-10-29T13:41:52.067455702Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -88,7 +88,7 @@ entries:
     version: 0.29.2
   - apiVersion: v2
     appVersion: latest
-    created: "2020-10-28T14:32:47.392054053Z"
+    created: "2020-10-29T13:41:52.063729397Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -105,7 +105,7 @@ entries:
     version: 0.29.1
   - apiVersion: v2
     appVersion: latest
-    created: "2020-10-28T14:32:47.388014539Z"
+    created: "2020-10-29T13:41:52.060324093Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -122,7 +122,7 @@ entries:
     version: 0.29.0
   - apiVersion: v2
     appVersion: latest
-    created: "2020-10-28T14:32:47.384719928Z"
+    created: "2020-10-29T13:41:52.056924188Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -137,4 +137,4 @@ entries:
     urls:
     - https://libero.github.io/reviewer/libero-reviewer-0.28.13.tgz
     version: 0.28.13
-generated: "2020-10-28T14:32:47.380817114Z"
+generated: "2020-10-29T13:41:52.052298082Z"
