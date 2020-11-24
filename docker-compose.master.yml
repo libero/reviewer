@@ -1,7 +1,7 @@
 version: '3'
 services:
   continuum-adaptor:
-    image: liberoadmin/continuum-adaptor:master-c398a21d-20200914.0759
+    image: liberoadmin/continuum-adaptor:master-55b3b4e7-20201124.1541
 
   reviewer-mocks:
     image: liberoadmin/reviewer-mocks:master-92b51719-20200914.1053
