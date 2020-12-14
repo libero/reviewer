@@ -7,7 +7,7 @@ services:
     image: liberoadmin/reviewer-mocks:master-a5f5c094-20201127.1613
 
   submission:
-    image: liberoadmin/reviewer-submission:master-b97f8efb-20201130.1146
+    image: liberoadmin/reviewer-submission:master-f26c406d-20201214.1330
 
   client:
     image: liberoadmin/reviewer-client:master-9cabbad3-20201203.1221
