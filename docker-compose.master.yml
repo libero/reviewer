@@ -4,7 +4,7 @@ services:
     image: liberoadmin/continuum-adaptor:master-4d2c50f9-20201214.1327
 
   reviewer-mocks:
-    image: liberoadmin/reviewer-mocks:master-a5f5c094-20201127.1613
+    image: liberoadmin/reviewer-mocks:master-aeb8fa0d-20201214.1329
 
   submission:
     image: liberoadmin/reviewer-submission:master-b97f8efb-20201130.1146
