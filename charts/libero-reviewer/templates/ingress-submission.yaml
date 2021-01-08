@@ -38,4 +38,8 @@ spec:
             backend:
               serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("submission") }}
               servicePort: {{ .Values.submission.port}}
+          - path: /retry-export
+            backend:
+              serviceName: {{ printf "%s-%s" (include "libero-reviewer.fullname" . ) ("submission") }}
+              servicePort: {{ .Values.submission.port}}
 {{- end -}}
