@@ -19,9 +19,6 @@ spec:
             - name: mailheader
               mountPath: "/mail-config"
               readOnly: true
-            - name: ssmtp
-              mountPath: /etc/ssmtp
-              readOnly: true
             env:
               - name: RECIPIENT
                 value: "{{ $.Values.reporter.recipient }}"
