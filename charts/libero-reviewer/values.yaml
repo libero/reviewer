@@ -149,8 +149,8 @@ reporter:
   fromAddress: no-reply@elifesciences.org
   subjectline: Reviewer Status Report
   recipient: ""
-  # reporter.ssmtpConfSecret -- ssmtp.conf file stored as secret, see also libero/reviewer-reporter
-  ssmtpConfSecret: ""
+  # reporter.ssmtpSecret -- name of existing secret with 'user', 'password', 'mailhost' and 'mailerport'
+  ssmtpSecret: "libero-reviewer--prod-reporter-ssmtp"
   # reporter.schedules -- list of 'name', 'schedule'(cron syntax) pairs
   schedules:
     - name: 8am
