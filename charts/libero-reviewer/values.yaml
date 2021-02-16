@@ -150,7 +150,7 @@ reporter:
   subjectline: Reviewer Status Report
   recipient: ""
   # reporter.ssmtpSecret -- name of existing secret with 'user', 'password', 'mailhost' and 'mailerport'
-  ssmtpSecret: ""
+  ssmtpSecret: "libero-reviewer--prod-reporter-ssmtp"
   # reporter.schedules -- list of 'name', 'schedule'(cron syntax) pairs
   schedules:
     - name: 8am
