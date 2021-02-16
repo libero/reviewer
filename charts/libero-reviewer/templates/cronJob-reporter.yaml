@@ -33,7 +33,7 @@ spec:
                       name: {{ $.Values.postgresql.existingSecret | quote }}
                       key: postgresql-password
               - name: PGDATABASE
-                value: "{{ $.Values.postgresql.postgresqlDatabase }}"
+                value: {{ $.Values.postgresql.postgresqlDatabase }}
               {{- else }}
               - name: PGDATABASE
                 value: {{ $.Values.database.dbName | quote }}
