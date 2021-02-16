@@ -52,13 +52,26 @@ spec:
               {{- end }}
               - name: PGPORT
                 value: "5432"
+              - name: MAILER_HOST
+                    secretKeyRef:
+                      name: {{ .Values.reporter.ssmtpSecret | quote }}
+                      key: mailerhost
+              - name: MAILER_PORT
+                    secretKeyRef:
+                      name: {{ .Values.reporter.ssmtpSecret | quote }}
+                      key: mailerport
+              - name: MAILER_AUTH_USER
+                    secretKeyRef:
+                      name: {{ .Values.reporter.ssmtpSecret | quote }}
+                      key: user
+              - name: MAILER_AUTH_PASS
+                    secretKeyRef:
+                      name: {{ .Values.reporter.ssmtpSecret | quote }}
+                      key: password
           volumes:
           - name: mailheader
             configMap:
               name: {{ $fullname }}-reporter-mailheader
-          - name: ssmtp
-            secret:
-              secretName: {{ $.Values.reporter.ssmtpConfSecret }}
           restartPolicy: OnFailure
 ---
 {{- end }}
