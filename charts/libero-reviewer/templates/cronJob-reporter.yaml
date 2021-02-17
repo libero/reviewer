@@ -19,29 +19,12 @@ spec:
             - name: mailheader
               mountPath: "/mail-config"
               readOnly: true
+            - name: ssmtp
+              mountPath: /etc/ssmtp
+              readOnly: true
             env:
               - name: RECIPIENT
                 value: "{{ $.Values.reporter.recipient }}"
-              - name: MAILER_HOST
-                valueFrom:
-                    secretKeyRef:
-                      name: {{ $.Values.reporter.ssmtpSecret | quote }}
-                      key: mailerhost
-              - name: MAILER_PORT
-                valueFrom:
-                    secretKeyRef:
-                      name: {{ $.Values.reporter.ssmtpSecret | quote }}
-                      key: mailerport
-              - name: MAILER_AUTH_USER
-                valueFrom:
-                    secretKeyRef:
-                      name: {{ $.Values.reporter.ssmtpSecret | quote }}
-                      key: user
-              - name: MAILER_AUTH_PASS
-                valueFrom:
-                    secretKeyRef:
-                      name: {{ $.Values.reporter.ssmtpSecret | quote }}
-                      key: password
               {{- if $.Values.postgresql.enabled }}
               - name: PGHOST
                 value: '{{ include "libero-reviewer.fullname" . }}-postgresql'
@@ -73,6 +56,9 @@ spec:
           - name: mailheader
             configMap:
               name: {{ $fullname }}-reporter-mailheader
+          - name: ssmtp
+            secret:
+              secretName: {{ $.Values.reporter.ssmtpConfSecret }}
           restartPolicy: OnFailure
 ---
 {{- end }}
