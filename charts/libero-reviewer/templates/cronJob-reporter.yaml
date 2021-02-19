@@ -19,8 +19,8 @@ spec:
             - name: mailheader
               mountPath: "/mail-config"
               readOnly: true
-            - name: ssmtp
-              mountPath: /etc/ssmtp
+            - name: msmtprc
+              mountPath: /etc
               readOnly: true
             env:
               - name: RECIPIENT
@@ -56,9 +56,9 @@ spec:
           - name: mailheader
             configMap:
               name: {{ $fullname }}-reporter-mailheader
-          - name: ssmtp
+          - name: msmtprc
             secret:
-              secretName: {{ $.Values.reporter.ssmtpConfSecret }}
+              secretName: {{ $.Values.reporter.msmtprcConfSecret }}
           restartPolicy: OnFailure
 ---
 {{- end }}
