@@ -21,6 +21,7 @@ spec:
               readOnly: true
             - name: msmtprc
               mountPath: /etc/msmtprc
+              subPath: msmtprc
               readOnly: true
             env:
               - name: RECIPIENT
