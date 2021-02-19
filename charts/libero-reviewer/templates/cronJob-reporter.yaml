@@ -20,7 +20,7 @@ spec:
               mountPath: "/mail-config"
               readOnly: true
             - name: msmtprc
-              mountPath: /etc/msmtprc
+              mountPath: /etc
               readOnly: true
             env:
               - name: RECIPIENT
