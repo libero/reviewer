@@ -91,7 +91,7 @@ services:
       - reviewer
 
   nginx:
-    image: nginx:stable-alpine@sha256:4c945e23f40334b2f0e8d6e5040a0ea06fc5c2e0cb355d1af0ae8ba0cdf80ea8
+    image: nginx:stable-alpine@sha256:cd4af31230ad8d1d1e648e65181efa2fd796c321a7c58c18c6ea928631ed3c45
     networks:
       - reviewer
     ports:
