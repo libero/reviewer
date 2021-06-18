@@ -10,7 +10,7 @@ services:
     image: liberoadmin/reviewer-submission:master-2f945b7b-20210616.1223
 
   client:
-    image: liberoadmin/reviewer-client:master-92142591-20210611.1451
+    image: liberoadmin/reviewer-client:master-cc398819-20210618.0944
 
   nginx:
     image: nginx:stable-alpine@sha256:3e129fe0de45ea916f768ceb792a75c473dc32147d6c3a0913fd9c3ae28dd8f1
