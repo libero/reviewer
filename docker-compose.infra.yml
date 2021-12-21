@@ -35,7 +35,7 @@ services:
       retries: 10
 
   s3_create-bucket:
-    image: minio/mc:RELEASE.2021-12-16T23-38-39Z
+    image: minio/mc:RELEASE.2021-12-20T23-43-34Z
     depends_on:
       - s3
     networks:
