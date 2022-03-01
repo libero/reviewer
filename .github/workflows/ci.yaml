@@ -10,7 +10,7 @@ jobs:
   ci-master:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Run browsertest container against latest master images
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Basic Helm Lint
         run: helm lint charts/libero-reviewer
       - name: Validate Chart's Output
