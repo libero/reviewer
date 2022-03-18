@@ -1,16 +1,16 @@
 version: '3'
 services:
   continuum-adaptor:
-    image: liberoadmin/continuum-adaptor:master-2952a7c5-20210615.1224
+    image: liberoadmin/continuum-adaptor:master-bf76dfa4-20220318.0849
 
   reviewer-mocks:
-    image: liberoadmin/reviewer-mocks:master-c72f8cc6-20210901.1518
+    image: liberoadmin/reviewer-mocks:master-e34882d7-20220317.1740
 
   submission:
-    image: liberoadmin/reviewer-submission:master-e076a2da-20220221.1255
+    image: liberoadmin/reviewer-submission:master-719b1f3d-20220318.0849
 
   client:
-    image: liberoadmin/reviewer-client:master-05bb1099-20210909.0939
+    image: liberoadmin/reviewer-client:master-d9321082-20220318.1619
 
   nginx:
     image: nginx:stable-alpine@sha256:74694f2de64c44787a81f0554aa45b281e468c0c58b8665fafceda624d31e556
