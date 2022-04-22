@@ -2,6 +2,8 @@ DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 DOCKER_COMPOSE_INFRA = docker-compose -f docker-compose.infra.yml
 KUBEVAL ?= "kubeval"
 HELM ?= "helm"
+KUBE_VERSION ?= "1.21.5"
+KUBE_SCHEMA_LOCATION ?= "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/"
 
 BROWSERTEST_SEMVER = `./browsertest-image-version.sh docker-compose.yml`
 BROWSERTEST_MASTER = `./browsertest-image-version.sh docker-compose.master.yml`
@@ -65,6 +67,6 @@ test_integration_master: setup start_master
 
 validate_chart:
 	${HELM} template ./charts/libero-reviewer --debug > /tmp/libero-reviewer.yaml
-	${KUBEVAL} /tmp/libero-reviewer.yaml
+	${KUBEVAL} --schema-location ${KUBE_SCHEMA_LOCATION} -v ${KUBE_VERSION} /tmp/libero-reviewer.yaml
 	${HELM} template ./charts/libero-reviewer --debug -f ./charts/libero-reviewer/values.test.all_enabled.yaml > /tmp/libero-reviewer.yaml
-	${KUBEVAL} /tmp/libero-reviewer.yaml
+	${KUBEVAL} --schema-location ${KUBE_SCHEMA_LOCATION} -v ${KUBE_VERSION} /tmp/libero-reviewer.yaml
