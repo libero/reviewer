@@ -3,14 +3,14 @@ entries:
   libero-reviewer:
   - apiVersion: v2
     appVersion: latest
-    created: "2022-05-14T01:18:07.891922137Z"
+    created: "2022-05-16T18:55:00.201791177Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: https://charts.bitnami.com/bitnami
       version: ~11.2.0
     description: elife specific deployment of Libero Reviewer
-    digest: d93dfdd6ab9a627394dba66a373e6a0a59bebb9e9cd5e27ee82b64ee3eee09df
+    digest: d3032441b89e668febf44a17e7da5658b65ffdffeefb2b43ca9ba0c7fd6f1490
     home: https://github.com/libero/reviewer
     maintainers:
     - name: erkannt
@@ -256,4 +256,4 @@ entries:
     urls:
     - https://libero.github.io/reviewer/libero-reviewer-0.28.13.tgz
     version: 0.28.13
-generated: "2022-05-14T01:18:07.88528082Z"
+generated: "2022-05-16T18:55:00.194935492Z"
