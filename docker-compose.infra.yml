@@ -17,7 +17,7 @@ services:
       retries: 10
 
   s3:
-    image: minio/minio:RELEASE.2022-08-26T19-53-15Z
+    image: minio/minio:RELEASE.2022-09-01T23-53-36Z
     ports:
       - "9004:9000"
     volumes:
