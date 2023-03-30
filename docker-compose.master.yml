@@ -13,4 +13,4 @@ services:
     image: liberoadmin/reviewer-client:master-bc7361b9-20230222.1222
 
   nginx:
-    image: nginx:stable-alpine@sha256:f7dd4cec50434d5b6c994cdaf659e11f115f13ab82da0b5b677be5c1db551d44
+    image: nginx:stable-alpine@sha256:76b8c77ae8e8bee038dd2f25057d54936c392aaf8f102a954e9fa0a8dcb750cc
